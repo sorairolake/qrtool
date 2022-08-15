@@ -1,0 +1,16 @@
+[package]
+name = "qrtool"
+version = "0.1.0"
+authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
+edition = "2021"
+rust-version = "1.61.0"
+description = "An utility for encoding or decoding QR code"
+readme = "README.md"
+repository = "https://github.com/sorairolake/qrtool"
+license = "Apache-2.0 OR MIT"
+keywords = ["qrcode"]
+categories = ["command-line-utilities"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
