@@ -5,11 +5,24 @@
 //
 
 // Lint levels of rustc.
-#![warn(rust_2018_idioms)]
 #![deny(missing_debug_implementations)]
+#![warn(rust_2018_idioms)]
 // Lint levels of Clippy.
 #![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
+#![allow(clippy::multiple_crate_versions)]
 
-fn main() {
-    println!("Hello, world!");
+mod cli;
+mod core;
+
+use std::process::ExitCode;
+
+fn main() -> ExitCode {
+    match core::run() {
+        Ok(()) => ExitCode::SUCCESS,
+        Err(err) => {
+            eprintln!("Error: {:?}", err);
+
+            ExitCode::FAILURE
+        }
+    }
 }
