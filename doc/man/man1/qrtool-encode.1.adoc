@@ -29,6 +29,7 @@ This command encodes input data in a QR code.
 _STRING_::
   Input data.
   If it is not specified, data will be read from stdin.
+  This conflicts with *--read-from*.
 
 == OPTIONS
 
@@ -37,6 +38,7 @@ _STRING_::
 
 *-r*, *--read-from* _FILE_::
   Read input data from a file.
+  This conflicts with _STRING_.
 
 *-l*, *--error-correction-level* _LEVEL_::
   Error correction level.
@@ -115,6 +117,7 @@ _STRING_::
 
 *--variant* _TYPE_::
   The type of QR code.
+  This requires *--symbol-version*.
 
   The possible values are:{blank}:::
 

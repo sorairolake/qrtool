@@ -12,7 +12,7 @@ use clap_complete::{Generator, Shell};
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
-#[clap(version, about, arg_required_else_help(true))]
+#[clap(version, about, propagate_version(true), arg_required_else_help(true))]
 #[clap(setting(AppSettings::DeriveDisplayOrder))]
 pub struct Opt {
     /// Generate shell completion.
@@ -35,7 +35,13 @@ pub enum Command {
         output: Option<PathBuf>,
 
         /// Read input data from a file.
-        #[clap(short, long, value_name("FILE"), value_hint(ValueHint::FilePath))]
+        #[clap(
+            short,
+            long,
+            value_name("FILE"),
+            value_hint(ValueHint::FilePath),
+            conflicts_with("input")
+        )]
         read_from: Option<PathBuf>,
 
         /// Error correction level.
@@ -46,7 +52,11 @@ pub enum Command {
         ///
         /// For normal QR code, it should be between 1 and 40.
         /// For Micro QR code, it should be between 1 and 4.
-        #[clap(value_parser(value_parser!(i16).range(1..=40)),short('v'),long,value_name("NUMBER"))]
+        #[clap(
+            value_parser(value_parser!(i16).range(1..=40)),
+            short('v'),
+            value_name("NUMBER")
+        )]
         symbol_version: Option<i16>,
 
         /// The width of margin.
@@ -68,7 +78,13 @@ pub enum Command {
         mode: Mode,
 
         /// The type of QR code.
-        #[clap(long, value_enum, default_value_t, value_name("TYPE"))]
+        #[clap(
+            long,
+            value_enum,
+            default_value_t,
+            requires("symbol-version"),
+            value_name("TYPE")
+        )]
         variant: Variant,
 
         /// Input data.
