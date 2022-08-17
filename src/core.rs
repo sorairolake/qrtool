@@ -4,15 +4,18 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use std::ffi::OsStr;
-use std::fs::{self, File};
-use std::io::{self, BufReader, Cursor, Read, Write};
-use std::path::Path;
+use std::fs;
+use std::io::{self, Read, Write};
 use std::str;
 
+use anyhow::Context;
 use clap::Parser;
+use image::{io::Reader, ImageError, ImageFormat};
+use qrcode::{bits::Bits, QrCode};
+use rqrr::PreparedImage;
 
-use crate::cli::{Command, InputFormat, Mode, Opt, OutputFormat, Variant};
+use crate::cli::{Command, InputFormat, Opt, OutputFormat};
+use crate::{decode, encode};
 
 /// Runs the program and returns the result.
 #[allow(clippy::too_many_lines)]
@@ -21,7 +24,6 @@ pub fn run() -> anyhow::Result<()> {
 
     if let Some(shell) = args.generate_completion {
         Opt::print_completion(shell);
-
         return Ok(());
     }
 
@@ -41,75 +43,57 @@ pub fn run() -> anyhow::Result<()> {
                 let input = if let Some(string) = input {
                     string.into_bytes()
                 } else if let Some(path) = read_from {
-                    fs::read(path)?
+                    fs::read(&path)
+                        .with_context(|| format!("Could not read data from {}", path.display()))?
                 } else {
                     let mut buf = Vec::new();
-                    io::stdin().read_to_end(&mut buf)?;
-
+                    io::stdin()
+                        .read_to_end(&mut buf)
+                        .context("Could not read data from stdin")?;
                     buf
                 };
 
                 let level = error_correction_level.into();
-
                 let code = if let Some(version) = symbol_version {
-                    let v = match variant {
-                        Variant::Normal => qrcode::Version::Normal(version),
-                        Variant::Micro => qrcode::Version::Micro(version),
-                    };
-
-                    let mut bits = qrcode::bits::Bits::new(v);
-                    match mode {
-                        Mode::Numeric => bits.push_numeric_data(&input)?,
-                        Mode::Alphanumeric => bits.push_alphanumeric_data(&input)?,
-                        Mode::Byte => bits.push_byte_data(&input)?,
-                        Mode::Kanji => bits.push_kanji_data(&input)?,
-                    }
-                    bits.push_terminator(level)?;
-
-                    qrcode::QrCode::with_bits(bits, level)?
+                    let v = encode::set_version(version, &variant);
+                    let mut bits = Bits::new(v);
+                    encode::push_data_for_selected_mode(&mut bits, input, &mode)
+                        .and_then(|_| bits.push_terminator(level))
+                        .and_then(|_| QrCode::with_bits(bits, level))
                 } else {
-                    qrcode::QrCode::with_error_correction_level(&input, level)?
-                };
+                    QrCode::with_error_correction_level(&input, level)
+                }
+                .context("Could not construct a QR code")?;
 
                 match output_format {
                     format @ (OutputFormat::Svg | OutputFormat::Unicode) => {
                         let string = if format == OutputFormat::Svg {
-                            qrcode::render::Renderer::<qrcode::render::svg::Color<'_>>::new(
-                                &code.to_colors(),
-                                code.width(),
-                                margin,
-                            )
-                            .build()
+                            encode::to_svg(&code, margin)
                         } else {
-                            qrcode::render::Renderer::<qrcode::render::unicode::Dense1x2>::new(
-                                &code.to_colors(),
-                                code.width(),
-                                margin,
-                            )
-                            .build()
+                            encode::to_unicode(&code, margin)
                         };
 
                         if let Some(file) = output {
-                            fs::write(file, string)?;
+                            fs::write(&file, string).with_context(|| {
+                                format!("Could not write the image to {}", file.display())
+                            })?;
                         } else {
                             println!("{string}");
                         }
                     }
                     format => {
-                        let format = image::ImageFormat::try_from(format)?;
+                        let image = encode::to_image(&code, margin);
 
-                        let image = qrcode::render::Renderer::<image::Luma<u8>>::new(
-                            &code.to_colors(),
-                            code.width(),
-                            margin,
-                        )
-                        .build();
-
+                        let format = ImageFormat::try_from(format)
+                            .expect("The image format is not supported");
                         if let Some(file) = output {
-                            image.save_with_format(file, format)?;
+                            image.save_with_format(&file, format).with_context(|| {
+                                format!("Could not write the image to {}", file.display())
+                            })?;
                         } else {
-                            image::DynamicImage::ImageLuma8(image)
-                                .write_to(&mut io::stdout(), format)?;
+                            image
+                                .write_to(&mut io::stdout(), format)
+                                .context("Could not write the image to stdout")?;
                         }
                     }
                 }
@@ -118,73 +102,41 @@ pub fn run() -> anyhow::Result<()> {
                 input_format,
                 input,
             } => {
-                let input_format =
-                    if let Some("svg" | "svgz") = input.extension().and_then(OsStr::to_str) {
-                        Some(InputFormat::Svg)
-                    } else {
-                        input_format
-                    };
-
-                let image = match input_format {
-                    Some(InputFormat::Svg) => {
-                        let opt = usvg::Options {
-                            resources_dir: input
-                                .canonicalize()
-                                .ok()
-                                .and_then(|path| path.parent().map(Path::to_path_buf)),
-                            ..Default::default()
-                        };
-
-                        let image = fs::read(input)?;
-                        let tree = usvg::Tree::from_data(&image, &opt.to_ref())?;
-
-                        let pixmap_size = tree.svg_node().size.to_screen_size();
-                        let mut pixmap =
-                            tiny_skia::Pixmap::new(pixmap_size.width(), pixmap_size.height())
-                                .unwrap();
-
-                        resvg::render(
-                            &tree,
-                            usvg::FitTo::Original,
-                            tiny_skia::Transform::default(),
-                            pixmap.as_mut(),
-                        )
-                        .unwrap();
-
-                        let png = pixmap.encode_png()?;
-
-                        image::io::Reader::with_format(Cursor::new(png), image::ImageFormat::Png)
-                            .decode()?
-                    }
-                    Some(format) => {
-                        let reader =
-                            BufReader::new(File::open(input).map_err(image::ImageError::IoError)?);
-
-                        image::load(reader, format.try_into()?)?
-                    }
-                    _ => image::io::Reader::open(input)?
-                        .with_guessed_format()?
-                        .decode()?,
+                let input_format = if decode::is_svg(&input) {
+                    Some(InputFormat::Svg)
+                } else {
+                    input_format
                 };
+                let image = match input_format {
+                    Some(InputFormat::Svg) => decode::from_svg(&input),
+                    Some(format) => decode::load_image_file(
+                        &input,
+                        format
+                            .try_into()
+                            .expect("The image format is not supported"),
+                    )
+                    .map_err(anyhow::Error::from),
+                    _ => Reader::open(&input)
+                        .and_then(Reader::with_guessed_format)
+                        .map_err(ImageError::from)
+                        .and_then(Reader::decode)
+                        .map_err(anyhow::Error::from),
+                }
+                .with_context(|| format!("Could not read the image from {}", input.display()))?;
                 let image = image.into_luma8();
 
-                let mut image = rqrr::PreparedImage::prepare(image);
+                let mut image = PreparedImage::prepare(image);
                 let grids = image.detect_grids();
-
-                let contents: Result<Vec<(rqrr::MetaData, Vec<u8>)>, rqrr::DeQRError> = grids
-                    .into_iter()
-                    .map(|grid| {
-                        let mut writer = Vec::new();
-                        grid.decode_to(&mut writer).map(|meta| (meta, writer))
-                    })
-                    .collect();
-                let contents = contents?;
+                let contents =
+                    decode::grids_as_bytes(grids).context("Could not decode the grid")?;
 
                 for content in contents {
                     if let Ok(string) = str::from_utf8(&content.1) {
                         println!("{string}");
                     } else {
-                        io::stdout().write_all(&content.1)?;
+                        io::stdout()
+                            .write_all(&content.1)
+                            .context("Could not write data to stdout")?;
                     }
                 }
             }

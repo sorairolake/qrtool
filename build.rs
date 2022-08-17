@@ -18,7 +18,6 @@ use std::process::{Command, ExitStatus};
 
 fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
     let man_dir = env::current_dir()?.join("doc/man/man1");
-
     Command::new("asciidoctor")
         .args(["-b", "manpage"])
         .args(["-a", concat!("revnumber=", env!("CARGO_PKG_VERSION"))])
