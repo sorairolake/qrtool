@@ -1,0 +1,63 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+= qrtool-decode(1)
+// Specify in UTC.
+:docdate: 2022-08-17
+:doctype: manpage
+ifdef::revnumber[:mansource: qrtool {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+qrtool-decode - detect and decode a QR code
+
+== SYNOPSIS
+
+*qrtool decode* [_OPTION_]... _IMAGE_
+
+== DESCRIPTION
+
+This command detects and decodes a QR code.
+
+== POSITIONAL ARGUMENTS
+
+_IMAGE_::
+  Input image file.
+
+== OPTIONS
+
+*-t*, *--type* _FORMAT_::
+  The format of the input.
+
+  The possible values are:{blank}:::
+
+    *png*::::
+
+      Portable Network Graphics.
+
+    *svg*::::
+
+      Scalable Vector Graphics.
+
+*-h*, *--help*::
+  Print help information.
+
+include::{includedir}/section-exit-status.adoc[]
+
+== EXAMPLES
+
+Detect and decode a QR code from the given image:{blank}::
+  $ *qrtool decode input.png*
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]
+
+== SEE ALSO
+
+*qrtool*(1), *qrtool-encode*(1)

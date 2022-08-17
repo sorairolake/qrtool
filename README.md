@@ -25,7 +25,11 @@ Please see [BUILD.adoc](BUILD.adoc).
 
 ## Usage
 
-Please see [`qrtool(1)`](doc/man/man1/qrtool.1.adoc).
+Please see the following:
+
+- [`qrtool(1)`](doc/man/man1/qrtool.1.adoc)
+- [`qrtool-encode(1)`](doc/man/man1/qrtool-encode.1.adoc)
+- [`qrtool-decode(1)`](doc/man/man1/qrtool-decode.1.adoc)
 
 ## Changelog
 

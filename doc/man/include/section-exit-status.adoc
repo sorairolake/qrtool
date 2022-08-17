@@ -1,0 +1,13 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+== EXIT STATUS
+
+*0*::
+  Successful program execution.
+
+*1*::
+  An error occurred.
