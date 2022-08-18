@@ -12,7 +12,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
-== {project-url}[Unreleased]
+== {project-url}/releases/tag/v0.1.0[0.1.0] - 2022-08-18
 
 === Added
 
