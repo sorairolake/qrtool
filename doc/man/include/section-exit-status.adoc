@@ -1,0 +1,31 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+== EXIT STATUS
+
+*0*::
+  Successful program execution.
+
+*1*::
+  An error occurred.
+
+*65*::
+  The input data was incorrect in some way.
+
+*66*::
+  An input file did not exist or was not readable.
+
+*69*::
+  A service is unavailable.
+
+*71*::
+  An operating system error has been detected.
+
+*74*::
+  An error occurred while doing I/O on some file.
+
+*77*::
+  You did not have sufficient permission to perform the operation.

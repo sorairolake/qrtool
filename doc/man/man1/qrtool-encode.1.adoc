@@ -1,0 +1,149 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+= qrtool-encode(1)
+// Specify in UTC.
+:docdate: 2022-08-17
+:doctype: manpage
+ifdef::revnumber[:mansource: qrtool {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+qrtool-encode - encode input data in a QR code
+
+== SYNOPSIS
+
+*qrtool encode* [_OPTION_]... [_STRING_]
+
+== DESCRIPTION
+
+This command encodes input data in a QR code.
+
+== POSITIONAL ARGUMENTS
+
+_STRING_::
+  Input data.
+  If it is not specified, data will be read from stdin.
+  This conflicts with *--read-from*.
+
+== OPTIONS
+
+*-o*, *--output* _FILE_::
+  Output the result to a file.
+
+*-r*, *--read-from* _FILE_::
+  Read input data from a file.
+  This conflicts with _STRING_.
+
+*-l*, *--error-correction-level* _LEVEL_::
+  Error correction level.
+
+  The possible values are:{blank}:::
+
+    *l*::::
+
+      Level L.
+      7% of codewords can be restored.
+
+    *m*::::
+
+      Level M.
+      15% of codewords can be restored.
+      This is the default.
+
+    *q*::::
+
+      Level Q.
+      25% of codewords can be restored.
+
+    *h*::::
+
+      Level H.
+      30% of codewords can be restored.
+
+*-v*, *--symbol-version* _NUMBER_::
+  The version of the symbol.
+  For normal QR code, it should be between *1* and *40*.
+  For Micro QR code, it should be between *1* and *4*.
+
+*-m*, *--margin* _NUMBER_::
+  The width of margin.
+  Default is 4.
+
+*-t*, *--type* _FORMAT_::
+  The format of the output.
+
+  The possible values are:{blank}:::
+
+    *png*::::
+
+      Portable Network Graphics.
+      This is the default.
+
+    *svg*::::
+
+      Scalable Vector Graphics.
+
+    *unicode*::::
+
+      UTF-8 string.
+
+*-M*, *--mode* _MODE_::
+  The mode of the output.
+
+  The possible values are:{blank}:::
+
+    *numeric*::::
+
+      Numbers from 0 to 9.
+
+    *alphanumeric*::::
+
+      Uppercase letters from A to Z, numbers from 0 to 9 and few symbols.
+
+    *byte*::::
+
+      Arbitrary binary data.
+      This is the default.
+
+    *kanji*::::
+
+      Shift JIS text.
+
+*--variant* _TYPE_::
+  The type of QR code.
+  This requires *--symbol-version*.
+
+  The possible values are:{blank}:::
+
+    *normal*::::
+
+      Normal QR code.
+      This is the default.
+
+    *micro*::::
+
+      Micro QR code.
+
+*-h*, *--help*::
+  Print help information.
+
+include::{includedir}/section-exit-status.adoc[]
+
+== EXAMPLES
+
+Encode the given string in a QR code:{blank}::
+  $ *qrtool encode "QR code"*
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]
+
+== SEE ALSO
+
+*qrtool*(1), *qrtool-decode*(1)
