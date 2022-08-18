@@ -81,3 +81,19 @@ pub fn grids_as_bytes<G: BitGrid>(
         .map(|grid| grid_as_bytes(grid))
         .collect()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn valid_extension_as_svg() {
+        assert!(is_svg("image.svg"));
+        assert!(is_svg("image.svgz"));
+    }
+
+    #[test]
+    fn invalid_extension_as_svg() {
+        assert!(!is_svg("image.png"));
+    }
+}

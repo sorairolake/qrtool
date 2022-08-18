@@ -8,16 +8,29 @@ use image::{DynamicImage, Luma};
 use qrcode::{
     bits::Bits,
     render::{svg, unicode, Renderer},
+    types::QrError,
     QrCode, QrResult, Version,
 };
 
 use crate::cli::{Mode, Variant};
 
 /// Sets the version.
-pub const fn set_version(version: i16, variant: &Variant) -> Version {
+pub const fn set_version(version: i16, variant: &Variant) -> QrResult<Version> {
     match variant {
-        Variant::Normal => Version::Normal(version),
-        Variant::Micro => Version::Micro(version),
+        Variant::Normal => {
+            if let 1..=40 = version {
+                Ok(Version::Normal(version))
+            } else {
+                Err(QrError::InvalidVersion)
+            }
+        }
+        Variant::Micro => {
+            if let 1..=4 = version {
+                Ok(Version::Micro(version))
+            } else {
+                Err(QrError::InvalidVersion)
+            }
+        }
     }
 }
 
@@ -50,4 +63,34 @@ pub fn to_unicode(code: &QrCode, margin: u32) -> String {
 pub fn to_image(code: &QrCode, margin: u32) -> DynamicImage {
     let image = Renderer::<Luma<u8>>::new(&code.to_colors(), code.width(), margin).build();
     DynamicImage::ImageLuma8(image)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn validate_qr_code_version() {
+        // Valid normal QR code version.
+        assert_eq!(
+            set_version(1, &Variant::Normal).unwrap(),
+            Version::Normal(1)
+        );
+        assert_eq!(
+            set_version(40, &Variant::Normal).unwrap(),
+            Version::Normal(40)
+        );
+
+        // Valid Micro QR code version.
+        assert_eq!(set_version(1, &Variant::Micro).unwrap(), Version::Micro(1));
+        assert_eq!(set_version(4, &Variant::Micro).unwrap(), Version::Micro(4));
+
+        // Invalid normal QR code version.
+        assert!(set_version(0, &Variant::Normal).is_err());
+        assert!(set_version(41, &Variant::Normal).is_err());
+
+        // Invalid Micro QR code version.
+        assert!(set_version(0, &Variant::Micro).is_err());
+        assert!(set_version(5, &Variant::Micro).is_err());
+    }
 }

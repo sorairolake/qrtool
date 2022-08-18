@@ -43,6 +43,7 @@ _IMAGE_::
     *svg*::::
 
       Scalable Vector Graphics.
+      This also includes gzipped it.
 
 *-h*, *--help*::
   Print help information.

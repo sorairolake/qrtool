@@ -24,3 +24,7 @@ rqrr = "0.4.0"
 sysexits = "0.3.0"
 tiny-skia = "0.6.6"
 usvg = { version = "0.23.0", default-features = false }
+
+[dev-dependencies]
+assert_cmd = "2.0.4"
+predicates = "2.1.1"

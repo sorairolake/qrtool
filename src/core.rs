@@ -20,29 +20,19 @@ use crate::{decode, encode};
 /// Runs the program and returns the result.
 #[allow(clippy::too_many_lines)]
 pub fn run() -> anyhow::Result<()> {
-    let args = Opt::parse();
+    let opt = Opt::parse();
 
-    if let Some(shell) = args.generate_completion {
+    if let Some(shell) = opt.generate_completion {
         Opt::print_completion(shell);
         return Ok(());
     }
 
-    if let Some(command) = args.command {
+    if let Some(command) = opt.command {
         match command {
-            Command::Encode {
-                output,
-                read_from,
-                error_correction_level,
-                symbol_version,
-                margin,
-                output_format,
-                mode,
-                variant,
-                input,
-            } => {
-                let input = if let Some(string) = input {
+            Command::Encode(arg) => {
+                let input = if let Some(string) = arg.input {
                     string.into_bytes()
-                } else if let Some(path) = read_from {
+                } else if let Some(path) = arg.read_from {
                     fs::read(&path)
                         .with_context(|| format!("Could not read data from {}", path.display()))?
                 } else {
@@ -53,11 +43,12 @@ pub fn run() -> anyhow::Result<()> {
                     buf
                 };
 
-                let level = error_correction_level.into();
-                let code = if let Some(version) = symbol_version {
-                    let v = encode::set_version(version, &variant);
+                let level = arg.error_correction_level.into();
+                let code = if let Some(version) = arg.symbol_version {
+                    let v = encode::set_version(version, &arg.variant)
+                        .context("Could not set the version")?;
                     let mut bits = Bits::new(v);
-                    encode::push_data_for_selected_mode(&mut bits, input, &mode)
+                    encode::push_data_for_selected_mode(&mut bits, input, &arg.mode)
                         .and_then(|_| bits.push_terminator(level))
                         .and_then(|_| QrCode::with_bits(bits, level))
                 } else {
@@ -65,15 +56,15 @@ pub fn run() -> anyhow::Result<()> {
                 }
                 .context("Could not construct a QR code")?;
 
-                match output_format {
+                match arg.output_format {
                     format @ (OutputFormat::Svg | OutputFormat::Unicode) => {
                         let string = if format == OutputFormat::Svg {
-                            encode::to_svg(&code, margin)
+                            encode::to_svg(&code, arg.margin)
                         } else {
-                            encode::to_unicode(&code, margin)
+                            encode::to_unicode(&code, arg.margin)
                         };
 
-                        if let Some(file) = output {
+                        if let Some(file) = arg.output {
                             fs::write(&file, string).with_context(|| {
                                 format!("Could not write the image to {}", file.display())
                             })?;
@@ -82,11 +73,11 @@ pub fn run() -> anyhow::Result<()> {
                         }
                     }
                     format => {
-                        let image = encode::to_image(&code, margin);
+                        let image = encode::to_image(&code, arg.margin);
 
                         let format = ImageFormat::try_from(format)
                             .expect("The image format is not supported");
-                        if let Some(file) = output {
+                        if let Some(file) = arg.output {
                             image.save_with_format(&file, format).with_context(|| {
                                 format!("Could not write the image to {}", file.display())
                             })?;
@@ -98,31 +89,30 @@ pub fn run() -> anyhow::Result<()> {
                     }
                 }
             }
-            Command::Decode {
-                input_format,
-                input,
-            } => {
-                let input_format = if decode::is_svg(&input) {
+            Command::Decode(arg) => {
+                let input_format = if decode::is_svg(&arg.input) {
                     Some(InputFormat::Svg)
                 } else {
-                    input_format
+                    arg.input_format
                 };
                 let image = match input_format {
-                    Some(InputFormat::Svg) => decode::from_svg(&input),
+                    Some(InputFormat::Svg) => decode::from_svg(&arg.input),
                     Some(format) => decode::load_image_file(
-                        &input,
+                        &arg.input,
                         format
                             .try_into()
                             .expect("The image format is not supported"),
                     )
                     .map_err(anyhow::Error::from),
-                    _ => Reader::open(&input)
+                    _ => Reader::open(&arg.input)
                         .and_then(Reader::with_guessed_format)
                         .map_err(ImageError::from)
                         .and_then(Reader::decode)
                         .map_err(anyhow::Error::from),
                 }
-                .with_context(|| format!("Could not read the image from {}", input.display()))?;
+                .with_context(|| {
+                    format!("Could not read the image from {}", arg.input.display())
+                })?;
                 let image = image.into_luma8();
 
                 let mut image = PreparedImage::prepare(image);
