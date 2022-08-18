@@ -22,7 +22,7 @@ qrcode = "0.12.0"
 resvg = { version = "0.23.0", default-features = false }
 rqrr = "0.4.0"
 sysexits = "0.3.0"
-tiny-skia = "0.6.6"
+tiny-skia = "0.7.0"
 usvg = { version = "0.23.0", default-features = false }
 
 [dev-dependencies]
