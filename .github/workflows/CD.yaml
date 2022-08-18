@@ -1,0 +1,91 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - develop
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-musl
+          - x86_64-apple-darwin
+          - x86_64-pc-windows-msvc
+        include:
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-20.04
+            use-cross: true
+          - target: x86_64-apple-darwin
+            os: macos-11
+          - target: x86_64-pc-windows-msvc
+            os: windows-2022
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Setup Rust toolchain
+      uses: actions-rs/toolchain@v1.0.6
+      with:
+        toolchain: 1.61.0 # MSRV
+        target: ${{ matrix.target }}
+        override: true
+        profile: minimal
+    - name: Cache build artifacts
+      uses: Swatinem/rust-cache@v1.3.0
+      with:
+        key: ${{ matrix.target }}
+    - name: Build a package
+      uses: actions-rs/cargo@v1.0.1
+      with:
+        command: build
+        args: --release --target ${{ matrix.target }}
+        use-cross: ${{ matrix.use-cross }}
+    - name: Get version
+      id: get_version
+      uses: battila7/get-version-action@v2.2.1
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1
+    - name: Install Asciidoctor
+      run: |
+        gem install asciidoctor
+        asciidoctor -V
+    - name: Build man pages
+      run: |
+        mkdir -p build
+        asciidoctor -b manpage -a "revnumber=${{ steps.get_version.outputs.version-without-v }}" -D build doc/man/man1/*.adoc
+    - name: Create a package
+      shell: bash
+      run: |
+        if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+          bin="target/${{ matrix.target }}/release/qrtool"
+        else
+          bin="target/${{ matrix.target }}/release/qrtool.exe"
+        fi
+        package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
+
+        mkdir -p "${package}"/{doc,man}
+        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-MIT "${bin}" "${package}"
+        cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
+        cp build/* "${package}"/man
+
+        if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+          tar czvf "${package}.tar.gz" "${package}"
+        else
+          7z a -bb "${package}.zip" "${package}"
+        fi
+    - name: Release
+      uses: softprops/action-gh-release@v0.1.14
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        draft: true
+        files: 'qrtool-*'
+        name: "Release version ${{ steps.get_version.outputs.version-without-v }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
