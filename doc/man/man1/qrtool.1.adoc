@@ -1,0 +1,59 @@
+//
+// SPDX-License-Identifier: Apache-2.0 OR MIT
+//
+// Copyright (C) 2022 Shun Sakai
+//
+
+= qrtool(1)
+// Specify in UTC.
+:docdate: 2022-08-17
+:doctype: manpage
+ifdef::revnumber[:mansource: qrtool {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+qrtool - an utility for encoding or decoding QR code
+
+== SYNOPSIS
+
+*{manname}* [_OPTION_]... _COMMAND_
+
+== DESCRIPTION
+
+*{manname}* is a command-line utility for encoding or decoding QR code.
+
+== COMMANDS
+
+*qrtool-encode*(1)::
+  Encode input data in a QR code.
+
+*qrtool-decode*(1)::
+  Detect and decode a QR code.
+
+== OPTIONS
+
+*-h*, *--help*::
+  Print help information.
+
+*-V*, *--version*::
+  Print version information.
+
+*--generate-completion* _SHELL_::
+  Generate shell completion.
+  The completion is output to stdout.
+
+  The possible values are:{blank}:::
+
+    * *bash*
+    * *elvish*
+    * *fish*
+    * *powershell*
+    * *zsh*
+
+include::{includedir}/section-exit-status.adoc[]
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]

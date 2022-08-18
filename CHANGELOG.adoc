@@ -1,0 +1,19 @@
+= Changelog
+:toc: macro
+:project-url: https://github.com/sorairolake/qrtool
+:compare-url: {project-url}/compare
+:issue-url: {project-url}/issues
+:pull-request-url: {project-url}/pull
+
+All notable changes to this project will be documented in this file.
+
+The format is based on https://keepachangelog.com/[Keep a Changelog], and this
+project adheres to https://semver.org/[Semantic Versioning].
+
+toc::[]
+
+== {project-url}/releases/tag/v0.1.0[0.1.0] - 2022-08-18
+
+=== Added
+
+* Initial release
