@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "image"
+        versions: ["0.23.14"]
+      - dependency-name: "qrcode"
+        versions: ["0.12.0"]
+      - dependency-name: "rqrr"
+        versions: ["0.4.0"]
