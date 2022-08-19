@@ -7,4 +7,5 @@
 == REPORTING BUGS
 
 Bugs can be reported on GitHub at:{blank}::
+
   https://github.com/sorairolake/qrtool/issues

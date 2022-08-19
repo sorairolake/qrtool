@@ -106,6 +106,7 @@ pub struct Encode {
     /// Input data.
     ///
     /// If it is not specified, data will be read from stdin.
+    /// It takes a valid UTF-8 string.
     #[clap(value_name("STRING"))]
     pub input: Option<String>,
 }
@@ -114,10 +115,18 @@ pub struct Encode {
 #[clap(setting(AppSettings::DeriveDisplayOrder))]
 pub struct Decode {
     /// The format of the input.
+    ///
+    /// If it is not specified, the format will be guessed based on the
+    /// extension, and the raster format will use the content in addition to it.
     #[clap(short('t'), long("type"), value_enum, value_name("FORMAT"))]
     pub input_format: Option<InputFormat>,
 
     /// Input image file.
+    ///
+    /// Supported raster image formats are any formats supported by the image
+    /// crate. The format guess based on the extension, and the raster
+    /// format use the content in addition to it. Note that the SVG image is
+    /// rasterized before scanning.
     #[clap(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
     pub input: PathBuf,
 }
@@ -242,14 +251,51 @@ impl Default for Variant {
 }
 
 #[derive(Clone, Debug, ValueEnum)]
+#[clap(rename_all = "lower")]
 pub enum InputFormat {
+    /// Windows Bitmap.
+    Bmp,
+
+    /// DirectDraw Surface.
+    Dds,
+
+    /// Farbfeld.
+    Farbfeld,
+
+    /// GIF.
+    Gif,
+
+    /// Radiance RGBE.
+    Hdr,
+
+    /// ICO.
+    Ico,
+
+    /// JPEG.
+    Jpeg,
+
+    /// OpenEXR.
+    OpenExr,
+
     /// Portable Network Graphics.
     Png,
+
+    /// PNM.
+    Pnm,
 
     /// Scalable Vector Graphics.
     ///
     /// This also includes gzipped it.
     Svg,
+
+    /// Truevision TGA.
+    Tga,
+
+    /// TIFF.
+    Tiff,
+
+    /// WebP.
+    WebP,
 }
 
 impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
@@ -259,8 +305,20 @@ impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
         use image_for_decoding::error::ImageFormatHint;
 
         match format {
+            InputFormat::Bmp => Ok(Self::Bmp),
+            InputFormat::Dds => Ok(Self::Dds),
+            InputFormat::Farbfeld => Ok(Self::Farbfeld),
+            InputFormat::Gif => Ok(Self::Gif),
+            InputFormat::Hdr => Ok(Self::Hdr),
+            InputFormat::Ico => Ok(Self::Ico),
+            InputFormat::Jpeg => Ok(Self::Jpeg),
+            InputFormat::OpenExr => Ok(Self::OpenExr),
             InputFormat::Png => Ok(Self::Png),
+            InputFormat::Pnm => Ok(Self::Pnm),
             InputFormat::Svg => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
+            InputFormat::Tga => Ok(Self::Tga),
+            InputFormat::Tiff => Ok(Self::Tiff),
+            InputFormat::WebP => Ok(Self::WebP),
         }
     }
 }

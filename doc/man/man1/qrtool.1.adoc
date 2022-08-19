@@ -27,20 +27,25 @@ qrtool - an utility for encoding or decoding QR code
 == COMMANDS
 
 *qrtool-encode*(1)::
+
   Encode input data in a QR code.
 
 *qrtool-decode*(1)::
+
   Detect and decode a QR code.
 
 == OPTIONS
 
 *-h*, *--help*::
+
   Print help information.
 
 *-V*, *--version*::
+
   Print version information.
 
 *--generate-completion* _SHELL_::
+
   Generate shell completion.
   The completion is output to stdout.
 

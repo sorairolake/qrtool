@@ -6,7 +6,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2022-08-17
+:docdate: 2022-08-19
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -27,20 +27,26 @@ This command encodes input data in a QR code.
 == POSITIONAL ARGUMENTS
 
 _STRING_::
+
   Input data.
   If it is not specified, data will be read from stdin.
+  It takes a valid UTF-8 string.
+  Use *--read-from* or read from stdin if taking other than it.
   This conflicts with *--read-from*.
 
 == OPTIONS
 
 *-o*, *--output* _FILE_::
+
   Output the result to a file.
 
 *-r*, *--read-from* _FILE_::
+
   Read input data from a file.
   This conflicts with _STRING_.
 
 *-l*, *--error-correction-level* _LEVEL_::
+
   Error correction level.
 
   The possible values are:{blank}:::
@@ -67,15 +73,18 @@ _STRING_::
       30% of codewords can be restored.
 
 *-v*, *--symbol-version* _NUMBER_::
+
   The version of the symbol.
   For normal QR code, it should be between *1* and *40*.
   For Micro QR code, it should be between *1* and *4*.
 
 *-m*, *--margin* _NUMBER_::
+
   The width of margin.
   Default is 4.
 
 *-t*, *--type* _FORMAT_::
+
   The format of the output.
 
   The possible values are:{blank}:::
@@ -94,6 +103,7 @@ _STRING_::
       UTF-8 string.
 
 *-M*, *--mode* _MODE_::
+
   The mode of the output.
 
   The possible values are:{blank}:::
@@ -116,6 +126,7 @@ _STRING_::
       Shift JIS text.
 
 *--variant* _TYPE_::
+
   The type of QR code.
   This requires *--symbol-version*.
 
@@ -131,6 +142,7 @@ _STRING_::
       Micro QR code.
 
 *-h*, *--help*::
+
   Print help information.
 
 include::{includedir}/section-exit-status.adoc[]
@@ -138,6 +150,7 @@ include::{includedir}/section-exit-status.adoc[]
 == EXAMPLES
 
 Encode the given string in a QR code:{blank}::
+
   $ *qrtool encode "QR code"*
 
 include::{includedir}/section-reporting-bugs.adoc[]

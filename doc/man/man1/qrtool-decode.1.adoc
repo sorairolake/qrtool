@@ -6,7 +6,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2022-08-17
+:docdate: 2022-08-19
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -27,25 +27,82 @@ This command detects and decodes a QR code.
 == POSITIONAL ARGUMENTS
 
 _IMAGE_::
+
   Input image file.
+  Supported raster image formats are any formats supported by the image crate.
+  The format guess based on the extension, and the raster format use the
+  content in addition to it.
+  Note that the SVG image is rasterized before scanning.
 
 == OPTIONS
 
 *-t*, *--type* _FORMAT_::
+
   The format of the input.
+  If it is not specified, the format will be guessed based on the extension,
+  and the raster format will use the content in addition to it.
 
   The possible values are:{blank}:::
+
+    *bmp*::::
+
+      Windows Bitmap.
+
+    *dds*::::
+
+      DirectDraw Surface.
+
+    *farbfeld*::::
+
+      Farbfeld.
+
+    *gif*::::
+
+      GIF.
+
+    *hdr*::::
+
+      Radiance RGBE.
+
+    *ico*::::
+
+      ICO.
+
+    *jpeg*::::
+
+      JPEG.
+
+    *openexr*::::
+
+      OpenEXR.
 
     *png*::::
 
       Portable Network Graphics.
+
+    *pnm*::::
+
+      PNM.
 
     *svg*::::
 
       Scalable Vector Graphics.
       This also includes gzipped it.
 
+    *tga*::::
+
+      Truevision TGA.
+
+    *tiff*::::
+
+      TIFF.
+
+    *webp*::::
+
+      WebP.
+
 *-h*, *--help*::
+
   Print help information.
 
 include::{includedir}/section-exit-status.adoc[]
@@ -53,6 +110,7 @@ include::{includedir}/section-exit-status.adoc[]
 == EXAMPLES
 
 Detect and decode a QR code from the given image:{blank}::
+
   $ *qrtool decode input.png*
 
 include::{includedir}/section-reporting-bugs.adoc[]
