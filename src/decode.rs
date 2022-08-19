@@ -15,6 +15,9 @@ use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 use tiny_skia::{Pixmap, Transform};
 use usvg::{FitTo, Tree};
 
+use crate::cli::Ecc;
+use crate::metadata::{Extractor, Metadata};
+
 /// Returns `true` if `path` is SVG.
 pub fn is_svg(path: impl AsRef<Path>) -> bool {
     matches!(
@@ -82,6 +85,23 @@ pub fn grids_as_bytes<G: BitGrid>(
         .collect()
 }
 
+impl Extractor for MetaData {
+    fn extract_metadata(&self) -> Metadata {
+        let symbol_version = self.version.0;
+        let error_correction_level = match self.ecc_level {
+            0 => Ecc::M,
+            1 => Ecc::L,
+            2 => Ecc::H,
+            3 => Ecc::Q,
+            _ => panic!("Invalid error correction level"),
+        };
+        Metadata {
+            symbol_version,
+            error_correction_level,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -95,5 +115,59 @@ mod tests {
     #[test]
     fn invalid_extension_as_svg() {
         assert!(!is_svg("image.png"));
+    }
+
+    #[test]
+    fn validate_metadata_extraction() {
+        use rqrr::Version;
+
+        assert_eq!(
+            MetaData {
+                version: Version(1),
+                ecc_level: 1,
+                mask: 4
+            }
+            .extract_metadata(),
+            Metadata {
+                symbol_version: 1,
+                error_correction_level: Ecc::L
+            }
+        );
+        assert_eq!(
+            MetaData {
+                version: Version(1),
+                ecc_level: 0,
+                mask: 3
+            }
+            .extract_metadata(),
+            Metadata {
+                symbol_version: 1,
+                error_correction_level: Ecc::M
+            }
+        );
+        assert_eq!(
+            MetaData {
+                version: Version(1),
+                ecc_level: 3,
+                mask: 7
+            }
+            .extract_metadata(),
+            Metadata {
+                symbol_version: 1,
+                error_correction_level: Ecc::Q
+            }
+        );
+        assert_eq!(
+            MetaData {
+                version: Version(1),
+                ecc_level: 2,
+                mask: 4
+            }
+            .extract_metadata(),
+            Metadata {
+                symbol_version: 1,
+                error_correction_level: Ecc::H
+            }
+        );
     }
 }

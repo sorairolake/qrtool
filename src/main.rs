@@ -15,6 +15,7 @@ mod cli;
 mod core;
 mod decode;
 mod encode;
+mod metadata;
 
 use std::io;
 use std::process::ExitCode;

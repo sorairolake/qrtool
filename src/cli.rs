@@ -103,6 +103,12 @@ pub struct Encode {
     )]
     pub variant: Variant,
 
+    /// Also print the metadata.
+    ///
+    /// It is output to stderr.
+    #[clap(long)]
+    pub verbose: bool,
+
     /// Input data.
     ///
     /// If it is not specified, data will be read from stdin.
@@ -120,6 +126,18 @@ pub struct Decode {
     /// extension, and the raster format will use the content in addition to it.
     #[clap(short('t'), long("type"), value_enum, value_name("FORMAT"))]
     pub input_format: Option<InputFormat>,
+
+    /// Also print the metadata.
+    ///
+    /// It is output to stderr.
+    #[clap(long, conflicts_with("metadata"))]
+    pub verbose: bool,
+
+    /// Print only the metadata.
+    ///
+    /// It is output to stderr.
+    #[clap(long)]
+    pub metadata: bool,
 
     /// Input image file.
     ///
@@ -143,7 +161,7 @@ impl Opt {
     }
 }
 
-#[derive(Clone, Debug, ValueEnum)]
+#[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
 pub enum Ecc {
     /// Level L.
     ///

@@ -140,6 +140,18 @@ fn encode_as_micro_qr_code() {
 }
 
 #[test]
+fn encode_with_verbose() {
+    command()
+        .arg("encode")
+        .arg("--verbose")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::ne(&[] as &[u8]))
+        .stderr(predicate::eq("Version: 1\nLevel: M\n"));
+}
+
+#[test]
 fn validate_the_options_dependencies_for_encode_command() {
     command()
         .arg("encode")
@@ -188,4 +200,39 @@ fn decode_from_svgz() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code\n"));
+}
+
+#[test]
+fn decode_with_verbose() {
+    command()
+        .arg("decode")
+        .arg("--verbose")
+        .arg("data/basic.png")
+        .assert()
+        .success()
+        .stdout(predicate::ne(&[] as &[u8]))
+        .stderr(predicate::eq("Version: 1\nLevel: M\n"));
+}
+
+#[test]
+fn decode_with_metadata() {
+    command()
+        .arg("decode")
+        .arg("--metadata")
+        .arg("data/basic.png")
+        .assert()
+        .success()
+        .stdout(predicate::eq(&[] as &[u8]))
+        .stderr(predicate::eq("Version: 1\nLevel: M\n"));
+}
+
+#[test]
+fn validate_the_options_dependencies_for_decode_command() {
+    command()
+        .arg("decode")
+        .arg("--verbose")
+        .arg("--metadata")
+        .assert()
+        .failure()
+        .code(2);
 }

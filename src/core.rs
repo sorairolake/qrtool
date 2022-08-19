@@ -14,6 +14,7 @@ use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
 use crate::cli::{Command, InputFormat, Opt, OutputFormat};
+use crate::metadata::Extractor;
 use crate::{decode, encode};
 
 /// Runs the program and returns the result.
@@ -56,6 +57,12 @@ pub fn run() -> anyhow::Result<()> {
                     QrCode::with_error_correction_level(&input, level)
                 }
                 .context("Could not construct a QR code")?;
+
+                if arg.verbose {
+                    let metadata = code.extract_metadata();
+                    eprintln!("Version: {}", metadata.symbol_version);
+                    eprintln!("Level: {:?}", metadata.error_correction_level);
+                }
 
                 match arg.output_format {
                     format @ (OutputFormat::Svg | OutputFormat::Unicode) => {
@@ -124,6 +131,15 @@ pub fn run() -> anyhow::Result<()> {
                     decode::grids_as_bytes(grids).context("Could not decode the grid")?;
 
                 for content in contents {
+                    if arg.verbose || arg.metadata {
+                        let metadata = content.0.extract_metadata();
+                        eprintln!("Version: {}", metadata.symbol_version);
+                        eprintln!("Level: {:?}", metadata.error_correction_level);
+                        if arg.metadata {
+                            continue;
+                        }
+                    }
+
                     if let Ok(string) = str::from_utf8(&content.1) {
                         println!("{string}");
                     } else {

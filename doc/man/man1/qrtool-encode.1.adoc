@@ -141,6 +141,11 @@ _STRING_::
 
       Micro QR code.
 
+*--verbose*::
+
+  Also print the metadata.
+  It is output to stderr.
+
 *-h*, *--help*::
 
   Print help information.

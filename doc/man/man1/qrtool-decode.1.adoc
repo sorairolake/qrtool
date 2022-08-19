@@ -101,6 +101,18 @@ _IMAGE_::
 
       WebP.
 
+*--verbose*::
+
+  Also print the metadata.
+  It is output to stderr.
+  This conflicts with *--metadata*.
+
+*--metadata*::
+
+  Print only the metadata.
+  It is output to stderr.
+  This conflicts with *--verbose*.
+
 *-h*, *--help*::
 
   Print help information.

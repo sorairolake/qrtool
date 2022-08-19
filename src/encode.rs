@@ -9,10 +9,11 @@ use qrcode::{
     bits::Bits,
     render::{svg, unicode, Renderer},
     types::QrError,
-    QrCode, QrResult, Version,
+    EcLevel, QrCode, QrResult, Version,
 };
 
-use crate::cli::{Mode, Variant};
+use crate::cli::{Ecc, Mode, Variant};
+use crate::metadata::{Extractor, Metadata};
 
 /// Sets the version.
 pub const fn set_version(version: i16, variant: &Variant) -> QrResult<Version> {
@@ -65,6 +66,26 @@ pub fn to_image(code: &QrCode, margin: u32) -> DynamicImage {
     DynamicImage::ImageLuma8(image)
 }
 
+impl Extractor for QrCode {
+    fn extract_metadata(&self) -> Metadata {
+        let symbol_version = match self.version() {
+            Version::Normal(version) | Version::Micro(version) => {
+                usize::try_from(version).expect("Invalid symbol version")
+            }
+        };
+        let error_correction_level = match self.error_correction_level() {
+            EcLevel::L => Ecc::L,
+            EcLevel::M => Ecc::M,
+            EcLevel::Q => Ecc::Q,
+            EcLevel::H => Ecc::H,
+        };
+        Metadata {
+            symbol_version,
+            error_correction_level,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -92,5 +113,47 @@ mod tests {
         // Invalid Micro QR code version.
         assert!(set_version(0, &Variant::Micro).is_err());
         assert!(set_version(5, &Variant::Micro).is_err());
+    }
+
+    #[test]
+    fn validate_metadata_extraction() {
+        const DATA: [u8; 0] = [];
+
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Normal(1), EcLevel::L)
+                .unwrap()
+                .extract_metadata(),
+            Metadata {
+                symbol_version: 1,
+                error_correction_level: Ecc::L
+            }
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Normal(1), EcLevel::M)
+                .unwrap()
+                .extract_metadata(),
+            Metadata {
+                symbol_version: 1,
+                error_correction_level: Ecc::M
+            }
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Normal(1), EcLevel::Q)
+                .unwrap()
+                .extract_metadata(),
+            Metadata {
+                symbol_version: 1,
+                error_correction_level: Ecc::Q
+            }
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Normal(1), EcLevel::H)
+                .unwrap()
+                .extract_metadata(),
+            Metadata {
+                symbol_version: 1,
+                error_correction_level: Ecc::H
+            }
+        );
     }
 }
