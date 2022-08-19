@@ -17,10 +17,11 @@ categories = ["command-line-utilities"]
 anyhow = "1.0.62"
 clap = { version = "3.2.17", features = ["derive"] }
 clap_complete = "3.2.4"
-image = { version = "0.23.14", default-features = false, features = ["png"] }
+image-for-decoding = { version = "0.24.3", package = "image" }
+image-for-encoding = { version = "0.23.14", package = "image" }
 qrcode = "0.12.0"
 resvg = { version = "0.23.0", default-features = false }
-rqrr = "0.4.0"
+rqrr = "0.5.1"
 sysexits = "0.3.0"
 tiny-skia = "0.6.6"
 usvg = { version = "0.23.0", default-features = false }

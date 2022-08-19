@@ -11,7 +11,6 @@ use clap::{
     value_parser, AppSettings, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint,
 };
 use clap_complete::{Generator, Shell};
-use image::{error::ImageFormatHint, ImageError, ImageFormat};
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
@@ -193,13 +192,15 @@ impl Default for OutputFormat {
     }
 }
 
-impl TryFrom<OutputFormat> for ImageFormat {
-    type Error = ImageError;
+impl TryFrom<OutputFormat> for image_for_encoding::ImageFormat {
+    type Error = image_for_encoding::ImageError;
 
     fn try_from(format: OutputFormat) -> Result<Self, Self::Error> {
+        use image_for_encoding::error::ImageFormatHint;
+
         match format {
             OutputFormat::Png => Ok(Self::Png),
-            _ => Err(ImageError::Unsupported(ImageFormatHint::Unknown.into())),
+            _ => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
         }
     }
 }
@@ -251,13 +252,15 @@ pub enum InputFormat {
     Svg,
 }
 
-impl TryFrom<InputFormat> for ImageFormat {
-    type Error = ImageError;
+impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
+    type Error = image_for_decoding::ImageError;
 
     fn try_from(format: InputFormat) -> Result<Self, Self::Error> {
+        use image_for_decoding::error::ImageFormatHint;
+
         match format {
             InputFormat::Png => Ok(Self::Png),
-            InputFormat::Svg => Err(ImageError::Unsupported(ImageFormatHint::Unknown.into())),
+            InputFormat::Svg => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
         }
     }
 }

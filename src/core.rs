@@ -10,7 +10,6 @@ use std::str;
 
 use anyhow::Context;
 use clap::Parser;
-use image::{io::Reader, ImageError, ImageFormat};
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
@@ -30,6 +29,8 @@ pub fn run() -> anyhow::Result<()> {
     if let Some(command) = opt.command {
         match command {
             Command::Encode(arg) => {
+                use image_for_encoding::ImageFormat;
+
                 let input = if let Some(string) = arg.input {
                     string.into_bytes()
                 } else if let Some(path) = arg.read_from {
@@ -90,6 +91,8 @@ pub fn run() -> anyhow::Result<()> {
                 }
             }
             Command::Decode(arg) => {
+                use image_for_decoding::{io::Reader, ImageError};
+
                 let input_format = if decode::is_svg(&arg.input) {
                     Some(InputFormat::Svg)
                 } else {

@@ -4,7 +4,7 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use image::{DynamicImage, Luma};
+use image_for_encoding::{DynamicImage, Luma};
 use qrcode::{
     bits::Bits,
     render::{svg, unicode, Renderer},

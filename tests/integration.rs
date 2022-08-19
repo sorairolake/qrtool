@@ -42,8 +42,8 @@ fn generate_completion_conflicts_with_subcommands() {
 fn basic_encode() {
     let output = command().arg("encode").arg("QR code").output().unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
-        image::open("tests/data/basic.png").unwrap()
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/basic.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -57,8 +57,8 @@ fn encode_data_from_file() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
-        image::open("tests/data/basic.png").unwrap()
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/basic.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -73,8 +73,8 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
-        image::open("tests/data/low.png").unwrap()
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/low.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -86,8 +86,8 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
-        image::open("tests/data/quartile.png").unwrap()
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/quartile.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -99,8 +99,8 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
-        image::open("tests/data/high.png").unwrap()
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/high.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -115,8 +115,8 @@ fn encode_with_margin() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
-        image::open("tests/data/8.png").unwrap()
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/8.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -133,8 +133,8 @@ fn encode_as_micro_qr_code() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
-        image::open("tests/data/micro.png").unwrap()
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/micro.png").unwrap()
     );
     assert!(output.status.success());
 }
