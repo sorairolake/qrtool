@@ -30,6 +30,9 @@ usvg = { version = "0.23.0", default-features = false }
 assert_cmd = "2.0.4"
 predicates = "2.1.1"
 
+[features]
+decode-from-avif = ["image-for-decoding/avif-decoder"]
+
 [profile.release]
 lto = true
 strip = true

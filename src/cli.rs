@@ -271,6 +271,10 @@ impl Default for Variant {
 #[derive(Clone, Debug, ValueEnum)]
 #[clap(rename_all = "lower")]
 pub enum InputFormat {
+    /// AV1 Image File Format.
+    #[cfg(feature = "decode-from-avif")]
+    Avif,
+
     /// Windows Bitmap.
     Bmp,
 
@@ -323,6 +327,8 @@ impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
         use image_for_decoding::error::ImageFormatHint;
 
         match format {
+            #[cfg(feature = "decode-from-avif")]
+            InputFormat::Avif => Ok(Self::Avif),
             InputFormat::Bmp => Ok(Self::Bmp),
             InputFormat::Dds => Ok(Self::Dds),
             InputFormat::Farbfeld => Ok(Self::Farbfeld),

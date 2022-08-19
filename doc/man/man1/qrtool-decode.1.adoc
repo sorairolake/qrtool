@@ -44,6 +44,11 @@ _IMAGE_::
 
   The possible values are:{blank}:::
 
+    *avif*::::
+
+      AV1 Image File Format.
+      This is an optional dependency.
+
     *bmp*::::
 
       Windows Bitmap.
