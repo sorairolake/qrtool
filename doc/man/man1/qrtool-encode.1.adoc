@@ -6,7 +6,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2022-08-19
+:docdate: 2022-08-20
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -140,6 +140,20 @@ _STRING_::
     *micro*::::
 
       Micro QR code.
+
+ifdef::color-output[]
+*--foreground* _COLOR_::
+
+  Foreground color.
+  It takes hexadecimal notation (hex triplet).
+endif::[]
+
+ifdef::color-output[]
+*--background* _COLOR_::
+
+  Background color.
+  It takes hexadecimal notation (hex triplet).
+endif::[]
 
 *--verbose*::
 

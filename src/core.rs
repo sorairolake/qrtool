@@ -67,7 +67,12 @@ pub fn run() -> anyhow::Result<()> {
                 match arg.output_format {
                     format @ (OutputFormat::Svg | OutputFormat::Terminal) => {
                         let string = if format == OutputFormat::Svg {
-                            encode::to_svg(&code, arg.margin)
+                            #[cfg(not(feature = "color-output"))]
+                            let image = encode::to_svg(&code, arg.margin);
+                            #[cfg(feature = "color-output")]
+                            let image =
+                                encode::to_svg(&code, arg.margin, (arg.foreground, arg.background));
+                            image
                         } else {
                             encode::to_terminal(&code, arg.margin)
                         };
@@ -81,7 +86,11 @@ pub fn run() -> anyhow::Result<()> {
                         }
                     }
                     format => {
+                        #[cfg(not(feature = "color-output"))]
                         let image = encode::to_image(&code, arg.margin);
+                        #[cfg(feature = "color-output")]
+                        let image =
+                            encode::to_image(&code, arg.margin, (arg.foreground, arg.background));
 
                         let format = ImageFormat::try_from(format)
                             .expect("The image format is not supported");

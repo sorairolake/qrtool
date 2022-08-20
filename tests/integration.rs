@@ -140,6 +140,51 @@ fn encode_as_micro_qr_code() {
 }
 
 #[test]
+#[cfg(feature = "color-output")]
+fn encode_to_colored() {
+    let output = command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("#bc002d")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/fg.png").unwrap()
+    );
+    assert!(output.status.success());
+
+    let output = command()
+        .arg("encode")
+        .arg("--background")
+        .arg("#7d8694")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/bg.png").unwrap()
+    );
+    assert!(output.status.success());
+
+    let output = command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("#bc002d")
+        .arg("--background")
+        .arg("#7d8694")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/color.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
 fn encode_with_verbose() {
     command()
         .arg("encode")

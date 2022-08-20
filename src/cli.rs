@@ -103,6 +103,20 @@ pub struct Encode {
     )]
     pub variant: Variant,
 
+    /// Foreground color.
+    ///
+    /// It takes hexadecimal notation (hex triplet).
+    #[cfg(feature = "color-output")]
+    #[clap(long, value_name("COLOR"))]
+    pub foreground: Option<crate::util::Color>,
+
+    /// Background color.
+    ///
+    /// It takes hexadecimal notation (hex triplet).
+    #[cfg(feature = "color-output")]
+    #[clap(long, value_name("COLOR"))]
+    pub background: Option<crate::util::Color>,
+
     /// Also print the metadata.
     ///
     /// It is output to stderr.

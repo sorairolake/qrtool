@@ -17,6 +17,9 @@ mod decode;
 mod encode;
 mod metadata;
 
+#[cfg(feature = "color-output")]
+mod util;
+
 use std::io;
 use std::process::ExitCode;
 
