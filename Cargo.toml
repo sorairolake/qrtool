@@ -34,7 +34,6 @@ predicates = "2.1.1"
 [features]
 default = ["encode-to-terminal", "decode-from-svg"]
 encode-to-terminal = ["dep:qr2term"]
-decode-from-avif = ["image-for-decoding/avif-decoder"]
 decode-from-svg = ["dep:resvg", "dep:tiny-skia", "dep:usvg"]
 
 [profile.release]
