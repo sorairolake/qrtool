@@ -80,6 +80,10 @@ pub fn run() -> anyhow::Result<()> {
                             println!("{string}");
                         }
                     }
+                    #[cfg(feature = "encode-to-terminal")]
+                    OutputFormat::Terminal => {
+                        encode::to_terminal(&code, arg.margin);
+                    }
                     format => {
                         let image = encode::to_image(&code, arg.margin);
 

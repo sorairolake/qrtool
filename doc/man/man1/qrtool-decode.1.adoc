@@ -44,10 +44,12 @@ _IMAGE_::
 
   The possible values are:{blank}:::
 
+ifdef::decode-from-avif[]
     *avif*::::
 
       AV1 Image File Format.
       This is an optional dependency.
+endif::[]
 
     *bmp*::::
 

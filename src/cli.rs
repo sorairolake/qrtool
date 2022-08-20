@@ -209,6 +209,10 @@ pub enum OutputFormat {
     /// Scalable Vector Graphics.
     Svg,
 
+    /// The terminal.
+    #[cfg(feature = "encode-to-terminal")]
+    Terminal,
+
     /// UTF-8 string.
     Unicode,
 }

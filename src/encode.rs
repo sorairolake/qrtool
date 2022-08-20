@@ -60,6 +60,22 @@ pub fn to_unicode(code: &QrCode, margin: u32) -> String {
     Renderer::<unicode::Dense1x2>::new(&code.to_colors(), code.width(), margin).build()
 }
 
+/// Renders the QR code into the terminal.
+#[cfg(feature = "encode-to-terminal")]
+pub fn to_terminal(code: &QrCode, margin: u32) {
+    use qr2term::{
+        matrix::Matrix,
+        render::{self, Renderer},
+    };
+
+    let mut matrix = Matrix::new(code.to_colors());
+    matrix.surround(
+        usize::try_from(margin).expect("Invalid thickness"),
+        render::QrLight,
+    );
+    Renderer::default().print_stdout(&matrix);
+}
+
 /// Renders the QR code into an image.
 pub fn to_image(code: &QrCode, margin: u32) -> DynamicImage {
     let image = Renderer::<Luma<u8>>::new(&code.to_colors(), code.width(), margin).build();
