@@ -91,10 +91,12 @@ endif::[]
 
       PNM.
 
+ifdef::decode-from-svg[]
     *svg*::::
 
       Scalable Vector Graphics.
       This also includes gzipped it.
+endif::[]
 
     *tga*::::
 

@@ -312,6 +312,7 @@ pub enum InputFormat {
     /// Scalable Vector Graphics.
     ///
     /// This also includes gzipped it.
+    #[cfg(feature = "decode-from-svg")]
     Svg,
 
     /// Truevision TGA.
@@ -328,6 +329,7 @@ impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
     type Error = image_for_decoding::ImageError;
 
     fn try_from(format: InputFormat) -> Result<Self, Self::Error> {
+        #[cfg(feature = "decode-from-svg")]
         use image_for_decoding::error::ImageFormatHint;
 
         match format {
@@ -343,6 +345,7 @@ impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
             InputFormat::OpenExr => Ok(Self::OpenExr),
             InputFormat::Png => Ok(Self::Png),
             InputFormat::Pnm => Ok(Self::Pnm),
+            #[cfg(feature = "decode-from-svg")]
             InputFormat::Svg => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
             InputFormat::Tga => Ok(Self::Tga),
             InputFormat::Tiff => Ok(Self::Tiff),

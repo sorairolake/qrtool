@@ -183,6 +183,7 @@ fn basic_decode() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-svg")]
 fn decode_from_svg() {
     command()
         .arg("decode")
@@ -193,6 +194,7 @@ fn decode_from_svg() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-svg")]
 fn decode_from_svgz() {
     command()
         .arg("decode")

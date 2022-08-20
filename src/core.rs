@@ -13,7 +13,7 @@ use clap::Parser;
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
-use crate::cli::{Command, InputFormat, Opt, OutputFormat};
+use crate::cli::{Command, Opt, OutputFormat};
 use crate::metadata::Extractor;
 use crate::{decode, encode};
 
@@ -104,12 +104,18 @@ pub fn run() -> anyhow::Result<()> {
             Command::Decode(arg) => {
                 use image_for_decoding::{io::Reader, ImageError};
 
+                #[cfg(feature = "decode-from-svg")]
+                use crate::cli::InputFormat;
+
+                let input_format = arg.input_format;
+                #[cfg(feature = "decode-from-svg")]
                 let input_format = if decode::is_svg(&arg.input) {
                     Some(InputFormat::Svg)
                 } else {
-                    arg.input_format
+                    input_format
                 };
                 let image = match input_format {
+                    #[cfg(feature = "decode-from-svg")]
                     Some(InputFormat::Svg) => decode::from_svg(&arg.input),
                     Some(format) => decode::load_image_file(
                         &arg.input,

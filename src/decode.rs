@@ -4,29 +4,35 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use std::ffi::OsStr;
-use std::fs::{self, File};
-use std::io::{BufReader, Cursor};
+use std::fs::File;
+use std::io::BufReader;
 use std::path::Path;
 
-use anyhow::Context;
-use image_for_decoding::{io::Reader, DynamicImage, ImageError, ImageFormat, ImageResult};
+use image_for_decoding::{DynamicImage, ImageError, ImageFormat, ImageResult};
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
-use tiny_skia::{Pixmap, Transform};
-use usvg::{FitTo, Tree};
 
 use crate::cli::Ecc;
 use crate::metadata::{Extractor, Metadata};
 
 /// Returns `true` if `path` is SVG.
+#[cfg(feature = "decode-from-svg")]
 pub fn is_svg(path: impl AsRef<Path>) -> bool {
+    use std::ffi::OsStr;
+
     matches!(
         path.as_ref().extension().and_then(OsStr::to_str),
         Some("svg" | "svgz")
     )
 }
 
+#[cfg(feature = "decode-from-svg")]
 fn svg_to_png(path: &Path) -> anyhow::Result<Vec<u8>> {
+    use std::fs;
+
+    use anyhow::Context;
+    use tiny_skia::{Pixmap, Transform};
+    use usvg::{FitTo, Tree};
+
     let opt = usvg::Options {
         resources_dir: path
             .canonicalize()
@@ -51,11 +57,17 @@ fn svg_to_png(path: &Path) -> anyhow::Result<Vec<u8>> {
     pixmap.encode_png().map_err(anyhow::Error::from)
 }
 
+#[cfg(feature = "decode-from-svg")]
 fn from_png(data: &[u8]) -> ImageResult<DynamicImage> {
+    use std::io::Cursor;
+
+    use image_for_decoding::io::Reader;
+
     Reader::with_format(Cursor::new(data), ImageFormat::Png).decode()
 }
 
 /// Reads the image from SVG.
+#[cfg(feature = "decode-from-svg")]
 pub fn from_svg(path: impl AsRef<Path>) -> anyhow::Result<DynamicImage> {
     let data = svg_to_png(path.as_ref())?;
     from_png(&data).map_err(anyhow::Error::from)
@@ -107,12 +119,14 @@ mod tests {
     use super::*;
 
     #[test]
+    #[cfg(feature = "decode-from-svg")]
     fn valid_extension_as_svg() {
         assert!(is_svg("image.svg"));
         assert!(is_svg("image.svgz"));
     }
 
     #[test]
+    #[cfg(feature = "decode-from-svg")]
     fn invalid_extension_as_svg() {
         assert!(!is_svg("image.png"));
     }

@@ -26,6 +26,8 @@ fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
     command.args(["-a", "encode-to-terminal"]);
     #[cfg(feature = "decode-from-avif")]
     command.args(["-a", "decode-from-avif"]);
+    #[cfg(feature = "decode-from-svg")]
+    command.args(["-a", "decode-from-svg"]);
     command
         .args(["-D".as_ref(), out_dir.as_ref()])
         .args([
