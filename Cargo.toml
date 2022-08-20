@@ -19,7 +19,6 @@ clap = { version = "3.2.17", features = ["derive"] }
 clap_complete = "3.2.4"
 image-for-decoding = { version = "0.24.3", package = "image" }
 image-for-encoding = { version = "0.23.14", package = "image" }
-qr2term = { version = "0.3.0", optional = true }
 qrcode = "0.12.0"
 resvg = { version = "0.23.0", default-features = false, optional = true }
 rqrr = "0.5.1"
@@ -32,8 +31,7 @@ assert_cmd = "2.0.4"
 predicates = "2.1.1"
 
 [features]
-default = ["encode-to-terminal", "decode-from-svg"]
-encode-to-terminal = ["dep:qr2term"]
+default = ["decode-from-svg"]
 decode-from-svg = ["dep:resvg", "dep:tiny-skia", "dep:usvg"]
 
 [profile.release]

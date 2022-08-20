@@ -55,25 +55,12 @@ pub fn to_svg(code: &QrCode, margin: u32) -> String {
     Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin).build()
 }
 
-/// Renders the QR code into an image.
-pub fn to_unicode(code: &QrCode, margin: u32) -> String {
-    Renderer::<unicode::Dense1x2>::new(&code.to_colors(), code.width(), margin).build()
-}
-
-/// Renders the QR code into the terminal.
-#[cfg(feature = "encode-to-terminal")]
-pub fn to_terminal(code: &QrCode, margin: u32) {
-    use qr2term::{
-        matrix::Matrix,
-        render::{self, Renderer},
-    };
-
-    let mut matrix = Matrix::new(code.to_colors());
-    matrix.surround(
-        usize::try_from(margin).expect("Invalid thickness"),
-        render::QrLight,
-    );
-    Renderer::default().print_stdout(&matrix);
+/// Renders the QR code into the terminal as UTF-8 string.
+pub fn to_terminal(code: &QrCode, margin: u32) -> String {
+    Renderer::<unicode::Dense1x2>::new(&code.to_colors(), code.width(), margin)
+        .dark_color(unicode::Dense1x2::Light)
+        .light_color(unicode::Dense1x2::Dark)
+        .build()
 }
 
 /// Renders the QR code into an image.

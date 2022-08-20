@@ -65,11 +65,11 @@ pub fn run() -> anyhow::Result<()> {
                 }
 
                 match arg.output_format {
-                    format @ (OutputFormat::Svg | OutputFormat::Unicode) => {
+                    format @ (OutputFormat::Svg | OutputFormat::Terminal) => {
                         let string = if format == OutputFormat::Svg {
                             encode::to_svg(&code, arg.margin)
                         } else {
-                            encode::to_unicode(&code, arg.margin)
+                            encode::to_terminal(&code, arg.margin)
                         };
 
                         if let Some(file) = arg.output {
@@ -79,10 +79,6 @@ pub fn run() -> anyhow::Result<()> {
                         } else {
                             println!("{string}");
                         }
-                    }
-                    #[cfg(feature = "encode-to-terminal")]
-                    OutputFormat::Terminal => {
-                        encode::to_terminal(&code, arg.margin);
                     }
                     format => {
                         let image = encode::to_image(&code, arg.margin);

@@ -22,8 +22,6 @@ fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
     command
         .args(["-b", "manpage"])
         .args(["-a", concat!("revnumber=", env!("CARGO_PKG_VERSION"))]);
-    #[cfg(feature = "encode-to-terminal")]
-    command.args(["-a", "encode-to-terminal"]);
     #[cfg(feature = "decode-from-svg")]
     command.args(["-a", "decode-from-svg"]);
     command

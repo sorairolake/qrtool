@@ -98,15 +98,9 @@ _STRING_::
 
       Scalable Vector Graphics.
 
-ifdef::encode-to-terminal[]
     *terminal*::::
 
-      The terminal.
-endif::[]
-
-    *unicode*::::
-
-      UTF-8 string.
+      To the terminal as UTF-8 string.
 
 *-M*, *--mode* _MODE_::
 
