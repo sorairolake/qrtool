@@ -51,11 +51,23 @@ jobs:
         command: build
         args: --target ${{ matrix.target }}
         use-cross: ${{ matrix.use-cross }}
+    - name: Build a package (no default features)
+      uses: actions-rs/cargo@v1.0.1
+      with:
+        command: build
+        args: --target ${{ matrix.target }} --no-default-features
+        use-cross: ${{ matrix.use-cross }}
     - name: Run tests
       uses: actions-rs/cargo@v1.0.1
       with:
         command: test
         args: --target ${{ matrix.target }}
+        use-cross: ${{ matrix.use-cross }}
+    - name: Run tests (no default features)
+      uses: actions-rs/cargo@v1.0.1
+      with:
+        command: test
+        args: --target ${{ matrix.target }} --no-default-features
         use-cross: ${{ matrix.use-cross }}
 
   rustfmt:
@@ -99,3 +111,8 @@ jobs:
       with:
         command: clippy
         args: -- -D warnings
+    - name: Check no lint warnings (no default features)
+      uses: actions-rs/cargo@v1.0.1
+      with:
+        command: clippy
+        args: --no-default-features -- -D warnings
