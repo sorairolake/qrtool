@@ -141,19 +141,19 @@ _STRING_::
 
       Micro QR code.
 
-ifdef::color-output[]
 *--foreground* _COLOR_::
 
   Foreground color.
-  It takes hexadecimal notation (hex triplet).
-endif::[]
+  It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA and
+  shorthands of these.
+  A leading number sign is allowed.
 
-ifdef::color-output[]
 *--background* _COLOR_::
 
   Background color.
-  It takes hexadecimal notation (hex triplet).
-endif::[]
+  It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA and
+  shorthands of these.
+  A leading number sign is allowed.
 
 *--verbose*::
 

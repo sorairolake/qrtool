@@ -12,6 +12,8 @@ use clap::{
 };
 use clap_complete::{Generator, Shell};
 
+use crate::color::Color;
+
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
 #[clap(
@@ -105,17 +107,17 @@ pub struct Encode {
 
     /// Foreground color.
     ///
-    /// It takes hexadecimal notation (hex triplet).
-    #[cfg(feature = "color-output")]
+    /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
+    /// and shorthands of these. A leading number sign is allowed.
     #[clap(long, value_name("COLOR"))]
-    pub foreground: Option<crate::util::Color>,
+    pub foreground: Option<Color>,
 
     /// Background color.
     ///
-    /// It takes hexadecimal notation (hex triplet).
-    #[cfg(feature = "color-output")]
+    /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
+    /// and shorthands of these. A leading number sign is allowed.
     #[clap(long, value_name("COLOR"))]
-    pub background: Option<crate::util::Color>,
+    pub background: Option<Color>,
 
     /// Also print the metadata.
     ///

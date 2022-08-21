@@ -4,15 +4,16 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use image_for_encoding::{DynamicImage, Luma};
+use image_for_encoding::{DynamicImage, Pixel as _, Rgb, Rgba};
 use qrcode::{
     bits::Bits,
-    render::{svg, unicode, Renderer},
+    render::{svg, unicode, Pixel as _, Renderer},
     types::QrError,
-    EcLevel, QrCode, QrResult, Version,
+    Color as QrColor, EcLevel, QrCode, QrResult, Version,
 };
 
 use crate::cli::{Ecc, Mode, Variant};
+use crate::color::Color;
 use crate::metadata::{Extractor, Metadata};
 
 /// Sets the version.
@@ -51,26 +52,13 @@ pub fn push_data_for_selected_mode(
 }
 
 /// Renders the QR code into an image.
-#[cfg(not(feature = "color-output"))]
-pub fn to_svg(code: &QrCode, margin: u32) -> String {
-    Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin).build()
-}
-
-/// Renders the QR code into an image.
-#[cfg(feature = "color-output")]
-pub fn to_svg(
-    code: &QrCode,
-    margin: u32,
-    colors: (Option<crate::util::Color>, Option<crate::util::Color>),
-) -> String {
-    use qrcode::{render::Pixel, Color};
-
+pub fn to_svg(code: &QrCode, margin: u32, colors: (Option<Color>, Option<Color>)) -> String {
     let foreground = colors.0.map_or_else(
-        || svg::Color::default_color(Color::Dark).0.to_string(),
+        || svg::Color::default_color(QrColor::Dark).0.to_string(),
         |fg| format!("#{fg:x}"),
     );
     let background = colors.1.map_or_else(
-        || svg::Color::default_color(Color::Light).0.to_string(),
+        || svg::Color::default_color(QrColor::Light).0.to_string(),
         |bg| format!("#{bg:x}"),
     );
     Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin)
@@ -87,48 +75,47 @@ pub fn to_terminal(code: &QrCode, margin: u32) -> String {
         .build()
 }
 
-/// Renders the QR code into an image.
-#[cfg(not(feature = "color-output"))]
-pub fn to_image(code: &QrCode, margin: u32) -> DynamicImage {
-    let image = Renderer::<Luma<u8>>::new(&code.to_colors(), code.width(), margin).build();
-    DynamicImage::ImageLuma8(image)
+fn to_rgb_image(code: &QrCode, margin: u32, colors: (Rgb<u8>, Rgb<u8>)) -> DynamicImage {
+    let image = Renderer::<Rgb<u8>>::new(&code.to_colors(), code.width(), margin)
+        .dark_color(colors.0)
+        .light_color(colors.1)
+        .build();
+    DynamicImage::ImageRgb8(image)
+}
+
+fn to_rgba_image(code: &QrCode, margin: u32, colors: (Rgba<u8>, Rgba<u8>)) -> DynamicImage {
+    let image = Renderer::<Rgba<u8>>::new(&code.to_colors(), code.width(), margin)
+        .dark_color(colors.0)
+        .light_color(colors.1)
+        .build();
+    DynamicImage::ImageRgba8(image)
 }
 
 /// Renders the QR code into an image.
-#[cfg(feature = "color-output")]
 pub fn to_image(
     code: &QrCode,
     margin: u32,
-    colors: (Option<crate::util::Color>, Option<crate::util::Color>),
+    colors: (Option<Color>, Option<Color>),
 ) -> DynamicImage {
-    use image_for_encoding::Rgb;
-    use qrcode::{render::Pixel, Color};
-
     let foreground = colors.0.map_or_else(
-        || Rgb::default_color(Color::Dark),
+        || Rgba::default_color(QrColor::Dark),
         |fg| {
-            let rgb = fg.into_components();
-            Rgb([rgb.0, rgb.1, rgb.2])
+            let color = fg.into_components();
+            Rgba([color.0, color.1, color.2, color.3.unwrap_or(u8::MAX)])
         },
     );
     let background = colors.1.map_or_else(
-        || Rgb::default_color(Color::Light),
+        || Rgba::default_color(QrColor::Light),
         |bg| {
-            let rgb = bg.into_components();
-            Rgb([rgb.0, rgb.1, rgb.2])
+            let color = bg.into_components();
+            Rgba([color.0, color.1, color.2, color.3.unwrap_or(u8::MAX)])
         },
     );
-    if foreground == Rgb::default_color(Color::Dark)
-        && background == Rgb::default_color(Color::Light)
-    {
-        let image = Renderer::<Luma<u8>>::new(&code.to_colors(), code.width(), margin).build();
-        DynamicImage::ImageLuma8(image)
-    } else {
-        let image = Renderer::<Rgb<u8>>::new(&code.to_colors(), code.width(), margin)
-            .dark_color(foreground)
-            .light_color(background)
-            .build();
-        DynamicImage::ImageRgb8(image)
+    match (foreground.channels()[3], background.channels()[3]) {
+        (u8::MAX, u8::MAX) => {
+            to_rgb_image(code, margin, (foreground.to_rgb(), background.to_rgb()))
+        }
+        _ => to_rgba_image(code, margin, (foreground, background)),
     }
 }
 

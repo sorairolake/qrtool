@@ -19,7 +19,6 @@ clap = { version = "3.2.17", features = ["derive"] }
 clap_complete = "3.2.4"
 image-for-decoding = { version = "0.24.3", package = "image" }
 image-for-encoding = { version = "0.23.14", package = "image" }
-palette = { version = "0.6.1", default-features = false, features = ["std"], optional = true }
 qrcode = "0.12.0"
 resvg = { version = "0.23.0", default-features = false, optional = true }
 rqrr = "0.5.1"
@@ -33,7 +32,6 @@ predicates = "2.1.1"
 
 [features]
 default = ["decode-from-svg"]
-color-output = ["palette"]
 decode-from-svg = ["dep:resvg", "dep:tiny-skia", "dep:usvg"]
 
 [profile.release]

@@ -12,13 +12,11 @@
 #![allow(clippy::multiple_crate_versions)]
 
 mod cli;
+mod color;
 mod core;
 mod decode;
 mod encode;
 mod metadata;
-
-#[cfg(feature = "color-output")]
-mod util;
 
 use std::io;
 use std::process::ExitCode;

@@ -42,7 +42,11 @@ fn generate_completion_conflicts_with_subcommands() {
 fn basic_encode() {
     let output = command().arg("encode").arg("QR code").output().unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::DynamicImage::ImageLuma8(
+            image_for_encoding::load_from_memory(&output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
         image_for_encoding::open("tests/data/basic.png").unwrap()
     );
     assert!(output.status.success());
@@ -57,7 +61,11 @@ fn encode_data_from_file() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::DynamicImage::ImageLuma8(
+            image_for_encoding::load_from_memory(&output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
         image_for_encoding::open("tests/data/basic.png").unwrap()
     );
     assert!(output.status.success());
@@ -73,7 +81,11 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::DynamicImage::ImageLuma8(
+            image_for_encoding::load_from_memory(&output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
         image_for_encoding::open("tests/data/low.png").unwrap()
     );
     assert!(output.status.success());
@@ -86,7 +98,11 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::DynamicImage::ImageLuma8(
+            image_for_encoding::load_from_memory(&output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
         image_for_encoding::open("tests/data/quartile.png").unwrap()
     );
     assert!(output.status.success());
@@ -99,7 +115,11 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::DynamicImage::ImageLuma8(
+            image_for_encoding::load_from_memory(&output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
         image_for_encoding::open("tests/data/high.png").unwrap()
     );
     assert!(output.status.success());
@@ -115,7 +135,11 @@ fn encode_with_margin() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::DynamicImage::ImageLuma8(
+            image_for_encoding::load_from_memory(&output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
         image_for_encoding::open("tests/data/8.png").unwrap()
     );
     assert!(output.status.success());
@@ -133,14 +157,17 @@ fn encode_as_micro_qr_code() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::DynamicImage::ImageLuma8(
+            image_for_encoding::load_from_memory(&output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
         image_for_encoding::open("tests/data/micro.png").unwrap()
     );
     assert!(output.status.success());
 }
 
 #[test]
-#[cfg(feature = "color-output")]
 fn encode_to_colored() {
     let output = command()
         .arg("encode")
@@ -179,7 +206,52 @@ fn encode_to_colored() {
         .unwrap();
     assert_eq!(
         image_for_encoding::load_from_memory(&output.stdout).unwrap(),
-        image_for_encoding::open("tests/data/color.png").unwrap()
+        image_for_encoding::open("tests/data/rgb.png").unwrap()
+    );
+    assert!(output.status.success());
+
+    let output = command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("bc002d7f")
+        .arg("--background")
+        .arg("7d86947f")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/rgba.png").unwrap()
+    );
+    assert!(output.status.success());
+
+    let output = command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("#111")
+        .arg("--background")
+        .arg("#eee")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/rgb_short.png").unwrap()
+    );
+    assert!(output.status.success());
+
+    let output = command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("1118")
+        .arg("--background")
+        .arg("eee8")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
+        image_for_encoding::open("tests/data/rgba_short.png").unwrap()
     );
     assert!(output.status.success());
 }
