@@ -132,10 +132,7 @@ impl Extractor for QrCode {
             EcLevel::Q => Ecc::Q,
             EcLevel::H => Ecc::H,
         };
-        Metadata {
-            symbol_version,
-            error_correction_level,
-        }
+        Metadata::new(symbol_version, error_correction_level)
     }
 }
 
@@ -176,37 +173,25 @@ mod tests {
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::L)
                 .unwrap()
                 .extract_metadata(),
-            Metadata {
-                symbol_version: 1,
-                error_correction_level: Ecc::L
-            }
+            Metadata::new(1, Ecc::L)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::M)
                 .unwrap()
                 .extract_metadata(),
-            Metadata {
-                symbol_version: 1,
-                error_correction_level: Ecc::M
-            }
+            Metadata::new(1, Ecc::M)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::Q)
                 .unwrap()
                 .extract_metadata(),
-            Metadata {
-                symbol_version: 1,
-                error_correction_level: Ecc::Q
-            }
+            Metadata::new(1, Ecc::Q)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::H)
                 .unwrap()
                 .extract_metadata(),
-            Metadata {
-                symbol_version: 1,
-                error_correction_level: Ecc::H
-            }
+            Metadata::new(1, Ecc::H)
         );
     }
 }

@@ -177,7 +177,7 @@ impl Opt {
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, ValueEnum)]
 pub enum Ecc {
     /// Level L.
     ///

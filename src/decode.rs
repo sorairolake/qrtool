@@ -107,10 +107,7 @@ impl Extractor for MetaData {
             3 => Ecc::Q,
             _ => panic!("Invalid error correction level"),
         };
-        Metadata {
-            symbol_version,
-            error_correction_level,
-        }
+        Metadata::new(symbol_version, error_correction_level)
     }
 }
 
@@ -142,10 +139,7 @@ mod tests {
                 mask: 4
             }
             .extract_metadata(),
-            Metadata {
-                symbol_version: 1,
-                error_correction_level: Ecc::L
-            }
+            Metadata::new(1, Ecc::L)
         );
         assert_eq!(
             MetaData {
@@ -154,10 +148,7 @@ mod tests {
                 mask: 3
             }
             .extract_metadata(),
-            Metadata {
-                symbol_version: 1,
-                error_correction_level: Ecc::M
-            }
+            Metadata::new(1, Ecc::M)
         );
         assert_eq!(
             MetaData {
@@ -166,10 +157,7 @@ mod tests {
                 mask: 7
             }
             .extract_metadata(),
-            Metadata {
-                symbol_version: 1,
-                error_correction_level: Ecc::Q
-            }
+            Metadata::new(1, Ecc::Q)
         );
         assert_eq!(
             MetaData {
@@ -178,10 +166,7 @@ mod tests {
                 mask: 4
             }
             .extract_metadata(),
-            Metadata {
-                symbol_version: 1,
-                error_correction_level: Ecc::H
-            }
+            Metadata::new(1, Ecc::H)
         );
     }
 }

@@ -60,8 +60,8 @@ pub fn run() -> anyhow::Result<()> {
 
                 if arg.verbose {
                     let metadata = code.extract_metadata();
-                    eprintln!("Version: {}", metadata.symbol_version);
-                    eprintln!("Level: {:?}", metadata.error_correction_level);
+                    eprintln!("Version: {}", metadata.symbol_version());
+                    eprintln!("Level: {:?}", metadata.error_correction_level());
                 }
 
                 match arg.output_format {
@@ -140,8 +140,8 @@ pub fn run() -> anyhow::Result<()> {
                 for content in contents {
                     if arg.verbose || arg.metadata {
                         let metadata = content.0.extract_metadata();
-                        eprintln!("Version: {}", metadata.symbol_version);
-                        eprintln!("Level: {:?}", metadata.error_correction_level);
+                        eprintln!("Version: {}", metadata.symbol_version());
+                        eprintln!("Level: {:?}", metadata.error_correction_level());
                         if arg.metadata {
                             continue;
                         }
