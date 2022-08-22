@@ -4,15 +4,17 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use image::{DynamicImage, Luma};
+use image_for_encoding::{DynamicImage, Pixel as _, Rgb, Rgba};
 use qrcode::{
     bits::Bits,
-    render::{svg, unicode, Renderer},
+    render::{svg, unicode, Pixel as _, Renderer},
     types::QrError,
-    QrCode, QrResult, Version,
+    Color as QrColor, EcLevel, QrCode, QrResult, Version,
 };
 
-use crate::cli::{Mode, Variant};
+use crate::cli::{Ecc, Mode, Variant};
+use crate::color::Color;
+use crate::metadata::{Extractor, Metadata};
 
 /// Sets the version.
 pub const fn set_version(version: i16, variant: &Variant) -> QrResult<Version> {
@@ -50,19 +52,88 @@ pub fn push_data_for_selected_mode(
 }
 
 /// Renders the QR code into an image.
-pub fn to_svg(code: &QrCode, margin: u32) -> String {
-    Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin).build()
+pub fn to_svg(code: &QrCode, margin: u32, colors: (Option<Color>, Option<Color>)) -> String {
+    let foreground = colors.0.map_or_else(
+        || svg::Color::default_color(QrColor::Dark).0.to_string(),
+        |fg| format!("#{fg:x}"),
+    );
+    let background = colors.1.map_or_else(
+        || svg::Color::default_color(QrColor::Light).0.to_string(),
+        |bg| format!("#{bg:x}"),
+    );
+    Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin)
+        .dark_color(svg::Color(&foreground))
+        .light_color(svg::Color(&background))
+        .build()
+}
+
+/// Renders the QR code into the terminal as UTF-8 string.
+pub fn to_terminal(code: &QrCode, margin: u32) -> String {
+    Renderer::<unicode::Dense1x2>::new(&code.to_colors(), code.width(), margin)
+        .dark_color(unicode::Dense1x2::Light)
+        .light_color(unicode::Dense1x2::Dark)
+        .build()
+}
+
+fn to_rgb_image(code: &QrCode, margin: u32, colors: (Rgb<u8>, Rgb<u8>)) -> DynamicImage {
+    let image = Renderer::<Rgb<u8>>::new(&code.to_colors(), code.width(), margin)
+        .dark_color(colors.0)
+        .light_color(colors.1)
+        .build();
+    DynamicImage::ImageRgb8(image)
+}
+
+fn to_rgba_image(code: &QrCode, margin: u32, colors: (Rgba<u8>, Rgba<u8>)) -> DynamicImage {
+    let image = Renderer::<Rgba<u8>>::new(&code.to_colors(), code.width(), margin)
+        .dark_color(colors.0)
+        .light_color(colors.1)
+        .build();
+    DynamicImage::ImageRgba8(image)
 }
 
 /// Renders the QR code into an image.
-pub fn to_unicode(code: &QrCode, margin: u32) -> String {
-    Renderer::<unicode::Dense1x2>::new(&code.to_colors(), code.width(), margin).build()
+pub fn to_image(
+    code: &QrCode,
+    margin: u32,
+    colors: (Option<Color>, Option<Color>),
+) -> DynamicImage {
+    let foreground = colors.0.map_or_else(
+        || Rgba::default_color(QrColor::Dark),
+        |fg| {
+            let color = fg.into_components();
+            Rgba([color.0, color.1, color.2, color.3.unwrap_or(u8::MAX)])
+        },
+    );
+    let background = colors.1.map_or_else(
+        || Rgba::default_color(QrColor::Light),
+        |bg| {
+            let color = bg.into_components();
+            Rgba([color.0, color.1, color.2, color.3.unwrap_or(u8::MAX)])
+        },
+    );
+    match (foreground.channels()[3], background.channels()[3]) {
+        (u8::MAX, u8::MAX) => {
+            to_rgb_image(code, margin, (foreground.to_rgb(), background.to_rgb()))
+        }
+        _ => to_rgba_image(code, margin, (foreground, background)),
+    }
 }
 
-/// Renders the QR code into an image.
-pub fn to_image(code: &QrCode, margin: u32) -> DynamicImage {
-    let image = Renderer::<Luma<u8>>::new(&code.to_colors(), code.width(), margin).build();
-    DynamicImage::ImageLuma8(image)
+impl Extractor for QrCode {
+    fn extract_metadata(&self) -> Metadata {
+        let symbol_version = match self.version() {
+            Version::Normal(version) | Version::Micro(version) => {
+                usize::try_from(version).expect("Invalid symbol version")
+            }
+        };
+        let error_correction_level = match self.error_correction_level() {
+            EcLevel::L => Ecc::L,
+            EcLevel::M => Ecc::M,
+            EcLevel::Q => Ecc::Q,
+            EcLevel::H => Ecc::H,
+        };
+        Metadata::new(symbol_version, error_correction_level)
+    }
 }
 
 #[cfg(test)]
@@ -92,5 +163,35 @@ mod tests {
         // Invalid Micro QR code version.
         assert!(set_version(0, &Variant::Micro).is_err());
         assert!(set_version(5, &Variant::Micro).is_err());
+    }
+
+    #[test]
+    fn validate_metadata_extraction() {
+        const DATA: [u8; 0] = [];
+
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Normal(1), EcLevel::L)
+                .unwrap()
+                .extract_metadata(),
+            Metadata::new(1, Ecc::L)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Normal(1), EcLevel::M)
+                .unwrap()
+                .extract_metadata(),
+            Metadata::new(1, Ecc::M)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Normal(1), EcLevel::Q)
+                .unwrap()
+                .extract_metadata(),
+            Metadata::new(1, Ecc::Q)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Normal(1), EcLevel::H)
+                .unwrap()
+                .extract_metadata(),
+            Metadata::new(1, Ecc::H)
+        );
     }
 }

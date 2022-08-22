@@ -18,9 +18,13 @@ use std::process::{Command, ExitStatus};
 
 fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
     let man_dir = env::current_dir()?.join("doc/man/man1");
-    Command::new("asciidoctor")
+    let mut command = Command::new("asciidoctor");
+    command
         .args(["-b", "manpage"])
-        .args(["-a", concat!("revnumber=", env!("CARGO_PKG_VERSION"))])
+        .args(["-a", concat!("revnumber=", env!("CARGO_PKG_VERSION"))]);
+    #[cfg(feature = "decode-from-svg")]
+    command.args(["-a", "decode-from-svg"]);
+    command
         .args(["-D".as_ref(), out_dir.as_ref()])
         .args([
             man_dir.join("qrtool.1.adoc"),

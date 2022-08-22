@@ -10,11 +10,11 @@ use std::str;
 
 use anyhow::Context;
 use clap::Parser;
-use image::{io::Reader, ImageError, ImageFormat};
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
-use crate::cli::{Command, InputFormat, Opt, OutputFormat};
+use crate::cli::{Command, Opt, OutputFormat};
+use crate::metadata::Extractor;
 use crate::{decode, encode};
 
 /// Runs the program and returns the result.
@@ -30,6 +30,8 @@ pub fn run() -> anyhow::Result<()> {
     if let Some(command) = opt.command {
         match command {
             Command::Encode(arg) => {
+                use image_for_encoding::ImageFormat;
+
                 let input = if let Some(string) = arg.input {
                     string.into_bytes()
                 } else if let Some(path) = arg.read_from {
@@ -56,12 +58,18 @@ pub fn run() -> anyhow::Result<()> {
                 }
                 .context("Could not construct a QR code")?;
 
+                if arg.verbose {
+                    let metadata = code.extract_metadata();
+                    eprintln!("Version: {}", metadata.symbol_version());
+                    eprintln!("Level: {:?}", metadata.error_correction_level());
+                }
+
                 match arg.output_format {
-                    format @ (OutputFormat::Svg | OutputFormat::Unicode) => {
+                    format @ (OutputFormat::Svg | OutputFormat::Terminal) => {
                         let string = if format == OutputFormat::Svg {
-                            encode::to_svg(&code, arg.margin)
+                            encode::to_svg(&code, arg.margin, (arg.foreground, arg.background))
                         } else {
-                            encode::to_unicode(&code, arg.margin)
+                            encode::to_terminal(&code, arg.margin)
                         };
 
                         if let Some(file) = arg.output {
@@ -73,7 +81,8 @@ pub fn run() -> anyhow::Result<()> {
                         }
                     }
                     format => {
-                        let image = encode::to_image(&code, arg.margin);
+                        let image =
+                            encode::to_image(&code, arg.margin, (arg.foreground, arg.background));
 
                         let format = ImageFormat::try_from(format)
                             .expect("The image format is not supported");
@@ -90,12 +99,20 @@ pub fn run() -> anyhow::Result<()> {
                 }
             }
             Command::Decode(arg) => {
+                use image_for_decoding::{io::Reader, ImageError};
+
+                #[cfg(feature = "decode-from-svg")]
+                use crate::cli::InputFormat;
+
+                let input_format = arg.input_format;
+                #[cfg(feature = "decode-from-svg")]
                 let input_format = if decode::is_svg(&arg.input) {
                     Some(InputFormat::Svg)
                 } else {
-                    arg.input_format
+                    input_format
                 };
                 let image = match input_format {
+                    #[cfg(feature = "decode-from-svg")]
                     Some(InputFormat::Svg) => decode::from_svg(&arg.input),
                     Some(format) => decode::load_image_file(
                         &arg.input,
@@ -121,6 +138,15 @@ pub fn run() -> anyhow::Result<()> {
                     decode::grids_as_bytes(grids).context("Could not decode the grid")?;
 
                 for content in contents {
+                    if arg.verbose || arg.metadata {
+                        let metadata = content.0.extract_metadata();
+                        eprintln!("Version: {}", metadata.symbol_version());
+                        eprintln!("Level: {:?}", metadata.error_correction_level());
+                        if arg.metadata {
+                            continue;
+                        }
+                    }
+
                     if let Ok(string) = str::from_utf8(&content.1) {
                         println!("{string}");
                     } else {

@@ -12,6 +12,23 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.1.0\...v0.2.0[0.2.0] - 2022-08-22
+
+=== Added
+
+* `--verbose` option and `--metadata` option.
+  These options are for printing the metadata.
+* `--foreground` option and `--background` option.
+  These options are for changing foreground and background colors.
+
+=== Changed
+
+* Add more input image formats supported by the
+  https://crates.io/crates/image[`image`] crate to `--type` option of `decode`
+  command
+* Change to be able to disable decoding from the SVG image
+* Rename `unicode` to `terminal` of `--type` option of `encode` command
+
 == {project-url}/releases/tag/v0.1.0[0.1.0] - 2022-08-18
 
 === Added

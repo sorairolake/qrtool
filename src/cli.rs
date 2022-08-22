@@ -11,7 +11,8 @@ use clap::{
     value_parser, AppSettings, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint,
 };
 use clap_complete::{Generator, Shell};
-use image::{error::ImageFormatHint, ImageError, ImageFormat};
+
+use crate::color::Color;
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
@@ -104,9 +105,30 @@ pub struct Encode {
     )]
     pub variant: Variant,
 
+    /// Foreground color.
+    ///
+    /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
+    /// and shorthands of these. A leading number sign is allowed.
+    #[clap(long, value_name("COLOR"))]
+    pub foreground: Option<Color>,
+
+    /// Background color.
+    ///
+    /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
+    /// and shorthands of these. A leading number sign is allowed.
+    #[clap(long, value_name("COLOR"))]
+    pub background: Option<Color>,
+
+    /// Also print the metadata.
+    ///
+    /// It is output to stderr.
+    #[clap(long)]
+    pub verbose: bool,
+
     /// Input data.
     ///
     /// If it is not specified, data will be read from stdin.
+    /// It takes a valid UTF-8 string.
     #[clap(value_name("STRING"))]
     pub input: Option<String>,
 }
@@ -115,10 +137,30 @@ pub struct Encode {
 #[clap(setting(AppSettings::DeriveDisplayOrder))]
 pub struct Decode {
     /// The format of the input.
+    ///
+    /// If it is not specified, the format will be guessed based on the
+    /// extension, and the raster format will use the content in addition to it.
     #[clap(short('t'), long("type"), value_enum, value_name("FORMAT"))]
     pub input_format: Option<InputFormat>,
 
+    /// Also print the metadata.
+    ///
+    /// It is output to stderr.
+    #[clap(long, conflicts_with("metadata"))]
+    pub verbose: bool,
+
+    /// Print only the metadata.
+    ///
+    /// It is output to stderr.
+    #[clap(long)]
+    pub metadata: bool,
+
     /// Input image file.
+    ///
+    /// Supported raster image formats are any formats supported by the image
+    /// crate. The format guess based on the extension, and the raster
+    /// format use the content in addition to it. Note that the SVG image is
+    /// rasterized before scanning.
     #[clap(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
     pub input: PathBuf,
 }
@@ -135,7 +177,7 @@ impl Opt {
     }
 }
 
-#[derive(Clone, Debug, ValueEnum)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, ValueEnum)]
 pub enum Ecc {
     /// Level L.
     ///
@@ -183,8 +225,8 @@ pub enum OutputFormat {
     /// Scalable Vector Graphics.
     Svg,
 
-    /// UTF-8 string.
-    Unicode,
+    /// To the terminal as UTF-8 string.
+    Terminal,
 }
 
 impl Default for OutputFormat {
@@ -193,13 +235,15 @@ impl Default for OutputFormat {
     }
 }
 
-impl TryFrom<OutputFormat> for ImageFormat {
-    type Error = ImageError;
+impl TryFrom<OutputFormat> for image_for_encoding::ImageFormat {
+    type Error = image_for_encoding::ImageError;
 
     fn try_from(format: OutputFormat) -> Result<Self, Self::Error> {
+        use image_for_encoding::error::ImageFormatHint;
+
         match format {
             OutputFormat::Png => Ok(Self::Png),
-            _ => Err(ImageError::Unsupported(ImageFormatHint::Unknown.into())),
+            _ => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
         }
     }
 }
@@ -241,23 +285,77 @@ impl Default for Variant {
 }
 
 #[derive(Clone, Debug, ValueEnum)]
+#[clap(rename_all = "lower")]
 pub enum InputFormat {
+    /// Windows Bitmap.
+    Bmp,
+
+    /// DirectDraw Surface.
+    Dds,
+
+    /// Farbfeld.
+    Farbfeld,
+
+    /// GIF.
+    Gif,
+
+    /// Radiance RGBE.
+    Hdr,
+
+    /// ICO.
+    Ico,
+
+    /// JPEG.
+    Jpeg,
+
+    /// OpenEXR.
+    OpenExr,
+
     /// Portable Network Graphics.
     Png,
+
+    /// PNM.
+    Pnm,
 
     /// Scalable Vector Graphics.
     ///
     /// This also includes gzipped it.
+    #[cfg(feature = "decode-from-svg")]
     Svg,
+
+    /// Truevision TGA.
+    Tga,
+
+    /// TIFF.
+    Tiff,
+
+    /// WebP.
+    WebP,
 }
 
-impl TryFrom<InputFormat> for ImageFormat {
-    type Error = ImageError;
+impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
+    type Error = image_for_decoding::ImageError;
 
     fn try_from(format: InputFormat) -> Result<Self, Self::Error> {
+        #[cfg(feature = "decode-from-svg")]
+        use image_for_decoding::error::ImageFormatHint;
+
         match format {
+            InputFormat::Bmp => Ok(Self::Bmp),
+            InputFormat::Dds => Ok(Self::Dds),
+            InputFormat::Farbfeld => Ok(Self::Farbfeld),
+            InputFormat::Gif => Ok(Self::Gif),
+            InputFormat::Hdr => Ok(Self::Hdr),
+            InputFormat::Ico => Ok(Self::Ico),
+            InputFormat::Jpeg => Ok(Self::Jpeg),
+            InputFormat::OpenExr => Ok(Self::OpenExr),
             InputFormat::Png => Ok(Self::Png),
-            InputFormat::Svg => Err(ImageError::Unsupported(ImageFormatHint::Unknown.into())),
+            InputFormat::Pnm => Ok(Self::Pnm),
+            #[cfg(feature = "decode-from-svg")]
+            InputFormat::Svg => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
+            InputFormat::Tga => Ok(Self::Tga),
+            InputFormat::Tiff => Ok(Self::Tiff),
+            InputFormat::WebP => Ok(Self::WebP),
         }
     }
 }

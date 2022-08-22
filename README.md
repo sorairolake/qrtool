@@ -25,6 +25,57 @@ Please see [BUILD.adoc](BUILD.adoc).
 
 ## Usage
 
+### Basic usage
+
+Encode a string in a QR code:
+
+```sh
+qrtool encode "QR code" > output.png
+```
+
+Generate this image:
+
+![Output](tests/data/basic/basic.png)
+
+Decode a QR code from this image:
+
+```sh
+> qrtool decode output.png
+QR code
+```
+
+### SVG generation
+
+```sh
+qrtool encode -o output.svg -t svg "QR code"
+```
+
+Generate this image:
+
+![Output](tests/data/decode/decode.svg)
+
+### Micro QR code generation
+
+```sh
+qrtool encode -v 3 --variant micro "QR code" > output.png
+```
+
+Generate this image:
+
+![Output](tests/data/variant/micro.png)
+
+### Colored output
+
+```sh
+qrtool encode --foreground "#bc002d" "QR code" > output.png
+```
+
+Generate this image:
+
+![Output](tests/data/colored/fg.png)
+
+## Command-line options
+
 Please see the following:
 
 - [`qrtool(1)`](doc/man/man1/qrtool.1.adoc)

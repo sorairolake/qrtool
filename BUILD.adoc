@@ -22,3 +22,10 @@ cd qrtool
 ----
 just build
 ----
+
+== Crate features
+
+`decode-from-svg`::
+
+  Enable decoding from the SVG image.
+  This is enabled by default.
