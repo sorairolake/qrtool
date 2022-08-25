@@ -8,7 +8,7 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
 
-use image_for_decoding::{DynamicImage, ImageError, ImageFormat, ImageResult};
+use image::{DynamicImage, ImageError, ImageFormat, ImageResult};
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
 use crate::cli::Ecc;
@@ -61,7 +61,7 @@ fn svg_to_png(path: &Path) -> anyhow::Result<Vec<u8>> {
 fn from_png(data: &[u8]) -> ImageResult<DynamicImage> {
     use std::io::Cursor;
 
-    use image_for_decoding::io::Reader;
+    use image::io::Reader;
 
     Reader::with_format(Cursor::new(data), ImageFormat::Png).decode()
 }
@@ -76,7 +76,7 @@ pub fn from_svg(path: impl AsRef<Path>) -> anyhow::Result<DynamicImage> {
 /// Reads an image file.
 pub fn load_image_file(path: impl AsRef<Path>, format: ImageFormat) -> ImageResult<DynamicImage> {
     let reader = BufReader::new(File::open(path.as_ref()).map_err(ImageError::IoError)?);
-    image_for_decoding::load(reader, format)
+    image::load(reader, format)
 }
 
 type DecodedBytes = (MetaData, Vec<u8>);

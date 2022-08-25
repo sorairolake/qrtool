@@ -42,12 +42,10 @@ fn generate_completion_conflicts_with_subcommands() {
 fn basic_encode() {
     let output = command().arg("encode").arg("QR code").output().unwrap();
     assert_eq!(
-        image_for_encoding::DynamicImage::ImageLuma8(
-            image_for_encoding::load_from_memory(&output.stdout)
-                .unwrap()
-                .to_luma8()
+        image::DynamicImage::ImageLuma8(
+            image::load_from_memory(&output.stdout).unwrap().to_luma8()
         ),
-        image_for_encoding::open("tests/data/basic/basic.png").unwrap()
+        image::open("tests/data/basic/basic.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -61,12 +59,10 @@ fn encode_data_from_file() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::DynamicImage::ImageLuma8(
-            image_for_encoding::load_from_memory(&output.stdout)
-                .unwrap()
-                .to_luma8()
+        image::DynamicImage::ImageLuma8(
+            image::load_from_memory(&output.stdout).unwrap().to_luma8()
         ),
-        image_for_encoding::open("tests/data/basic/basic.png").unwrap()
+        image::open("tests/data/basic/basic.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -81,12 +77,10 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::DynamicImage::ImageLuma8(
-            image_for_encoding::load_from_memory(&output.stdout)
-                .unwrap()
-                .to_luma8()
+        image::DynamicImage::ImageLuma8(
+            image::load_from_memory(&output.stdout).unwrap().to_luma8()
         ),
-        image_for_encoding::open("tests/data/level/low.png").unwrap()
+        image::open("tests/data/level/low.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -98,12 +92,10 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::DynamicImage::ImageLuma8(
-            image_for_encoding::load_from_memory(&output.stdout)
-                .unwrap()
-                .to_luma8()
+        image::DynamicImage::ImageLuma8(
+            image::load_from_memory(&output.stdout).unwrap().to_luma8()
         ),
-        image_for_encoding::open("tests/data/level/quartile.png").unwrap()
+        image::open("tests/data/level/quartile.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -115,12 +107,10 @@ fn encode_with_error_correction_level() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::DynamicImage::ImageLuma8(
-            image_for_encoding::load_from_memory(&output.stdout)
-                .unwrap()
-                .to_luma8()
+        image::DynamicImage::ImageLuma8(
+            image::load_from_memory(&output.stdout).unwrap().to_luma8()
         ),
-        image_for_encoding::open("tests/data/level/high.png").unwrap()
+        image::open("tests/data/level/high.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -135,12 +125,10 @@ fn encode_with_margin() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::DynamicImage::ImageLuma8(
-            image_for_encoding::load_from_memory(&output.stdout)
-                .unwrap()
-                .to_luma8()
+        image::DynamicImage::ImageLuma8(
+            image::load_from_memory(&output.stdout).unwrap().to_luma8()
         ),
-        image_for_encoding::open("tests/data/margin/8.png").unwrap()
+        image::open("tests/data/margin/8.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -157,12 +145,10 @@ fn encode_as_micro_qr_code() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::DynamicImage::ImageLuma8(
-            image_for_encoding::load_from_memory(&output.stdout)
-                .unwrap()
-                .to_luma8()
+        image::DynamicImage::ImageLuma8(
+            image::load_from_memory(&output.stdout).unwrap().to_luma8()
         ),
-        image_for_encoding::open("tests/data/variant/micro.png").unwrap()
+        image::open("tests/data/variant/micro.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -177,8 +163,8 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
-        image_for_encoding::open("tests/data/colored/fg.png").unwrap()
+        image::load_from_memory(&output.stdout).unwrap(),
+        image::open("tests/data/colored/fg.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -190,8 +176,8 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
-        image_for_encoding::open("tests/data/colored/bg.png").unwrap()
+        image::load_from_memory(&output.stdout).unwrap(),
+        image::open("tests/data/colored/bg.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -205,8 +191,8 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
-        image_for_encoding::open("tests/data/colored/rgb.png").unwrap()
+        image::load_from_memory(&output.stdout).unwrap(),
+        image::open("tests/data/colored/rgb.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -220,8 +206,8 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
-        image_for_encoding::open("tests/data/colored/rgba.png").unwrap()
+        image::load_from_memory(&output.stdout).unwrap(),
+        image::open("tests/data/colored/rgba.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -235,8 +221,8 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
-        image_for_encoding::open("tests/data/colored/rgb_short.png").unwrap()
+        image::load_from_memory(&output.stdout).unwrap(),
+        image::open("tests/data/colored/rgb_short.png").unwrap()
     );
     assert!(output.status.success());
 
@@ -250,8 +236,8 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image_for_encoding::load_from_memory(&output.stdout).unwrap(),
-        image_for_encoding::open("tests/data/colored/rgba_short.png").unwrap()
+        image::load_from_memory(&output.stdout).unwrap(),
+        image::open("tests/data/colored/rgba_short.png").unwrap()
     );
     assert!(output.status.success());
 }

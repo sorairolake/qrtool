@@ -5,11 +5,12 @@
 //
 
 use std::fs;
-use std::io::{self, Read, Write};
+use std::io::{self, Cursor, Read, Write};
 use std::str;
 
 use anyhow::Context;
 use clap::Parser;
+use image::{io::Reader, ImageError, ImageFormat};
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
@@ -30,8 +31,6 @@ pub fn run() -> anyhow::Result<()> {
     if let Some(command) = opt.command {
         match command {
             Command::Encode(arg) => {
-                use image_for_encoding::ImageFormat;
-
                 let input = if let Some(string) = arg.input {
                     string.into_bytes()
                 } else if let Some(path) = arg.read_from {
@@ -91,16 +90,18 @@ pub fn run() -> anyhow::Result<()> {
                                 format!("Could not write the image to {}", file.display())
                             })?;
                         } else {
+                            let mut buf = Vec::new();
                             image
-                                .write_to(&mut io::stdout(), format)
+                                .write_to(&mut Cursor::new(&mut buf), format)
+                                .and_then(|_| {
+                                    io::stdout().write_all(&buf).map_err(ImageError::from)
+                                })
                                 .context("Could not write the image to stdout")?;
                         }
                     }
                 }
             }
             Command::Decode(arg) => {
-                use image_for_decoding::{io::Reader, ImageError};
-
                 #[cfg(feature = "decode-from-svg")]
                 use crate::cli::InputFormat;
 

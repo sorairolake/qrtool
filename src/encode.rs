@@ -4,7 +4,7 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use image_for_encoding::{DynamicImage, Pixel as _, Rgb, Rgba};
+use image::{DynamicImage, Pixel as _, Rgb, Rgba};
 use qrcode::{
     bits::Bits,
     render::{svg, unicode, Pixel as _, Renderer},

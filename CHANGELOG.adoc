@@ -12,6 +12,14 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.2.0\...HEAD[Unreleased]
+
+=== Changed
+
+* Change to use fork of `qrcode` crate.
+  This is to support `image` crate version 0.24.
+  Thanks to https://github.com/qm3ster[@qm3ster].
+
 == {compare-url}/v0.1.0\...v0.2.0[0.2.0] - 2022-08-22
 
 === Added

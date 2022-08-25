@@ -11,6 +11,7 @@ use clap::{
     value_parser, AppSettings, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint,
 };
 use clap_complete::{Generator, Shell};
+use image::{error::ImageFormatHint, ImageError, ImageFormat};
 
 use crate::color::Color;
 
@@ -235,12 +236,10 @@ impl Default for OutputFormat {
     }
 }
 
-impl TryFrom<OutputFormat> for image_for_encoding::ImageFormat {
-    type Error = image_for_encoding::ImageError;
+impl TryFrom<OutputFormat> for ImageFormat {
+    type Error = ImageError;
 
     fn try_from(format: OutputFormat) -> Result<Self, Self::Error> {
-        use image_for_encoding::error::ImageFormatHint;
-
         match format {
             OutputFormat::Png => Ok(Self::Png),
             _ => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
@@ -333,13 +332,10 @@ pub enum InputFormat {
     WebP,
 }
 
-impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
-    type Error = image_for_decoding::ImageError;
+impl TryFrom<InputFormat> for ImageFormat {
+    type Error = ImageError;
 
     fn try_from(format: InputFormat) -> Result<Self, Self::Error> {
-        #[cfg(feature = "decode-from-svg")]
-        use image_for_decoding::error::ImageFormatHint;
-
         match format {
             InputFormat::Bmp => Ok(Self::Bmp),
             InputFormat::Dds => Ok(Self::Dds),
