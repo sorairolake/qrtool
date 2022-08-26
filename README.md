@@ -40,7 +40,12 @@ Generate this image:
 Decode a QR code from this image:
 
 ```sh
-> qrtool decode output.png
+qrtool decode output.png
+```
+
+Output:
+
+```text
 QR code
 ```
 
