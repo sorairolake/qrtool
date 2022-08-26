@@ -74,6 +74,24 @@ Generate this image:
 
 ![Output](tests/data/colored/fg.png)
 
+### Generate shell completion
+
+`--generate-completion` option generates shell completions to stdout.
+
+The following shells are supported:
+
+- `bash`
+- `elvish`
+- `fish`
+- `powershell`
+- `zsh`
+
+Example:
+
+```sh
+qrtool --generate-completion bash > qrtool.bash
+```
+
 ## Command-line options
 
 Please see the following:
