@@ -112,7 +112,7 @@ _STRING_::
 
       To the terminal as UTF-8 string.
 
-*-M*, *--mode* _MODE_::
+*--mode* _MODE_::
 
   The mode of the output.
 

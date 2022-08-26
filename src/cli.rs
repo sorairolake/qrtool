@@ -101,7 +101,7 @@ pub struct Encode {
     pub output_format: OutputFormat,
 
     /// The mode of the output.
-    #[clap(short('M'), long, value_enum, default_value_t, value_name("MODE"))]
+    #[clap(long, value_enum, default_value_t, value_name("MODE"))]
     pub mode: Mode,
 
     /// The type of QR code.

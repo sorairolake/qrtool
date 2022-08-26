@@ -28,6 +28,10 @@ toc::[]
 * Change to be able to input the image from stdin
 * Change to read the image from stdin if "-" is specified
 
+=== Removed
+
+* Remove short option from `--mode` of `encode` command
+
 === Fixed
 
 * Remove unnecessary newline when decoding
