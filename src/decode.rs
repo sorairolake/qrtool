@@ -4,8 +4,10 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
+#[cfg(feature = "decode-from-svg")]
 use std::path::Path;
 
+#[cfg(feature = "decode-from-svg")]
 use image::{DynamicImage, ImageFormat};
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
