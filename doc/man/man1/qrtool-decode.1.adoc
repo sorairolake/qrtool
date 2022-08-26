@@ -75,10 +75,6 @@ _IMAGE_::
 
       JPEG.
 
-    *openexr*::::
-
-      OpenEXR.
-
     *png*::::
 
       Portable Network Graphics.

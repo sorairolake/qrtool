@@ -4,3 +4,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "image"
+      - dependency-name: "qrcode"
+      - dependency-name: "rqrr"
