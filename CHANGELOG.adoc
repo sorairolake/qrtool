@@ -21,6 +21,7 @@ toc::[]
   Thanks to https://github.com/qm3ster[@qm3ster].
 * Change to output only 32-bit RGBA image when outputting PNG
 * Change to be able to input the image from stdin
+* Change to read the image from stdin if "-" is specified
 
 === Fixed
 
@@ -34,7 +35,6 @@ toc::[]
   These options are for printing the metadata.
 * `--foreground` option and `--background` option.
   These options are for changing foreground and background colors.
-* Change to read the image from stdin if "-" is specified
 
 === Changed
 
