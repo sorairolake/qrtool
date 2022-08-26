@@ -158,12 +158,13 @@ pub struct Decode {
 
     /// Input image file.
     ///
+    /// If it is not specified, the image will be read from stdin.
     /// Supported raster image formats are any formats supported by the image
     /// crate. The format guess based on the extension, and the raster
     /// format use the content in addition to it. Note that the SVG image is
     /// rasterized before scanning.
     #[clap(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
-    pub input: PathBuf,
+    pub input: Option<PathBuf>,
 }
 
 impl Opt {
