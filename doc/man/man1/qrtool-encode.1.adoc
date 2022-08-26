@@ -6,7 +6,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2022-08-20
+:docdate: 2022-08-26
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -23,6 +23,7 @@ qrtool-encode - encode input data in a QR code
 == DESCRIPTION
 
 This command encodes input data in a QR code.
+By default, the result will be output to stdout.
 
 == POSITIONAL ARGUMENTS
 
@@ -72,11 +73,19 @@ _STRING_::
       Level H.
       30% of codewords can be restored.
 
+*--level* _LEVEL_::
+
+  Alias for *-l*, *--error-correction-level*.
+
 *-v*, *--symbol-version* _NUMBER_::
 
   The version of the symbol.
   For normal QR code, it should be between *1* and *40*.
   For Micro QR code, it should be between *1* and *4*.
+
+*--symversion* _NUMBER_::
+
+  Alias for *-v*, *--symbol-version*.
 
 *-m*, *--margin* _NUMBER_::
 
@@ -92,6 +101,7 @@ _STRING_::
     *png*::::
 
       Portable Network Graphics.
+      This outputs 32-bit RGBA PNG image.
       This is the default.
 
     *svg*::::
@@ -102,7 +112,7 @@ _STRING_::
 
       To the terminal as UTF-8 string.
 
-*-M*, *--mode* _MODE_::
+*--mode* _MODE_::
 
   The mode of the output.
 

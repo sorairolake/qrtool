@@ -12,6 +12,30 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.2.0\...v0.3.0[0.3.0] - 2022-08-26
+
+=== Added
+
+* Add aliases to `--error-correction-level` and `--symbol-version` of `encode`
+  command
+
+=== Changed
+
+* Change to use fork of `qrcode` crate.
+  This is to support `image` crate version 0.24.
+  Thanks to https://github.com/qm3ster[@qm3ster].
+* Change to output only 32-bit RGBA image when outputting PNG
+* Change to be able to input the image from stdin
+* Change to read the image from stdin if "-" is specified
+
+=== Removed
+
+* Remove short option from `--mode` of `encode` command
+
+=== Fixed
+
+* Remove unnecessary newline when decoding
+
 == {compare-url}/v0.1.0\...v0.2.0[0.2.0] - 2022-08-22
 
 === Added

@@ -4,11 +4,11 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use std::fs::File;
-use std::io::BufReader;
+#[cfg(feature = "decode-from-svg")]
 use std::path::Path;
 
-use image_for_decoding::{DynamicImage, ImageError, ImageFormat, ImageResult};
+#[cfg(feature = "decode-from-svg")]
+use image::{DynamicImage, ImageFormat};
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
 use crate::cli::Ecc;
@@ -26,23 +26,14 @@ pub fn is_svg(path: impl AsRef<Path>) -> bool {
 }
 
 #[cfg(feature = "decode-from-svg")]
-fn svg_to_png(path: &Path) -> anyhow::Result<Vec<u8>> {
-    use std::fs;
-
+fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
     use anyhow::Context;
     use tiny_skia::{Pixmap, Transform};
     use usvg::{FitTo, Tree};
 
-    let opt = usvg::Options {
-        resources_dir: path
-            .canonicalize()
-            .ok()
-            .and_then(|p| p.parent().map(Path::to_path_buf)),
-        ..Default::default()
-    };
+    let opt = usvg::Options::default();
 
-    let image = fs::read(path)?;
-    let tree = Tree::from_data(&image, &opt.to_ref())?;
+    let tree = Tree::from_data(data, &opt.to_ref())?;
 
     let pixmap_size = tree.svg_node().size.to_screen_size();
     let mut pixmap = Pixmap::new(pixmap_size.width(), pixmap_size.height())
@@ -57,26 +48,11 @@ fn svg_to_png(path: &Path) -> anyhow::Result<Vec<u8>> {
     pixmap.encode_png().map_err(anyhow::Error::from)
 }
 
-#[cfg(feature = "decode-from-svg")]
-fn from_png(data: &[u8]) -> ImageResult<DynamicImage> {
-    use std::io::Cursor;
-
-    use image_for_decoding::io::Reader;
-
-    Reader::with_format(Cursor::new(data), ImageFormat::Png).decode()
-}
-
 /// Reads the image from SVG.
 #[cfg(feature = "decode-from-svg")]
-pub fn from_svg(path: impl AsRef<Path>) -> anyhow::Result<DynamicImage> {
-    let data = svg_to_png(path.as_ref())?;
-    from_png(&data).map_err(anyhow::Error::from)
-}
-
-/// Reads an image file.
-pub fn load_image_file(path: impl AsRef<Path>, format: ImageFormat) -> ImageResult<DynamicImage> {
-    let reader = BufReader::new(File::open(path.as_ref()).map_err(ImageError::IoError)?);
-    image_for_decoding::load(reader, format)
+pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<DynamicImage> {
+    let image = svg_to_png(data.as_ref())?;
+    image::load_from_memory_with_format(&image, ImageFormat::Png).map_err(anyhow::Error::from)
 }
 
 type DecodedBytes = (MetaData, Vec<u8>);

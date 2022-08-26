@@ -6,7 +6,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2022-08-20
+:docdate: 2022-08-26
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -18,17 +18,20 @@ qrtool-decode - detect and decode a QR code
 
 == SYNOPSIS
 
-*qrtool decode* [_OPTION_]... _IMAGE_
+*qrtool decode* [_OPTION_]... [_IMAGE_]
 
 == DESCRIPTION
 
 This command detects and decodes a QR code.
+By default, the result will be output to stdout.
 
 == POSITIONAL ARGUMENTS
 
 _IMAGE_::
 
   Input image file.
+  If it is not specified, or if "-" is specified, the image will be read from
+  stdin.
   Supported raster image formats are any formats supported by the image crate.
   The format guess based on the extension, and the raster format use the
   content in addition to it.

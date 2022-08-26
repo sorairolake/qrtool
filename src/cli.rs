@@ -11,6 +11,7 @@ use clap::{
     value_parser, AppSettings, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint,
 };
 use clap_complete::{Generator, Shell};
+use image::{error::ImageFormatHint, ImageError, ImageFormat};
 
 use crate::color::Color;
 
@@ -62,7 +63,14 @@ pub struct Encode {
     pub read_from: Option<PathBuf>,
 
     /// Error correction level.
-    #[clap(short('l'), long, value_enum, default_value_t, value_name("LEVEL"))]
+    #[clap(
+        short('l'),
+        long,
+        value_enum,
+        default_value_t,
+        visible_alias("level"),
+        value_name("LEVEL")
+    )]
     pub error_correction_level: Ecc,
 
     /// The version of the symbol.
@@ -73,6 +81,7 @@ pub struct Encode {
         value_parser(value_parser!(i16).range(1..=40)),
         short('v'),
         long,
+        visible_alias("symversion"),
         value_name("NUMBER")
     )]
     pub symbol_version: Option<i16>,
@@ -92,7 +101,7 @@ pub struct Encode {
     pub output_format: OutputFormat,
 
     /// The mode of the output.
-    #[clap(short('M'), long, value_enum, default_value_t, value_name("MODE"))]
+    #[clap(long, value_enum, default_value_t, value_name("MODE"))]
     pub mode: Mode,
 
     /// The type of QR code.
@@ -157,12 +166,13 @@ pub struct Decode {
 
     /// Input image file.
     ///
-    /// Supported raster image formats are any formats supported by the image
-    /// crate. The format guess based on the extension, and the raster
-    /// format use the content in addition to it. Note that the SVG image is
-    /// rasterized before scanning.
+    /// If it is not specified, or if "-" is specified, the image will be read
+    /// from stdin. Supported raster image formats are any formats supported
+    /// by the image crate. The format guess based on the extension, and the
+    /// raster format use the content in addition to it. Note that the SVG
+    /// image is rasterized before scanning.
     #[clap(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
-    pub input: PathBuf,
+    pub input: Option<PathBuf>,
 }
 
 impl Opt {
@@ -220,6 +230,8 @@ impl From<Ecc> for qrcode::EcLevel {
 #[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
 pub enum OutputFormat {
     /// Portable Network Graphics.
+    ///
+    /// This outputs 32-bit RGBA PNG image.
     Png,
 
     /// Scalable Vector Graphics.
@@ -235,12 +247,10 @@ impl Default for OutputFormat {
     }
 }
 
-impl TryFrom<OutputFormat> for image_for_encoding::ImageFormat {
-    type Error = image_for_encoding::ImageError;
+impl TryFrom<OutputFormat> for ImageFormat {
+    type Error = ImageError;
 
     fn try_from(format: OutputFormat) -> Result<Self, Self::Error> {
-        use image_for_encoding::error::ImageFormatHint;
-
         match format {
             OutputFormat::Png => Ok(Self::Png),
             _ => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
@@ -333,13 +343,10 @@ pub enum InputFormat {
     WebP,
 }
 
-impl TryFrom<InputFormat> for image_for_decoding::ImageFormat {
-    type Error = image_for_decoding::ImageError;
+impl TryFrom<InputFormat> for ImageFormat {
+    type Error = ImageError;
 
     fn try_from(format: InputFormat) -> Result<Self, Self::Error> {
-        #[cfg(feature = "decode-from-svg")]
-        use image_for_decoding::error::ImageFormatHint;
-
         match format {
             InputFormat::Bmp => Ok(Self::Bmp),
             InputFormat::Dds => Ok(Self::Dds),

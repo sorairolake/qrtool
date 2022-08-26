@@ -5,14 +5,17 @@
 //
 
 use std::fs;
-use std::io::{self, Read, Write};
+use std::io::{self, Cursor, Read, Write};
 use std::str;
 
 use anyhow::Context;
 use clap::Parser;
+use image::{ImageError, ImageFormat};
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
+#[cfg(feature = "decode-from-svg")]
+use crate::cli::InputFormat;
 use crate::cli::{Command, Opt, OutputFormat};
 use crate::metadata::Extractor;
 use crate::{decode, encode};
@@ -30,8 +33,6 @@ pub fn run() -> anyhow::Result<()> {
     if let Some(command) = opt.command {
         match command {
             Command::Encode(arg) => {
-                use image_for_encoding::ImageFormat;
-
                 let input = if let Some(string) = arg.input {
                     string.into_bytes()
                 } else if let Some(path) = arg.read_from {
@@ -91,45 +92,48 @@ pub fn run() -> anyhow::Result<()> {
                                 format!("Could not write the image to {}", file.display())
                             })?;
                         } else {
+                            let mut buf = Vec::new();
                             image
-                                .write_to(&mut io::stdout(), format)
+                                .write_to(&mut Cursor::new(&mut buf), format)
+                                .and_then(|_| {
+                                    io::stdout().write_all(&buf).map_err(ImageError::from)
+                                })
                                 .context("Could not write the image to stdout")?;
                         }
                     }
                 }
             }
             Command::Decode(arg) => {
-                use image_for_decoding::{io::Reader, ImageError};
-
-                #[cfg(feature = "decode-from-svg")]
-                use crate::cli::InputFormat;
-
                 let input_format = arg.input_format;
                 #[cfg(feature = "decode-from-svg")]
-                let input_format = if decode::is_svg(&arg.input) {
-                    Some(InputFormat::Svg)
-                } else {
-                    input_format
+                let input_format = match arg.input {
+                    Some(ref path) if decode::is_svg(path) => Some(InputFormat::Svg),
+                    _ => input_format,
+                };
+                let input = match arg.input {
+                    Some(path) if path.to_str().unwrap_or_default() != "-" => fs::read(&path)
+                        .with_context(|| format!("Could not read data from {}", path.display()))?,
+                    _ => {
+                        let mut buf = Vec::new();
+                        io::stdin()
+                            .read_to_end(&mut buf)
+                            .context("Could not read data from stdin")?;
+                        buf
+                    }
                 };
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]
-                    Some(InputFormat::Svg) => decode::from_svg(&arg.input),
-                    Some(format) => decode::load_image_file(
-                        &arg.input,
+                    Some(InputFormat::Svg) => decode::from_svg(&input),
+                    Some(format) => image::load_from_memory_with_format(
+                        &input,
                         format
                             .try_into()
                             .expect("The image format is not supported"),
                     )
                     .map_err(anyhow::Error::from),
-                    _ => Reader::open(&arg.input)
-                        .and_then(Reader::with_guessed_format)
-                        .map_err(ImageError::from)
-                        .and_then(Reader::decode)
-                        .map_err(anyhow::Error::from),
+                    _ => image::load_from_memory(&input).map_err(anyhow::Error::from),
                 }
-                .with_context(|| {
-                    format!("Could not read the image from {}", arg.input.display())
-                })?;
+                .context("Could not read the image")?;
                 let image = image.into_luma8();
 
                 let mut image = PreparedImage::prepare(image);
@@ -148,7 +152,7 @@ pub fn run() -> anyhow::Result<()> {
                     }
 
                     if let Ok(string) = str::from_utf8(&content.1) {
-                        println!("{string}");
+                        print!("{string}");
                     } else {
                         io::stdout()
                             .write_all(&content.1)

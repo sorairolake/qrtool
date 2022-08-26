@@ -21,6 +21,7 @@ mod metadata;
 use std::io;
 use std::process::ExitCode;
 
+use image::ImageError;
 use qrcode::types::QrError;
 use rqrr::DeQRError;
 
@@ -43,18 +44,7 @@ fn main() -> ExitCode {
                     DeQRError::IoError => sysexits::ExitCode::IoErr.into(),
                     _ => sysexits::ExitCode::DataErr.into(),
                 }
-            } else if let Some(e) = err.downcast_ref::<image_for_encoding::ImageError>() {
-                use image_for_encoding::ImageError;
-
-                match e {
-                    ImageError::Limits(_) => sysexits::ExitCode::OsErr.into(),
-                    ImageError::Unsupported(_) => sysexits::ExitCode::Unavailable.into(),
-                    ImageError::IoError(_) => sysexits::ExitCode::IoErr.into(),
-                    _ => sysexits::ExitCode::DataErr.into(),
-                }
-            } else if let Some(e) = err.downcast_ref::<image_for_decoding::ImageError>() {
-                use image_for_decoding::ImageError;
-
+            } else if let Some(e) = err.downcast_ref::<ImageError>() {
                 match e {
                     ImageError::Limits(_) => sysexits::ExitCode::OsErr.into(),
                     ImageError::Unsupported(_) => sysexits::ExitCode::Unavailable.into(),

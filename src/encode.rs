@@ -4,10 +4,10 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use image_for_encoding::{DynamicImage, Pixel as _, Rgb, Rgba};
+use image::{DynamicImage, Rgba};
 use qrcode::{
     bits::Bits,
-    render::{svg, unicode, Pixel as _, Renderer},
+    render::{svg, unicode, Pixel, Renderer},
     types::QrError,
     Color as QrColor, EcLevel, QrCode, QrResult, Version,
 };
@@ -75,22 +75,6 @@ pub fn to_terminal(code: &QrCode, margin: u32) -> String {
         .build()
 }
 
-fn to_rgb_image(code: &QrCode, margin: u32, colors: (Rgb<u8>, Rgb<u8>)) -> DynamicImage {
-    let image = Renderer::<Rgb<u8>>::new(&code.to_colors(), code.width(), margin)
-        .dark_color(colors.0)
-        .light_color(colors.1)
-        .build();
-    DynamicImage::ImageRgb8(image)
-}
-
-fn to_rgba_image(code: &QrCode, margin: u32, colors: (Rgba<u8>, Rgba<u8>)) -> DynamicImage {
-    let image = Renderer::<Rgba<u8>>::new(&code.to_colors(), code.width(), margin)
-        .dark_color(colors.0)
-        .light_color(colors.1)
-        .build();
-    DynamicImage::ImageRgba8(image)
-}
-
 /// Renders the QR code into an image.
 pub fn to_image(
     code: &QrCode,
@@ -111,12 +95,11 @@ pub fn to_image(
             Rgba([color.0, color.1, color.2, color.3.unwrap_or(u8::MAX)])
         },
     );
-    match (foreground.channels()[3], background.channels()[3]) {
-        (u8::MAX, u8::MAX) => {
-            to_rgb_image(code, margin, (foreground.to_rgb(), background.to_rgb()))
-        }
-        _ => to_rgba_image(code, margin, (foreground, background)),
-    }
+    let image = Renderer::<Rgba<u8>>::new(&code.to_colors(), code.width(), margin)
+        .dark_color(foreground)
+        .light_color(background)
+        .build();
+    DynamicImage::ImageRgba8(image)
 }
 
 impl Extractor for QrCode {

@@ -1,6 +1,6 @@
 [package]
 name = "qrtool"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.61.0"
@@ -17,9 +17,8 @@ categories = ["command-line-utilities"]
 anyhow = "1.0.62"
 clap = { version = "3.2.17", features = ["derive"] }
 clap_complete = "3.2.4"
-image-for-decoding = { version = "0.24.3", package = "image" }
-image-for-encoding = { version = "0.23.14", package = "image" }
-qrcode = "0.12.0"
+image = "0.24.3"
+qrcode = { git = "https://github.com/sorairolake/qrcode-rust.git", rev = "0f75a68", version = "0.13.0" }
 resvg = { version = "0.23.0", default-features = false, optional = true }
 rqrr = "0.5.1"
 sysexits = "0.3.0"
