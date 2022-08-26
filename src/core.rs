@@ -111,15 +111,16 @@ pub fn run() -> anyhow::Result<()> {
                     Some(ref path) if decode::is_svg(path) => Some(InputFormat::Svg),
                     _ => input_format,
                 };
-                let input = if let Some(path) = arg.input {
-                    fs::read(&path)
-                        .with_context(|| format!("Could not read data from {}", path.display()))?
-                } else {
-                    let mut buf = Vec::new();
-                    io::stdin()
-                        .read_to_end(&mut buf)
-                        .context("Could not read data from stdin")?;
-                    buf
+                let input = match arg.input {
+                    Some(path) if path.to_str().unwrap_or_default() != "-" => fs::read(&path)
+                        .with_context(|| format!("Could not read data from {}", path.display()))?,
+                    _ => {
+                        let mut buf = Vec::new();
+                        io::stdin()
+                            .read_to_end(&mut buf)
+                            .context("Could not read data from stdin")?;
+                        buf
+                    }
                 };
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]

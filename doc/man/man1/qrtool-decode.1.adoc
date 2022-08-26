@@ -29,7 +29,8 @@ This command detects and decodes a QR code.
 _IMAGE_::
 
   Input image file.
-  If it is not specified, the image will be read from stdin.
+  If it is not specified, or if "-" is specified, the image will be read from
+  stdin.
   Supported raster image formats are any formats supported by the image crate.
   The format guess based on the extension, and the raster format use the
   content in addition to it.

@@ -30,6 +30,7 @@ toc::[]
   These options are for printing the metadata.
 * `--foreground` option and `--background` option.
   These options are for changing foreground and background colors.
+* Change to read the image from stdin if "-" is specified
 
 === Changed
 
