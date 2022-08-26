@@ -23,6 +23,7 @@ qrtool-decode - detect and decode a QR code
 == DESCRIPTION
 
 This command detects and decodes a QR code.
+By default, the result will be output to stdout.
 
 == POSITIONAL ARGUMENTS
 

@@ -23,6 +23,7 @@ qrtool-encode - encode input data in a QR code
 == DESCRIPTION
 
 This command encodes input data in a QR code.
+By default, the result will be output to stdout.
 
 == POSITIONAL ARGUMENTS
 
