@@ -282,7 +282,7 @@ fn basic_decode() {
         .arg("data/basic/basic.png")
         .assert()
         .success()
-        .stdout(predicate::eq("QR code\n"));
+        .stdout(predicate::eq("QR code"));
 }
 
 #[test]
@@ -293,7 +293,7 @@ fn decode_from_svg() {
         .arg("data/decode/decode.svg")
         .assert()
         .success()
-        .stdout(predicate::eq("QR code\n"));
+        .stdout(predicate::eq("QR code"));
 }
 
 #[test]
@@ -304,7 +304,7 @@ fn decode_from_svgz() {
         .arg("data/decode/decode.svgz")
         .assert()
         .success()
-        .stdout(predicate::eq("QR code\n"));
+        .stdout(predicate::eq("QR code"));
 }
 
 #[test]

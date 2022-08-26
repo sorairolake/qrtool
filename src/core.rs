@@ -153,7 +153,7 @@ pub fn run() -> anyhow::Result<()> {
                     }
 
                     if let Ok(string) = str::from_utf8(&content.1) {
-                        println!("{string}");
+                        print!("{string}");
                     } else {
                         io::stdout()
                             .write_all(&content.1)

@@ -22,6 +22,10 @@ toc::[]
 * Change to output only 32-bit RGBA image when outputting PNG
 * Change to be able to input the image from stdin
 
+=== Fixed
+
+* Remove unnecessary newline when decoding
+
 == {compare-url}/v0.1.0\...v0.2.0[0.2.0] - 2022-08-22
 
 === Added
