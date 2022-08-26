@@ -6,7 +6,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2022-08-20
+:docdate: 2022-08-26
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -92,6 +92,7 @@ _STRING_::
     *png*::::
 
       Portable Network Graphics.
+      This outputs 32-bit RGBA PNG image.
       This is the default.
 
     *svg*::::

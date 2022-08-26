@@ -19,6 +19,7 @@ toc::[]
 * Change to use fork of `qrcode` crate.
   This is to support `image` crate version 0.24.
   Thanks to https://github.com/qm3ster[@qm3ster].
+* Change to output only 32-bit RGBA image when outputting PNG
 
 == {compare-url}/v0.1.0\...v0.2.0[0.2.0] - 2022-08-22
 

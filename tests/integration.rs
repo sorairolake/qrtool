@@ -163,7 +163,7 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
+        image::DynamicImage::ImageRgb8(image::load_from_memory(&output.stdout).unwrap().to_rgb8()),
         image::open("tests/data/colored/fg.png").unwrap()
     );
     assert!(output.status.success());
@@ -176,7 +176,7 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
+        image::DynamicImage::ImageRgb8(image::load_from_memory(&output.stdout).unwrap().to_rgb8()),
         image::open("tests/data/colored/bg.png").unwrap()
     );
     assert!(output.status.success());
@@ -191,7 +191,7 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
+        image::DynamicImage::ImageRgb8(image::load_from_memory(&output.stdout).unwrap().to_rgb8()),
         image::open("tests/data/colored/rgb.png").unwrap()
     );
     assert!(output.status.success());
@@ -221,7 +221,7 @@ fn encode_to_colored() {
         .output()
         .unwrap();
     assert_eq!(
-        image::load_from_memory(&output.stdout).unwrap(),
+        image::DynamicImage::ImageRgb8(image::load_from_memory(&output.stdout).unwrap().to_rgb8()),
         image::open("tests/data/colored/rgb_short.png").unwrap()
     );
     assert!(output.status.success());

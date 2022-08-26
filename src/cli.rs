@@ -221,6 +221,8 @@ impl From<Ecc> for qrcode::EcLevel {
 #[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
 pub enum OutputFormat {
     /// Portable Network Graphics.
+    ///
+    /// This outputs 32-bit RGBA PNG image.
     Png,
 
     /// Scalable Vector Graphics.
