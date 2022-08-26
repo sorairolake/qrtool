@@ -73,11 +73,19 @@ _STRING_::
       Level H.
       30% of codewords can be restored.
 
+*--level* _LEVEL_::
+
+  Alias for *-l*, *--error-correction-level*.
+
 *-v*, *--symbol-version* _NUMBER_::
 
   The version of the symbol.
   For normal QR code, it should be between *1* and *40*.
   For Micro QR code, it should be between *1* and *4*.
+
+*--symversion* _NUMBER_::
+
+  Alias for *-v*, *--symbol-version*.
 
 *-m*, *--margin* _NUMBER_::
 

@@ -63,7 +63,14 @@ pub struct Encode {
     pub read_from: Option<PathBuf>,
 
     /// Error correction level.
-    #[clap(short('l'), long, value_enum, default_value_t, value_name("LEVEL"))]
+    #[clap(
+        short('l'),
+        long,
+        value_enum,
+        default_value_t,
+        visible_alias("level"),
+        value_name("LEVEL")
+    )]
     pub error_correction_level: Ecc,
 
     /// The version of the symbol.
@@ -74,6 +81,7 @@ pub struct Encode {
         value_parser(value_parser!(i16).range(1..=40)),
         short('v'),
         long,
+        visible_alias("symversion"),
         value_name("NUMBER")
     )]
     pub symbol_version: Option<i16>,
