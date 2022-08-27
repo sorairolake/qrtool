@@ -12,6 +12,13 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.3.0\...v0.3.1[0.3.1] - 2022-08-27
+
+=== Fixed
+
+* Change `qrcode` crate to get from crates.io.
+  This is for publishing on crates.io.
+
 == {compare-url}/v0.2.0\...v0.3.0[0.3.0] - 2022-08-26
 
 === Added
