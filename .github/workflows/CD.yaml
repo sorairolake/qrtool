@@ -49,14 +49,17 @@ jobs:
       id: get_version
       uses: battila7/get-version-action@v2.2.1
     - name: Setup Ruby
+      if: matrix.os != 'windows-2022'
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.1
     - name: Install Asciidoctor
+      if: matrix.os != 'windows-2022'
       run: |
         gem install asciidoctor
         asciidoctor -V
     - name: Build man pages
+      if: matrix.os != 'windows-2022'
       run: |
         mkdir -p build
         asciidoctor -b manpage -a "revnumber=${{ steps.get_version.outputs.version-without-v }}" -D build doc/man/man1/*.adoc
@@ -73,7 +76,9 @@ jobs:
         mkdir -p "${package}"/{doc,man}
         cp README.md COPYRIGHT LICENSE-APACHE LICENSE-MIT "${bin}" "${package}"
         cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
-        cp build/* "${package}"/man
+        if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+          cp build/* "${package}"/man
+        fi
 
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
           tar czvf "${package}.tar.gz" "${package}"
