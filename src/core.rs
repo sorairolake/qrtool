@@ -60,7 +60,7 @@ pub fn run() -> anyhow::Result<()> {
                 .context("Could not construct a QR code")?;
 
                 if arg.verbose {
-                    let metadata = code.extract_metadata();
+                    let metadata = code.metadata();
                     eprintln!("Version: {}", metadata.symbol_version());
                     eprintln!("Level: {:?}", metadata.error_correction_level());
                 }
@@ -143,7 +143,7 @@ pub fn run() -> anyhow::Result<()> {
 
                 for content in contents {
                     if arg.verbose || arg.metadata {
-                        let metadata = content.0.extract_metadata();
+                        let metadata = content.0.metadata();
                         eprintln!("Version: {}", metadata.symbol_version());
                         eprintln!("Level: {:?}", metadata.error_correction_level());
                         if arg.metadata {

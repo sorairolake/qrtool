@@ -103,7 +103,7 @@ pub fn to_image(
 }
 
 impl Extractor for QrCode {
-    fn extract_metadata(&self) -> Metadata {
+    fn metadata(&self) -> Metadata {
         let symbol_version = match self.version() {
             Version::Normal(version) | Version::Micro(version) => {
                 usize::try_from(version).expect("Invalid symbol version")
@@ -155,25 +155,25 @@ mod tests {
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::L)
                 .unwrap()
-                .extract_metadata(),
+                .metadata(),
             Metadata::new(1, Ecc::L)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::M)
                 .unwrap()
-                .extract_metadata(),
+                .metadata(),
             Metadata::new(1, Ecc::M)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::Q)
                 .unwrap()
-                .extract_metadata(),
+                .metadata(),
             Metadata::new(1, Ecc::Q)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::H)
                 .unwrap()
-                .extract_metadata(),
+                .metadata(),
             Metadata::new(1, Ecc::H)
         );
     }

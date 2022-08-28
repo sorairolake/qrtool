@@ -14,7 +14,7 @@ pub struct Metadata {
 
 pub trait Extractor {
     /// Extracts the metadata.
-    fn extract_metadata(&self) -> Metadata;
+    fn metadata(&self) -> Metadata;
 }
 
 impl Metadata {
