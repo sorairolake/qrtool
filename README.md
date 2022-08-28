@@ -79,6 +79,22 @@ Generate this image:
 
 ![Output](tests/data/colored/fg.png)
 
+### Convert to and from unsupported image formats
+
+Both `encode` and `decode` can read from stdin and output to stdout.
+
+Example (convert to AVIF):
+
+```sh
+cat Cargo.toml | qrtool encode | magick png:- output.avif
+```
+
+Example (convert from AVIF):
+
+```sh
+magick output.avif png:- | qrtool decode | bat -l toml
+```
+
 ### Generate shell completion
 
 `--generate-completion` option generates shell completions to stdout.
