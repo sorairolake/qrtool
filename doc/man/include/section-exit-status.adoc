@@ -14,6 +14,10 @@
 
   An error occurred.
 
+*2*::
+
+  An error occurred while parsing command-line arguments.
+
 *65*::
 
   The input data was incorrect in some way.
