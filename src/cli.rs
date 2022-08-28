@@ -69,7 +69,8 @@ pub struct Encode {
         value_enum,
         default_value_t,
         visible_alias("level"),
-        value_name("LEVEL")
+        value_name("LEVEL"),
+        ignore_case(true)
     )]
     pub error_correction_level: Ecc,
 
@@ -96,12 +97,19 @@ pub struct Encode {
         long("type"),
         value_enum,
         default_value_t,
-        value_name("FORMAT")
+        value_name("FORMAT"),
+        ignore_case(true)
     )]
     pub output_format: OutputFormat,
 
     /// The mode of the output.
-    #[clap(long, value_enum, default_value_t, value_name("MODE"))]
+    #[clap(
+        long,
+        value_enum,
+        default_value_t,
+        value_name("MODE"),
+        ignore_case(true)
+    )]
     pub mode: Mode,
 
     /// The type of QR code.
@@ -110,7 +118,8 @@ pub struct Encode {
         value_enum,
         default_value_t,
         requires("symbol-version"),
-        value_name("TYPE")
+        value_name("TYPE"),
+        ignore_case(true)
     )]
     pub variant: Variant,
 
@@ -149,7 +158,13 @@ pub struct Decode {
     ///
     /// If it is not specified, the format will be guessed based on the
     /// extension, and the raster format will use the content in addition to it.
-    #[clap(short('t'), long("type"), value_enum, value_name("FORMAT"))]
+    #[clap(
+        short('t'),
+        long("type"),
+        value_enum,
+        value_name("FORMAT"),
+        ignore_case(true)
+    )]
     pub input_format: Option<InputFormat>,
 
     /// Also print the metadata.
