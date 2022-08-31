@@ -275,10 +275,10 @@ impl TryFrom<OutputFormat> for ImageFormat {
 
 #[derive(Clone, Debug, ValueEnum)]
 pub enum Mode {
-    /// Numbers from 0 to 9.
+    /// All digits.
     Numeric,
 
-    /// Uppercase letters from A to Z, numbers from 0 to 9 and few symbols.
+    /// Alphanumerics and few symbols.
     Alphanumeric,
 
     /// Arbitrary binary data.
