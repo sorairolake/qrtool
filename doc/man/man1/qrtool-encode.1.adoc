@@ -6,7 +6,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2022-08-26
+:docdate: 2022-09-06
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -157,6 +157,7 @@ _STRING_::
   It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA and
   shorthands of these.
   A leading number sign is allowed.
+  Default is black (#000000).
 
 *--background* _COLOR_::
 
@@ -164,6 +165,7 @@ _STRING_::
   It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA and
   shorthands of these.
   A leading number sign is allowed.
+  Default is white (#ffffff).
 
 *--verbose*::
 

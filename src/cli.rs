@@ -127,15 +127,15 @@ pub struct Encode {
     ///
     /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
     /// and shorthands of these. A leading number sign is allowed.
-    #[clap(long, value_name("COLOR"))]
-    pub foreground: Option<Color>,
+    #[clap(long, default_value("#000000"), value_name("COLOR"))]
+    pub foreground: Color,
 
     /// Background color.
     ///
     /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
     /// and shorthands of these. A leading number sign is allowed.
-    #[clap(long, value_name("COLOR"))]
-    pub background: Option<Color>,
+    #[clap(long, default_value("#ffffff"), value_name("COLOR"))]
+    pub background: Color,
 
     /// Also print the metadata.
     ///
