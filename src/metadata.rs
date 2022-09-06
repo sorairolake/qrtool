@@ -6,6 +6,7 @@
 
 use crate::cli::Ecc;
 
+/// Metadata for a QR code.
 #[derive(Debug, Eq, PartialEq)]
 pub struct Metadata {
     symbol_version: usize,
@@ -14,7 +15,7 @@ pub struct Metadata {
 
 pub trait Extractor {
     /// Extracts the metadata.
-    fn extract_metadata(&self) -> Metadata;
+    fn metadata(&self) -> Metadata;
 }
 
 impl Metadata {

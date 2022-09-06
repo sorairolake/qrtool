@@ -9,9 +9,14 @@ use std::fmt;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
+/// The error type for parsing a string of hexadecimal notation to a RGB color
+/// or it with an alpha component.
 #[derive(Debug)]
 pub enum FromHexError {
+    /// An error which can be returned when parsing an integer.
     ParseIntError(ParseIntError),
+
+    /// An error which can be returned when hexadecimal notation is invalid.
     HexFormatError,
 }
 
@@ -36,6 +41,7 @@ impl From<ParseIntError> for FromHexError {
     }
 }
 
+/// RGB color or it with an alpha component.
 #[derive(Debug, Eq, PartialEq)]
 pub struct Color {
     red: u8,
@@ -45,9 +51,20 @@ pub struct Color {
 }
 
 impl Color {
-    /// Convert to a `(red, green, blue, alpha)` tuple.
-    pub const fn into_components(self) -> (u8, u8, u8, Option<u8>) {
-        (self.red, self.green, self.blue, self.alpha)
+    /// Returns the components as an array.
+    pub fn channels(&self) -> [u8; 4] {
+        [
+            self.red,
+            self.green,
+            self.blue,
+            self.alpha.unwrap_or(u8::MAX),
+        ]
+    }
+}
+
+impl fmt::Display for Color {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "#{self:x}")
     }
 }
 
@@ -111,8 +128,35 @@ mod tests {
     use super::*;
 
     #[test]
-    #[allow(clippy::cognitive_complexity, clippy::too_many_lines)]
-    fn from_str() {
+    fn display() {
+        assert_eq!(
+            format!(
+                "{}",
+                Color {
+                    red: 18,
+                    green: 58,
+                    blue: 188,
+                    alpha: None
+                }
+            ),
+            "#123abc"
+        );
+        assert_eq!(
+            format!(
+                "{}",
+                Color {
+                    red: 18,
+                    green: 52,
+                    blue: 171,
+                    alpha: Some(205)
+                }
+            ),
+            "#1234abcd"
+        );
+    }
+
+    #[test]
+    fn from_str_of_rgb() {
         assert_eq!(
             Color::from_str("#123abc").unwrap(),
             Color {
@@ -187,7 +231,10 @@ mod tests {
             }
         );
         assert!(Color::from_str("#ggg").is_err());
+    }
 
+    #[test]
+    fn from_str_of_rgba() {
         assert_eq!(
             Color::from_str("#1234abcd").unwrap(),
             Color {
@@ -262,7 +309,10 @@ mod tests {
             }
         );
         assert!(Color::from_str("#gggg").is_err());
+    }
 
+    #[test]
+    fn from_str_of_invalid_hexadecimal_notation() {
         assert!(Color::from_str("#1").is_err());
         assert!(Color::from_str("1").is_err());
         assert!(Color::from_str("#12").is_err());

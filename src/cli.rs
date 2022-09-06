@@ -127,15 +127,15 @@ pub struct Encode {
     ///
     /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
     /// and shorthands of these. A leading number sign is allowed.
-    #[clap(long, value_name("COLOR"))]
-    pub foreground: Option<Color>,
+    #[clap(long, default_value("#000000"), value_name("COLOR"))]
+    pub foreground: Color,
 
     /// Background color.
     ///
     /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
     /// and shorthands of these. A leading number sign is allowed.
-    #[clap(long, value_name("COLOR"))]
-    pub background: Option<Color>,
+    #[clap(long, default_value("#ffffff"), value_name("COLOR"))]
+    pub background: Color,
 
     /// Also print the metadata.
     ///
@@ -202,7 +202,7 @@ impl Opt {
     }
 }
 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, ValueEnum)]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum Ecc {
     /// Level L.
     ///
@@ -212,6 +212,7 @@ pub enum Ecc {
     /// Level M.
     ///
     /// 15% of codewords can be restored.
+    #[default]
     M,
 
     /// Level Q.
@@ -225,12 +226,6 @@ pub enum Ecc {
     H,
 }
 
-impl Default for Ecc {
-    fn default() -> Self {
-        Self::M
-    }
-}
-
 impl From<Ecc> for qrcode::EcLevel {
     fn from(level: Ecc) -> Self {
         match level {
@@ -242,11 +237,12 @@ impl From<Ecc> for qrcode::EcLevel {
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
+#[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum OutputFormat {
     /// Portable Network Graphics.
     ///
     /// This outputs 32-bit RGBA PNG image.
+    #[default]
     Png,
 
     /// Scalable Vector Graphics.
@@ -254,12 +250,6 @@ pub enum OutputFormat {
 
     /// To the terminal as UTF-8 string.
     Terminal,
-}
-
-impl Default for OutputFormat {
-    fn default() -> Self {
-        Self::Png
-    }
 }
 
 impl TryFrom<OutputFormat> for ImageFormat {
@@ -273,40 +263,30 @@ impl TryFrom<OutputFormat> for ImageFormat {
     }
 }
 
-#[derive(Clone, Debug, ValueEnum)]
+#[derive(Clone, Debug, Default, ValueEnum)]
 pub enum Mode {
-    /// Numbers from 0 to 9.
+    /// All digits.
     Numeric,
 
-    /// Uppercase letters from A to Z, numbers from 0 to 9 and few symbols.
+    /// Alphanumerics and few symbols.
     Alphanumeric,
 
     /// Arbitrary binary data.
+    #[default]
     Byte,
 
     /// Shift JIS text.
     Kanji,
 }
 
-impl Default for Mode {
-    fn default() -> Self {
-        Self::Byte
-    }
-}
-
-#[derive(Clone, Debug, ValueEnum)]
+#[derive(Clone, Debug, Default, ValueEnum)]
 pub enum Variant {
     /// Normal QR code.
+    #[default]
     Normal,
 
     /// Micro QR code.
     Micro,
-}
-
-impl Default for Variant {
-    fn default() -> Self {
-        Self::Normal
-    }
 }
 
 #[derive(Clone, Debug, ValueEnum)]

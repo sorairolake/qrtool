@@ -12,6 +12,16 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.3.2\...v0.3.3[0.3.3] - 2022-09-06
+
+=== Added
+
+* Add the default color to `--foreground` and `--background`
+
+=== Changed
+
+* Bump MSRV to 1.62.0
+
 == {compare-url}/v0.3.1\...v0.3.2[0.3.2] - 2022-08-28
 
 === Changed

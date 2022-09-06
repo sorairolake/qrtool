@@ -74,7 +74,7 @@ pub fn grids_as_bytes<G: BitGrid>(
 }
 
 impl Extractor for MetaData {
-    fn extract_metadata(&self) -> Metadata {
+    fn metadata(&self) -> Metadata {
         let symbol_version = self.version.0;
         let error_correction_level = match self.ecc_level {
             0 => Ecc::M,
@@ -114,7 +114,7 @@ mod tests {
                 ecc_level: 1,
                 mask: 4
             }
-            .extract_metadata(),
+            .metadata(),
             Metadata::new(1, Ecc::L)
         );
         assert_eq!(
@@ -123,7 +123,7 @@ mod tests {
                 ecc_level: 0,
                 mask: 3
             }
-            .extract_metadata(),
+            .metadata(),
             Metadata::new(1, Ecc::M)
         );
         assert_eq!(
@@ -132,7 +132,7 @@ mod tests {
                 ecc_level: 3,
                 mask: 7
             }
-            .extract_metadata(),
+            .metadata(),
             Metadata::new(1, Ecc::Q)
         );
         assert_eq!(
@@ -141,7 +141,7 @@ mod tests {
                 ecc_level: 2,
                 mask: 4
             }
-            .extract_metadata(),
+            .metadata(),
             Metadata::new(1, Ecc::H)
         );
     }

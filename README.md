@@ -97,6 +97,22 @@ Example:
 qrtool --generate-completion bash > qrtool.bash
 ```
 
+## Integration with other programs
+
+Both `encode` and `decode` can read from stdin and output to stdout.
+
+The following example, the encoded result is saved as a JPEG XL image:
+
+```sh
+cat Cargo.toml | qrtool encode | magick png:- output.jxl
+```
+
+The following example, the decoded result is displayed by `bat`:
+
+```sh
+magick output.jxl png:- | qrtool decode | bat -l toml
+```
+
 ## Command-line options
 
 Please see the following:

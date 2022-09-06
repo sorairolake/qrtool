@@ -7,9 +7,9 @@
 use image::{DynamicImage, Rgba};
 use qrcode::{
     bits::Bits,
-    render::{svg, unicode, Pixel, Renderer},
+    render::{svg, unicode, Renderer},
     types::QrError,
-    Color as QrColor, EcLevel, QrCode, QrResult, Version,
+    EcLevel, QrCode, QrResult, Version,
 };
 
 use crate::cli::{Ecc, Mode, Variant};
@@ -52,18 +52,10 @@ pub fn push_data_for_selected_mode(
 }
 
 /// Renders the QR code into an image.
-pub fn to_svg(code: &QrCode, margin: u32, colors: (Option<Color>, Option<Color>)) -> String {
-    let foreground = colors.0.map_or_else(
-        || svg::Color::default_color(QrColor::Dark).0.to_string(),
-        |fg| format!("#{fg:x}"),
-    );
-    let background = colors.1.map_or_else(
-        || svg::Color::default_color(QrColor::Light).0.to_string(),
-        |bg| format!("#{bg:x}"),
-    );
+pub fn to_svg(code: &QrCode, margin: u32, colors: &(Color, Color)) -> String {
     Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin)
-        .dark_color(svg::Color(&foreground))
-        .light_color(svg::Color(&background))
+        .dark_color(svg::Color(&format!("{}", colors.0)))
+        .light_color(svg::Color(&format!("{}", colors.1)))
         .build()
 }
 
@@ -76,34 +68,16 @@ pub fn to_terminal(code: &QrCode, margin: u32) -> String {
 }
 
 /// Renders the QR code into an image.
-pub fn to_image(
-    code: &QrCode,
-    margin: u32,
-    colors: (Option<Color>, Option<Color>),
-) -> DynamicImage {
-    let foreground = colors.0.map_or_else(
-        || Rgba::default_color(QrColor::Dark),
-        |fg| {
-            let color = fg.into_components();
-            Rgba([color.0, color.1, color.2, color.3.unwrap_or(u8::MAX)])
-        },
-    );
-    let background = colors.1.map_or_else(
-        || Rgba::default_color(QrColor::Light),
-        |bg| {
-            let color = bg.into_components();
-            Rgba([color.0, color.1, color.2, color.3.unwrap_or(u8::MAX)])
-        },
-    );
+pub fn to_image(code: &QrCode, margin: u32, colors: &(Color, Color)) -> DynamicImage {
     let image = Renderer::<Rgba<u8>>::new(&code.to_colors(), code.width(), margin)
-        .dark_color(foreground)
-        .light_color(background)
+        .dark_color(Rgba::from(colors.0.channels()))
+        .light_color(Rgba::from(colors.1.channels()))
         .build();
     DynamicImage::ImageRgba8(image)
 }
 
 impl Extractor for QrCode {
-    fn extract_metadata(&self) -> Metadata {
+    fn metadata(&self) -> Metadata {
         let symbol_version = match self.version() {
             Version::Normal(version) | Version::Micro(version) => {
                 usize::try_from(version).expect("Invalid symbol version")
@@ -155,25 +129,25 @@ mod tests {
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::L)
                 .unwrap()
-                .extract_metadata(),
+                .metadata(),
             Metadata::new(1, Ecc::L)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::M)
                 .unwrap()
-                .extract_metadata(),
+                .metadata(),
             Metadata::new(1, Ecc::M)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::Q)
                 .unwrap()
-                .extract_metadata(),
+                .metadata(),
             Metadata::new(1, Ecc::Q)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::H)
                 .unwrap()
-                .extract_metadata(),
+                .metadata(),
             Metadata::new(1, Ecc::H)
         );
     }
