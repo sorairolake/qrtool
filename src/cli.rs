@@ -202,7 +202,7 @@ impl Opt {
     }
 }
 
-#[derive(Clone, Copy, Debug, Eq, PartialEq, ValueEnum)]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum Ecc {
     /// Level L.
     ///
@@ -212,6 +212,7 @@ pub enum Ecc {
     /// Level M.
     ///
     /// 15% of codewords can be restored.
+    #[default]
     M,
 
     /// Level Q.
@@ -225,12 +226,6 @@ pub enum Ecc {
     H,
 }
 
-impl Default for Ecc {
-    fn default() -> Self {
-        Self::M
-    }
-}
-
 impl From<Ecc> for qrcode::EcLevel {
     fn from(level: Ecc) -> Self {
         match level {
@@ -242,11 +237,12 @@ impl From<Ecc> for qrcode::EcLevel {
     }
 }
 
-#[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
+#[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum OutputFormat {
     /// Portable Network Graphics.
     ///
     /// This outputs 32-bit RGBA PNG image.
+    #[default]
     Png,
 
     /// Scalable Vector Graphics.
@@ -254,12 +250,6 @@ pub enum OutputFormat {
 
     /// To the terminal as UTF-8 string.
     Terminal,
-}
-
-impl Default for OutputFormat {
-    fn default() -> Self {
-        Self::Png
-    }
 }
 
 impl TryFrom<OutputFormat> for ImageFormat {
@@ -273,7 +263,7 @@ impl TryFrom<OutputFormat> for ImageFormat {
     }
 }
 
-#[derive(Clone, Debug, ValueEnum)]
+#[derive(Clone, Debug, Default, ValueEnum)]
 pub enum Mode {
     /// All digits.
     Numeric,
@@ -282,31 +272,21 @@ pub enum Mode {
     Alphanumeric,
 
     /// Arbitrary binary data.
+    #[default]
     Byte,
 
     /// Shift JIS text.
     Kanji,
 }
 
-impl Default for Mode {
-    fn default() -> Self {
-        Self::Byte
-    }
-}
-
-#[derive(Clone, Debug, ValueEnum)]
+#[derive(Clone, Debug, Default, ValueEnum)]
 pub enum Variant {
     /// Normal QR code.
+    #[default]
     Normal,
 
     /// Micro QR code.
     Micro,
-}
-
-impl Default for Variant {
-    fn default() -> Self {
-        Self::Normal
-    }
 }
 
 #[derive(Clone, Debug, ValueEnum)]
