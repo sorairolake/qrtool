@@ -6,6 +6,7 @@
 
 use crate::cli::Ecc;
 
+/// Metadata for a QR code.
 #[derive(Debug, Eq, PartialEq)]
 pub struct Metadata {
     symbol_version: usize,

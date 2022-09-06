@@ -9,9 +9,14 @@ use std::fmt;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
+/// The error type for parsing a string of hexadecimal notation to a RGB color
+/// or it with an alpha component.
 #[derive(Debug)]
 pub enum FromHexError {
+    /// An error which can be returned when parsing an integer.
     ParseIntError(ParseIntError),
+
+    /// An error which can be returned when hexadecimal notation is invalid.
     HexFormatError,
 }
 
@@ -36,6 +41,7 @@ impl From<ParseIntError> for FromHexError {
     }
 }
 
+/// RGB color or it with an alpha component.
 #[derive(Debug, Eq, PartialEq)]
 pub struct Color {
     red: u8,
