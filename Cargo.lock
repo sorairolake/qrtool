@@ -920,9 +920,9 @@ dependencies = [
 
 [[package]]
 name = "sysexits"
-version = "0.3.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57c24dea646d0a2a4209a2d960275fd4416be9ab32c77927f51279a621e2b629"
+checksum = "70bb908917c14629cfe25e0198e96757ff3d07861da4452d27e4bd4ea333644d"
 
 [[package]]
 name = "termcolor"
