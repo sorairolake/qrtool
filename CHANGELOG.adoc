@@ -12,6 +12,12 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.3.3\...HEAD[Unreleased]
+
+=== Changed
+
+* Allow non-UTF-8 paths as arguments
+
 == {compare-url}/v0.3.2\...v0.3.3[0.3.3] - 2022-09-06
 
 === Added
