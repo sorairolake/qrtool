@@ -164,6 +164,5 @@ pub fn run() -> anyhow::Result<()> {
     } else {
         unreachable!();
     }
-
     Ok(())
 }

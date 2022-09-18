@@ -49,11 +49,12 @@ pub enum Command {
 #[clap(setting(AppSettings::DeriveDisplayOrder))]
 pub struct Encode {
     /// Output the result to a file.
-    #[clap(short, long, value_name("FILE"))]
+    #[clap(value_parser, short, long, value_name("FILE"))]
     pub output: Option<PathBuf>,
 
     /// Read input data from a file.
     #[clap(
+        value_parser,
         short,
         long,
         value_name("FILE"),
@@ -186,7 +187,7 @@ pub struct Decode {
     /// by the image crate. The format guess based on the extension, and the
     /// raster format use the content in addition to it. Note that the SVG
     /// image is rasterized before scanning.
-    #[clap(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
+    #[clap(value_parser, value_name("IMAGE"), value_hint(ValueHint::FilePath))]
     pub input: Option<PathBuf>,
 }
 
