@@ -1,6 +1,6 @@
 [package]
 name = "qrtool"
-version = "0.3.3"
+version = "0.4.0"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.62.0"
@@ -21,7 +21,7 @@ image = "0.23.14"
 qrcode = "0.12.0"
 resvg = { version = "0.23.0", default-features = false, optional = true }
 rqrr = "0.4.0"
-sysexits = "0.3.1"
+sysexits = "0.3.2"
 tiny-skia = { version = "0.6.6", optional = true }
 usvg = { version = "0.23.0", default-features = false, optional = true }
 
