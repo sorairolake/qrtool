@@ -42,7 +42,7 @@ impl From<ParseIntError> for FromHexError {
 }
 
 /// RGB color or it with an alpha component.
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Color {
     red: u8,
     green: u8,
