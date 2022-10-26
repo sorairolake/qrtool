@@ -257,6 +257,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "data-url"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8d7439c3735f405729d52c3fbbe4de140eaf938a1fe47d227c27f8254d4302a5"
+
+[[package]]
 name = "deflate"
 version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -407,7 +413,7 @@ dependencies = [
  "byteorder",
  "color_quant",
  "gif",
- "jpeg-decoder 0.1.22",
+ "jpeg-decoder",
  "num-iter",
  "num-rational",
  "num-traits",
@@ -439,12 +445,6 @@ checksum = "229d53d58899083193af11e15917b5640cd40b29ff475a1fe4ef725deb02d0f2"
 dependencies = [
  "rayon",
 ]
-
-[[package]]
-name = "jpeg-decoder"
-version = "0.2.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9478aa10f73e7528198d75109c8be5cd7d15fb530238040148d5f9a22d4c5b3b"
 
 [[package]]
 name = "kurbo"
@@ -735,8 +735,8 @@ dependencies = [
  "resvg",
  "rqrr",
  "sysexits",
- "tiny-skia",
- "usvg",
+ "tiny-skia 0.6.6",
+ "usvg 0.23.0",
 ]
 
 [[package]]
@@ -788,6 +788,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9ae028b272a6e99d9f8260ceefa3caa09300a8d6c8d2b2001316474bc52122e9"
 
 [[package]]
+name = "rctree"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3b42e27ef78c35d3998403c1d26f3efd9e135d3e5121b0a4845cc5cc27547f4f"
+
+[[package]]
 name = "regex"
 version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -812,19 +818,16 @@ checksum = "a3f87b73ce11b1619a3c6332f45341e0047173771e8b8b73f87bfeefb7b56244"
 
 [[package]]
 name = "resvg"
-version = "0.23.0"
+version = "0.24.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "34489194784b86c03c3d688258e2ba73f3c82700ba4673ee2ecad5ae540b9438"
+checksum = "bf64f51f2e0b6a953e946120e93c346603eec1c480678ad1a5f303122c29bbba"
 dependencies = [
- "gif",
- "jpeg-decoder 0.2.6",
  "log",
  "pico-args",
- "png 0.17.6",
  "rgb",
  "svgtypes",
- "tiny-skia",
- "usvg",
+ "tiny-skia 0.8.2",
+ "usvg 0.24.0",
 ]
 
 [[package]]
@@ -841,6 +844,15 @@ name = "roxmltree"
 version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "921904a62e410e37e215c40381b7117f830d9d89ba60ab5236170541dd25646b"
+dependencies = [
+ "xmlparser",
+]
+
+[[package]]
+name = "roxmltree"
+version = "0.15.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6b9de9831a129b122e7e61f242db509fa9d0838008bf0b29bb0624669edfe48a"
 dependencies = [
  "xmlparser",
 ]
@@ -905,6 +917,15 @@ name = "siphasher"
 version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7bd3e3206899af3f8b12af284fafc038cc1dc2b41d1b89dd17297221c5d225de"
+
+[[package]]
+name = "strict-num"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9df65f20698aeed245efdde3628a6b559ea1239bbb871af1b6e3b58c413b2bd1"
+dependencies = [
+ "float-cmp",
+]
 
 [[package]]
 name = "strsim"
@@ -980,7 +1001,7 @@ version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9a53f4706d65497df0c4349241deddf35f84cee19c87ed86ea8ca590f4464437"
 dependencies = [
- "jpeg-decoder 0.1.22",
+ "jpeg-decoder",
  "miniz_oxide 0.4.4",
  "weezl",
 ]
@@ -997,6 +1018,31 @@ dependencies = [
  "cfg-if",
  "png 0.17.6",
  "safe_arch",
+]
+
+[[package]]
+name = "tiny-skia"
+version = "0.8.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0ae12c22601b6853f4d93abb178e13bf0e1cc8e2454100c85d4d3a59ac71b3f7"
+dependencies = [
+ "arrayref",
+ "arrayvec 0.7.2",
+ "bytemuck",
+ "cfg-if",
+ "png 0.17.6",
+ "tiny-skia-path",
+]
+
+[[package]]
+name = "tiny-skia-path"
+version = "0.8.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bd665853ce64402daabef6edda442dbb4f8ee93ea80957b66ba1af419f11a104"
+dependencies = [
+ "arrayref",
+ "bytemuck",
+ "strict-num",
 ]
 
 [[package]]
@@ -1018,16 +1064,36 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28a82565b5c96dcbb58c9bdbb6aa3642abd395a6a6b480658532c6f74c3c4b7a"
 dependencies = [
  "base64",
- "data-url",
+ "data-url 0.1.1",
  "flate2",
  "float-cmp",
  "kurbo",
  "log",
  "pico-args",
- "rctree",
- "roxmltree",
+ "rctree 0.4.0",
+ "roxmltree 0.14.1",
  "simplecss",
  "siphasher",
+ "svgtypes",
+]
+
+[[package]]
+name = "usvg"
+version = "0.24.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0bd5d0b775c3da5fd8d2e79b1eca61c71b7d45220a696a1dc6b85ba9b5aa7b79"
+dependencies = [
+ "base64",
+ "data-url 0.2.0",
+ "flate2",
+ "kurbo",
+ "log",
+ "pico-args",
+ "rctree 0.5.0",
+ "roxmltree 0.15.1",
+ "simplecss",
+ "siphasher",
+ "strict-num",
  "svgtypes",
 ]
 
@@ -1134,6 +1200,6 @@ checksum = "c811ca4a8c853ef420abd8592ba53ddbbac90410fab6903b3e79972a631f7680"
 
 [[package]]
 name = "xmlparser"
-version = "0.13.3"
+version = "0.13.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "114ba2b24d2167ef6d67d7d04c8cc86522b87f490025f39f0303b7db5bf5e3d8"
+checksum = "4d25c75bf9ea12c4040a97f829154768bbbce366287e2dc044af160cd79a13fd"
