@@ -23,7 +23,7 @@ resvg = { version = "0.23.0", default-features = false, optional = true }
 rqrr = "0.4.0"
 sysexits = "0.3.3"
 tiny-skia = { version = "0.6.6", optional = true }
-usvg = { version = "0.23.0", default-features = false, optional = true }
+usvg = { version = "0.24.0", default-features = false, optional = true }
 
 [dev-dependencies]
 assert_cmd = "2.0.5"
