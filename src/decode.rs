@@ -35,7 +35,7 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
 
     let tree = Tree::from_data(data, &opt.to_ref())?;
 
-    let pixmap_size = tree.svg_node().size.to_screen_size();
+    let pixmap_size = tree.size.to_screen_size();
     let mut pixmap = Pixmap::new(pixmap_size.width(), pixmap_size.height())
         .context("Could not allocate a new pixmap")?;
     resvg::render(
