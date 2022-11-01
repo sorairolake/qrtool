@@ -47,7 +47,7 @@ jobs:
         use-cross: ${{ matrix.use-cross }}
     - name: Get version
       id: get_version
-      uses: battila7/get-version-action@v2.2.1
+      uses: battila7/get-version-action@v2.3.0
     - name: Setup Ruby
       if: matrix.os != 'windows-2022'
       uses: ruby/setup-ruby@v1
