@@ -46,25 +46,25 @@ jobs:
       with:
         key: ${{ matrix.target }}
     - name: Build a package
-      uses: actions-rs/cargo@v1.0.1
+      uses: actions-rs/cargo@v1.0.3
       with:
         command: build
         args: --target ${{ matrix.target }}
         use-cross: ${{ matrix.use-cross }}
     - name: Build a package (no default features)
-      uses: actions-rs/cargo@v1.0.1
+      uses: actions-rs/cargo@v1.0.3
       with:
         command: build
         args: --target ${{ matrix.target }} --no-default-features
         use-cross: ${{ matrix.use-cross }}
     - name: Run tests
-      uses: actions-rs/cargo@v1.0.1
+      uses: actions-rs/cargo@v1.0.3
       with:
         command: test
         args: --target ${{ matrix.target }}
         use-cross: ${{ matrix.use-cross }}
     - name: Run tests (no default features)
-      uses: actions-rs/cargo@v1.0.1
+      uses: actions-rs/cargo@v1.0.3
       with:
         command: test
         args: --target ${{ matrix.target }} --no-default-features
@@ -86,7 +86,7 @@ jobs:
     - name: Cache build artifacts
       uses: Swatinem/rust-cache@v1.3.0
     - name: Check code formatted
-      uses: actions-rs/cargo@v1.0.1
+      uses: actions-rs/cargo@v1.0.3
       with:
         command: fmt
         args: -- --check
@@ -107,12 +107,12 @@ jobs:
     - name: Cache build artifacts
       uses: Swatinem/rust-cache@v1.3.0
     - name: Check no lint warnings
-      uses: actions-rs/cargo@v1.0.1
+      uses: actions-rs/cargo@v1.0.3
       with:
         command: clippy
         args: -- -D warnings
     - name: Check no lint warnings (no default features)
-      uses: actions-rs/cargo@v1.0.1
+      uses: actions-rs/cargo@v1.0.3
       with:
         command: clippy
         args: --no-default-features -- -D warnings
