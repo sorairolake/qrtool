@@ -15,7 +15,7 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 anyhow = "1.0.66"
-clap = { version = "4.0.18", features = ["derive", "wrap_help"] }
+clap = { version = "4.0.22", features = ["derive", "wrap_help"] }
 clap_complete = "4.0.5"
 image = "0.23.14"
 qrcode = "0.12.0"
