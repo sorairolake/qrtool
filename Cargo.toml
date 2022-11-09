@@ -27,7 +27,7 @@ usvg = { version = "0.25.0", default-features = false, optional = true }
 
 [dev-dependencies]
 assert_cmd = "2.0.5"
-predicates = "2.1.1"
+predicates = "2.1.2"
 
 [features]
 default = ["decode-from-svg"]
