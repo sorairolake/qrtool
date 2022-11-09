@@ -106,6 +106,7 @@ pub fn run() -> anyhow::Result<()> {
             Command::Decode(arg) => {
                 let input_format = arg.input_format;
                 #[cfg(feature = "decode-from-svg")]
+                #[allow(clippy::option_if_let_else)]
                 let input_format = match arg.input {
                     Some(ref path) if decode::is_svg(path) => Some(InputFormat::Svg),
                     _ => input_format,
@@ -121,6 +122,7 @@ pub fn run() -> anyhow::Result<()> {
                         buf
                     }
                 };
+                #[allow(clippy::option_if_let_else)]
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]
                     Some(InputFormat::Svg) => decode::from_svg(&input),
