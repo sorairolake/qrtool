@@ -36,7 +36,7 @@ jobs:
         override: true
         profile: minimal
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.0.1
+      uses: Swatinem/rust-cache@v2.1.0
       with:
         key: ${{ matrix.target }}
     - name: Build a package
