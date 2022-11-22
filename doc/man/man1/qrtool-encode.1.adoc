@@ -6,7 +6,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2022-09-06
+:docdate: 2022-11-22
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -175,6 +175,10 @@ _STRING_::
 *-h*, *--help*::
 
   Print help information.
+
+*-V*, *--version*::
+
+  Print version information.
 
 include::{includedir}/section-exit-status.adoc[]
 

@@ -3,7 +3,16 @@ updates:
   - package-ecosystem: "cargo"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     ignore:
       - dependency-name: "image"
+      - dependency-name: "qrcode"
+      - dependency-name: "resvg"
       - dependency-name: "rqrr"
+      - dependency-name: "tiny-skia"
+      - dependency-name: "usvg"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

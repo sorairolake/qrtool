@@ -24,7 +24,7 @@ impl fmt::Display for FromHexError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::ParseIntError(err) => {
-                write!(f, "{}", err)
+                write!(f, "{err}")
             }
             Self::HexFormatError => {
                 write!(f, "Invalid hexadecimal notation")
@@ -42,7 +42,7 @@ impl From<ParseIntError> for FromHexError {
 }
 
 /// RGB color or it with an alpha component.
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Color {
     red: u8,
     green: u8,
@@ -114,8 +114,8 @@ impl fmt::LowerHex for Color {
         if let Some(alpha) = self.alpha {
             write!(
                 f,
-                "{:02x}{:02x}{:02x}{:02x}",
-                self.red, self.green, self.blue, alpha
+                "{:02x}{:02x}{:02x}{alpha:02x}",
+                self.red, self.green, self.blue
             )
         } else {
             write!(f, "{:02x}{:02x}{:02x}", self.red, self.green, self.blue)

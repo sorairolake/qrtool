@@ -29,25 +29,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Setup Rust toolchain
-      uses: actions-rs/toolchain@v1.0.6
+      uses: actions-rs/toolchain@v1.0.7
       with:
         toolchain: 1.62.0 # MSRV
         target: ${{ matrix.target }}
         override: true
         profile: minimal
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v1.3.0
+      uses: Swatinem/rust-cache@v2.2.0
       with:
         key: ${{ matrix.target }}
     - name: Build a package
-      uses: actions-rs/cargo@v1.0.1
+      uses: actions-rs/cargo@v1.0.3
       with:
         command: build
         args: --release --target ${{ matrix.target }}
         use-cross: ${{ matrix.use-cross }}
     - name: Get version
       id: get_version
-      uses: battila7/get-version-action@v2.2.1
+      uses: battila7/get-version-action@v2.3.0
     - name: Setup Ruby
       if: matrix.os != 'windows-2022'
       uses: ruby/setup-ruby@v1
@@ -86,7 +86,7 @@ jobs:
           7z a -bb "${package}.zip" "${package}"
         fi
     - name: Release
-      uses: softprops/action-gh-release@v0.1.14
+      uses: softprops/action-gh-release@v0.1.15
       if: startsWith(github.ref, 'refs/tags/')
       with:
         draft: true

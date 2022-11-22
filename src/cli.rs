@@ -7,9 +7,7 @@
 use std::io;
 use std::path::PathBuf;
 
-use clap::{
-    value_parser, AppSettings, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint,
-};
+use clap::{value_parser, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
 use clap_complete::{Generator, Shell};
 use image::{error::ImageFormatHint, ImageError, ImageFormat};
 
@@ -17,22 +15,22 @@ use crate::color::Color;
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
-#[clap(
+#[command(
     version,
     about,
+    max_term_width(100),
     propagate_version(true),
     arg_required_else_help(true),
     args_conflicts_with_subcommands(true)
 )]
-#[clap(setting(AppSettings::DeriveDisplayOrder))]
 pub struct Opt {
     /// Generate shell completion.
     ///
     /// The completion is output to stdout.
-    #[clap(long, value_enum, value_name("SHELL"))]
+    #[arg(long, value_enum, value_name("SHELL"))]
     pub generate_completion: Option<Shell>,
 
-    #[clap(subcommand)]
+    #[command(subcommand)]
     pub command: Option<Command>,
 }
 
@@ -46,15 +44,13 @@ pub enum Command {
 }
 
 #[derive(Args, Debug)]
-#[clap(setting(AppSettings::DeriveDisplayOrder))]
 pub struct Encode {
     /// Output the result to a file.
-    #[clap(value_parser, short, long, value_name("FILE"))]
+    #[arg(short, long, value_name("FILE"))]
     pub output: Option<PathBuf>,
 
     /// Read input data from a file.
-    #[clap(
-        value_parser,
+    #[arg(
         short,
         long,
         value_name("FILE"),
@@ -64,7 +60,7 @@ pub struct Encode {
     pub read_from: Option<PathBuf>,
 
     /// Error correction level.
-    #[clap(
+    #[arg(
         short('l'),
         long,
         value_enum,
@@ -79,7 +75,7 @@ pub struct Encode {
     ///
     /// For normal QR code, it should be between 1 and 40.
     /// For Micro QR code, it should be between 1 and 4.
-    #[clap(
+    #[arg(
         value_parser(value_parser!(i16).range(1..=40)),
         short('v'),
         long,
@@ -89,11 +85,11 @@ pub struct Encode {
     pub symbol_version: Option<i16>,
 
     /// The width of margin.
-    #[clap(short, long, default_value("4"), value_name("NUMBER"))]
+    #[arg(short, long, default_value("4"), value_name("NUMBER"))]
     pub margin: u32,
 
     /// The format of the output.
-    #[clap(
+    #[arg(
         short('t'),
         long("type"),
         value_enum,
@@ -104,7 +100,7 @@ pub struct Encode {
     pub output_format: OutputFormat,
 
     /// The mode of the output.
-    #[clap(
+    #[arg(
         long,
         value_enum,
         default_value_t,
@@ -114,11 +110,11 @@ pub struct Encode {
     pub mode: Mode,
 
     /// The type of QR code.
-    #[clap(
+    #[arg(
         long,
         value_enum,
         default_value_t,
-        requires("symbol-version"),
+        requires("symbol_version"),
         value_name("TYPE"),
         ignore_case(true)
     )]
@@ -128,38 +124,37 @@ pub struct Encode {
     ///
     /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
     /// and shorthands of these. A leading number sign is allowed.
-    #[clap(long, default_value("#000000"), value_name("COLOR"))]
+    #[arg(long, default_value("#000000"), value_name("COLOR"))]
     pub foreground: Color,
 
     /// Background color.
     ///
     /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
     /// and shorthands of these. A leading number sign is allowed.
-    #[clap(long, default_value("#ffffff"), value_name("COLOR"))]
+    #[arg(long, default_value("#ffffff"), value_name("COLOR"))]
     pub background: Color,
 
     /// Also print the metadata.
     ///
     /// It is output to stderr.
-    #[clap(long)]
+    #[arg(long)]
     pub verbose: bool,
 
     /// Input data.
     ///
     /// If it is not specified, data will be read from stdin.
     /// It takes a valid UTF-8 string.
-    #[clap(value_name("STRING"))]
+    #[arg(value_name("STRING"))]
     pub input: Option<String>,
 }
 
 #[derive(Args, Debug)]
-#[clap(setting(AppSettings::DeriveDisplayOrder))]
 pub struct Decode {
     /// The format of the input.
     ///
     /// If it is not specified, the format will be guessed based on the
     /// extension, and the raster format will use the content in addition to it.
-    #[clap(
+    #[arg(
         short('t'),
         long("type"),
         value_enum,
@@ -171,13 +166,13 @@ pub struct Decode {
     /// Also print the metadata.
     ///
     /// It is output to stderr.
-    #[clap(long, conflicts_with("metadata"))]
+    #[arg(long, conflicts_with("metadata"))]
     pub verbose: bool,
 
     /// Print only the metadata.
     ///
     /// It is output to stderr.
-    #[clap(long)]
+    #[arg(long)]
     pub metadata: bool,
 
     /// Input image file.
@@ -187,7 +182,7 @@ pub struct Decode {
     /// by the image crate. The format guess based on the extension, and the
     /// raster format use the content in addition to it. Note that the SVG
     /// image is rasterized before scanning.
-    #[clap(value_parser, value_name("IMAGE"), value_hint(ValueHint::FilePath))]
+    #[arg(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
     pub input: Option<PathBuf>,
 }
 
@@ -291,7 +286,7 @@ pub enum Variant {
 }
 
 #[derive(Clone, Debug, ValueEnum)]
-#[clap(rename_all = "lower")]
+#[value(rename_all = "lower")]
 pub enum InputFormat {
     /// Windows Bitmap.
     Bmp,
@@ -356,5 +351,15 @@ impl TryFrom<InputFormat> for ImageFormat {
             InputFormat::Tiff => Ok(Self::Tiff),
             InputFormat::WebP => Ok(Self::WebP),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn verify_app() {
+        Opt::command().debug_assert();
     }
 }
