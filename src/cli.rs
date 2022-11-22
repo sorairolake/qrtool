@@ -30,7 +30,7 @@ pub struct Opt {
     #[arg(long, value_enum, value_name("SHELL"))]
     pub generate_completion: Option<Shell>,
 
-    #[clap(subcommand)]
+    #[command(subcommand)]
     pub command: Option<Command>,
 }
 
