@@ -4,19 +4,16 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-#[cfg(feature = "decode-from-svg")]
-use std::path::Path;
-
-#[cfg(feature = "decode-from-svg")]
-use image::{DynamicImage, ImageFormat};
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
-use crate::cli::Ecc;
-use crate::metadata::{Extractor, Metadata};
+use crate::{
+    cli::Ecc,
+    metadata::{Extractor, Metadata},
+};
 
 /// Returns `true` if `path` is SVG.
 #[cfg(feature = "decode-from-svg")]
-pub fn is_svg(path: impl AsRef<Path>) -> bool {
+pub fn is_svg(path: impl AsRef<std::path::Path>) -> bool {
     use std::ffi::OsStr;
 
     matches!(
@@ -37,7 +34,7 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
 
     let pixmap_size = tree.size.to_screen_size();
     let mut pixmap = Pixmap::new(pixmap_size.width(), pixmap_size.height())
-        .context("Could not allocate a new pixmap")?;
+        .context("could not allocate a new pixmap")?;
     resvg::render(
         &tree,
         FitTo::Original,
@@ -50,9 +47,10 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
 
 /// Reads the image from SVG.
 #[cfg(feature = "decode-from-svg")]
-pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<DynamicImage> {
+pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<image::DynamicImage> {
     let image = svg_to_png(data.as_ref())?;
-    image::load_from_memory_with_format(&image, ImageFormat::Png).map_err(anyhow::Error::from)
+    image::load_from_memory_with_format(&image, image::ImageFormat::Png)
+        .map_err(anyhow::Error::from)
 }
 
 type DecodedBytes = (MetaData, Vec<u8>);
@@ -81,7 +79,7 @@ impl Extractor for MetaData {
             1 => Ecc::L,
             2 => Ecc::H,
             3 => Ecc::Q,
-            _ => panic!("Invalid error correction level"),
+            _ => panic!("invalid error correction level"),
         };
         Metadata::new(symbol_version, error_correction_level)
     }

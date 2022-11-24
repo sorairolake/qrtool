@@ -11,10 +11,11 @@
 // Lint levels of Clippy.
 #![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
 
-use std::env;
-use std::io;
-use std::path::Path;
-use std::process::{Command, ExitStatus};
+use std::{
+    env, io,
+    path::Path,
+    process::{Command, ExitStatus},
+};
 
 fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
     let man_dir = env::current_dir()?.join("doc/man/man1");

@@ -4,8 +4,7 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use std::io;
-use std::path::PathBuf;
+use std::{io, path::PathBuf};
 
 use clap::{value_parser, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
 use clap_complete::{Generator, Shell};
