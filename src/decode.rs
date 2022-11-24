@@ -37,7 +37,7 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
 
     let pixmap_size = tree.size.to_screen_size();
     let mut pixmap = Pixmap::new(pixmap_size.width(), pixmap_size.height())
-        .context("Could not allocate a new pixmap")?;
+        .context("could not allocate a new pixmap")?;
     resvg::render(
         &tree,
         FitTo::Original,
@@ -81,7 +81,7 @@ impl Extractor for MetaData {
             1 => Ecc::L,
             2 => Ecc::H,
             3 => Ecc::Q,
-            _ => panic!("Invalid error correction level"),
+            _ => panic!("invalid error correction level"),
         };
         Metadata::new(symbol_version, error_correction_level)
     }

@@ -80,7 +80,7 @@ impl Extractor for QrCode {
     fn metadata(&self) -> Metadata {
         let symbol_version = match self.version() {
             Version::Normal(version) | Version::Micro(version) => {
-                usize::try_from(version).expect("Invalid symbol version")
+                usize::try_from(version).expect("invalid symbol version")
             }
         };
         let error_correction_level = match self.error_correction_level() {

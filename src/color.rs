@@ -27,7 +27,7 @@ impl fmt::Display for FromHexError {
                 write!(f, "{err}")
             }
             Self::HexFormatError => {
-                write!(f, "Invalid hexadecimal notation")
+                write!(f, "invalid hexadecimal notation")
             }
         }
     }

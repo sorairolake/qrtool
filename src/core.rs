@@ -37,19 +37,19 @@ pub fn run() -> anyhow::Result<()> {
                     string.into_bytes()
                 } else if let Some(path) = arg.read_from {
                     fs::read(&path)
-                        .with_context(|| format!("Could not read data from {}", path.display()))?
+                        .with_context(|| format!("could not read data from {}", path.display()))?
                 } else {
                     let mut buf = Vec::new();
                     io::stdin()
                         .read_to_end(&mut buf)
-                        .context("Could not read data from stdin")?;
+                        .context("could not read data from stdin")?;
                     buf
                 };
 
                 let level = arg.error_correction_level.into();
                 let code = if let Some(version) = arg.symbol_version {
                     let v = encode::set_version(version, &arg.variant)
-                        .context("Could not set the version")?;
+                        .context("could not set the version")?;
                     let mut bits = Bits::new(v);
                     encode::push_data_for_selected_mode(&mut bits, input, &arg.mode)
                         .and_then(|_| bits.push_terminator(level))
@@ -57,7 +57,7 @@ pub fn run() -> anyhow::Result<()> {
                 } else {
                     QrCode::with_error_correction_level(&input, level)
                 }
-                .context("Could not construct a QR code")?;
+                .context("could not construct a QR code")?;
 
                 if arg.verbose {
                     let metadata = code.metadata();
@@ -75,7 +75,7 @@ pub fn run() -> anyhow::Result<()> {
 
                         if let Some(file) = arg.output {
                             fs::write(&file, string).with_context(|| {
-                                format!("Could not write the image to {}", file.display())
+                                format!("could not write the image to {}", file.display())
                             })?;
                         } else {
                             println!("{string}");
@@ -86,10 +86,10 @@ pub fn run() -> anyhow::Result<()> {
                             encode::to_image(&code, arg.margin, &(arg.foreground, arg.background));
 
                         let format = ImageFormat::try_from(format)
-                            .expect("The image format is not supported");
+                            .expect("the image format is not supported");
                         if let Some(file) = arg.output {
                             image.save_with_format(&file, format).with_context(|| {
-                                format!("Could not write the image to {}", file.display())
+                                format!("could not write the image to {}", file.display())
                             })?;
                         } else {
                             let mut buf = Vec::new();
@@ -98,7 +98,7 @@ pub fn run() -> anyhow::Result<()> {
                                 .and_then(|_| {
                                     io::stdout().write_all(&buf).map_err(ImageError::from)
                                 })
-                                .context("Could not write the image to stdout")?;
+                                .context("could not write the image to stdout")?;
                         }
                     }
                 }
@@ -113,12 +113,12 @@ pub fn run() -> anyhow::Result<()> {
                 };
                 let input = match arg.input {
                     Some(path) if path.to_str().unwrap_or_default() != "-" => fs::read(&path)
-                        .with_context(|| format!("Could not read data from {}", path.display()))?,
+                        .with_context(|| format!("could not read data from {}", path.display()))?,
                     _ => {
                         let mut buf = Vec::new();
                         io::stdin()
                             .read_to_end(&mut buf)
-                            .context("Could not read data from stdin")?;
+                            .context("could not read data from stdin")?;
                         buf
                     }
                 };
@@ -130,18 +130,18 @@ pub fn run() -> anyhow::Result<()> {
                         &input,
                         format
                             .try_into()
-                            .expect("The image format is not supported"),
+                            .expect("the image format is not supported"),
                     )
                     .map_err(anyhow::Error::from),
                     _ => image::load_from_memory(&input).map_err(anyhow::Error::from),
                 }
-                .context("Could not read the image")?;
+                .context("could not read the image")?;
                 let image = image.into_luma8();
 
                 let mut image = PreparedImage::prepare(image);
                 let grids = image.detect_grids();
                 let contents =
-                    decode::grids_as_bytes(grids).context("Could not decode the grid")?;
+                    decode::grids_as_bytes(grids).context("could not decode the grid")?;
 
                 for content in contents {
                     if arg.verbose || arg.metadata {
@@ -158,7 +158,7 @@ pub fn run() -> anyhow::Result<()> {
                     } else {
                         io::stdout()
                             .write_all(&content.1)
-                            .context("Could not write data to stdout")?;
+                            .context("could not write data to stdout")?;
                     }
                 }
             }
