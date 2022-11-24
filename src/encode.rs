@@ -12,9 +12,11 @@ use qrcode::{
     EcLevel, QrCode, QrResult, Version,
 };
 
-use crate::cli::{Ecc, Mode, Variant};
-use crate::color::Color;
-use crate::metadata::{Extractor, Metadata};
+use crate::{
+    cli::{Ecc, Mode, Variant},
+    color::Color,
+    metadata::{Extractor, Metadata},
+};
 
 /// Sets the version.
 pub const fn set_version(version: i16, variant: &Variant) -> QrResult<Version> {

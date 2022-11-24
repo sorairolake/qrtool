@@ -4,10 +4,7 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use std::error::Error;
-use std::fmt;
-use std::num::ParseIntError;
-use std::str::FromStr;
+use std::{error::Error, fmt, num::ParseIntError, str::FromStr};
 
 /// The error type for parsing a string of hexadecimal notation to a RGB color
 /// or it with an alpha component.

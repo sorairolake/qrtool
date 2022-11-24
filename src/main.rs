@@ -19,8 +19,7 @@ mod decode;
 mod encode;
 mod metadata;
 
-use std::io;
-use std::process::ExitCode;
+use std::{io, process::ExitCode};
 
 use image::ImageError;
 use qrcode::types::QrError;

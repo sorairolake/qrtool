@@ -4,19 +4,16 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-#[cfg(feature = "decode-from-svg")]
-use std::path::Path;
-
-#[cfg(feature = "decode-from-svg")]
-use image::{DynamicImage, ImageFormat};
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
-use crate::cli::Ecc;
-use crate::metadata::{Extractor, Metadata};
+use crate::{
+    cli::Ecc,
+    metadata::{Extractor, Metadata},
+};
 
 /// Returns `true` if `path` is SVG.
 #[cfg(feature = "decode-from-svg")]
-pub fn is_svg(path: impl AsRef<Path>) -> bool {
+pub fn is_svg(path: impl AsRef<std::path::Path>) -> bool {
     use std::ffi::OsStr;
 
     matches!(
@@ -50,9 +47,10 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
 
 /// Reads the image from SVG.
 #[cfg(feature = "decode-from-svg")]
-pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<DynamicImage> {
+pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<image::DynamicImage> {
     let image = svg_to_png(data.as_ref())?;
-    image::load_from_memory_with_format(&image, ImageFormat::Png).map_err(anyhow::Error::from)
+    image::load_from_memory_with_format(&image, image::ImageFormat::Png)
+        .map_err(anyhow::Error::from)
 }
 
 type DecodedBytes = (MetaData, Vec<u8>);

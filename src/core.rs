@@ -4,9 +4,11 @@
 // Copyright (C) 2022 Shun Sakai
 //
 
-use std::fs;
-use std::io::{self, Cursor, Read, Write};
-use std::str;
+use std::{
+    fs,
+    io::{self, Cursor, Read, Write},
+    str,
+};
 
 use anyhow::Context;
 use clap::Parser;
@@ -14,11 +16,11 @@ use image::{ImageError, ImageFormat};
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
-#[cfg(feature = "decode-from-svg")]
-use crate::cli::InputFormat;
-use crate::cli::{Command, Opt, OutputFormat};
-use crate::metadata::Extractor;
-use crate::{decode, encode};
+use crate::{
+    cli::{Command, Opt, OutputFormat},
+    decode, encode,
+    metadata::Extractor,
+};
 
 /// Runs the program and returns the result.
 #[allow(clippy::too_many_lines)]
@@ -108,7 +110,7 @@ pub fn run() -> anyhow::Result<()> {
                 #[cfg(feature = "decode-from-svg")]
                 #[allow(clippy::option_if_let_else)]
                 let input_format = match arg.input {
-                    Some(ref path) if decode::is_svg(path) => Some(InputFormat::Svg),
+                    Some(ref path) if decode::is_svg(path) => Some(crate::cli::InputFormat::Svg),
                     _ => input_format,
                 };
                 let input = match arg.input {
@@ -125,7 +127,7 @@ pub fn run() -> anyhow::Result<()> {
                 #[allow(clippy::option_if_let_else)]
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]
-                    Some(InputFormat::Svg) => decode::from_svg(&input),
+                    Some(crate::cli::InputFormat::Svg) => decode::from_svg(&input),
                     Some(format) => image::load_from_memory_with_format(
                         &input,
                         format
