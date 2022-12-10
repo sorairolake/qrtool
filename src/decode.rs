@@ -30,7 +30,7 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
 
     let opt = usvg::Options::default();
 
-    let tree = Tree::from_data(data, &opt.to_ref())?;
+    let tree = Tree::from_data(data, &opt)?;
 
     let pixmap_size = tree.size.to_screen_size();
     let mut pixmap = Pixmap::new(pixmap_size.width(), pixmap_size.height())

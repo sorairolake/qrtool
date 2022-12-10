@@ -62,7 +62,7 @@ jobs:
       if: matrix.os != 'windows-2022'
       run: |
         mkdir -p build
-        asciidoctor -b manpage -a "revnumber=${{ steps.get_version.outputs.version-without-v }}" -D build doc/man/man1/*.adoc
+        asciidoctor -b manpage -a "revnumber=${{ steps.get_version.outputs.version-without-v }}" -a decode-from-svg -D build doc/man/man1/*.adoc
     - name: Create a package
       shell: bash
       run: |
