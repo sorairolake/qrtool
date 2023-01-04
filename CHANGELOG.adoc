@@ -14,6 +14,10 @@ toc::[]
 
 == {compare-url}/v0.4.3\...HEAD[Unreleased]
 
+=== Changed
+
+* Bump sysexits to v0.4
+
 === Fixed
 
 * Fix create a package for Windows in CD
