@@ -1,12 +1,12 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 //
-// Copyright (C) 2022 Shun Sakai
+// Copyright (C) 2022-2023 Shun Sakai
 //
 
 == COPYRIGHT
 
-Copyright \(C) 2022 Shun Sakai
+Copyright (C) 2022-2023 Shun Sakai
 
 This program is distributed under the terms of either the Apache License 2.0 or
 the MIT License.
