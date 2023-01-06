@@ -19,7 +19,7 @@ jobs:
           - x86_64-pc-windows-msvc
         include:
           - target: x86_64-unknown-linux-musl
-            os: ubuntu-20.04
+            os: ubuntu-22.04
             use-cross: true
           - target: x86_64-apple-darwin
             os: macos-11
@@ -52,7 +52,7 @@ jobs:
       if: matrix.os != 'windows-2022'
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.1
+        ruby-version: 3.2
     - name: Install Asciidoctor
       if: matrix.os != 'windows-2022'
       run: |
@@ -82,9 +82,9 @@ jobs:
         fi
 
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-          tar czvf "${package}.tar.gz" "${package}"
+          tar -cvf --zstd "${package}.tar.zst" "${package}"
         else
-          7z a -bb "${package}.zip" "${package}"
+          7z a -bb "${package}.7z" "${package}"
         fi
     - name: Release
       uses: softprops/action-gh-release@v0.1.15
