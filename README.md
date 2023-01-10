@@ -117,9 +117,9 @@ magick output.jxl png:- | qrtool decode | bat -l toml
 
 Please see the following:
 
-- [`qrtool(1)`](doc/man/man1/qrtool.1.adoc)
-- [`qrtool-encode(1)`](doc/man/man1/qrtool-encode.1.adoc)
-- [`qrtool-decode(1)`](doc/man/man1/qrtool-decode.1.adoc)
+- [`qrtool(1)`][qrtool-man-url]
+- [`qrtool-encode(1)`][qrtool-encode-man-url]
+- [`qrtool-decode(1)`][qrtool-decode-man-url]
 
 ## Changelog
 
@@ -145,3 +145,6 @@ See [COPYRIGHT](COPYRIGHT), [LICENSE-APACHE](LICENSE-APACHE) and
 [version-url]: https://crates.io/crates/qrtool
 [license-badge]: https://img.shields.io/crates/l/qrtool
 [release-page-url]: https://github.com/sorairolake/qrtool/releases
+[qrtool-man-url]: https://sorairolake.github.io/qrtool/man/qrtool.1.html
+[qrtool-encode-man-url]: https://sorairolake.github.io/qrtool/man/man/qrtool-encode.1.html
+[qrtool-decode-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-decode.1.html
