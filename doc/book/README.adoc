@@ -1,0 +1,13 @@
+= Introduction
+:project-url: https://github.com/sorairolake/qrtool
+:ci-badge: {project-url}/workflows/CI/badge.svg
+:ci-url: {project-url}/actions?query=workflow%3ACI
+:version-badge: https://img.shields.io/crates/v/qrtool
+:version-url: https://crates.io/crates/qrtool
+:license-badge: https://img.shields.io/crates/l/qrtool
+
+image:{ci-badge}[CI, link={ci-url}]
+image:{version-badge}[Version, link={version-url}]
+image:{license-badge}[License]
+
+*qrtool* is a command-line utility for encoding or decoding QR code.
