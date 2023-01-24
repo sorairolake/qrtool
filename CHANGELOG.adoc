@@ -17,6 +17,7 @@ toc::[]
 === Changed
 
 * Bump sysexits to v0.4
+* Bump MSRV to 1.64.0
 
 === Fixed
 
