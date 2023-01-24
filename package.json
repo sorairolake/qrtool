@@ -22,7 +22,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "honkit": "^4.0.4",
-    "prettier": "^2.8.2"
+    "honkit": "^4.0.4"
   }
 }
