@@ -20,7 +20,6 @@ jobs:
         include:
           - target: x86_64-unknown-linux-musl
             os: ubuntu-22.04
-            use-cross: true
           - target: x86_64-apple-darwin
             os: macos-11
           - target: x86_64-pc-windows-msvc
@@ -39,15 +38,6 @@ jobs:
       uses: Swatinem/rust-cache@v2.2.0
       with:
         key: ${{ matrix.target }}
-    - name: Build a package
-      uses: actions-rs/cargo@v1.0.3
-      with:
-        command: build
-        args: --release --target ${{ matrix.target }}
-        use-cross: ${{ matrix.use-cross }}
-    - name: Get version
-      id: get_version
-      uses: battila7/get-version-action@v2.3.0
     - name: Setup Ruby
       if: matrix.os != 'windows-2022'
       uses: ruby/setup-ruby@v1
@@ -58,11 +48,19 @@ jobs:
       run: |
         gem install asciidoctor
         asciidoctor -V
-    - name: Build man pages
-      if: matrix.os != 'windows-2022'
+    - name: Install dependencies
+      if: matrix.target == 'x86_64-unknown-linux-musl'
       run: |
-        mkdir -p build
-        asciidoctor -b manpage -a "revnumber=${{ steps.get_version.outputs.version-without-v }}" -a decode-from-svg -D build doc/man/man1/*.adoc
+        sudo apt-get update
+        sudo apt-get install musl-tools
+    - name: Build a package
+      uses: actions-rs/cargo@v1.0.3
+      with:
+        command: build
+        args: --release --target ${{ matrix.target }}
+    - name: Get version
+      id: get_version
+      uses: battila7/get-version-action@v2.3.0
     - name: Create a package
       shell: bash
       run: |
@@ -78,7 +76,7 @@ jobs:
         cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
           mkdir -p "${package}"/man
-          cp build/* "${package}"/man
+          cp "$(find ./target -path '*/qrtool-*/out' -type d)"/* "${package}"/man
         fi
 
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
