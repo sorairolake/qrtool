@@ -14,17 +14,33 @@ jobs:
     strategy:
       matrix:
         target:
+          - aarch64-unknown-linux-musl
+          - arm-unknown-linux-musleabihf
+          - armv7-unknown-linux-musleabihf
           - x86_64-unknown-linux-musl
-          - x86_64-apple-darwin
           - aarch64-apple-darwin
+          - x86_64-apple-darwin
+          - aarch64-pc-windows-msvc
           - x86_64-pc-windows-msvc
         include:
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-22.04
+            use-cross: true
+          - target: arm-unknown-linux-musleabihf
+            os: ubuntu-22.04
+            use-cross: true
+          - target: armv7-unknown-linux-musleabihf
+            os: ubuntu-22.04
+            use-cross: true
           - target: x86_64-unknown-linux-musl
             os: ubuntu-22.04
-          - target: x86_64-apple-darwin
-            os: macos-12
+            use-cross: true
           - target: aarch64-apple-darwin
             os: macos-12
+          - target: x86_64-apple-darwin
+            os: macos-12
+          - target: aarch64-pc-windows-msvc
+            os: windows-2022
           - target: x86_64-pc-windows-msvc
             os: windows-2022
     steps:
@@ -42,25 +58,21 @@ jobs:
       with:
         key: ${{ matrix.target }}
     - name: Setup Ruby
-      if: matrix.os != 'windows-2022'
+      if: matrix.os != 'windows-2022' && !matrix.use-cross
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.2
     - name: Install Asciidoctor
-      if: matrix.os != 'windows-2022'
+      if: matrix.os != 'windows-2022' && !matrix.use-cross
       run: |
         gem install asciidoctor
         asciidoctor -V
-    - name: Install dependencies
-      if: matrix.target == 'x86_64-unknown-linux-musl'
-      run: |
-        sudo apt-get update
-        sudo apt-get install musl-tools
     - name: Build a package
       uses: actions-rs/cargo@v1.0.3
       with:
         command: build
         args: --release --target ${{ matrix.target }}
+        use-cross: ${{ matrix.use-cross }}
     - name: Get version
       id: get_version
       uses: battila7/get-version-action@v2.3.0
