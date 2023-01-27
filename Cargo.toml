@@ -10,6 +10,15 @@ repository = "https://github.com/sorairolake/qrtool"
 license = "Apache-2.0 OR MIT"
 keywords = ["qrcode"]
 categories = ["command-line-utilities"]
+exclude = [
+  "/.github",
+  "/*.json",
+  "/clippy.toml",
+  "/doc",
+  "/justfile",
+  "/rustfmt.toml",
+  "/tests",
+]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
