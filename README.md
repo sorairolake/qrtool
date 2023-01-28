@@ -146,5 +146,5 @@ See [COPYRIGHT](COPYRIGHT), [LICENSE-APACHE](LICENSE-APACHE) and
 [license-badge]: https://img.shields.io/crates/l/qrtool
 [release-page-url]: https://github.com/sorairolake/qrtool/releases
 [qrtool-man-url]: https://sorairolake.github.io/qrtool/man/qrtool.1.html
-[qrtool-encode-man-url]: https://sorairolake.github.io/qrtool/man/man/qrtool-encode.1.html
+[qrtool-encode-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-encode.1.html
 [qrtool-decode-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-decode.1.html
