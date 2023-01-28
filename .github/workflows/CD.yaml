@@ -95,7 +95,7 @@ jobs:
         fi
 
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-          tar -cavf "${package}.tar.zst" "${package}"
+          ZSTD_CLEVEL=19 tar -cavf "${package}.tar.zst" "${package}"
         else
           7z a -bb "${package}.7z" "${package}"
         fi
