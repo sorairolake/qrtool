@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 #
-# Copyright (C) 2022 Shun Sakai
+# Copyright (C) 2022-2023 Shun Sakai
 #
 
 alias all := default
@@ -49,3 +49,11 @@ default: build
 # Run the formatter for the README
 @fmt-readme:
     npx prettier -w README.md
+
+# Build the book
+@build-book:
+    cp AUTHORS.adoc BUILD.adoc CHANGELOG.adoc CONTRIBUTING.adoc doc/book
+    mkdir -p doc/book/man
+    cp doc/man/man1/*.1.adoc doc/book/man
+    sed -i '/^:includedir:/s/\.\.\/include$/doc\/man\/include/g' doc/book/man/*.1.adoc
+    npx honkit build

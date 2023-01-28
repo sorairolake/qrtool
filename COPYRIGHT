@@ -2,5 +2,5 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Source: https://github.com/sorairolake/qrtool
 
 Files: *
-Copyright: 2022 Shun Sakai
+Copyright: 2022-2023 Shun Sakai
 License: Apache-2.0 or MIT
