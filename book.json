@@ -1,5 +1,6 @@
 {
   "root": "doc/book",
   "title": "qrtool Documentation",
-  "author": "Shun Sakai"
+  "author": "Shun Sakai",
+  "language": "en"
 }
