@@ -24,7 +24,7 @@ exclude = [
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.68"
+anyhow = "1.0.69"
 clap = { version = "4.1.4", features = ["derive", "wrap_help"] }
 clap_complete = "4.1.1"
 image = "0.23.14"
