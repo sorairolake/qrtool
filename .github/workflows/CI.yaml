@@ -38,7 +38,7 @@ jobs:
         override: true
         profile: minimal
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.2.0
+      uses: Swatinem/rust-cache@v2.2.1
       with:
         key: ${{ matrix.target }}
     - name: Build a package
@@ -76,7 +76,7 @@ jobs:
         profile: minimal
         components: rustfmt
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.2.0
+      uses: Swatinem/rust-cache@v2.2.1
     - name: Check code formatted
       uses: actions-rs/cargo@v1.0.3
       with:
@@ -97,7 +97,7 @@ jobs:
         profile: minimal
         components: clippy
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.2.0
+      uses: Swatinem/rust-cache@v2.2.1
     - name: Check no lint warnings
       uses: actions-rs/cargo@v1.0.3
       with:

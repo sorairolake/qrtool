@@ -54,7 +54,7 @@ jobs:
         override: true
         profile: minimal
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.2.0
+      uses: Swatinem/rust-cache@v2.2.1
       with:
         key: ${{ matrix.target }}
     - name: Setup Ruby
