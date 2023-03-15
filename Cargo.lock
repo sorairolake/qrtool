@@ -643,9 +643,9 @@ dependencies = [
 
 [[package]]
 name = "predicates"
-version = "3.0.0"
+version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e7d6ab0758c8486d593e1614f3af1d0f07d93d3ff15e47f78819d1ac2d6d094c"
+checksum = "1ba7d6ead3e3966038f68caa9fc1f860185d95a793180bbcfe0d0da47b3961ed"
 dependencies = [
  "anstyle",
  "difflib",
@@ -733,7 +733,7 @@ dependencies = [
  "clap",
  "clap_complete",
  "image",
- "predicates 3.0.0",
+ "predicates 3.0.1",
  "qrcode",
  "resvg",
  "rqrr",
