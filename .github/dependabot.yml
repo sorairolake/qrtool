@@ -4,13 +4,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    ignore:
-      - dependency-name: "image"
-      - dependency-name: "qrcode"
-      - dependency-name: "resvg"
-      - dependency-name: "rqrr"
-      - dependency-name: "tiny-skia"
-      - dependency-name: "usvg"
 
   - package-ecosystem: "github-actions"
     directory: "/"

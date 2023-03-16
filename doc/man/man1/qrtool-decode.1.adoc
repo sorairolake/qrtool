@@ -6,7 +6,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2022-11-22
+:docdate: 2023-03-16
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -74,6 +74,10 @@ _IMAGE_::
     *jpeg*::::
 
       JPEG.
+
+    *openexr*::::
+
+      OpenEXR.
 
     *png*::::
 

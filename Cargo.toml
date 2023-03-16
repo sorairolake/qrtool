@@ -3,7 +3,7 @@ name = "qrtool"
 version = "0.5.1"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
-rust-version = "1.64.0"
+rust-version = "1.65.0"
 description = "An utility for encoding or decoding QR code"
 readme = "README.md"
 repository = "https://github.com/sorairolake/qrtool"
@@ -27,21 +27,19 @@ exclude = [
 anyhow = "1.0.69"
 clap = { version = "4.1.8", features = ["derive", "wrap_help"] }
 clap_complete = "4.1.4"
-image = "0.23.14"
-qrcode = "0.12.0"
-resvg = { version = "0.28.0", default-features = false, optional = true }
-rqrr = "0.4.0"
+image = "0.24.5"
+qrencode = "0.14.0"
+resvg = { version = "0.29.0", default-features = false, optional = true }
+rqrr = "0.6.0"
 sysexits = "0.4.1"
-tiny-skia = { version = "0.8.2", optional = true }
-usvg = { version = "0.28.0", default-features = false, optional = true }
 
 [dev-dependencies]
-assert_cmd = "2.0.9"
+assert_cmd = "2.0.10"
 predicates = "3.0.1"
 
 [features]
 default = ["decode-from-svg"]
-decode-from-svg = ["dep:resvg", "dep:tiny-skia", "dep:usvg"]
+decode-from-svg = ["dep:resvg"]
 
 [profile.release]
 lto = true

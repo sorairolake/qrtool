@@ -5,7 +5,7 @@
 //
 
 use image::{DynamicImage, Rgba};
-use qrcode::{
+use qrencode::{
     bits::Bits,
     render::{svg, unicode, Renderer},
     types::QrError,
