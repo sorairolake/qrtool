@@ -25,7 +25,7 @@ exclude = [
 
 [dependencies]
 anyhow = "1.0.69"
-clap = { version = "4.1.8", features = ["derive", "wrap_help"] }
+clap = { version = "4.1.9", features = ["derive", "wrap_help"] }
 clap_complete = "4.1.4"
 image = "0.24.5"
 qrencode = "0.14.0"
