@@ -27,10 +27,10 @@ exclude = [
 anyhow = "1.0.69"
 clap = { version = "4.1.8", features = ["derive", "wrap_help"] }
 clap_complete = "4.1.4"
-image = "0.23.14"
-qrcode = "0.12.0"
+image = "0.24.5"
+qrencode = "0.14.0"
 resvg = { version = "0.28.0", default-features = false, optional = true }
-rqrr = "0.4.0"
+rqrr = "0.6.0"
 sysexits = "0.4.1"
 tiny-skia = { version = "0.8.2", optional = true }
 usvg = { version = "0.28.0", default-features = false, optional = true }

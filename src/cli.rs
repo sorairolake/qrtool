@@ -221,7 +221,7 @@ pub enum Ecc {
     H,
 }
 
-impl From<Ecc> for qrcode::EcLevel {
+impl From<Ecc> for qrencode::EcLevel {
     fn from(level: Ecc) -> Self {
         match level {
             Ecc::L => Self::L,
@@ -308,6 +308,9 @@ pub enum InputFormat {
     /// JPEG.
     Jpeg,
 
+    /// OpenEXR.
+    OpenExr,
+
     /// Portable Network Graphics.
     Png,
 
@@ -342,6 +345,7 @@ impl TryFrom<InputFormat> for ImageFormat {
             InputFormat::Hdr => Ok(Self::Hdr),
             InputFormat::Ico => Ok(Self::Ico),
             InputFormat::Jpeg => Ok(Self::Jpeg),
+            InputFormat::OpenExr => Ok(Self::OpenExr),
             InputFormat::Png => Ok(Self::Png),
             InputFormat::Pnm => Ok(Self::Pnm),
             #[cfg(feature = "decode-from-svg")]
