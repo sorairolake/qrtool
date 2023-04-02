@@ -25,8 +25,11 @@ pub fn is_svg(path: impl AsRef<std::path::Path>) -> bool {
 #[cfg(feature = "decode-from-svg")]
 fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
     use anyhow::Context;
-    use tiny_skia::{Pixmap, Transform};
-    use usvg::{FitTo, Tree};
+    use resvg::{
+        tiny_skia::{Pixmap, Transform},
+        usvg::{self, Tree, TreeParsing},
+        FitTo,
+    };
 
     let opt = usvg::Options::default();
 

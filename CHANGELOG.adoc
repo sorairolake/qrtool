@@ -12,6 +12,17 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.5.1\...v0.6.0[0.6.0] - 2023-04-02
+
+=== Added
+
+* Add OpenEXR as an input format
+
+=== Changed
+
+* Change to use `qrencode` crate
+* Bump MSRV to 1.65.0
+
 == {compare-url}/v0.5.0\...v0.5.1[0.5.1] - 2023-01-30
 
 === Fixed

@@ -22,7 +22,7 @@ mod metadata;
 use std::{io, process::ExitCode};
 
 use image::ImageError;
-use qrcode::types::QrError;
+use qrencode::types::QrError;
 use rqrr::DeQRError;
 
 fn main() -> ExitCode {

@@ -49,12 +49,12 @@ jobs:
     - name: Setup Rust toolchain
       uses: actions-rs/toolchain@v1.0.7
       with:
-        toolchain: 1.64.0 # MSRV
+        toolchain: 1.65.0 # MSRV
         target: ${{ matrix.target }}
         override: true
         profile: minimal
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.2.0
+      uses: Swatinem/rust-cache@v2.2.1
       with:
         key: ${{ matrix.target }}
     - name: Setup Ruby
