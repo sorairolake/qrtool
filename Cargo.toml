@@ -1,6 +1,6 @@
 [package]
 name = "qrtool"
-version = "0.5.1"
+version = "0.6.0"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.65.0"
@@ -25,11 +25,11 @@ exclude = [
 
 [dependencies]
 anyhow = "1.0.70"
-clap = { version = "4.1.14", features = ["derive", "wrap_help"] }
+clap = { version = "4.2.1", features = ["derive", "wrap_help"] }
 clap_complete = "4.2.0"
 image = "0.24.6"
 qrencode = "0.14.0"
-resvg = { version = "0.29.0", default-features = false, optional = true }
+resvg = { version = "0.30.0", default-features = false, optional = true }
 rqrr = "0.6.0"
 sysexits = "0.5.0"
 
