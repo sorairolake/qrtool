@@ -27,7 +27,8 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
     use anyhow::Context;
     use resvg::{
         tiny_skia::{Pixmap, Transform},
-        usvg::{self, FitTo, Tree},
+        usvg::{self, Tree, TreeParsing},
+        FitTo,
     };
 
     let opt = usvg::Options::default();
