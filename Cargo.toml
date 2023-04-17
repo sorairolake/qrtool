@@ -35,7 +35,7 @@ sysexits = "0.5.0"
 
 [dev-dependencies]
 assert_cmd = "2.0.10"
-predicates = "3.0.2"
+predicates = "3.0.3"
 
 [features]
 default = ["decode-from-svg"]
