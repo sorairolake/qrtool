@@ -39,12 +39,6 @@ jobs:
       uses: Swatinem/rust-cache@v2.2.1
       with:
         key: ${{ matrix.target }}
-    - name: Build a package
-      run: cargo build --target ${{ matrix.target }}
-    - name: Build a package (all features)
-      run: cargo build --target ${{ matrix.target }} --all-features
-    - name: Build a package (no default features)
-      run: cargo build --target ${{ matrix.target }} --no-default-features
     - name: Run tests
       run: cargo test --target ${{ matrix.target }}
     - name: Run tests (all features)
