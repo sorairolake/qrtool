@@ -139,7 +139,7 @@ or the _MIT License_.
 See [COPYRIGHT](COPYRIGHT), [LICENSE-APACHE](LICENSE-APACHE) and
 [LICENSE-MIT](LICENSE-MIT) for more details.
 
-[ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&style=for-the-badge
+[ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&label=CI&logo=github&style=for-the-badge
 [ci-url]: https://github.com/sorairolake/qrtool/actions?query=branch%3Adevelop+workflow%3ACI++
 [version-badge]: https://img.shields.io/crates/v/qrtool?style=for-the-badge
 [version-url]: https://crates.io/crates/qrtool
