@@ -139,11 +139,11 @@ or the _MIT License_.
 See [COPYRIGHT](COPYRIGHT), [LICENSE-APACHE](LICENSE-APACHE) and
 [LICENSE-MIT](LICENSE-MIT) for more details.
 
-[ci-badge]: https://github.com/sorairolake/qrtool/workflows/CI/badge.svg
-[ci-url]: https://github.com/sorairolake/qrtool/actions?query=workflow%3ACI
-[version-badge]: https://img.shields.io/crates/v/qrtool
+[ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&style=for-the-badge
+[ci-url]: https://github.com/sorairolake/qrtool/actions?query=branch%3Adevelop+workflow%3ACI++
+[version-badge]: https://img.shields.io/crates/v/qrtool?style=for-the-badge
 [version-url]: https://crates.io/crates/qrtool
-[license-badge]: https://img.shields.io/crates/l/qrtool
+[license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
 [release-page-url]: https://github.com/sorairolake/qrtool/releases
 [qrtool-man-url]: https://sorairolake.github.io/qrtool/man/qrtool.1.html
 [qrtool-encode-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-encode.1.html
