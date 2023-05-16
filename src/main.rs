@@ -32,7 +32,7 @@ fn main() -> ExitCode {
             eprintln!("Error: {err:?}");
             #[allow(clippy::option_if_let_else)]
             if let Some(e) = err.downcast_ref::<io::Error>() {
-                sysexits::ExitCode::try_from(e.kind()).map_or(ExitCode::FAILURE, ExitCode::from)
+                sysexits::ExitCode::from(e.kind()).into()
             } else if err.is::<QrError>() {
                 sysexits::ExitCode::DataErr.into()
             } else if let Some(e) = err.downcast_ref::<DeQRError>() {
