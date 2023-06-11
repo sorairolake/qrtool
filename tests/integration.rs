@@ -252,7 +252,6 @@ fn validate_the_options_dependencies_for_encode_command() {
         .assert()
         .failure()
         .code(2);
-
     command()
         .arg("encode")
         .arg("--variant")
@@ -274,10 +273,282 @@ fn basic_decode() {
 }
 
 #[test]
+fn decode_from_bmp() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.bmp")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("bmp")
+        .arg("data/decode/decode.bmp")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_dds() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.dds")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("dds")
+        .arg("data/decode/decode.dds")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_farbfeld() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.ff")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("farbfeld")
+        .arg("data/decode/decode.ff")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_gif() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.gif")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("gif")
+        .arg("data/decode/decode.gif")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_hdr() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.hdr")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("hdr")
+        .arg("data/decode/decode.hdr")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_ico() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.ico")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("ico")
+        .arg("data/decode/decode.ico")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_jpeg() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.jpeg")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("jpeg")
+        .arg("data/decode/decode.jpeg")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_open_exr() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.exr")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("openexr")
+        .arg("data/decode/decode.exr")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_png() {
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("png")
+        .arg("data/basic/basic.png")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_ascii_pbm() {
+    command()
+        .arg("decode")
+        .arg("data/decode/ascii.pbm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/ascii.pbm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_ascii_pgm() {
+    command()
+        .arg("decode")
+        .arg("data/decode/ascii.pgm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/ascii.pgm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_ascii_ppm() {
+    command()
+        .arg("decode")
+        .arg("data/decode/ascii.ppm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/ascii.ppm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_binary_pbm() {
+    command()
+        .arg("decode")
+        .arg("data/decode/binary.pbm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/binary.pbm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_binary_pgm() {
+    command()
+        .arg("decode")
+        .arg("data/decode/binary.pgm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/binary.pgm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_binary_ppm() {
+    command()
+        .arg("decode")
+        .arg("data/decode/binary.ppm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/binary.ppm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
 #[cfg(feature = "decode-from-svg")]
 fn decode_from_svg() {
     command()
         .arg("decode")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("svg")
         .arg("data/decode/decode.svg")
         .assert()
         .success()
@@ -290,6 +561,69 @@ fn decode_from_svgz() {
     command()
         .arg("decode")
         .arg("data/decode/decode.svgz")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("svg")
+        .arg("data/decode/decode.svgz")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_tga() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.tga")
+        .assert()
+        .failure()
+        .code(69)
+        .stderr(predicate::str::contains("could not read the image"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("tga")
+        .arg("data/decode/decode.tga")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_tiff() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.tiff")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("tiff")
+        .arg("data/decode/decode.tiff")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_web_p() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.webp")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("webp")
+        .arg("data/decode/decode.webp")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
