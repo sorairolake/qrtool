@@ -612,10 +612,10 @@ fn decode_from_tiff() {
 }
 
 #[test]
-fn decode_from_web_p() {
+fn decode_from_lossy_web_p() {
     command()
         .arg("decode")
-        .arg("data/decode/decode.webp")
+        .arg("data/decode/lossy.webp")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
@@ -623,7 +623,25 @@ fn decode_from_web_p() {
         .arg("decode")
         .arg("-t")
         .arg("webp")
-        .arg("data/decode/decode.webp")
+        .arg("data/decode/lossy.webp")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_lossless_web_p() {
+    command()
+        .arg("decode")
+        .arg("data/decode/lossless.webp")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("webp")
+        .arg("data/decode/lossless.webp")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
