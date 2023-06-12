@@ -27,24 +27,18 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
     use anyhow::Context;
     use resvg::{
         tiny_skia::{Pixmap, Transform},
-        usvg::{self, Tree, TreeParsing},
-        FitTo,
+        usvg::{self, TreeParsing},
     };
 
     let opt = usvg::Options::default();
 
-    let tree = Tree::from_data(data, &opt)?;
+    let tree = usvg::Tree::from_data(data, &opt)?;
+    let tree = resvg::Tree::from_usvg(&tree);
 
-    let pixmap_size = tree.size.to_screen_size();
+    let pixmap_size = tree.size.to_int_size();
     let mut pixmap = Pixmap::new(pixmap_size.width(), pixmap_size.height())
         .context("could not allocate a new pixmap")?;
-    resvg::render(
-        &tree,
-        FitTo::Original,
-        Transform::default(),
-        pixmap.as_mut(),
-    )
-    .context("SVG has an invalid size")?;
+    tree.render(Transform::default(), &mut pixmap.as_mut());
     pixmap.encode_png().map_err(anyhow::Error::from)
 }
 
