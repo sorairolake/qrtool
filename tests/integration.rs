@@ -363,10 +363,48 @@ fn decode_from_hdr() {
 }
 
 #[test]
-fn decode_from_ico() {
+fn decode_from_bmp_cur() {
     command()
         .arg("decode")
-        .arg("data/decode/decode.ico")
+        .arg("data/decode/bmp.cur")
+        .assert()
+        .failure()
+        .code(69)
+        .stderr(predicate::str::contains("could not read the image"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("ico")
+        .arg("data/decode/bmp.cur")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_png_cur() {
+    command()
+        .arg("decode")
+        .arg("data/decode/png.cur")
+        .assert()
+        .failure()
+        .code(69)
+        .stderr(predicate::str::contains("could not read the image"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("ico")
+        .arg("data/decode/png.cur")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_bmp_ico() {
+    command()
+        .arg("decode")
+        .arg("data/decode/bmp.ico")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
@@ -374,7 +412,25 @@ fn decode_from_ico() {
         .arg("decode")
         .arg("-t")
         .arg("ico")
-        .arg("data/decode/decode.ico")
+        .arg("data/decode/bmp.ico")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn decode_from_png_ico() {
+    command()
+        .arg("decode")
+        .arg("data/decode/png.ico")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("ico")
+        .arg("data/decode/png.ico")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
