@@ -61,7 +61,7 @@ _IMAGE_::
 
     *gif*::::
 
-      GIF.
+      Graphics Interchange Format.
 
     *hdr*::::
 
@@ -69,7 +69,8 @@ _IMAGE_::
 
     *ico*::::
 
-      ICO.
+      ICO file format.
+      This also includes the CUR file format.
 
     *jpeg*::::
 
@@ -85,7 +86,7 @@ _IMAGE_::
 
     *pnm*::::
 
-      PNM.
+      Portable Anymap Format.
 
     *qoi*::::
 
@@ -104,7 +105,7 @@ endif::[]
 
     *tiff*::::
 
-      TIFF.
+      Tag Image File Format.
 
     *webp*::::
 

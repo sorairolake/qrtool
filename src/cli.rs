@@ -285,13 +285,15 @@ pub enum InputFormat {
     /// Farbfeld.
     Farbfeld,
 
-    /// GIF.
+    /// Graphics Interchange Format.
     Gif,
 
     /// Radiance RGBE.
     Hdr,
 
-    /// ICO.
+    /// ICO file format.
+    ///
+    /// This also includes the CUR file format.
     Ico,
 
     /// JPEG.
@@ -303,7 +305,7 @@ pub enum InputFormat {
     /// Portable Network Graphics.
     Png,
 
-    /// PNM.
+    /// Portable Anymap Format.
     Pnm,
 
     /// Quite OK Image Format.
@@ -318,7 +320,7 @@ pub enum InputFormat {
     /// Truevision TGA.
     Tga,
 
-    /// TIFF.
+    /// Tag Image File Format.
     Tiff,
 
     /// WebP.
