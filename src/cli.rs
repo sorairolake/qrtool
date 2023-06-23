@@ -8,7 +8,7 @@ use std::{io, path::PathBuf};
 
 use clap::{value_parser, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
 use clap_complete::{Generator, Shell};
-use image::{error::ImageFormatHint, ImageError, ImageFormat};
+use image::{ImageError, ImageFormat};
 
 use crate::color::Color;
 
@@ -247,17 +247,6 @@ pub enum OutputFormat {
     Terminal,
 }
 
-impl TryFrom<OutputFormat> for ImageFormat {
-    type Error = ImageError;
-
-    fn try_from(format: OutputFormat) -> Result<Self, Self::Error> {
-        match format {
-            OutputFormat::Png => Ok(Self::Png),
-            _ => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
-        }
-    }
-}
-
 #[derive(Clone, Debug, Default, ValueEnum)]
 pub enum Mode {
     /// All digits.
@@ -349,7 +338,9 @@ impl TryFrom<InputFormat> for ImageFormat {
             InputFormat::Png => Ok(Self::Png),
             InputFormat::Pnm => Ok(Self::Pnm),
             #[cfg(feature = "decode-from-svg")]
-            InputFormat::Svg => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
+            InputFormat::Svg => Err(Self::Error::Unsupported(
+                image::error::ImageFormatHint::Unknown.into(),
+            )),
             InputFormat::Tga => Ok(Self::Tga),
             InputFormat::Tiff => Ok(Self::Tiff),
             InputFormat::WebP => Ok(Self::WebP),

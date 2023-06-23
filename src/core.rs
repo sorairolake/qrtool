@@ -83,20 +83,20 @@ pub fn run() -> anyhow::Result<()> {
                             println!("{string}");
                         }
                     }
-                    format => {
+                    OutputFormat::Png => {
                         let image =
                             encode::to_image(&code, arg.margin, &(arg.foreground, arg.background));
 
-                        let format = ImageFormat::try_from(format)
-                            .expect("the image format is not supported");
                         if let Some(file) = arg.output {
-                            image.save_with_format(&file, format).with_context(|| {
-                                format!("could not write the image to {}", file.display())
-                            })?;
+                            image
+                                .save_with_format(&file, ImageFormat::Png)
+                                .with_context(|| {
+                                    format!("could not write the image to {}", file.display())
+                                })?;
                         } else {
                             let mut buf = Vec::new();
                             image
-                                .write_to(&mut Cursor::new(&mut buf), format)
+                                .write_to(&mut Cursor::new(&mut buf), ImageFormat::Png)
                                 .and_then(|_| {
                                     io::stdout().write_all(&buf).map_err(ImageError::from)
                                 })
