@@ -593,6 +593,24 @@ fn decode_from_binary_ppm() {
 }
 
 #[test]
+fn decode_from_qoi() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.qoi")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("qoi")
+        .arg("data/decode/decode.qoi")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
 #[cfg(feature = "decode-from-svg")]
 fn decode_from_svg() {
     command()

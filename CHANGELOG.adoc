@@ -12,6 +12,12 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 toc::[]
 
+== {compare-url}/v0.6.2\...HEAD[Unreleased]
+
+=== Added
+
+* Add QOI as an input format
+
 == {compare-url}/v0.6.1\...v0.6.2[0.6.2] - 2023-06-12
 
 === Changed

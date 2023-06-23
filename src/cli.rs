@@ -306,6 +306,9 @@ pub enum InputFormat {
     /// PNM.
     Pnm,
 
+    /// Quite OK Image Format.
+    Qoi,
+
     /// Scalable Vector Graphics.
     ///
     /// This also includes gzipped it.
@@ -337,6 +340,7 @@ impl TryFrom<InputFormat> for ImageFormat {
             InputFormat::OpenExr => Ok(Self::OpenExr),
             InputFormat::Png => Ok(Self::Png),
             InputFormat::Pnm => Ok(Self::Pnm),
+            InputFormat::Qoi => Ok(Self::Qoi),
             #[cfg(feature = "decode-from-svg")]
             InputFormat::Svg => Err(Self::Error::Unsupported(
                 image::error::ImageFormatHint::Unknown.into(),
