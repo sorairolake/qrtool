@@ -177,10 +177,11 @@ pub struct Decode {
     /// Input image file.
     ///
     /// If it is not specified, or if "-" is specified, the image will be read
-    /// from stdin. Supported raster image formats are any formats supported
-    /// by the image crate. The format guess based on the extension, and the
-    /// raster format use the content in addition to it. Note that the SVG
-    /// image is rasterized before scanning.
+    /// from stdin. Supported raster image formats are based on the formats
+    /// supported by the image crate. The format guess based on the
+    /// extension, and the raster format use the content in addition to it.
+    /// If the format cannot be guessed, use --type.
+    /// Note that the SVG image is rasterized before scanning.
     #[arg(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
     pub input: Option<PathBuf>,
 }
@@ -305,7 +306,7 @@ pub enum InputFormat {
     /// Portable Network Graphics.
     Png,
 
-    /// Portable Anymap Format.
+    /// Portable Anymap Format (PBM, PGM and PPM).
     Pnm,
 
     /// Quite OK Image Format.
