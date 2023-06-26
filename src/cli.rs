@@ -8,9 +8,8 @@ use std::{io, path::PathBuf};
 
 use clap::{value_parser, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
 use clap_complete::{Generator, Shell};
+use csscolorparser::Color;
 use image::{ImageError, ImageFormat};
-
-use crate::color::Color;
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
@@ -121,16 +120,14 @@ pub struct Encode {
 
     /// Foreground color.
     ///
-    /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
-    /// and shorthands of these. A leading number sign is allowed.
-    #[arg(long, default_value("#000000"), value_name("COLOR"))]
+    /// It takes a CSS color string.
+    #[arg(long, default_value("black"), value_name("COLOR"))]
     pub foreground: Color,
 
     /// Background color.
     ///
-    /// It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA
-    /// and shorthands of these. A leading number sign is allowed.
-    #[arg(long, default_value("#ffffff"), value_name("COLOR"))]
+    /// It takes a CSS color string.
+    #[arg(long, default_value("white"), value_name("COLOR"))]
     pub background: Color,
 
     /// Also print the metadata.

@@ -72,7 +72,7 @@ Generate this image:
 ### Colored output
 
 ```sh
-qrtool encode --foreground "#bc002d" "QR code" > output.png
+qrtool encode --foreground "brown" "QR code" > output.png
 ```
 
 Generate this image:

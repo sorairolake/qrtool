@@ -18,6 +18,11 @@ toc::[]
 
 * Add QOI as an input format
 
+=== Changed
+
+* Change to support more CSS color formats for foreground and background colors
+  ({pull-request-url}/137[#137])
+
 == {compare-url}/v0.6.1\...v0.6.2[0.6.2] - 2023-06-12
 
 === Changed

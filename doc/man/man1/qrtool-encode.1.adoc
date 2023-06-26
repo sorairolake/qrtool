@@ -154,18 +154,14 @@ _STRING_::
 *--foreground* _COLOR_::
 
   Foreground color.
-  It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA and
-  shorthands of these.
-  A leading number sign is allowed.
-  Default is black (#000000).
+  It takes a https://www.w3.org/TR/css-color-4/[CSS color] string.
+  Default is black.
 
 *--background* _COLOR_::
 
   Background color.
-  It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA and
-  shorthands of these.
-  A leading number sign is allowed.
-  Default is white (#ffffff).
+  It takes a https://www.w3.org/TR/css-color-4/[CSS color] string.
+  Default is white.
 
 *--verbose*::
 
