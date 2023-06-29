@@ -71,8 +71,8 @@ pub struct Encode {
 
     /// The version of the symbol.
     ///
-    /// For normal QR code, it should be between 1 and 40.
-    /// For Micro QR code, it should be between 1 and 4.
+    /// For normal QR code, <NUMBER> should be between 1 and 40.
+    /// For Micro QR code, <NUMBER> should be between 1 and 4.
     #[arg(
         value_parser(value_parser!(i16).range(1..=40)),
         short('v'),
@@ -120,13 +120,13 @@ pub struct Encode {
 
     /// Foreground color.
     ///
-    /// It takes a CSS color string.
+    /// <COLOR> takes a CSS color string.
     #[arg(long, default_value("black"), value_name("COLOR"))]
     pub foreground: Color,
 
     /// Background color.
     ///
-    /// It takes a CSS color string.
+    /// <COLOR> takes a CSS color string.
     #[arg(long, default_value("white"), value_name("COLOR"))]
     pub background: Color,
 
@@ -138,8 +138,8 @@ pub struct Encode {
 
     /// Input data.
     ///
-    /// If it is not specified, data will be read from stdin.
-    /// It takes a valid UTF-8 string.
+    /// If [STRING] is not specified, data will be read from stdin.
+    /// [STRING] must be a valid UTF-8 string.
     #[arg(value_name("STRING"))]
     pub input: Option<String>,
 }
@@ -148,8 +148,8 @@ pub struct Encode {
 pub struct Decode {
     /// The format of the input.
     ///
-    /// If it is not specified, the format will be guessed based on the
-    /// extension, and the raster format will use the content in addition to it.
+    /// If <FORMAT> is not specified, the format is determined based on the
+    /// extension or the magic number.
     #[arg(
         short('t'),
         long("type"),
@@ -173,11 +173,11 @@ pub struct Decode {
 
     /// Input image file.
     ///
-    /// If it is not specified, or if "-" is specified, the image will be read
-    /// from stdin. Supported raster image formats are based on the formats
-    /// supported by the image crate. The format guess based on the
-    /// extension, and the raster format use the content in addition to it.
-    /// If the format cannot be guessed, use --type.
+    /// If [IMAGE] is not specified, or if "-" is specified, the image will be
+    /// read from stdin. Supported raster image formats are based on the
+    /// formats supported by the image crate. The format of [IMAGE] is
+    /// determined based on the extension or the magic number if possible.
+    /// If the format cannot be determined, use '--type'.
     /// Note that the SVG image is rasterized before scanning.
     #[arg(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
     pub input: Option<PathBuf>,
@@ -291,7 +291,7 @@ pub enum InputFormat {
 
     /// ICO file format.
     ///
-    /// This also includes the CUR file format.
+    /// This value also includes the CUR file format.
     Ico,
 
     /// JPEG.
@@ -303,7 +303,7 @@ pub enum InputFormat {
     /// Portable Network Graphics.
     Png,
 
-    /// Portable Anymap Format (PBM, PGM and PPM).
+    /// Portable Anymap Format.
     Pnm,
 
     /// Quite OK Image Format.
@@ -311,7 +311,7 @@ pub enum InputFormat {
 
     /// Scalable Vector Graphics.
     ///
-    /// This also includes gzipped it.
+    /// This value also includes the gzip-compressed SVG image.
     #[cfg(feature = "decode-from-svg")]
     Svg,
 

@@ -6,7 +6,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2023-06-23
+:docdate: 2023-06-29
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -30,13 +30,13 @@ By default, the result will be output to stdout.
 _IMAGE_::
 
   Input image file.
-  If it is not specified, or if "-" is specified, the image will be read from
-  stdin.
+  If _IMAGE_ is not specified, or if "-" is specified, the image will be read
+  from stdin.
   Supported raster image formats are based on the formats supported by the
-  https://crates.io/crates/image[image] crate.
-  The format guess based on the extension, and the raster format use the
-  content in addition to it.
-  If the format cannot be guessed, use *--type*.
+  image crate.
+  The format of _IMAGE_ is determined based on the extension or the magic
+  number if possible.
+  If the format cannot be determined, use *--type*.
   Note that the SVG image is rasterized before scanning.
 
 == OPTIONS
@@ -44,8 +44,8 @@ _IMAGE_::
 *-t*, *--type* _FORMAT_::
 
   The format of the input.
-  If it is not specified, the format will be guessed based on the extension,
-  and the raster format will use the content in addition to it.
+  If _FORMAT_ is not specified, the format is determined based on the extension
+  or the magic number.
 
   The possible values are:{blank}:::
 
@@ -72,7 +72,7 @@ _IMAGE_::
     *ico*::::
 
       ICO file format.
-      This also includes the CUR file format.
+      This value also includes the CUR file format.
 
     *jpeg*::::
 
@@ -88,7 +88,7 @@ _IMAGE_::
 
     *pnm*::::
 
-      Portable Anymap Format (PBM, PGM and PPM).
+      Portable Anymap Format.
 
     *qoi*::::
 
@@ -98,7 +98,7 @@ ifdef::decode-from-svg[]
     *svg*::::
 
       Scalable Vector Graphics.
-      This also includes gzipped it.
+      This value also includes the gzip-compressed SVG image.
 endif::[]
 
     *tga*::::
@@ -117,13 +117,13 @@ endif::[]
 
   Also print the metadata.
   It is output to stderr.
-  This conflicts with *--metadata*.
+  This option conflicts with *--metadata*.
 
 *--metadata*::
 
   Print only the metadata.
   It is output to stderr.
-  This conflicts with *--verbose*.
+  This option conflicts with *--verbose*.
 
 *-h*, *--help*::
 
@@ -147,4 +147,4 @@ include::{includedir}/section-copyright.adoc[]
 
 == SEE ALSO
 
-*qrtool*(1), *qrtool-encode*(1)
+*qrtool*(1), *qrtool-encode*(1), *zbarimg*(1)
