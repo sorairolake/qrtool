@@ -30,7 +30,7 @@ clap_complete = "4.3.1"
 csscolorparser = "0.6.2"
 image = "0.24.6"
 qrencode = "0.14.0"
-resvg = { version = "0.34.1", default-features = false, optional = true }
+resvg = { version = "0.35.0", default-features = false, optional = true }
 rqrr = "0.6.0"
 sysexits = "0.6.1"
 
