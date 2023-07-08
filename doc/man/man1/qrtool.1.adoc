@@ -6,7 +6,7 @@
 
 = qrtool(1)
 // Specify in UTC.
-:docdate: 2022-08-19
+:docdate: 2023-07-08
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -58,6 +58,16 @@ qrtool - an utility for encoding or decoding QR code
     * *zsh*
 
 include::{includedir}/section-exit-status.adoc[]
+
+== NOTES
+
+Source repository:{blank}::
+
+  https://github.com/sorairolake/qrtool
+
+QR code.com:{blank}::
+
+  https://www.qrcode.com/
 
 include::{includedir}/section-reporting-bugs.adoc[]
 

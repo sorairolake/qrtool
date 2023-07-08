@@ -6,7 +6,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2023-06-29
+:docdate: 2023-07-08
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -134,6 +134,20 @@ endif::[]
   Print version information.
 
 include::{includedir}/section-exit-status.adoc[]
+
+== NOTES
+
+Source repository:{blank}::
+
+  https://github.com/sorairolake/qrtool
+
+QR code.com:{blank}::
+
+  https://www.qrcode.com/
+
+image crate:{blank}::
+
+  https://crates.io/crates/image
 
 == EXAMPLES
 

@@ -6,7 +6,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2023-06-29
+:docdate: 2023-07-08
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -178,6 +178,20 @@ _STRING_::
   Print version information.
 
 include::{includedir}/section-exit-status.adoc[]
+
+== NOTES
+
+Source repository:{blank}::
+
+  https://github.com/sorairolake/qrtool
+
+QR code.com:{blank}::
+
+  https://www.qrcode.com/
+
+CSS Color Module Level 4:{blank}::
+
+  https://www.w3.org/TR/css-color-4/
 
 == EXAMPLES
 
