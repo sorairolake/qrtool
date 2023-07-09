@@ -22,6 +22,7 @@ toc::[]
 
 * Change to support more CSS color formats for foreground and background colors
   ({pull-request-url}/137[#137])
+* Change license of documents to CC BY 4.0 ({pull-request-url}/148[#148])
 
 == {compare-url}/v0.6.1\...v0.6.2[0.6.2] - 2023-06-12
 

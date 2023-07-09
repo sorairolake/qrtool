@@ -1,5 +1,5 @@
 //
-// SPDX-License-Identifier: Apache-2.0 OR MIT
+// SPDX-License-Identifier: CC-BY-4.0
 //
 // Copyright (C) 2022-2023 Shun Sakai
 //
@@ -8,8 +8,10 @@
 
 Copyright (C) 2022-2023 Shun Sakai
 
-This program is distributed under the terms of either the Apache License 2.0 or
-the MIT License.
+. This program is distributed under the terms of either the Apache License 2.0
+  or the MIT License.
+. This manual page is distributed under the terms of the Creative Commons
+  Attribution 4.0 International Public License.
 
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
