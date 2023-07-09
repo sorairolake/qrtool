@@ -129,6 +129,11 @@ Please see [CHANGELOG.adoc](CHANGELOG.adoc).
 
 Please see [CONTRIBUTING.adoc](CONTRIBUTING.adoc).
 
+## Acknowledgment
+
+This program is inspired by [`qrencode`](https://fukuchi.org/works/qrencode/)
+and [`zbarimg`](https://github.com/mchehab/zbar).
+
 ## License
 
 Copyright &copy; 2022&ndash;2023 Shun Sakai (see [AUTHORS.adoc](AUTHORS.adoc))
