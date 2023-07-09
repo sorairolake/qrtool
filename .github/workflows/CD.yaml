@@ -90,7 +90,7 @@ jobs:
         package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
 
         mkdir -p "${package}"/doc
-        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-MIT "${bin}" "${package}"
+        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-CC-BY LICENSE-MIT "${bin}" "${package}"
         cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
           mkdir -p "${package}"/man
