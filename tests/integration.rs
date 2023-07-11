@@ -791,7 +791,9 @@ fn decode_from_bmp_cur() {
         .assert()
         .failure()
         .code(69)
-        .stderr(predicate::str::contains("could not read the image"));
+        .stderr(predicate::str::contains(
+            "could not determine the image format",
+        ));
     command()
         .arg("decode")
         .arg("-t")
@@ -810,7 +812,9 @@ fn decode_from_png_cur() {
         .assert()
         .failure()
         .code(69)
-        .stderr(predicate::str::contains("could not read the image"));
+        .stderr(predicate::str::contains(
+            "could not determine the image format",
+        ));
     command()
         .arg("decode")
         .arg("-t")
@@ -1075,9 +1079,8 @@ fn decode_from_tga() {
         .arg("decode")
         .arg("data/decode/decode.tga")
         .assert()
-        .failure()
-        .code(69)
-        .stderr(predicate::str::contains("could not read the image"));
+        .success()
+        .stdout(predicate::eq("QR code"));
     command()
         .arg("decode")
         .arg("-t")
