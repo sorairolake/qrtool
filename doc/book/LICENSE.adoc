@@ -2,8 +2,10 @@
 
 Copyright (C) 2022&ndash;2023 Shun Sakai
 
-This program is distributed under the terms of either the _Apache License 2.0_
-or the _MIT License_.
+. This program is distributed under the terms of either the _Apache License
+  2.0_ or the _MIT License_.
+. Some documentations are distributed under the terms of the _Creative Commons
+  Attribution 4.0 International Public License_.
 
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
@@ -18,4 +20,10 @@ include::LICENSE-APACHE[]
 
 ....
 include::LICENSE-MIT[]
+....
+
+== Creative Commons Attribution 4.0 International Public License
+
+....
+include::LICENSE-CC-BY[]
 ....

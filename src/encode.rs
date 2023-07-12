@@ -4,6 +4,7 @@
 // Copyright (C) 2022-2023 Shun Sakai
 //
 
+use csscolorparser::Color;
 use image::{DynamicImage, Rgba};
 use qrencode::{
     bits::Bits,
@@ -14,7 +15,6 @@ use qrencode::{
 
 use crate::{
     cli::{Ecc, Mode, Variant},
-    color::Color,
     metadata::{Extractor, Metadata},
 };
 
@@ -56,8 +56,8 @@ pub fn push_data_for_selected_mode(
 /// Renders the QR code into an image.
 pub fn to_svg(code: &QrCode, margin: u32, colors: &(Color, Color)) -> String {
     Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin)
-        .dark_color(svg::Color(&format!("{}", colors.0)))
-        .light_color(svg::Color(&format!("{}", colors.1)))
+        .dark_color(svg::Color(&colors.0.to_hex_string()))
+        .light_color(svg::Color(&colors.1.to_hex_string()))
         .build()
 }
 
@@ -72,8 +72,8 @@ pub fn to_terminal(code: &QrCode, margin: u32) -> String {
 /// Renders the QR code into an image.
 pub fn to_image(code: &QrCode, margin: u32, colors: &(Color, Color)) -> DynamicImage {
     let image = Renderer::<Rgba<u8>>::new(&code.to_colors(), code.width(), margin)
-        .dark_color(Rgba::from(colors.0.channels()))
-        .light_color(Rgba::from(colors.1.channels()))
+        .dark_color(Rgba::from(colors.0.to_rgba8()))
+        .light_color(Rgba::from(colors.1.to_rgba8()))
         .build();
     DynamicImage::ImageRgba8(image)
 }

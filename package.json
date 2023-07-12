@@ -3,7 +3,7 @@
   "name": "qrtool",
   "version": "1.0.0",
   "description": "An utility for encoding or decoding QR code",
-  "license": "Apache-2.0 OR MIT",
+  "license": "CC-BY-4.0",
   "author": "Shun Sakai <sorairolake@protonmail.ch>",
   "homepage": "https://github.com/sorairolake/qrtool#readme",
   "repository": {
@@ -22,6 +22,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "honkit": "^4.0.7"
+    "honkit": "^4.0.8"
   }
 }

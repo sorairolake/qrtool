@@ -83,20 +83,20 @@ pub fn run() -> anyhow::Result<()> {
                             println!("{string}");
                         }
                     }
-                    format => {
+                    OutputFormat::Png => {
                         let image =
                             encode::to_image(&code, arg.margin, &(arg.foreground, arg.background));
 
-                        let format = ImageFormat::try_from(format)
-                            .expect("the image format is not supported");
                         if let Some(file) = arg.output {
-                            image.save_with_format(&file, format).with_context(|| {
-                                format!("could not write the image to {}", file.display())
-                            })?;
+                            image
+                                .save_with_format(&file, ImageFormat::Png)
+                                .with_context(|| {
+                                    format!("could not write the image to {}", file.display())
+                                })?;
                         } else {
                             let mut buf = Vec::new();
                             image
-                                .write_to(&mut Cursor::new(&mut buf), format)
+                                .write_to(&mut Cursor::new(&mut buf), ImageFormat::Png)
                                 .and_then(|_| {
                                     io::stdout().write_all(&buf).map_err(ImageError::from)
                                 })
@@ -114,7 +114,7 @@ pub fn run() -> anyhow::Result<()> {
                     _ => input_format,
                 };
                 let input = match arg.input {
-                    Some(path) if path.to_str().unwrap_or_default() != "-" => fs::read(&path)
+                    Some(ref path) if path.to_str().unwrap_or_default() != "-" => fs::read(path)
                         .with_context(|| format!("could not read data from {}", path.display()))?,
                     _ => {
                         let mut buf = Vec::new();
@@ -128,14 +128,18 @@ pub fn run() -> anyhow::Result<()> {
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]
                     Some(crate::cli::InputFormat::Svg) => decode::from_svg(&input),
-                    Some(format) => image::load_from_memory_with_format(
-                        &input,
-                        format
-                            .try_into()
-                            .expect("the image format is not supported"),
-                    )
-                    .map_err(anyhow::Error::from),
-                    _ => image::load_from_memory(&input).map_err(anyhow::Error::from),
+                    format => {
+                        let format = if let Some(f) = format {
+                            f.try_into()
+                        } else {
+                            image::guess_format(&input).or_else(|err| {
+                                arg.input.map_or_else(|| Err(err), ImageFormat::from_path)
+                            })
+                        }
+                        .context("could not determine the image format")?;
+                        image::load_from_memory_with_format(&input, format)
+                            .map_err(anyhow::Error::from)
+                    }
                 }
                 .context("could not read the image")?;
                 let image = image.into_luma8();

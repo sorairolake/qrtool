@@ -1,12 +1,12 @@
 //
-// SPDX-License-Identifier: Apache-2.0 OR MIT
+// SPDX-License-Identifier: CC-BY-4.0
 //
 // Copyright (C) 2022-2023 Shun Sakai
 //
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2022-11-22
+:docdate: 2023-07-08
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -30,10 +30,11 @@ By default, the result will be output to stdout.
 _STRING_::
 
   Input data.
-  If it is not specified, data will be read from stdin.
-  It takes a valid UTF-8 string.
-  Use *--read-from* or read from stdin if taking other than it.
-  This conflicts with *--read-from*.
+  If _STRING_ is not specified, data will be read from stdin.
+  _STRING_ must be a valid UTF-8 string.
+  Use *--read-from* or read from stdin if taking other than a valid UTF-8
+  string.
+  This positional argument conflicts with *--read-from*.
 
 == OPTIONS
 
@@ -44,7 +45,7 @@ _STRING_::
 *-r*, *--read-from* _FILE_::
 
   Read input data from a file.
-  This conflicts with _STRING_.
+  This option conflicts with _STRING_.
 
 *-l*, *--error-correction-level* _LEVEL_::
 
@@ -61,7 +62,7 @@ _STRING_::
 
       Level M.
       15% of codewords can be restored.
-      This is the default.
+      This is the default value.
 
     *q*::::
 
@@ -80,8 +81,8 @@ _STRING_::
 *-v*, *--symbol-version* _NUMBER_::
 
   The version of the symbol.
-  For normal QR code, it should be between *1* and *40*.
-  For Micro QR code, it should be between *1* and *4*.
+  For normal QR code, _NUMBER_ should be between *1* and *40*.
+  For Micro QR code, _NUMBER_ should be between *1* and *4*.
 
 *--symversion* _NUMBER_::
 
@@ -102,7 +103,7 @@ _STRING_::
 
       Portable Network Graphics.
       This outputs 32-bit RGBA PNG image.
-      This is the default.
+      This is the default value.
 
     *svg*::::
 
@@ -129,7 +130,7 @@ _STRING_::
     *byte*::::
 
       Arbitrary binary data.
-      This is the default.
+      This is the default value.
 
     *kanji*::::
 
@@ -138,14 +139,14 @@ _STRING_::
 *--variant* _TYPE_::
 
   The type of QR code.
-  This requires *--symbol-version*.
+  This option requires *--symbol-version*.
 
   The possible values are:{blank}:::
 
     *normal*::::
 
       Normal QR code.
-      This is the default.
+      This is the default value.
 
     *micro*::::
 
@@ -154,18 +155,14 @@ _STRING_::
 *--foreground* _COLOR_::
 
   Foreground color.
-  It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA and
-  shorthands of these.
-  A leading number sign is allowed.
-  Default is black (#000000).
+  _COLOR_ takes a CSS color string.
+  Default is black.
 
 *--background* _COLOR_::
 
   Background color.
-  It takes hexadecimal notation such as RRGGBB (hex triplet) or RRGGBBAA and
-  shorthands of these.
-  A leading number sign is allowed.
-  Default is white (#ffffff).
+  _COLOR_ takes a CSS color string.
+  Default is white.
 
 *--verbose*::
 
@@ -182,6 +179,20 @@ _STRING_::
 
 include::{includedir}/section-exit-status.adoc[]
 
+== NOTES
+
+Source repository:{blank}::
+
+  https://github.com/sorairolake/qrtool
+
+QR code.com:{blank}::
+
+  https://www.qrcode.com/
+
+CSS Color Module Level 4:{blank}::
+
+  https://www.w3.org/TR/css-color-4/
+
 == EXAMPLES
 
 Encode the given string in a QR code:{blank}::
@@ -194,4 +205,4 @@ include::{includedir}/section-copyright.adoc[]
 
 == SEE ALSO
 
-*qrtool*(1), *qrtool-decode*(1)
+*qrencode*(1), *qrtool*(1), *qrtool-decode*(1)

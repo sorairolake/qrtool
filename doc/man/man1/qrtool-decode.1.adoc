@@ -1,12 +1,12 @@
 //
-// SPDX-License-Identifier: Apache-2.0 OR MIT
+// SPDX-License-Identifier: CC-BY-4.0
 //
 // Copyright (C) 2022-2023 Shun Sakai
 //
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2023-03-16
+:docdate: 2023-07-08
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -30,11 +30,13 @@ By default, the result will be output to stdout.
 _IMAGE_::
 
   Input image file.
-  If it is not specified, or if "-" is specified, the image will be read from
-  stdin.
-  Supported raster image formats are any formats supported by the image crate.
-  The format guess based on the extension, and the raster format use the
-  content in addition to it.
+  If _IMAGE_ is not specified, or if "-" is specified, the image will be read
+  from stdin.
+  Supported raster image formats are based on the formats supported by the
+  image crate.
+  The format of _IMAGE_ is determined based on the extension or the magic
+  number if possible.
+  If the format cannot be determined, use *--type*.
   Note that the SVG image is rasterized before scanning.
 
 == OPTIONS
@@ -42,8 +44,8 @@ _IMAGE_::
 *-t*, *--type* _FORMAT_::
 
   The format of the input.
-  If it is not specified, the format will be guessed based on the extension,
-  and the raster format will use the content in addition to it.
+  If _FORMAT_ is not specified, the format is determined based on the extension
+  or the magic number.
 
   The possible values are:{blank}:::
 
@@ -61,7 +63,7 @@ _IMAGE_::
 
     *gif*::::
 
-      GIF.
+      Graphics Interchange Format.
 
     *hdr*::::
 
@@ -69,7 +71,8 @@ _IMAGE_::
 
     *ico*::::
 
-      ICO.
+      ICO file format.
+      This value also includes the CUR file format.
 
     *jpeg*::::
 
@@ -85,13 +88,17 @@ _IMAGE_::
 
     *pnm*::::
 
-      PNM.
+      Portable Anymap Format.
+
+    *qoi*::::
+
+      Quite OK Image Format.
 
 ifdef::decode-from-svg[]
     *svg*::::
 
       Scalable Vector Graphics.
-      This also includes gzipped it.
+      This value also includes the gzip-compressed SVG image.
 endif::[]
 
     *tga*::::
@@ -100,7 +107,7 @@ endif::[]
 
     *tiff*::::
 
-      TIFF.
+      Tag Image File Format.
 
     *webp*::::
 
@@ -110,13 +117,13 @@ endif::[]
 
   Also print the metadata.
   It is output to stderr.
-  This conflicts with *--metadata*.
+  This option conflicts with *--metadata*.
 
 *--metadata*::
 
   Print only the metadata.
   It is output to stderr.
-  This conflicts with *--verbose*.
+  This option conflicts with *--verbose*.
 
 *-h*, *--help*::
 
@@ -127,6 +134,20 @@ endif::[]
   Print version information.
 
 include::{includedir}/section-exit-status.adoc[]
+
+== NOTES
+
+Source repository:{blank}::
+
+  https://github.com/sorairolake/qrtool
+
+QR code.com:{blank}::
+
+  https://www.qrcode.com/
+
+image crate:{blank}::
+
+  https://crates.io/crates/image
 
 == EXAMPLES
 
@@ -140,4 +161,4 @@ include::{includedir}/section-copyright.adoc[]
 
 == SEE ALSO
 
-*qrtool*(1), *qrtool-encode*(1)
+*qrtool*(1), *qrtool-encode*(1), *zbarimg*(1)

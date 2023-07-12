@@ -13,7 +13,6 @@
 #![allow(clippy::multiple_crate_versions)]
 
 mod cli;
-mod color;
 mod core;
 mod decode;
 mod encode;

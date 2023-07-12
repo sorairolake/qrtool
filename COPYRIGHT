@@ -4,3 +4,7 @@ Source: https://github.com/sorairolake/qrtool
 Files: *
 Copyright: 2022-2023 Shun Sakai
 License: Apache-2.0 or MIT
+
+Files: doc/*
+Copyright: 2022-2023 Shun Sakai
+License: CC-BY-4.0

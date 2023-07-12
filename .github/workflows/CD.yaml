@@ -53,11 +53,11 @@ jobs:
         targets: ${{ matrix.target }}
     - name: Install cross
       if: ${{ matrix.use-cross }}
-      uses: taiki-e/install-action@v2.11.0
+      uses: taiki-e/install-action@v2.12.10
       with:
         tool: cross
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.4.0
+      uses: Swatinem/rust-cache@v2.5.1
       with:
         key: ${{ matrix.target }}
     - name: Setup Ruby
@@ -90,7 +90,7 @@ jobs:
         package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
 
         mkdir -p "${package}"/doc
-        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-MIT "${bin}" "${package}"
+        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-CC-BY LICENSE-MIT "${bin}" "${package}"
         cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
           mkdir -p "${package}"/man
