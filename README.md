@@ -6,6 +6,8 @@
 
 **qrtool** is a command-line utility for encoding or decoding QR code.
 
+![Demonstration video](asset/demo.gif)
+
 ## Installation
 
 ### From source
