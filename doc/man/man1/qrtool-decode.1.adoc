@@ -6,7 +6,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2023-07-08
+:docdate: 2023-07-17
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -161,4 +161,4 @@ include::{includedir}/section-copyright.adoc[]
 
 == SEE ALSO
 
-*qrtool*(1), *qrtool-encode*(1), *zbarimg*(1)
+*qrtool*(1), *qrtool-encode*(1), *qrtool-help*(1), *zbarimg*(1)

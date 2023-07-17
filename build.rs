@@ -31,6 +31,7 @@ fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
             man_dir.join("qrtool.1.adoc"),
             man_dir.join("qrtool-encode.1.adoc"),
             man_dir.join("qrtool-decode.1.adoc"),
+            man_dir.join("qrtool-help.1.adoc"),
         ])
         .status()
 }

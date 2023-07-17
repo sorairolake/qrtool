@@ -12,6 +12,7 @@
 * link:man/qrtool.1.adoc[`qrtool(1)`]
 * link:man/qrtool-encode.1.adoc[`qrtool-encode(1)`]
 * link:man/qrtool-decode.1.adoc[`qrtool-decode(1)`]
+* link:man/qrtool-help.1.adoc[`qrtool-help(1)`]
 
 '''
 

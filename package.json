@@ -22,6 +22,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "honkit": "^4.0.8"
+    "honkit": "^5.0.0"
   }
 }
