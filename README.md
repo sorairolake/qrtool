@@ -120,6 +120,7 @@ Please see the following:
 - [`qrtool(1)`][qrtool-man-url]
 - [`qrtool-encode(1)`][qrtool-encode-man-url]
 - [`qrtool-decode(1)`][qrtool-decode-man-url]
+- [`qrtool-help(1)`][qrtool-help-man-url]
 
 ## Changelog
 
@@ -155,3 +156,4 @@ See [COPYRIGHT](COPYRIGHT), [LICENSE-APACHE](LICENSE-APACHE),
 [qrtool-man-url]: https://sorairolake.github.io/qrtool/man/qrtool.1.html
 [qrtool-encode-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-encode.1.html
 [qrtool-decode-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-decode.1.html
+[qrtool-help-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-help.1.html

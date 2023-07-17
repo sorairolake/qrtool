@@ -1,0 +1,55 @@
+//
+// SPDX-License-Identifier: CC-BY-4.0
+//
+// Copyright (C) 2022-2023 Shun Sakai
+//
+
+= qrtool-help(1)
+// Specify in UTC.
+:docdate: 2023-07-17
+:doctype: manpage
+ifdef::revnumber[:mansource: qrtool {revnumber}]
+:manmanual: General Commands Manual
+:includedir: ../include
+
+== NAME
+
+qrtool-help - print the help for a command
+
+== SYNOPSIS
+
+*qrtool help* [_COMMAND_]
+
+== DESCRIPTION
+
+This command prints the help for a command.
+
+This command is identical to any of the following:{blank}::
+
+  $ *qrtool* [_COMMAND_] *-h*|*--help*
+
+== POSITIONAL ARGUMENTS
+
+_COMMAND_::
+
+  Subcommand to print the help.
+
+include::{includedir}/section-exit-status.adoc[]
+
+== NOTES
+
+Source repository:{blank}::
+
+  https://github.com/sorairolake/qrtool
+
+QR code.com:{blank}::
+
+  https://www.qrcode.com/
+
+include::{includedir}/section-reporting-bugs.adoc[]
+
+include::{includedir}/section-copyright.adoc[]
+
+== SEE ALSO
+
+*qrtool*(1), *qrtool-decode*(1), *qrtool-encode*(1)
