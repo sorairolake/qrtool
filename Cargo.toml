@@ -1,6 +1,6 @@
 [package]
 name = "qrtool"
-version = "0.7.0"
+version = "0.7.1"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.65.0"
@@ -24,8 +24,8 @@ exclude = [
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.71"
-clap = { version = "4.3.11", features = ["derive", "wrap_help"] }
+anyhow = "1.0.72"
+clap = { version = "4.3.12", features = ["derive", "wrap_help"] }
 clap_complete = "4.3.2"
 clap_complete_nushell = "4.3.1"
 csscolorparser = "0.6.2"
