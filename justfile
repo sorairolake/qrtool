@@ -52,8 +52,9 @@ default: build
 
 # Build the book
 @build-book:
-    cp AUTHORS.adoc BUILD.adoc CHANGELOG.adoc CONTRIBUTING.adoc doc/book
+    cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc LICENSE-* doc/book
     mkdir -p doc/book/man
     cp doc/man/man1/*.1.adoc doc/book/man
-    sed -i '/^:includedir:/s/\.\.\/include$/doc\/man\/include/g' doc/book/man/*.1.adoc
+    cp -r doc/man/include doc/book/man
+    sed -i '/^:includedir:/s/\.//' doc/book/man/*.1.adoc
     npx honkit build
