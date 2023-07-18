@@ -51,7 +51,8 @@ default: build
     npx prettier -w README.md
 
 # Build the book
-@build-book:
+build-book:
+    #!/usr/bin/env bash
     cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc LICENSE-* doc/book
     mkdir -p doc/book/man
     cp doc/man/man1/*.1.adoc doc/book/man
