@@ -56,5 +56,5 @@ default: build
     mkdir -p doc/book/man
     cp doc/man/man1/*.1.adoc doc/book/man
     cp -r doc/man/include doc/book/man
-    sed -i '/^:includedir:/s/\.//' doc/book/man/*.1.adoc
+    sed -i -E -e '/^:includedir:/s/\.//' -e '/ifdef::|endif::/d' doc/book/man/*.1.adoc
     npx honkit build
