@@ -53,7 +53,7 @@ default: build
 # Build the book
 build-book:
     #!/usr/bin/env bash
-    cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc LICENSE-* doc/book
+    cp asset/demo.gif {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc LICENSE-* doc/book
     mkdir -p doc/book/man
     cp doc/man/man1/*.1.adoc doc/book/man
     cp -r doc/man/include doc/book/man
