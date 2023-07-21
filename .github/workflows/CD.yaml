@@ -101,6 +101,7 @@ jobs:
           ZSTD_CLEVEL=19 tar -cavf "${package}.tar.zst" "${package}"
         else
           7z a -bb "${package}.7z" "${package}"
+          7z a -bb -mx=9 "${package}.7z" "${package}"
         fi
     - name: Release
       uses: softprops/action-gh-release@v0.1.15
