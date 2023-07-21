@@ -1,11 +1,12 @@
 [package]
 name = "qrtool"
-version = "0.7.2"
+version = "0.7.3"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.65.0"
 description = "An utility for encoding or decoding QR code"
 readme = "README.md"
+homepage = "https://sorairolake.github.io/qrtool/"
 repository = "https://github.com/sorairolake/qrtool"
 license = "Apache-2.0 OR MIT"
 keywords = ["qrcode"]
@@ -25,7 +26,7 @@ exclude = [
 
 [dependencies]
 anyhow = "1.0.72"
-clap = { version = "4.3.15", features = ["derive", "wrap_help"] }
+clap = { version = "4.3.17", features = ["derive", "wrap_help"] }
 clap_complete = "4.3.2"
 clap_complete_nushell = "4.3.1"
 csscolorparser = "0.6.2"

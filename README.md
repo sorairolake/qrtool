@@ -90,6 +90,7 @@ The following shells are supported:
 - `bash`
 - `elvish`
 - `fish`
+- `nushell`
 - `powershell`
 - `zsh`
 
