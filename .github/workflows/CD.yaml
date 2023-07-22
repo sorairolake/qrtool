@@ -77,6 +77,17 @@ jobs:
     - name: Build a package with cross
       if: ${{ matrix.use-cross }}
       run: cross build --release --target ${{ matrix.target }}
+    - name: Install lzip
+      if: matrix.os != 'windows-2022'
+      run: |
+        if [ "${{ matrix.os }}" == "ubuntu-22.04" ] ; then
+          sudo apt-get update
+          sudo apt-get install lzip
+        else
+          brew update
+          brew install lzip
+        fi
+        lzip -V
     - name: Get version
       id: get_version
       uses: battila7/get-version-action@v2.3.0
@@ -99,9 +110,13 @@ jobs:
         fi
 
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-          ZSTD_CLEVEL=19 tar -cavf "${package}.tar.zst" "${package}"
+          tar -cvf "${package}.tar" "${package}"
+          zstd -19 -v "${package}.tar"
+          gzip -k -v -9 "${package}.tar"
+          lzip -v -9 "${package}.tar"
         else
           7z a -bb -mx=9 "${package}.7z" "${package}"
+          7z a -bb -mx=9 "${package}.zip" "${package}"
         fi
     - name: Release
       uses: softprops/action-gh-release@v0.1.15
