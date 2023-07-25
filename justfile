@@ -1,8 +1,6 @@
+# SPDX-FileCopyrightText: 2022-2023 Shun Sakai
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
-#
-# Copyright (C) 2022-2023 Shun Sakai
-#
 
 alias all := default
 alias lint := clippy
