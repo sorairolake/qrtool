@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022-2023 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
 = Introduction
 :project-url: https://github.com/sorairolake/qrtool
 :shields-url: https://img.shields.io

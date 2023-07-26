@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022-2023 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
 name: CD
 
 on:
@@ -104,7 +108,8 @@ jobs:
         package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
 
         mkdir -p "${package}"/doc
-        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-CC-BY LICENSE-MIT "${bin}" "${package}"
+        cp README.md COPYING "${bin}" "${package}"
+        cp -r LICENSES "${package}"
         cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
           mkdir -p "${package}"/man

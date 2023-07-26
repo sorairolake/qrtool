@@ -13,17 +13,17 @@ There is NO WARRANTY, to the extent permitted by law.
 == Apache License 2.0
 
 ....
-include::LICENSE-APACHE[]
+include::LICENSES/Apache-2.0.txt[]
 ....
 
 == MIT License
 
 ....
-include::LICENSE-MIT[]
+include::LICENSES/MIT.txt[]
 ....
 
 == Creative Commons Attribution 4.0 International Public License
 
 ....
-include::LICENSE-CC-BY[]
+include::LICENSES/CC-BY-4.0.txt[]
 ....
