@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2022-2023 Shun Sakai
+
+SPDX-License-Identifier: Apache-2.0 OR MIT
+-->
+
 # qrtool
 
 [![CI][ci-badge]][ci-url]
@@ -147,8 +153,7 @@ Copyright &copy; 2022&ndash;2023 Shun Sakai (see [AUTHORS.adoc](AUTHORS.adoc))
 2. Some files are distributed under the terms of the _Creative Commons
    Attribution 4.0 International Public License_.
 
-See [COPYRIGHT](COPYRIGHT), [LICENSE-APACHE](LICENSE-APACHE),
-[LICENSE-MIT](LICENSE-MIT) and [LICENSE-CC-BY](LICENSE-CC-BY) for more details.
+See [COPYING](COPYING) for more details.
 
 [ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&label=CI&logo=github&style=for-the-badge
 [ci-url]: https://github.com/sorairolake/qrtool/actions?query=branch%3Adevelop+workflow%3ACI++

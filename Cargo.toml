@@ -1,6 +1,10 @@
+# SPDX-FileCopyrightText: 2022-2023 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
 [package]
 name = "qrtool"
-version = "0.7.3"
+version = "0.7.4"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.65.0"
@@ -14,6 +18,7 @@ categories = ["command-line-utilities"]
 exclude = [
   "/.github",
   "/*.json",
+  "/*.json.license",
   "/clippy.toml",
   "/Cross.toml",
   "/doc",
@@ -26,7 +31,7 @@ exclude = [
 
 [dependencies]
 anyhow = "1.0.72"
-clap = { version = "4.3.17", features = ["derive", "wrap_help"] }
+clap = { version = "4.3.19", features = ["derive", "wrap_help"] }
 clap_complete = "4.3.2"
 clap_complete_nushell = "4.3.1"
 csscolorparser = "0.6.2"
@@ -34,7 +39,7 @@ image = "0.24.6"
 qrencode = "0.14.0"
 resvg = { version = "0.35.0", default-features = false, optional = true }
 rqrr = "0.6.0"
-sysexits = "0.6.1"
+sysexits = "0.6.2"
 
 [dev-dependencies]
 assert_cmd = "2.0.11"

@@ -1,8 +1,6 @@
+// SPDX-FileCopyrightText: 2022-2023 Shun Sakai
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
-//
-// Copyright (C) 2022-2023 Shun Sakai
-//
 
 // Lint levels of rustc.
 #![forbid(unsafe_code)]
@@ -12,8 +10,8 @@
 #![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
 #![allow(clippy::multiple_crate_versions)]
 
+mod app;
 mod cli;
-mod core;
 mod decode;
 mod encode;
 mod metadata;
@@ -25,7 +23,7 @@ use qrencode::types::QrError;
 use rqrr::DeQRError;
 
 fn main() -> ExitCode {
-    match core::run() {
+    match app::run() {
         Ok(()) => ExitCode::SUCCESS,
         Err(err) => {
             eprintln!("Error: {err:?}");

@@ -189,9 +189,9 @@ checksum = "17cc5e6b5ab06331c33589842070416baa137e8b0eb912b008cfd4a78ada7919"
 
 [[package]]
 name = "clap"
-version = "4.3.17"
+version = "4.3.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b0827b011f6f8ab38590295339817b0d26f344aa4932c3ced71b45b0c54b4a9"
+checksum = "5fd304a20bff958a57f04c4e96a2e7594cc4490a0e809cbd48bb6437edaa452d"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -200,9 +200,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.3.17"
+version = "4.3.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9441b403be87be858db6a23edb493e7f694761acdc3343d5a0fcaafd304cbc9e"
+checksum = "01c6a3f08f1fe5662a35cfe393aec09c4df95f60ee93b7556505260f75eee9e1"
 dependencies = [
  "anstream",
  "anstyle",
@@ -882,7 +882,7 @@ dependencies = [
 
 [[package]]
 name = "qrtool"
-version = "0.7.3"
+version = "0.7.4"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -1146,9 +1146,9 @@ dependencies = [
 
 [[package]]
 name = "sysexits"
-version = "0.6.1"
+version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d9d7620c72a31fadb8987ceec6cd78ee0589d8ef2a572e4e8c9803833d1801a4"
+checksum = "64aecc23cf87e057af0c65a2859d4003a80bb84cf8d82113a4a07bf3d3fa7468"
 
 [[package]]
 name = "terminal_size"

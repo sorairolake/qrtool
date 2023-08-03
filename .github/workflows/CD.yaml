@@ -1,9 +1,13 @@
+# SPDX-FileCopyrightText: 2022-2023 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
 name: CD
 
 on:
   push:
     branches:
-      - '**'
+      - 'develop'
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
@@ -12,6 +16,8 @@ jobs:
   build:
     name: Build
     runs-on: ${{ matrix.os }}
+    outputs:
+      get_version: ${{ steps.get_version.outputs.version-without-v }}
     strategy:
       matrix:
         target:
@@ -54,11 +60,11 @@ jobs:
         targets: ${{ matrix.target }}
     - name: Install cross
       if: ${{ matrix.use-cross }}
-      uses: taiki-e/install-action@v2.12.12
+      uses: taiki-e/install-action@v2.13.5
       with:
         tool: cross
     - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.5.1
+      uses: Swatinem/rust-cache@v2.6.0
       with:
         key: ${{ matrix.target }}
     - name: Setup Ruby
@@ -77,6 +83,17 @@ jobs:
     - name: Build a package with cross
       if: ${{ matrix.use-cross }}
       run: cross build --release --target ${{ matrix.target }}
+    - name: Install lzip
+      if: matrix.os != 'windows-2022'
+      run: |
+        if [ "${{ matrix.os }}" == "ubuntu-22.04" ] ; then
+          sudo apt-get update
+          sudo apt-get install lzip
+        else
+          brew update
+          brew install lzip
+        fi
+        lzip -V
     - name: Get version
       id: get_version
       uses: battila7/get-version-action@v2.3.0
@@ -91,7 +108,8 @@ jobs:
         package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
 
         mkdir -p "${package}"/doc
-        cp README.md COPYRIGHT LICENSE-APACHE LICENSE-CC-BY LICENSE-MIT "${bin}" "${package}"
+        cp README.md COPYING "${bin}" "${package}"
+        cp -r LICENSES "${package}"
         cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
           mkdir -p "${package}"/man
@@ -99,16 +117,43 @@ jobs:
         fi
 
         if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-          ZSTD_CLEVEL=19 tar -cavf "${package}.tar.zst" "${package}"
+          tar -cvf "${package}.tar" "${package}"
+          zstd -19 -v "${package}.tar"
+          gzip -k -v -9 "${package}.tar"
+          lzip -v -9 "${package}.tar"
         else
           7z a -bb -mx=9 "${package}.7z" "${package}"
+          7z a -bb -mx=9 "${package}.zip" "${package}"
         fi
+        rm -rv qrtool-*/
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: "qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
+        path: 'qrtool-*.*'
+
+  release:
+    name: Release
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+    - name: Calculate checksums
+      run: |
+        mv qrtool-*/* .
+        rmdir -v qrtool-*/
+        sha256sum qrtool-* | tee sha256sums.txt
+        b2sum qrtool-* | tee b2sums.txt
     - name: Release
       uses: softprops/action-gh-release@v0.1.15
       if: startsWith(github.ref, 'refs/tags/')
       with:
         draft: true
-        files: 'qrtool-*'
-        name: "Release version ${{ steps.get_version.outputs.version-without-v }}"
+        files: |
+          qrtool-*
+          sha256sums.txt
+          b2sums.txt
+        name: "Release version ${{ needs.build.outputs.get_version }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
