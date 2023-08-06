@@ -21,6 +21,8 @@ toc::[]
 === Changed
 
 * Update documentation ({pull-request-url}/179[#179])
+* Use LZMA instead of LZMA2 in 7z format for pre-built binary
+  ({pull-request-url}/181[#181])
 
 == {compare-url}/v0.7.3\...v0.7.4[0.7.4] - 2023-08-03
 

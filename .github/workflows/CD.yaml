@@ -122,8 +122,8 @@ jobs:
           gzip -k -v -9 "${package}.tar"
           lzip -v -9 "${package}.tar"
         else
-          7z a -bb -mx=9 "${package}.7z" "${package}"
-          7z a -bb -mx=9 "${package}.zip" "${package}"
+          7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
+          7z a -bb -mx=9 -mm=Deflate "${package}.zip" "${package}"
         fi
         rm -rv qrtool-*/
     - name: Upload artifact
