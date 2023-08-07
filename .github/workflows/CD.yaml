@@ -60,7 +60,7 @@ jobs:
         targets: ${{ matrix.target }}
     - name: Install cross
       if: ${{ matrix.use-cross }}
-      uses: taiki-e/install-action@v2.13.5
+      uses: taiki-e/install-action@v2.14.2
       with:
         tool: cross
     - name: Cache build artifacts
