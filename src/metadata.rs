@@ -25,12 +25,12 @@ impl Metadata {
         }
     }
 
-    /// Get the symbol version.
+    /// Gets the symbol version.
     pub const fn symbol_version(&self) -> usize {
         self.symbol_version
     }
 
-    /// Get the error correction level.
+    /// Gets the error correction level.
     pub const fn error_correction_level(&self) -> Ecc {
         self.error_correction_level
     }
