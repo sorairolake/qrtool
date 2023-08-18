@@ -11,5 +11,5 @@ Copyright (C) 2022-2023 Shun Sakai
 . This manual page is distributed under the terms of the Creative Commons
   Attribution 4.0 International Public License.
 
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
+This is free software: you are free to change and redistribute it. There is NO
+WARRANTY, to the extent permitted by law.

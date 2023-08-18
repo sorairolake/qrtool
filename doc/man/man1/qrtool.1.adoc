@@ -48,8 +48,7 @@ qrtool - an utility for encoding or decoding QR code
 
 *--generate-completion* _SHELL_::
 
-  Generate shell completion.
-  The completion is output to stdout.
+  Generate shell completion. The completion is output to stdout.
 
   The possible values are:{blank}:::
 

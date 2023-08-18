@@ -31,5 +31,4 @@ just build
 
 `decode-from-svg`::
 
-  Enable decoding from the SVG image.
-  This is enabled by default.
+  Enable decoding from the SVG image. This is enabled by default.

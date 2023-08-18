@@ -20,19 +20,17 @@ qrtool-encode - encode input data in a QR code
 
 == DESCRIPTION
 
-This command encodes input data in a QR code.
-By default, the result will be output to stdout.
+This command encodes input data in a QR code. By default, the result will be
+output to stdout.
 
 == POSITIONAL ARGUMENTS
 
 _STRING_::
 
-  Input data.
-  If _STRING_ is not specified, data will be read from stdin.
-  _STRING_ must be a valid UTF-8 string.
-  Use *--read-from* or read from stdin if taking other than a valid UTF-8
-  string.
-  This positional argument conflicts with *--read-from*.
+  Input data. If _STRING_ is not specified, data will be read from stdin.
+  _STRING_ must be a valid UTF-8 string. Use *--read-from* or read from stdin
+  if taking other than a valid UTF-8 string. This positional argument conflicts
+  with *--read-from*.
 
 == OPTIONS
 
@@ -42,8 +40,7 @@ _STRING_::
 
 *-r*, *--read-from* _FILE_::
 
-  Read input data from a file.
-  This option conflicts with _STRING_.
+  Read input data from a file. This option conflicts with _STRING_.
 
 *-l*, *--error-correction-level* _LEVEL_::
 
@@ -53,24 +50,19 @@ _STRING_::
 
     *l*::::
 
-      Level L.
-      7% of codewords can be restored.
+      Level L. 7% of codewords can be restored.
 
     *m*::::
 
-      Level M.
-      15% of codewords can be restored.
-      This is the default value.
+      Level M. 15% of codewords can be restored. This is the default value.
 
     *q*::::
 
-      Level Q.
-      25% of codewords can be restored.
+      Level Q. 25% of codewords can be restored.
 
     *h*::::
 
-      Level H.
-      30% of codewords can be restored.
+      Level H. 30% of codewords can be restored.
 
 *--level* _LEVEL_::
 
@@ -78,9 +70,8 @@ _STRING_::
 
 *-v*, *--symbol-version* _NUMBER_::
 
-  The version of the symbol.
-  For normal QR code, _NUMBER_ should be between *1* and *40*.
-  For Micro QR code, _NUMBER_ should be between *1* and *4*.
+  The version of the symbol. For normal QR code, _NUMBER_ should be between *1*
+  and *40*. For Micro QR code, _NUMBER_ should be between *1* and *4*.
 
 *--symversion* _NUMBER_::
 
@@ -88,8 +79,7 @@ _STRING_::
 
 *-m*, *--margin* _NUMBER_::
 
-  The width of margin.
-  Default is 4.
+  The width of margin. Default is 4.
 
 *-t*, *--type* _FORMAT_::
 
@@ -99,9 +89,8 @@ _STRING_::
 
     *png*::::
 
-      Portable Network Graphics.
-      This outputs 32-bit RGBA PNG image.
-      This is the default value.
+      Portable Network Graphics. This outputs 32-bit RGBA PNG image. This is
+      the default value.
 
     *svg*::::
 
@@ -127,8 +116,7 @@ _STRING_::
 
     *byte*::::
 
-      Arbitrary binary data.
-      This is the default value.
+      Arbitrary binary data. This is the default value.
 
     *kanji*::::
 
@@ -136,15 +124,13 @@ _STRING_::
 
 *--variant* _TYPE_::
 
-  The type of QR code.
-  This option requires *--symbol-version*.
+  The type of QR code. This option requires *--symbol-version*.
 
   The possible values are:{blank}:::
 
     *normal*::::
 
-      Normal QR code.
-      This is the default value.
+      Normal QR code. This is the default value.
 
     *micro*::::
 
@@ -152,20 +138,15 @@ _STRING_::
 
 *--foreground* _COLOR_::
 
-  Foreground color.
-  _COLOR_ takes a CSS color string.
-  Default is black.
+  Foreground color. _COLOR_ takes a CSS color string. Default is black.
 
 *--background* _COLOR_::
 
-  Background color.
-  _COLOR_ takes a CSS color string.
-  Default is white.
+  Background color. _COLOR_ takes a CSS color string. Default is white.
 
 *--verbose*::
 
-  Also print the metadata.
-  It is output to stderr.
+  Also print the metadata. It is output to stderr.
 
 *-h*, *--help*::
 

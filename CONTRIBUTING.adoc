@@ -20,8 +20,8 @@ Please see the {commit-messages-guide-url}[Commit messages guide].
 
 === Useful development tools
 
-The https://github.com/casey/just[just] command runner can be used.
-Run `just --list` for more details.
+The https://github.com/casey/just[just] command runner can be used. Run
+`just --list` for more details.
 
 .Run tests
 [source, shell]
