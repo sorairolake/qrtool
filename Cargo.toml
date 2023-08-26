@@ -31,7 +31,7 @@ exclude = [
 
 [dependencies]
 anyhow = "1.0.75"
-clap = { version = "4.3.21", features = ["derive", "wrap_help"] }
+clap = { version = "4.4.0", features = ["derive", "wrap_help"] }
 clap_complete = "4.3.2"
 clap_complete_nushell = "4.3.2"
 csscolorparser = "0.6.2"
