@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 = Changelog
-:toc: macro
+:toc: preamble
 :project-url: https://github.com/sorairolake/qrtool
 :compare-url: {project-url}/compare
 :issue-url: {project-url}/issues
@@ -13,8 +13,6 @@ All notable changes to this project will be documented in this file.
 
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
-
-toc::[]
 
 == {compare-url}/v0.7.5\...HEAD[Unreleased]
 
