@@ -21,6 +21,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Change `SPDX-FileCopyrightText` of each file to include only the year of
   initial publication ({pull-request-url}/192[#192])
 * Remove unnecessary newline after period ({pull-request-url}/193[#193])
+* Bump MSRV to 1.70.0 ({pull-request-url}/213[#213])
 
 == {compare-url}/v0.7.4\...v0.7.5[0.7.5] - 2023-08-09
 
