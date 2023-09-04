@@ -32,7 +32,7 @@ jobs:
             os: windows-2022
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup Rust toolchain
       uses: dtolnay/rust-toolchain@v1
       with:
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup Rust toolchain
       uses: dtolnay/rust-toolchain@v1
       with:
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Setup Rust toolchain
       uses: dtolnay/rust-toolchain@v1
       with:
