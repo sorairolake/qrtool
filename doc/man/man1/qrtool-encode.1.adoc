@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2023-07-17
+:docdate: 2023-09-06
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -176,7 +176,7 @@ CSS Color Module Level 4:{blank}::
 
 Encode the given string in a QR code:{blank}::
 
-  $ *qrtool encode "QR code"*
+  $ *qrtool encode "QR code" > output.png*
 
 include::{includedir}/section-reporting-bugs.adoc[]
 
