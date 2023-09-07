@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022-2023 Shun Sakai
+// SPDX-FileCopyrightText: 2022 Shun Sakai
 //
 // SPDX-License-Identifier: CC-BY-4.0
 
@@ -20,30 +20,26 @@ qrtool-decode - detect and decode a QR code
 
 == DESCRIPTION
 
-This command detects and decodes a QR code.
-By default, the result will be output to stdout.
+This command detects and decodes a QR code. By default, the result will be
+output to stdout.
 
 == POSITIONAL ARGUMENTS
 
 _IMAGE_::
 
-  Input image file.
-  If _IMAGE_ is not specified, or if "-" is specified, the image will be read
-  from stdin.
-  Supported raster image formats are based on the formats supported by the
-  image crate.
-  The format of _IMAGE_ is determined based on the extension or the magic
-  number if possible.
-  If the format cannot be determined, use *--type*.
-  Note that the SVG image is rasterized before scanning.
+  Input image file. If _IMAGE_ is not specified, or if "-" is specified, the
+  image will be read from stdin. Supported raster image formats are based on
+  the formats supported by the image crate. The format of _IMAGE_ is determined
+  based on the extension or the magic number if possible. If the format cannot
+  be determined, use *--type*. Note that the SVG image is rasterized before
+  scanning.
 
 == OPTIONS
 
 *-t*, *--type* _FORMAT_::
 
-  The format of the input.
-  If _FORMAT_ is not specified, the format is determined based on the extension
-  or the magic number.
+  The format of the input. If _FORMAT_ is not specified, the format is
+  determined based on the extension or the magic number.
 
   The possible values are:{blank}:::
 
@@ -69,8 +65,7 @@ _IMAGE_::
 
     *ico*::::
 
-      ICO file format.
-      This value also includes the CUR file format.
+      ICO file format. This value also includes the CUR file format.
 
     *jpeg*::::
 
@@ -92,11 +87,11 @@ _IMAGE_::
 
       Quite OK Image Format.
 
-ifdef::decode-from-svg[]
+ifdef::decode-from-svg,env-github[]
     *svg*::::
 
-      Scalable Vector Graphics.
-      This value also includes the gzip-compressed SVG image.
+      Scalable Vector Graphics. This value also includes the gzip-compressed
+      SVG image.
 endif::[]
 
     *tga*::::
@@ -113,15 +108,13 @@ endif::[]
 
 *--verbose*::
 
-  Also print the metadata.
-  It is output to stderr.
-  This option conflicts with *--metadata*.
+  Also print the metadata. It is output to stderr. This option conflicts with
+  *--metadata*.
 
 *--metadata*::
 
-  Print only the metadata.
-  It is output to stderr.
-  This option conflicts with *--verbose*.
+  Print only the metadata. It is output to stderr. This option conflicts with
+  *--verbose*.
 
 *-h*, *--help*::
 
