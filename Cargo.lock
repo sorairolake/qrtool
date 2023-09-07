@@ -860,7 +860,7 @@ dependencies = [
 
 [[package]]
 name = "qrtool"
-version = "0.7.5"
+version = "0.8.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -1125,9 +1125,9 @@ dependencies = [
 
 [[package]]
 name = "sysexits"
-version = "0.7.1"
+version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d4246d0efb19683b32a1b69ee8041a0fa3e3e5d54b629929ba9ed302f64905ff"
+checksum = "ed767c454d933992df9ed9f4fdc01f67630d41879d45f54792a6f83c2269a3d6"
 
 [[package]]
 name = "terminal_size"
