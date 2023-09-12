@@ -17,17 +17,17 @@ WARRANTY, to the extent permitted by law.
 == Apache License 2.0
 
 ....
-include::LICENSES/Apache-2.0.txt[]
+include::example$LICENSES/Apache-2.0.txt[]
 ....
 
 == MIT License
 
 ....
-include::LICENSES/MIT.txt[]
+include::example$LICENSES/MIT.txt[]
 ....
 
 == Creative Commons Attribution 4.0 International Public License
 
 ....
-include::LICENSES/CC-BY-4.0.txt[]
+include::example$LICENSES/CC-BY-4.0.txt[]
 ....

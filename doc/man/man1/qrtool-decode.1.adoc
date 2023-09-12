@@ -87,7 +87,7 @@ _IMAGE_::
 
       Quite OK Image Format.
 
-ifdef::decode-from-svg,env-github[]
+ifdef::decode-from-svg,env-github,site-gen-antora[]
     *svg*::::
 
       Scalable Vector Graphics. This value also includes the gzip-compressed

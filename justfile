@@ -49,7 +49,10 @@ default: build
     npx prettier -w README.md
 
 # Build the book
-build-book:
-    #!/usr/bin/env bash
-    sed -i -E -e '/^:includedir: \.\.\//s/\.\.\//\.\//' -e '/ifdef::|endif::/d' doc/book/man/man1/*.1.adoc
-    npx honkit build
+@build-book:
+    npx antora antora-playbook.yml
+
+# Increment the version
+@bump part:
+    bump2version {{part}}
+    cargo set-version --bump {{part}}
