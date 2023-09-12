@@ -4,6 +4,6 @@
 
 name: book
 title: qrtool
-version: "0.8.0"
+version: "0.8.1"
 nav:
   - modules/ROOT/nav.adoc
