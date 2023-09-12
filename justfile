@@ -49,12 +49,10 @@ default: build
     npx prettier -w README.md
 
 # Build the book
-build-book:
-    #!/usr/bin/env bash
-    cp asset/demo.gif {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc doc/book
-    cp -r LICENSES doc/book
-    mkdir -p doc/book/man
-    cp doc/man/man1/*.1.adoc doc/book/man
-    cp -r doc/man/include doc/book/man
-    sed -i -E -e '/^:includedir:/s/\.//' -e '/ifdef::|endif::/d' doc/book/man/*.1.adoc
-    npx honkit build
+@build-book:
+    npx antora antora-playbook.yml
+
+# Increment the version
+@bump part:
+    bump2version {{part}}
+    cargo set-version --bump {{part}}

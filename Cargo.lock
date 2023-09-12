@@ -208,18 +208,18 @@ dependencies = [
 
 [[package]]
 name = "clap_complete"
-version = "4.4.0"
+version = "4.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "586a385f7ef2f8b4d86bddaa0c094794e7ccbfe5ffef1f434fe928143fc783a5"
+checksum = "4110a1e6af615a9e6d0a36f805d5c99099f8bab9b8042f5bc1fa220a4a89e36f"
 dependencies = [
  "clap",
 ]
 
 [[package]]
 name = "clap_complete_nushell"
-version = "4.4.0"
+version = "4.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "787093c7ce9278e9f7ae55cbdba76a2d6610fe809e54db4c6d61a65bc0258d15"
+checksum = "df47268eb308aaac1ffbfcd8ae43e43820cd094a051b03956d238f2bc60dc3fe"
 dependencies = [
  "clap",
  "clap_complete",
@@ -860,7 +860,7 @@ dependencies = [
 
 [[package]]
 name = "qrtool"
-version = "0.8.0"
+version = "0.8.1"
 dependencies = [
  "anyhow",
  "assert_cmd",

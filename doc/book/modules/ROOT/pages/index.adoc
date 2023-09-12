@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: CC-BY-4.0
 
-= Introduction
+= qrtool
 :project-url: https://github.com/sorairolake/qrtool
 :shields-url: https://img.shields.io
 :ci-badge: {shields-url}/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&label=CI&logo=github&style=for-the-badge

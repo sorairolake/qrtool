@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2023 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+site:
+  title: qrtool Documentation
+  url: https://sorairolake.github.io/qrtool/
+  start_page: book::index.adoc
+
+content:
+  sources:
+    - url: .
+      start_path: doc/book
+
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true

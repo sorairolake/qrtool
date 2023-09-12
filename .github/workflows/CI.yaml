@@ -7,11 +7,11 @@ name: CI
 on:
   push:
     branches:
-      - 'develop'
-      - 'master'
+      - "develop"
+      - "master"
   pull_request:
   schedule:
-      - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
 
 jobs:
   test:
@@ -31,56 +31,56 @@ jobs:
           - target: x86_64-pc-windows-msvc
             os: windows-2022
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup Rust toolchain
-      uses: dtolnay/rust-toolchain@v1
-      with:
-        toolchain: 1.70.0 # MSRV
-        targets: ${{ matrix.target }}
-    - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.6.2
-      with:
-        key: ${{ matrix.target }}
-    - name: Run tests
-      run: cargo test --target ${{ matrix.target }}
-    - name: Run tests (all features)
-      run: cargo test --target ${{ matrix.target }} --all-features
-    - name: Run tests (no default features)
-      run: cargo test --target ${{ matrix.target }} --no-default-features
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: 1.70.0 # MSRV
+          targets: ${{ matrix.target }}
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.6.2
+        with:
+          key: ${{ matrix.target }}
+      - name: Run tests
+        run: cargo test --target ${{ matrix.target }}
+      - name: Run tests (all features)
+        run: cargo test --target ${{ matrix.target }} --all-features
+      - name: Run tests (no default features)
+        run: cargo test --target ${{ matrix.target }} --no-default-features
 
   rustfmt:
     name: Rustfmt
     runs-on: ubuntu-22.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup Rust toolchain
-      uses: dtolnay/rust-toolchain@v1
-      with:
-        toolchain: stable
-        components: rustfmt
-    - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.6.2
-    - name: Check code formatted
-      run: cargo fmt -- --check
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.6.2
+      - name: Check code formatted
+        run: cargo fmt -- --check
 
   clippy:
     name: Clippy
     runs-on: ubuntu-22.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup Rust toolchain
-      uses: dtolnay/rust-toolchain@v1
-      with:
-        toolchain: stable
-        components: clippy
-    - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.6.2
-    - name: Check no lint warnings
-      run: cargo clippy -- -D warnings
-    - name: Check no lint warnings (all features)
-      run: cargo clippy --all-features -- -D warnings
-    - name: Check no lint warnings (no default features)
-      run: cargo clippy --no-default-features -- -D warnings
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: clippy
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.6.2
+      - name: Check no lint warnings
+        run: cargo clippy -- -D warnings
+      - name: Check no lint warnings (all features)
+        run: cargo clippy --all-features -- -D warnings
+      - name: Check no lint warnings (no default features)
+        run: cargo clippy --no-default-features -- -D warnings

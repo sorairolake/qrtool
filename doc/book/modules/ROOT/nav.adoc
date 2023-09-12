@@ -1,0 +1,19 @@
+// SPDX-FileCopyrightText: 2023 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+.Installation
+* xref:install.adoc[]
+* xref:build.adoc[]
+
+.Manual pages
+* xref:man/man1/qrtool.1.adoc[`qrtool(1)`]
+* xref:man/man1/qrtool-encode.1.adoc[`qrtool-encode(1)`]
+* xref:man/man1/qrtool-decode.1.adoc[`qrtool-decode(1)`]
+* xref:man/man1/qrtool-help.1.adoc[`qrtool-help(1)`]
+
+.Resources
+* xref:changelog.adoc[]
+* xref:contributing.adoc[]
+* xref:authors.adoc[]
+* xref:license.adoc[]
