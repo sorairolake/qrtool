@@ -7,9 +7,9 @@ name: CD
 on:
   push:
     branches:
-      - 'develop'
+      - "develop"
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 permissions:
   contents: write
@@ -53,109 +53,109 @@ jobs:
           - target: x86_64-pc-windows-msvc
             os: windows-2022
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup Rust toolchain
-      uses: dtolnay/rust-toolchain@v1
-      with:
-        toolchain: 1.70.0 # MSRV
-        targets: ${{ matrix.target }}
-    - name: Install cross
-      if: ${{ matrix.use-cross }}
-      uses: taiki-e/install-action@v2.18.9
-      with:
-        tool: cross
-    - name: Cache build artifacts
-      uses: Swatinem/rust-cache@v2.6.2
-      with:
-        key: ${{ matrix.target }}
-    - name: Setup Ruby
-      if: matrix.os != 'windows-2022' && !matrix.use-cross
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.2
-    - name: Install Asciidoctor
-      if: matrix.os != 'windows-2022' && !matrix.use-cross
-      run: |
-        gem install asciidoctor
-        asciidoctor -V
-    - name: Build a package
-      if: ${{ !matrix.use-cross }}
-      run: cargo build --release --target ${{ matrix.target }}
-    - name: Build a package with cross
-      if: ${{ matrix.use-cross }}
-      run: cross build --release --target ${{ matrix.target }}
-    - name: Install lzip
-      if: matrix.os != 'windows-2022'
-      run: |
-        if [ "${{ matrix.os }}" == "ubuntu-22.04" ] ; then
-          sudo apt-get update
-          sudo apt-get install lzip
-        else
-          brew update
-          brew install lzip
-        fi
-        lzip -V
-    - name: Get version
-      id: get_version
-      uses: battila7/get-version-action@v2.3.0
-    - name: Create a package
-      shell: bash
-      run: |
-        if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-          bin="target/${{ matrix.target }}/release/qrtool"
-        else
-          bin="target/${{ matrix.target }}/release/qrtool.exe"
-        fi
-        package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: 1.70.0 # MSRV
+          targets: ${{ matrix.target }}
+      - name: Install cross
+        if: ${{ matrix.use-cross }}
+        uses: taiki-e/install-action@v2.18.9
+        with:
+          tool: cross
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.6.2
+        with:
+          key: ${{ matrix.target }}
+      - name: Setup Ruby
+        if: matrix.os != 'windows-2022' && !matrix.use-cross
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2
+      - name: Install Asciidoctor
+        if: matrix.os != 'windows-2022' && !matrix.use-cross
+        run: |
+          gem install asciidoctor
+          asciidoctor -V
+      - name: Build a package
+        if: ${{ !matrix.use-cross }}
+        run: cargo build --release --target ${{ matrix.target }}
+      - name: Build a package with cross
+        if: ${{ matrix.use-cross }}
+        run: cross build --release --target ${{ matrix.target }}
+      - name: Install lzip
+        if: matrix.os != 'windows-2022'
+        run: |
+          if [ "${{ matrix.os }}" == "ubuntu-22.04" ] ; then
+            sudo apt-get update
+            sudo apt-get install lzip
+          else
+            brew update
+            brew install lzip
+          fi
+          lzip -V
+      - name: Get version
+        id: get_version
+        uses: battila7/get-version-action@v2.3.0
+      - name: Create a package
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+            bin="target/${{ matrix.target }}/release/qrtool"
+          else
+            bin="target/${{ matrix.target }}/release/qrtool.exe"
+          fi
+          package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
 
-        mkdir -p "${package}"/doc
-        cp README.md COPYING "${bin}" "${package}"
-        cp -r LICENSES "${package}"
-        cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
-        if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-          mkdir -p "${package}"/man
-          cp "$(find ./target -path '*/qrtool-*/out' -type d)"/* "${package}"/man
-        fi
+          mkdir -p "${package}"/doc
+          cp README.md COPYING "${bin}" "${package}"
+          cp -r LICENSES "${package}"
+          cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
+          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+            mkdir -p "${package}"/man
+            cp "$(find ./target -path '*/qrtool-*/out' -type d)"/* "${package}"/man
+          fi
 
-        if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-          tar -cvf "${package}.tar" "${package}"
-          zstd -19 -v "${package}.tar"
-          gzip -k -v -9 "${package}.tar"
-          lzip -v -9 "${package}.tar"
-        else
-          7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
-          7z a -bb -mx=9 -mm=Deflate "${package}.zip" "${package}"
-        fi
-        rm -rv qrtool-*/
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: "qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
-        path: 'qrtool-*.*'
+          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+            tar -cvf "${package}.tar" "${package}"
+            zstd -19 -v "${package}.tar"
+            gzip -k -v -9 "${package}.tar"
+            lzip -v -9 "${package}.tar"
+          else
+            7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
+            7z a -bb -mx=9 -mm=Deflate "${package}.zip" "${package}"
+          fi
+          rm -rv qrtool-*/
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: "qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
+          path: "qrtool-*.*"
 
   release:
     name: Release
     needs: build
     runs-on: ubuntu-22.04
     steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v3
-    - name: Calculate checksums
-      run: |
-        mv qrtool-*/* .
-        rmdir -v qrtool-*/
-        sha256sum qrtool-* | tee sha256sums.txt
-        b2sum qrtool-* | tee b2sums.txt
-    - name: Release
-      uses: softprops/action-gh-release@v0.1.15
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        draft: true
-        files: |
-          qrtool-*
-          sha256sums.txt
-          b2sums.txt
-        name: "Release version ${{ needs.build.outputs.get_version }}"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+      - name: Calculate checksums
+        run: |
+          mv qrtool-*/* .
+          rmdir -v qrtool-*/
+          sha256sum qrtool-* | tee sha256sums.txt
+          b2sum qrtool-* | tee b2sums.txt
+      - name: Release
+        uses: softprops/action-gh-release@v0.1.15
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          draft: true
+          files: |
+            qrtool-*
+            sha256sums.txt
+            b2sums.txt
+          name: "Release version ${{ needs.build.outputs.get_version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
