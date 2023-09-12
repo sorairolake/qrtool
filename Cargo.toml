@@ -16,13 +16,14 @@ license = "Apache-2.0 OR MIT"
 keywords = ["qrcode"]
 categories = ["command-line-utilities"]
 exclude = [
+  "/.bumpversion.cfg*",
   "/.github",
-  "/*.json",
-  "/*.json.license",
+  "/antora-playbook.yml",
   "/clippy.toml",
   "/Cross.toml",
   "/doc",
   "/justfile",
+  "/package*.json*",
   "/rustfmt.toml",
   "/tests",
 ]
