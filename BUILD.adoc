@@ -15,14 +15,14 @@
 == Building from source
 
 .To clone the repository
-[source, shell]
+[source,shell]
 ----
 git clone https://github.com/sorairolake/qrtool.git
 cd qrtool
 ----
 
 .To build a package
-[source, shell]
+[source,shell]
 ----
 just build
 ----

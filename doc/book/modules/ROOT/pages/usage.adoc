@@ -1,0 +1,91 @@
+// SPDX-FileCopyrightText: 2023 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= Usage
+
+== Basic usage
+
+.Encode a string in a QR code
+[source,shell]
+----
+qrtool encode "QR code" > output.png
+----
+
+.Generate this image
+image::basic.png[Output]
+
+.Decode a QR code from this image
+[source,shell]
+----
+qrtool decode output.png
+----
+
+.Output
+....
+QR code
+....
+
+== SVG generation
+
+[source,shell]
+----
+qrtool encode -o output.svg -t svg "QR code"
+----
+
+.Generate this image
+image::decode.svg[Output]
+
+== Micro QR code generation
+
+[source,shell]
+----
+qrtool encode -v 3 --variant micro "QR code" > output.png
+----
+
+.Generate this image
+image::micro.png[Output]
+
+== Colored output
+
+[source,shell]
+----
+qrtool encode --foreground brown "QR code" > output.png
+----
+
+.Generate this image
+image::fg.png[Output]
+
+== Generate shell completion
+
+`--generate-completion` option generates shell completions to stdout.
+
+.The following shells are supported
+* `bash`
+* `elvish`
+* `fish`
+* `nushell`
+* `powershell`
+* `zsh`
+
+.Example
+[source,shell]
+----
+qrtool --generate-completion bash > qrtool.bash
+----
+
+== Integration with other programs
+
+Both `encode` and `decode` can read from stdin and output to stdout.
+
+.The following example, the encoded result is saved as a JPEG XL image
+[source,shell]
+----
+cat Cargo.toml | qrtool encode | magick png:- output.jxl
+----
+
+.The following example, the decoded result is displayed by `bat`
+[source,shell]
+----
+magick output.jxl png:- | qrtool decode | bat -l toml
+----
