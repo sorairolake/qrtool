@@ -41,11 +41,11 @@ fn main() {
     match generate_man_page(out_dir) {
         Ok(exit_status) => {
             if !exit_status.success() {
-                println!("cargo:warning=Asciidoctor failed ({exit_status})");
+                println!("cargo:warning=Asciidoctor failed: {exit_status}");
             }
         }
         Err(err) => {
-            println!("cargo:warning=failed to execute Asciidoctor ({err})");
+            println!("cargo:warning=failed to execute Asciidoctor: {err}");
         }
     }
 }
