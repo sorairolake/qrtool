@@ -11,8 +11,8 @@
 :version-url: https://crates.io/crates/qrtool
 :license-badge: {shields-url}/crates/l/qrtool?style=for-the-badge
 
-image:{ci-badge}[CI, link={ci-url}]
-image:{version-badge}[Version, link={version-url}]
+image:{ci-badge}[CI,link={ci-url}]
+image:{version-badge}[Version,link={version-url}]
 image:{license-badge}[License]
 
 *qrtool* is a command-line utility for encoding or decoding QR code.

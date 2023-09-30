@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.8.1"
+version = "0.8.2"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.70.0"
@@ -16,13 +16,14 @@ license = "Apache-2.0 OR MIT"
 keywords = ["qrcode"]
 categories = ["command-line-utilities"]
 exclude = [
+  "/.bumpversion.cfg*",
   "/.github",
-  "/*.json",
-  "/*.json.license",
+  "/antora-playbook.yml",
   "/clippy.toml",
   "/Cross.toml",
   "/doc",
   "/justfile",
+  "/package*.json*",
   "/rustfmt.toml",
   "/tests",
 ]
@@ -31,8 +32,8 @@ exclude = [
 
 [dependencies]
 anyhow = "1.0.75"
-clap = { version = "4.4.2", features = ["derive", "wrap_help"] }
-clap_complete = "4.4.1"
+clap = { version = "4.4.6", features = ["derive", "wrap_help"] }
+clap_complete = "4.4.3"
 clap_complete_nushell = "4.4.1"
 csscolorparser = "0.6.2"
 image = "0.24.7"
@@ -43,7 +44,7 @@ sysexits = "0.7.2"
 
 [dev-dependencies]
 assert_cmd = "2.0.12"
-predicates = "3.0.3"
+predicates = "3.0.4"
 
 [features]
 default = ["decode-from-svg"]

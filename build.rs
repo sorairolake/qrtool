@@ -35,19 +35,17 @@ fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
 }
 
 fn main() {
-    println!(
-        "cargo:rerun-if-changed={}",
-        env::current_dir().unwrap().join("doc/man").display()
-    );
+    println!("cargo:rerun-if-changed=doc/man");
 
-    match generate_man_page(env::var_os("OUT_DIR").unwrap()) {
+    let out_dir = env::var("OUT_DIR").expect("environment variable `OUT_DIR` not defined");
+    match generate_man_page(out_dir) {
         Ok(exit_status) => {
             if !exit_status.success() {
-                println!("cargo:warning=Asciidoctor failed ({exit_status})");
+                println!("cargo:warning=Asciidoctor failed: {exit_status}");
             }
         }
         Err(err) => {
-            println!("cargo:warning=failed to execute Asciidoctor ({err})");
+            println!("cargo:warning=failed to execute Asciidoctor: {err}");
         }
     }
 }
