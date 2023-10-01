@@ -40,7 +40,7 @@ image = "0.24.7"
 qrencode = "0.14.0"
 resvg = { version = "0.35.0", default-features = false, optional = true }
 rqrr = "0.6.0"
-sysexits = "0.7.2"
+sysexits = "0.7.3"
 
 [dev-dependencies]
 assert_cmd = "2.0.12"
