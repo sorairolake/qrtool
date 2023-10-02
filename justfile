@@ -54,5 +54,4 @@ default: build
 
 # Increment the version
 @bump part:
-    bump2version {{part}}
     cargo set-version --bump {{part}}
