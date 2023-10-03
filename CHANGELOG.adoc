@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.8.2\...v0.8.3[0.8.3] - 2023-10-03
+
+=== Removed
+
+* Remove version from the book ({pull-request-url}/240[#240])
+
 == {compare-url}/v0.8.1\...v0.8.2[0.8.2] - 2023-09-30
 
 === Added
