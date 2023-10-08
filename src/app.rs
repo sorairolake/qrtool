@@ -52,8 +52,8 @@ pub fn run() -> anyhow::Result<()> {
                         .context("could not set the version")?;
                     let mut bits = Bits::new(v);
                     encode::push_data_for_selected_mode(&mut bits, input, &arg.mode)
-                        .and_then(|_| bits.push_terminator(level))
-                        .and_then(|_| QrCode::with_bits(bits, level))
+                        .and_then(|()| bits.push_terminator(level))
+                        .and_then(|()| QrCode::with_bits(bits, level))
                 } else {
                     QrCode::with_error_correction_level(&input, level)
                 }
@@ -95,7 +95,7 @@ pub fn run() -> anyhow::Result<()> {
                             let mut buf = Vec::new();
                             image
                                 .write_to(&mut Cursor::new(&mut buf), ImageFormat::Png)
-                                .and_then(|_| {
+                                .and_then(|()| {
                                     io::stdout().write_all(&buf).map_err(ImageError::from)
                                 })
                                 .context("could not write the image to stdout")?;
