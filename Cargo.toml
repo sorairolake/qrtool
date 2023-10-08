@@ -38,7 +38,7 @@ clap_complete_nushell = "4.4.1"
 csscolorparser = "0.6.2"
 image = "0.24.7"
 qrencode = "0.14.0"
-resvg = { version = "0.35.0", default-features = false, optional = true }
+resvg = { version = "0.36.0", default-features = false, optional = true }
 rqrr = "0.6.0"
 sysexits = "0.7.4"
 
