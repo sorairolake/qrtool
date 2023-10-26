@@ -160,10 +160,10 @@ See [COPYING] for more details.
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
-[`qrtool(1)`]: https://sorairolake.github.io/qrtool/man/qrtool.1.html
-[`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/man/qrtool-encode.1.html
-[`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/man/qrtool-decode.1.html
-[`qrtool-help(1)`]: https://sorairolake.github.io/qrtool/man/qrtool-help.1.html
+[`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
+[`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
+[`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html
+[`qrtool-help(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-help.1.html
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [`qrencode`]: https://fukuchi.org/works/qrencode/
