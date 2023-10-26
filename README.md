@@ -24,12 +24,11 @@ cargo install qrtool
 
 ### From binaries
 
-The [release page][release-page-url] contains pre-built binaries for Linux,
-macOS and Windows.
+The [release page] contains pre-built binaries for Linux, macOS and Windows.
 
 ### How to build
 
-Please see [BUILD.adoc](BUILD.adoc).
+Please see [BUILD.adoc].
 
 ## Usage
 
@@ -126,42 +125,48 @@ magick output.jxl png:- | qrtool decode | bat -l toml
 
 Please see the following:
 
-- [`qrtool(1)`][qrtool-man-url]
-- [`qrtool-encode(1)`][qrtool-encode-man-url]
-- [`qrtool-decode(1)`][qrtool-decode-man-url]
-- [`qrtool-help(1)`][qrtool-help-man-url]
+- [`qrtool(1)`]
+- [`qrtool-encode(1)`]
+- [`qrtool-decode(1)`]
+- [`qrtool-help(1)`]
 
 ## Changelog
 
-Please see [CHANGELOG.adoc](CHANGELOG.adoc).
+Please see [CHANGELOG.adoc].
 
 ## Contributing
 
-Please see [CONTRIBUTING.adoc](CONTRIBUTING.adoc).
+Please see [CONTRIBUTING.adoc].
 
 ## Acknowledgment
 
-This program is inspired by [`qrencode`](https://fukuchi.org/works/qrencode/)
-and [`zbarimg`](https://github.com/mchehab/zbar).
+This program is inspired by [`qrencode`] and [`zbarimg`].
 
 ## License
 
-Copyright &copy; 2022&ndash;2023 Shun Sakai (see [AUTHORS.adoc](AUTHORS.adoc))
+Copyright &copy; 2022&ndash;2023 Shun Sakai (see [AUTHORS.adoc])
 
 1. This program is distributed under the terms of either the _Apache License
    2.0_ or the _MIT License_.
 2. Some files are distributed under the terms of the _Creative Commons
    Attribution 4.0 International Public License_.
 
-See [COPYING](COPYING) for more details.
+See [COPYING] for more details.
 
 [ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&label=CI&logo=github&style=for-the-badge
 [ci-url]: https://github.com/sorairolake/qrtool/actions?query=branch%3Adevelop+workflow%3ACI++
 [version-badge]: https://img.shields.io/crates/v/qrtool?style=for-the-badge
 [version-url]: https://crates.io/crates/qrtool
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
-[release-page-url]: https://github.com/sorairolake/qrtool/releases
-[qrtool-man-url]: https://sorairolake.github.io/qrtool/man/qrtool.1.html
-[qrtool-encode-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-encode.1.html
-[qrtool-decode-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-decode.1.html
-[qrtool-help-man-url]: https://sorairolake.github.io/qrtool/man/qrtool-help.1.html
+[release page]: https://github.com/sorairolake/qrtool/releases
+[BUILD.adoc]: BUILD.adoc
+[`qrtool(1)`]: https://sorairolake.github.io/qrtool/man/qrtool.1.html
+[`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/man/qrtool-encode.1.html
+[`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/man/qrtool-decode.1.html
+[`qrtool-help(1)`]: https://sorairolake.github.io/qrtool/man/qrtool-help.1.html
+[CHANGELOG.adoc]: CHANGELOG.adoc
+[CONTRIBUTING.adoc]: CONTRIBUTING.adoc
+[`qrencode`]: https://fukuchi.org/works/qrencode/
+[`zbarimg`]: https://github.com/mchehab/zbar
+[AUTHORS.adoc]: AUTHORS.adoc
+[COPYING]: COPYING
