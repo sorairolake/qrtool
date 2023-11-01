@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: 2023 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+name: 💡 Feature request
+description: Suggest an idea for this project
+labels: ["enhancement"]
+
+body:
+  - type: checkboxes
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched the existing issues
+          required: true
+
+  - type: textarea
+    attributes:
+      label: Summary
+      description: A clear and concise description of what the suggestion is.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the feature request here.
+    validations:
+      required: false
+
+  - type: checkboxes
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/sorairolake/qrtool/blob/develop/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

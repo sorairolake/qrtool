@@ -16,6 +16,20 @@ The branching model of this project is based on the {git-flow-url}[git-flow].
 
 Please see the {commit-messages-guide-url}[Commit messages guide].
 
+== Submitting a pull request
+
+. Create a working branch from the `develop` branch. The branch name should be
+  something other than `develop` or `master`.
+. Create your patch. If your change is a feature or a bugfix, please add a test
+  case if possible. Note that the change must pass the CI.
+. Please update the copyright information if possible. This project is
+  compliant with version 3.0 of the
+  https://reuse.software/spec/[_REUSE Specification_].
+  https://github.com/fsfe/reuse-tool[`reuse`] is useful for updating the
+  copyright information.
+. Please update the link:CHANGELOG.adoc[Changelog] if possible.
+. Please read and agree to follow the link:CODE_OF_CONDUCT.md[Code of Conduct].
+
 == Development
 
 === Useful development tools
