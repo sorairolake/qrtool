@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: CC-BY-4.0
 
 = License
+:reuse-spec-url: https://reuse.software/spec/
 
 Copyright (C) 2022&ndash;2023 Shun Sakai
 
@@ -11,8 +12,8 @@ Copyright (C) 2022&ndash;2023 Shun Sakai
 . Some documentations are distributed under the terms of the _Creative Commons
   Attribution 4.0 International Public License_.
 
-This is free software: you are free to change and redistribute it. There is NO
-WARRANTY, to the extent permitted by law.
+This project is compliant with version 3.0 of the
+{reuse-spec-url}[_REUSE Specification_].
 
 == Apache License 2.0
 
