@@ -152,8 +152,8 @@ Copyright &copy; 2022&ndash;2023 Shun Sakai (see [AUTHORS.adoc])
    Attribution 4.0 International Public License_.
 
 This project is compliant with version 3.0 of the [_REUSE Specification_]. See
-[COPYING] and copyright notices of individual files for more details on
-copyright and licensing information.
+copyright notices of individual files for more details on copyright and
+licensing information.
 
 [ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&label=CI&logo=github&style=for-the-badge
 [ci-url]: https://github.com/sorairolake/qrtool/actions?query=branch%3Adevelop+workflow%3ACI++
@@ -172,4 +172,3 @@ copyright and licensing information.
 [`zbarimg`]: https://github.com/mchehab/zbar
 [AUTHORS.adoc]: AUTHORS.adoc
 [_REUSE Specification_]: https://reuse.software/spec/
-[COPYING]: COPYING
