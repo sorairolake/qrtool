@@ -21,7 +21,7 @@ exclude = [
   "/antora-playbook.yml",
   "/clippy.toml",
   "/Cross.toml",
-  "/doc",
+  "/docs",
   "/justfile",
   "/package*.json*",
   "/rustfmt.toml",

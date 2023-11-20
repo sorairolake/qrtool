@@ -109,10 +109,10 @@ jobs:
           fi
           package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
 
-          mkdir -p "${package}"/doc
+          mkdir -p "${package}"/docs
           cp README.md "${bin}" "${package}"
           cp -r LICENSES "${package}"
-          cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/doc
+          cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/docs
           if [ "${{ matrix.os }}" != "windows-2022" ] ; then
             mkdir -p "${package}"/man
             cp "$(find ./target -path '*/qrtool-*/out' -type d)"/* "${package}"/man

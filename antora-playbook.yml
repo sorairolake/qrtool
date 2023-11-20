@@ -10,7 +10,7 @@ site:
 content:
   sources:
     - url: .
-      start_path: doc/book
+      start_path: docs/book
 
 ui:
   bundle:
