@@ -14,7 +14,7 @@
     "url": "https://github.com/sorairolake/qrtool/issues"
   },
   "devDependencies": {
-    "@antora/cli": "^3.1.4",
+    "@antora/cli": "^3.1.5",
     "@antora/site-generator": "^3.1.4"
   }
 }
