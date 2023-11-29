@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.8.4"
+version = "0.8.5"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.70.0"
@@ -21,7 +21,7 @@ exclude = [
   "/antora-playbook.yml",
   "/clippy.toml",
   "/Cross.toml",
-  "/doc",
+  "/docs",
   "/justfile",
   "/package*.json*",
   "/rustfmt.toml",
@@ -32,7 +32,7 @@ exclude = [
 
 [dependencies]
 anyhow = "1.0.75"
-clap = { version = "4.4.7", features = ["derive", "wrap_help"] }
+clap = { version = "4.4.10", features = ["derive", "wrap_help"] }
 clap_complete = "4.4.4"
 clap_complete_nushell = "4.4.2"
 csscolorparser = "0.6.2"

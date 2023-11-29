@@ -16,7 +16,7 @@ use std::{
 };
 
 fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
-    let man_dir = env::current_dir()?.join("doc/man/man1");
+    let man_dir = env::current_dir()?.join("docs/man/man1");
     let mut command = Command::new("asciidoctor");
     command
         .args(["-b", "manpage"])
@@ -35,7 +35,7 @@ fn generate_man_page(out_dir: impl AsRef<Path>) -> io::Result<ExitStatus> {
 }
 
 fn main() {
-    println!("cargo:rerun-if-changed=doc/man");
+    println!("cargo:rerun-if-changed=docs/man");
 
     let out_dir = env::var("OUT_DIR").expect("environment variable `OUT_DIR` not defined");
     match generate_man_page(out_dir) {
