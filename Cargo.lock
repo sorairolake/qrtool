@@ -999,9 +999,9 @@ dependencies = [
 
 [[package]]
 name = "sysexits"
-version = "0.7.5"
+version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "35587fa4b40e64c3d9d4dfaf9903a7c3f2c5ffcec7154e3e4aa50343a66e6c13"
+checksum = "1e724941c9890385558cc069867fd6e42f5432018a5de81d7e3c3c66755d12f5"
 
 [[package]]
 name = "terminal_size"
