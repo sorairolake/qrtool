@@ -122,6 +122,46 @@ fn encode_with_margin() {
 }
 
 #[test]
+fn encode_to_png() {
+    let output = command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+        image::open("tests/data/basic/basic.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_to_svg() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("<svg"));
+}
+
+#[test]
+fn encode_to_terminal() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("terminal")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::str::starts_with('\u{2588}'));
+}
+
+#[test]
 fn encode_as_micro_qr_code() {
     let output = command()
         .arg("encode")
@@ -707,6 +747,16 @@ fn decode_from_bmp() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("bmp")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -725,6 +775,16 @@ fn decode_from_dds() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("dds")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -743,6 +803,16 @@ fn decode_from_farbfeld() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("farbfeld")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -761,6 +831,16 @@ fn decode_from_gif() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("gif")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -779,6 +859,16 @@ fn decode_from_hdr() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("hdr")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -800,6 +890,16 @@ fn decode_from_bmp_cur() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("ico")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -821,6 +921,16 @@ fn decode_from_png_cur() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("ico")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -839,6 +949,16 @@ fn decode_from_bmp_ico() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("ico")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -857,6 +977,16 @@ fn decode_from_png_ico() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("ico")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -875,6 +1005,16 @@ fn decode_from_jpeg() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("jpeg")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -893,6 +1033,16 @@ fn decode_from_open_exr() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("openexr")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -905,6 +1055,16 @@ fn decode_from_png() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("png")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -923,6 +1083,16 @@ fn decode_from_ascii_pbm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -941,6 +1111,16 @@ fn decode_from_ascii_pgm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -959,6 +1139,16 @@ fn decode_from_ascii_ppm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -977,6 +1167,16 @@ fn decode_from_binary_pbm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -995,6 +1195,16 @@ fn decode_from_binary_pgm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1013,6 +1223,16 @@ fn decode_from_binary_ppm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("pnm")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1031,6 +1251,16 @@ fn decode_from_qoi() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("qoi")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1050,6 +1280,16 @@ fn decode_from_svg() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("svg")
+        .arg("data/basic/basic.png")
+        .assert()
+        .failure()
+        .code(1)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1069,6 +1309,16 @@ fn decode_from_svgz() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("svg")
+        .arg("data/basic/basic.png")
+        .assert()
+        .failure()
+        .code(1)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1087,6 +1337,16 @@ fn decode_from_tga() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("tga")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(69)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1105,6 +1365,16 @@ fn decode_from_tiff() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("tiff")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1123,6 +1393,16 @@ fn decode_from_lossy_web_p() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("webp")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1141,6 +1421,16 @@ fn decode_from_lossless_web_p() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("webp")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]

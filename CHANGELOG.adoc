@@ -14,6 +14,13 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.8.4\...HEAD[Unreleased]
+
+=== Fixed
+
+* Fix an issue where the input format is always determined to be SVG, if the
+  input file extension represented SVG ({pull-request-url}/285[#285])
+
 == {compare-url}/v0.8.3\...v0.8.4[0.8.4] - 2023-11-29
 
 === Changed
