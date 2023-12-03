@@ -107,8 +107,10 @@ pub fn run() -> anyhow::Result<()> {
                 let input_format = arg.input_format;
                 #[cfg(feature = "decode-from-svg")]
                 #[allow(clippy::option_if_let_else)]
-                let input_format = match arg.input {
-                    Some(ref path) if decode::is_svg(path) => Some(crate::cli::InputFormat::Svg),
+                let input_format = match (&input_format, &arg.input) {
+                    (None, Some(path)) if decode::is_svg(path) => {
+                        Some(crate::cli::InputFormat::Svg)
+                    }
                     _ => input_format,
                 };
                 let input = match arg.input {
