@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.8.6"
+version = "0.8.7"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.70.0"
@@ -51,5 +51,7 @@ default = ["decode-from-svg"]
 decode-from-svg = ["dep:resvg"]
 
 [profile.release]
+codegen-units = 1
 lto = true
+panic = "abort"
 strip = true
