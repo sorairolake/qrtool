@@ -51,5 +51,7 @@ default = ["decode-from-svg"]
 decode-from-svg = ["dep:resvg"]
 
 [profile.release]
+codegen-units = 1
 lto = true
+panic = "abort"
 strip = true
