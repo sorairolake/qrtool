@@ -50,11 +50,19 @@ pub struct Opt {
 #[derive(Debug, Subcommand)]
 pub enum Command {
     /// Encode input data in a QR code.
-    #[command(after_long_help(ENCODE_AFTER_LONG_HELP))]
+    #[command(
+        after_long_help(ENCODE_AFTER_LONG_HELP),
+        visible_alias("enc"),
+        visible_alias("e")
+    )]
     Encode(Encode),
 
     /// Detect and decode a QR code.
-    #[command(after_long_help(DECODE_AFTER_LONG_HELP))]
+    #[command(
+        after_long_help(DECODE_AFTER_LONG_HELP),
+        visible_alias("dec"),
+        visible_alias("d")
+    )]
     Decode(Decode),
 }
 

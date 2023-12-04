@@ -16,6 +16,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 == {compare-url}/v0.8.7\...HEAD[Unreleased]
 
+=== Added
+
+* Add aliases to subcommands ({pull-request-url}/290[#290])
+
 === Changed
 
 * Change `--help` and `--version` to print additional information

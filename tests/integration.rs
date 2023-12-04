@@ -71,6 +71,12 @@ fn basic_encode() {
 }
 
 #[test]
+fn validate_aliases_for_encode_command() {
+    command().arg("enc").arg("-V").assert().success();
+    command().arg("e").arg("-V").assert().success();
+}
+
+#[test]
 fn encode_data_from_file() {
     let output = command()
         .arg("encode")
@@ -775,6 +781,12 @@ fn basic_decode() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+}
+
+#[test]
+fn validate_aliases_for_decode_command() {
+    command().arg("dec").arg("-V").assert().success();
+    command().arg("d").arg("-V").assert().success();
 }
 
 #[test]

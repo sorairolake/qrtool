@@ -4,7 +4,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2023-07-17
+:docdate: 2023-12-04
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -22,6 +22,8 @@ qrtool-decode - detect and decode a QR code
 
 This command detects and decodes a QR code. By default, the result will be
 output to stdout.
+
+*qrtool dec* and *qrtool d* are aliases for this command.
 
 == POSITIONAL ARGUMENTS
 
