@@ -25,6 +25,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Change `--help` and `--version` to print additional information
   ({pull-request-url}/289[#289])
 
+=== Fixed
+
+* Fix exit status when input is SVG ({pull-request-url}/291[#291])
+
 == {compare-url}/v0.8.6\...v0.8.7[0.8.7] - 2023-12-03
 
 === Changed

@@ -948,16 +948,6 @@ fn decode_from_bmp_cur() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("ico")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -979,16 +969,6 @@ fn decode_from_png_cur() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("ico")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1007,16 +987,6 @@ fn decode_from_bmp_ico() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("ico")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1035,7 +1005,10 @@ fn decode_from_png_ico() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+}
 
+#[test]
+fn decode_from_ico_with_wrong_format() {
     command()
         .arg("decode")
         .arg("-t")
@@ -1141,16 +1114,6 @@ fn decode_from_ascii_pbm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("pnm")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1169,16 +1132,6 @@ fn decode_from_ascii_pgm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("pnm")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1197,16 +1150,6 @@ fn decode_from_ascii_ppm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("pnm")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1225,16 +1168,6 @@ fn decode_from_binary_pbm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("pnm")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1253,16 +1186,6 @@ fn decode_from_binary_pgm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("pnm")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1281,7 +1204,10 @@ fn decode_from_binary_ppm() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+}
 
+#[test]
+fn decode_from_pnm_with_wrong_format() {
     command()
         .arg("decode")
         .arg("-t")
@@ -1338,16 +1264,6 @@ fn decode_from_svg() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("svg")
-        .arg("data/basic/basic.png")
-        .assert()
-        .failure()
-        .code(1)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1367,7 +1283,11 @@ fn decode_from_svgz() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+}
 
+#[test]
+#[cfg(feature = "decode-from-svg")]
+fn decode_from_svg_with_wrong_format() {
     command()
         .arg("decode")
         .arg("-t")
@@ -1375,7 +1295,7 @@ fn decode_from_svgz() {
         .arg("data/basic/basic.png")
         .assert()
         .failure()
-        .code(1)
+        .code(69)
         .stderr(predicate::str::contains("could not read the image"));
 }
 
@@ -1451,16 +1371,6 @@ fn decode_from_lossy_web_p() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-
-    command()
-        .arg("decode")
-        .arg("-t")
-        .arg("webp")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not read the image"));
 }
 
 #[test]
@@ -1479,7 +1389,10 @@ fn decode_from_lossless_web_p() {
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
+}
 
+#[test]
+fn decode_from_web_p_with_wrong_format() {
     command()
         .arg("decode")
         .arg("-t")

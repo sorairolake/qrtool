@@ -27,26 +27,38 @@ fn main() -> ExitCode {
         Ok(()) => ExitCode::SUCCESS,
         Err(err) => {
             eprintln!("Error: {err:?}");
-            #[allow(clippy::option_if_let_else)]
             if let Some(e) = err.downcast_ref::<io::Error>() {
-                sysexits::ExitCode::from(e.kind()).into()
-            } else if err.is::<QrError>() {
-                sysexits::ExitCode::DataErr.into()
-            } else if let Some(e) = err.downcast_ref::<DeQRError>() {
-                match e {
+                return sysexits::ExitCode::from(e.kind()).into();
+            }
+            if err.is::<QrError>() {
+                return sysexits::ExitCode::DataErr.into();
+            }
+            if let Some(e) = err.downcast_ref::<DeQRError>() {
+                return match e {
                     DeQRError::IoError => sysexits::ExitCode::IoErr.into(),
                     _ => sysexits::ExitCode::DataErr.into(),
-                }
-            } else if let Some(e) = err.downcast_ref::<ImageError>() {
-                match e {
+                };
+            }
+            if let Some(e) = err.downcast_ref::<ImageError>() {
+                return match e {
                     ImageError::Limits(_) => sysexits::ExitCode::OsErr.into(),
                     ImageError::Unsupported(_) => sysexits::ExitCode::Unavailable.into(),
                     ImageError::IoError(_) => sysexits::ExitCode::IoErr.into(),
                     _ => sysexits::ExitCode::DataErr.into(),
-                }
-            } else {
-                ExitCode::FAILURE
+                };
             }
+            #[cfg(feature = "decode-from-svg")]
+            if let Some(e) = err.downcast_ref::<resvg::usvg::Error>() {
+                return match e {
+                    resvg::usvg::Error::NotAnUtf8Str | resvg::usvg::Error::ElementsLimitReached => {
+                        sysexits::ExitCode::Unavailable.into()
+                    }
+                    resvg::usvg::Error::MalformedGZip
+                    | resvg::usvg::Error::InvalidSize
+                    | resvg::usvg::Error::ParsingFailed(_) => sysexits::ExitCode::DataErr.into(),
+                };
+            }
+            ExitCode::FAILURE
         }
     }
 }
