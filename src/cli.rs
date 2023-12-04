@@ -12,13 +12,27 @@ use clap_complete::Generator;
 use csscolorparser::Color;
 use image::{ImageError, ImageFormat};
 
+const LONG_VERSION: &str = concat!(
+    env!("CARGO_PKG_VERSION"),
+    "\n",
+    include_str!("assets/long-version.md")
+);
+
+const AFTER_LONG_HELP: &str = include_str!("assets/after-long-help.md");
+
+const ENCODE_AFTER_LONG_HELP: &str = include_str!("assets/encode-after-long-help.md");
+
+const DECODE_AFTER_LONG_HELP: &str = include_str!("assets/decode-after-long-help.md");
+
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
 #[command(
     version,
+    long_version(LONG_VERSION),
     about,
     max_term_width(100),
     propagate_version(true),
+    after_long_help(AFTER_LONG_HELP),
     arg_required_else_help(true),
     args_conflicts_with_subcommands(true)
 )]
@@ -36,9 +50,11 @@ pub struct Opt {
 #[derive(Debug, Subcommand)]
 pub enum Command {
     /// Encode input data in a QR code.
+    #[command(after_long_help(ENCODE_AFTER_LONG_HELP))]
     Encode(Encode),
 
     /// Detect and decode a QR code.
+    #[command(after_long_help(DECODE_AFTER_LONG_HELP))]
     Decode(Decode),
 }
 

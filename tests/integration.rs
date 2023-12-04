@@ -39,6 +39,28 @@ fn generate_completion_conflicts_with_subcommands() {
 }
 
 #[test]
+fn long_version() {
+    command()
+        .arg("--version")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(include_str!(
+            "../src/assets/long-version.md"
+        )));
+}
+
+#[test]
+fn after_long_help() {
+    command()
+        .arg("--help")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(include_str!(
+            "../src/assets/after-long-help.md"
+        )));
+}
+
+#[test]
 fn basic_encode() {
     let output = command().arg("encode").arg("QR code").output().unwrap();
     assert_eq!(
@@ -699,6 +721,30 @@ fn encode_with_verbose() {
         .success()
         .stdout(predicate::ne(&[] as &[u8]))
         .stderr(predicate::eq("Version: 1\nLevel: M\n"));
+}
+
+#[test]
+fn long_version_for_encode_command() {
+    command()
+        .arg("encode")
+        .arg("--version")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(include_str!(
+            "../src/assets/long-version.md"
+        )));
+}
+
+#[test]
+fn after_long_help_for_encode_command() {
+    command()
+        .arg("encode")
+        .arg("--help")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(include_str!(
+            "../src/assets/encode-after-long-help.md"
+        )));
 }
 
 #[test]
@@ -1466,4 +1512,28 @@ fn validate_the_options_dependencies_for_decode_command() {
         .assert()
         .failure()
         .code(2);
+}
+
+#[test]
+fn long_version_for_decode_command() {
+    command()
+        .arg("decode")
+        .arg("--version")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(include_str!(
+            "../src/assets/long-version.md"
+        )));
+}
+
+#[test]
+fn after_long_help_for_decode_command() {
+    command()
+        .arg("decode")
+        .arg("--help")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains(include_str!(
+            "../src/assets/decode-after-long-help.md"
+        )));
 }
