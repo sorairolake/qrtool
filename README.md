@@ -26,9 +26,9 @@ cargo install qrtool
 
 [![Packaging status][repology-badge]][repology-versions]
 
-| OS    | Package manager | Command              |
-| ----- | --------------- | -------------------- |
-| _Any_ | [Nix]           | `nix-env -iA qrtool` |
+| OS    | Package manager | Command                      |
+| ----- | --------------- | ---------------------------- |
+| _Any_ | [Nix]           | `nix-env -iA nixpkgs.qrtool` |
 
 ### From binaries
 

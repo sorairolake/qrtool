@@ -25,7 +25,7 @@ image::{repology-badge}[Packaging status,link={repology-versions}]
 
 |_Any_
 |{nix-package-url}[Nix]
-|`nix-env -iA qrtool`
+|`nix-env -iA nixpkgs.qrtool`
 |===
 
 == From binaries
