@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2023-09-06
+:docdate: 2023-12-04
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -22,6 +22,8 @@ qrtool-encode - encode input data in a QR code
 
 This command encodes input data in a QR code. By default, the result will be
 output to stdout.
+
+*qrtool enc* and *qrtool e* are aliases for this command.
 
 == POSITIONAL ARGUMENTS
 

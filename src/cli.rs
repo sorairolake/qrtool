@@ -12,13 +12,27 @@ use clap_complete::Generator;
 use csscolorparser::Color;
 use image::{ImageError, ImageFormat};
 
+const LONG_VERSION: &str = concat!(
+    env!("CARGO_PKG_VERSION"),
+    "\n",
+    include_str!("assets/long-version.md")
+);
+
+const AFTER_LONG_HELP: &str = include_str!("assets/after-long-help.md");
+
+const ENCODE_AFTER_LONG_HELP: &str = include_str!("assets/encode-after-long-help.md");
+
+const DECODE_AFTER_LONG_HELP: &str = include_str!("assets/decode-after-long-help.md");
+
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
 #[command(
     version,
+    long_version(LONG_VERSION),
     about,
     max_term_width(100),
     propagate_version(true),
+    after_long_help(AFTER_LONG_HELP),
     arg_required_else_help(true),
     args_conflicts_with_subcommands(true)
 )]
@@ -36,9 +50,19 @@ pub struct Opt {
 #[derive(Debug, Subcommand)]
 pub enum Command {
     /// Encode input data in a QR code.
+    #[command(
+        after_long_help(ENCODE_AFTER_LONG_HELP),
+        visible_alias("enc"),
+        visible_alias("e")
+    )]
     Encode(Encode),
 
     /// Detect and decode a QR code.
+    #[command(
+        after_long_help(DECODE_AFTER_LONG_HELP),
+        visible_alias("dec"),
+        visible_alias("d")
+    )]
     Decode(Decode),
 }
 
@@ -292,7 +316,7 @@ pub enum OutputFormat {
     Terminal,
 }
 
-#[derive(Clone, Debug, Default, ValueEnum)]
+#[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum Mode {
     /// All digits.
     Numeric,
@@ -308,7 +332,7 @@ pub enum Mode {
     Kanji,
 }
 
-#[derive(Clone, Debug, Default, ValueEnum)]
+#[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum Variant {
     /// Normal QR code.
     #[default]
@@ -406,5 +430,109 @@ mod tests {
     #[test]
     fn verify_app() {
         Opt::command().debug_assert();
+    }
+
+    #[test]
+    fn file_name_shell() {
+        assert_eq!(Shell::Bash.file_name("qrtool"), "qrtool.bash");
+        assert_eq!(Shell::Elvish.file_name("qrtool"), "qrtool.elv");
+        assert_eq!(Shell::Fish.file_name("qrtool"), "qrtool.fish");
+        assert_eq!(Shell::Nushell.file_name("qrtool"), "qrtool.nu");
+        assert_eq!(Shell::PowerShell.file_name("qrtool"), "_qrtool.ps1");
+        assert_eq!(Shell::Zsh.file_name("qrtool"), "_qrtool");
+    }
+
+    #[test]
+    fn default_ecc() {
+        assert_eq!(Ecc::default(), Ecc::M);
+    }
+
+    #[test]
+    fn from_ecc_to_ec_level() {
+        assert_eq!(qrencode::EcLevel::from(Ecc::L), qrencode::EcLevel::L);
+        assert_eq!(qrencode::EcLevel::from(Ecc::M), qrencode::EcLevel::M);
+        assert_eq!(qrencode::EcLevel::from(Ecc::Q), qrencode::EcLevel::Q);
+        assert_eq!(qrencode::EcLevel::from(Ecc::H), qrencode::EcLevel::H);
+    }
+
+    #[test]
+    fn default_output_format() {
+        assert_eq!(OutputFormat::default(), OutputFormat::Png);
+    }
+
+    #[test]
+    fn default_mode() {
+        assert_eq!(Mode::default(), Mode::Byte);
+    }
+
+    #[test]
+    fn default_variant() {
+        assert_eq!(Variant::default(), Variant::Normal);
+    }
+
+    #[test]
+    fn try_from_input_format_to_image_format() {
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Bmp).unwrap(),
+            ImageFormat::Bmp
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Dds).unwrap(),
+            ImageFormat::Dds
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Farbfeld).unwrap(),
+            ImageFormat::Farbfeld
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Gif).unwrap(),
+            ImageFormat::Gif
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Hdr).unwrap(),
+            ImageFormat::Hdr
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Ico).unwrap(),
+            ImageFormat::Ico
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Jpeg).unwrap(),
+            ImageFormat::Jpeg
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::OpenExr).unwrap(),
+            ImageFormat::OpenExr
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Png).unwrap(),
+            ImageFormat::Png
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Pnm).unwrap(),
+            ImageFormat::Pnm
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Qoi).unwrap(),
+            ImageFormat::Qoi
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Tga).unwrap(),
+            ImageFormat::Tga
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::Tiff).unwrap(),
+            ImageFormat::Tiff
+        );
+        assert_eq!(
+            ImageFormat::try_from(InputFormat::WebP).unwrap(),
+            ImageFormat::WebP
+        );
+    }
+
+    #[cfg(feature = "decode-from-svg")]
+    #[test]
+    fn try_from_input_format_to_image_format_when_svg() {
+        assert!(ImageFormat::try_from(InputFormat::Svg).is_err());
     }
 }

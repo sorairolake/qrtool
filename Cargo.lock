@@ -51,30 +51,30 @@ checksum = "7079075b41f533b8c61d2a4d073c4676e1f8b249ff94a393b0595db304e0dd87"
 
 [[package]]
 name = "anstyle-parse"
-version = "0.2.2"
+version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "317b9a89c1868f5ea6ff1d9539a69f45dffc21ce321ac1fd1160dfa48c8e2140"
+checksum = "c75ac65da39e5fe5ab759307499ddad880d724eed2f6ce5b5e8a26f4f387928c"
 dependencies = [
  "utf8parse",
 ]
 
 [[package]]
 name = "anstyle-query"
-version = "1.0.0"
+version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5ca11d4be1bab0c8bc8734a9aa7bf4ee8316d462a08c6ac5052f888fef5b494b"
+checksum = "a3a318f1f38d2418400f8209655bfd825785afd25aa30bb7ba6cc792e4596748"
 dependencies = [
- "windows-sys 0.48.0",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
 name = "anstyle-wincon"
-version = "3.0.1"
+version = "3.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f0699d10d2f4d628a98ee7b57b289abbc98ff3bad977cb3152709d4bf2330628"
+checksum = "1cd54b81ec8d6180e24654d0b371ad22fc3dd083b6ff8ba325b72e00c87660a7"
 dependencies = [
  "anstyle",
- "windows-sys 0.48.0",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -177,9 +177,9 @@ checksum = "17cc5e6b5ab06331c33589842070416baa137e8b0eb912b008cfd4a78ada7919"
 
 [[package]]
 name = "clap"
-version = "4.4.10"
+version = "4.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "41fffed7514f420abec6d183b1d3acfd9099c79c3a10a06ade4f8203f1411272"
+checksum = "bfaff671f6b22ca62406885ece523383b9b64022e341e53e009a62ebc47a45f2"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -187,9 +187,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.4.9"
+version = "4.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "63361bae7eef3771745f02d8d892bec2fee5f6e34af316ba556e7f97a7069ff1"
+checksum = "a216b506622bb1d316cd51328dce24e07bdff4a6128a47c7e7fad11878d5adbb"
 dependencies = [
  "anstream",
  "anstyle",
@@ -737,7 +737,7 @@ dependencies = [
 
 [[package]]
 name = "qrtool"
-version = "0.8.7"
+version = "0.8.8"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -1032,9 +1032,9 @@ dependencies = [
 
 [[package]]
 name = "tiny-skia"
-version = "0.11.2"
+version = "0.11.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3b72a92a05db376db09fe6d50b7948d106011761c05a6a45e23e17ee9b556222"
+checksum = "b6a067b809476893fce6a254cf285850ff69c847e6cfbade6a20b655b6c7e80d"
 dependencies = [
  "arrayref",
  "arrayvec",
@@ -1047,9 +1047,9 @@ dependencies = [
 
 [[package]]
 name = "tiny-skia-path"
-version = "0.11.2"
+version = "0.11.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6ac3865b9708fc7e1961a65c3a4fa55e984272f33092d3c859929f887fceb647"
+checksum = "5de35e8a90052baaaf61f171680ac2f8e925a1e43ea9d2e3a00514772250e541"
 dependencies = [
  "arrayref",
  "bytemuck",

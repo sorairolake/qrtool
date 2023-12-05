@@ -14,6 +14,21 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.8.7\...v0.8.8[0.8.8] - 2023-12-05
+
+=== Added
+
+* Add aliases to subcommands ({pull-request-url}/290[#290])
+
+=== Changed
+
+* Change `--help` and `--version` to print additional information
+  ({pull-request-url}/289[#289])
+
+=== Fixed
+
+* Fix exit status when input is SVG ({pull-request-url}/291[#291])
+
 == {compare-url}/v0.8.6\...v0.8.7[0.8.7] - 2023-12-03
 
 === Changed
