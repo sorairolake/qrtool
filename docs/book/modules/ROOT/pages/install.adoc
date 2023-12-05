@@ -3,6 +3,10 @@
 // SPDX-License-Identifier: CC-BY-4.0
 
 = Installation
+:repology-url: https://repology.org
+:repology-badge: {repology-url}/badge/vertical-allrepos/qrtool.svg
+:repology-versions: {repology-url}/project/qrtool/versions
+:nix-package-url: https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/qr/qrtool/package.nix
 :release-page-url: https://github.com/sorairolake/qrtool/releases
 
 == From source
@@ -11,6 +15,18 @@
 ----
 cargo install qrtool
 ----
+
+== Via a package manager
+
+image::{repology-badge}[Packaging status,link={repology-versions}]
+
+|===
+|OS |Package manager |Command
+
+|_Any_
+|{nix-package-url}[Nix]
+|`nix-env -iA qrtool`
+|===
 
 == From binaries
 
