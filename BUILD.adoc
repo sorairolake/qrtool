@@ -27,6 +27,12 @@ cd qrtool
 just build
 ----
 
+.To find the directory where manual pages are generated
+[source,shell]
+----
+fd -t directory out ./target/*/build/qrtool-*
+----
+
 == Crate features
 
 `decode-from-svg`::

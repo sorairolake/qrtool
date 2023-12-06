@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: CC-BY-4.0
 
 = Usage
+:css-color-4: https://www.w3.org/TR/css-color-4/
 
 == Basic usage
 
@@ -28,6 +29,9 @@ QR code
 
 == SVG generation
 
+Use `-t` option to change the format of the generated image. The format is
+`png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
+
 [source,shell]
 ----
 qrtool encode -o output.svg -t svg "QR code"
@@ -38,6 +42,9 @@ image::decode.svg[Output]
 
 == Micro QR code generation
 
+Use `--variant` option to change the variant of the generated QR code. The
+variant is `normal` (default) or `micro` (Micro QR code).
+
 [source,shell]
 ----
 qrtool encode -v 3 --variant micro "QR code" > output.png
@@ -47,6 +54,12 @@ qrtool encode -v 3 --variant micro "QR code" > output.png
 image::micro.png[Output]
 
 == Colored output
+
+Use `--foreground` and `--background` options to change the foreground and
+background colors of the generated image. These options takes a
+{css-color-4}[CSS color string] such as `brown`, `#a52a2a` or `rgb(165 42 42)`.
+The default foreground color is black and the background color is white of
+CSS's named colors.
 
 [source,shell]
 ----

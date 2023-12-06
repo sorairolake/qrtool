@@ -66,6 +66,9 @@ QR code
 
 ### SVG generation
 
+Use `-t` option to change the format of the generated image. The format is
+`png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
+
 ```sh
 qrtool encode -o output.svg -t svg "QR code"
 ```
@@ -76,6 +79,9 @@ Generate this image:
 
 ### Micro QR code generation
 
+Use `--variant` option to change the variant of the generated QR code. The
+variant is `normal` (default) or `micro` (Micro QR code).
+
 ```sh
 qrtool encode -v 3 --variant micro "QR code" > output.png
 ```
@@ -85,6 +91,11 @@ Generate this image:
 ![Output](tests/data/variant/micro.png)
 
 ### Colored output
+
+Use `--foreground` and `--background` options to change the foreground and
+background colors of the generated image. These options takes a [CSS color
+string] such as `brown`, `#a52a2a` or `rgb(165 42 42)`. The default foreground
+color is black and the background color is white of CSS's named colors.
 
 ```sh
 qrtool encode --foreground brown "QR code" > output.png
@@ -173,6 +184,7 @@ licensing information.
 [Nix]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/qr/qrtool/package.nix
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
+[CSS color string]: https://www.w3.org/TR/css-color-4/
 [`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
 [`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
 [`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html

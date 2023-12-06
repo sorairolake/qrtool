@@ -21,6 +21,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Add installation instructions via package manager to documentation
   ({pull-request-url}/294[#294])
 
+=== Changed
+
+* Update documentation ({pull-request-url}/295[#295])
+
 == {compare-url}/v0.8.7\...v0.8.8[0.8.8] - 2023-12-05
 
 === Added
