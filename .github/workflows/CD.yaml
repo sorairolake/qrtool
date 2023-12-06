@@ -5,6 +5,7 @@
 name: CD
 
 on:
+  pull_request:
   push:
     branches:
       - "develop"
