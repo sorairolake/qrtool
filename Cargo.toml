@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.8.8"
+version = "0.8.9"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.70.0"
@@ -15,18 +15,7 @@ repository = "https://github.com/sorairolake/qrtool"
 license = "Apache-2.0 OR MIT"
 keywords = ["qrcode"]
 categories = ["command-line-utilities"]
-exclude = [
-  "/.bumpversion.cfg*",
-  "/.github",
-  "/antora-playbook.yml",
-  "/clippy.toml",
-  "/Cross.toml",
-  "/docs",
-  "/justfile",
-  "/package*.json*",
-  "/rustfmt.toml",
-  "/tests",
-]
+include = ["/LICENSES", "/README.md", "/src"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -40,7 +29,7 @@ image = "0.24.7"
 qrencode = "0.14.0"
 resvg = { version = "0.36.0", default-features = false, optional = true }
 rqrr = "0.6.0"
-sysexits = "0.7.6"
+sysexits = "0.7.7"
 
 [dev-dependencies]
 assert_cmd = "2.0.12"

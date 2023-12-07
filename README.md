@@ -22,6 +22,14 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 cargo install qrtool
 ```
 
+### Via a package manager
+
+[![Packaging status][repology-badge]][repology-versions]
+
+| OS    | Package manager | Command                      |
+| ----- | --------------- | ---------------------------- |
+| _Any_ | [Nix]           | `nix-env -iA nixpkgs.qrtool` |
+
 ### From binaries
 
 The [release page] contains pre-built binaries for Linux, macOS and Windows.
@@ -58,6 +66,9 @@ QR code
 
 ### SVG generation
 
+Use `-t` option to change the format of the generated image. The format is
+`png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
+
 ```sh
 qrtool encode -o output.svg -t svg "QR code"
 ```
@@ -67,6 +78,9 @@ Generate this image:
 ![Output](tests/data/decode/decode.svg)
 
 ### Micro QR code generation
+
+Use `--variant` option to change the variant of the generated QR code. The
+variant is `normal` (default) or `micro` (Micro QR code).
 
 ```sh
 qrtool encode -v 3 --variant micro "QR code" > output.png
@@ -78,6 +92,11 @@ Generate this image:
 
 ### Colored output
 
+Use `--foreground` and `--background` options to change the foreground and
+background colors of the generated image. These options takes a [CSS color
+string] such as `brown`, `#a52a2a` or `rgb(165 42 42)`. The default foreground
+color is black and the background color is white of CSS's named colors.
+
 ```sh
 qrtool encode --foreground brown "QR code" > output.png
 ```
@@ -85,6 +104,53 @@ qrtool encode --foreground brown "QR code" > output.png
 Generate this image:
 
 ![Output](tests/data/colored/fg.png)
+
+### Supported input image formats
+
+`qrtool decode` supports decoding a QR code from the following image formats:
+
+- [BMP]
+- [DDS]
+- [Farbfeld]
+- [GIF]
+- [Radiance RGBE]
+- [ICO][][^ico-note]
+- [JPEG]
+- [OpenEXR]
+- [PNG]
+- [PNM]
+- [QOI]
+- [SVG][][^svg-note]
+- [TGA]
+- [TIFF]
+- [WebP]
+
+To support decoding from SVG image, the `decode-from-svg` feature must be
+enabled at compile time. Note that the SVG image is rasterized before scanning.
+
+Use `-t` option to specify the image format. If this option is not specified,
+the image format is determined based on the extension or the magic number.
+
+Input this WebP image:
+
+![Input](tests/data/decode/lossless.webp)
+
+Decode a QR code from the WebP image:
+
+```sh
+qrtool decode input.webp
+# or
+qrtool decode -t webp input.webp
+```
+
+Output:
+
+```text
+QR code
+```
+
+[^ico-note]: CUR is also supported.
+[^svg-note]: SVGZ is also supported.
 
 ### Generate shell completion
 
@@ -160,8 +226,27 @@ licensing information.
 [version-badge]: https://img.shields.io/crates/v/qrtool?style=for-the-badge
 [version-url]: https://crates.io/crates/qrtool
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
+[repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg
+[repology-versions]: https://repology.org/project/qrtool/versions
+[Nix]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/qr/qrtool/package.nix
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
+[CSS color string]: https://www.w3.org/TR/css-color-4/
+[BMP]: https://en.wikipedia.org/wiki/BMP_file_format
+[DDS]: https://en.wikipedia.org/wiki/DirectDraw_Surface
+[Farbfeld]: https://tools.suckless.org/farbfeld/
+[GIF]: https://en.wikipedia.org/wiki/GIF
+[Radiance RGBE]: https://en.wikipedia.org/wiki/RGBE_image_format
+[ICO]: https://en.wikipedia.org/wiki/ICO_(file_format)
+[JPEG]: https://jpeg.org/jpeg/
+[OpenEXR]: https://openexr.com/
+[PNG]: https://en.wikipedia.org/wiki/PNG
+[PNM]: https://netpbm.sourceforge.net/doc/pnm.html
+[QOI]: https://qoiformat.org/
+[SVG]: https://www.w3.org/Graphics/SVG/
+[TGA]: https://en.wikipedia.org/wiki/Truevision_TGA
+[TIFF]: https://en.wikipedia.org/wiki/TIFF
+[WebP]: https://developers.google.com/speed/webp/
 [`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
 [`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
 [`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html

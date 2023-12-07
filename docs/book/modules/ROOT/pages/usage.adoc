@@ -3,6 +3,25 @@
 // SPDX-License-Identifier: CC-BY-4.0
 
 = Usage
+:w3-url: https://www.w3.org
+:enwp-url: https://en.wikipedia.org
+:enwp-article-url: {enwp-url}/wiki
+:css-color-4-url: {w3-url}/TR/css-color-4/
+:bmp-url: {enwp-article-url}/BMP_file_format
+:dds-url: {enwp-article-url}/DirectDraw_Surface
+:farbfeld-url: https://tools.suckless.org/farbfeld/
+:gif-url: {enwp-article-url}/GIF
+:radiance-rgbe-url: {enwp-article-url}/RGBE_image_format
+:ico-url: {enwp-article-url}/ICO_(file_format)
+:jpeg-url: https://jpeg.org/jpeg/
+:openexr-url: https://openexr.com/
+:png-url: {enwp-article-url}/PNG
+:pnm-url: https://netpbm.sourceforge.net/doc/pnm.html
+:qoi-url: https://qoiformat.org/
+:svg-url: {w3-url}/Graphics/SVG/
+:tga-url: {enwp-article-url}/Truevision_TGA
+:tiff-url: {enwp-article-url}/TIFF
+:webp-url: https://developers.google.com/speed/webp/
 
 == Basic usage
 
@@ -28,6 +47,9 @@ QR code
 
 == SVG generation
 
+Use `-t` option to change the format of the generated image. The format is
+`png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
+
 [source,shell]
 ----
 qrtool encode -o output.svg -t svg "QR code"
@@ -37,6 +59,9 @@ qrtool encode -o output.svg -t svg "QR code"
 image::decode.svg[Output]
 
 == Micro QR code generation
+
+Use `--variant` option to change the variant of the generated QR code. The
+variant is `normal` (default) or `micro` (Micro QR code).
 
 [source,shell]
 ----
@@ -48,6 +73,12 @@ image::micro.png[Output]
 
 == Colored output
 
+Use `--foreground` and `--background` options to change the foreground and
+background colors of the generated image. These options takes a
+{css-color-4-url}[CSS color string] such as `brown`, `#a52a2a` or
+`rgb(165 42 42)`. The default foreground color is black and the background
+color is white of CSS's named colors.
+
 [source,shell]
 ----
 qrtool encode --foreground brown "QR code" > output.png
@@ -55,6 +86,47 @@ qrtool encode --foreground brown "QR code" > output.png
 
 .Generate this image
 image::fg.png[Output]
+
+== Supported input image formats
+
+.`qrtool decode` supports decoding a QR code from the following image formats
+* {bmp-url}[BMP]
+* {dds-url}[DDS]
+* {farbfeld-url}[Farbfeld]
+* {gif-url}[GIF]
+* {radiance-rgbe-url}[Radiance RGBE]
+* {ico-url}[ICO]footnote:[CUR is also supported.]
+* {jpeg-url}[JPEG]
+* {openexr-url}[OpenEXR]
+* {png-url}[PNG]
+* {pnm-url}[PNM]
+* {qoi-url}[QOI]
+* {svg-url}[SVG]footnote:[SVGZ is also supported.]
+* {tga-url}[TGA]
+* {tiff-url}[TIFF]
+* {webp-url}[WebP]
+
+To support decoding from SVG image, the `decode-from-svg` feature must be
+enabled at compile time. Note that the SVG image is rasterized before scanning.
+
+Use `-t` option to specify the image format. If this option is not specified,
+the image format is determined based on the extension or the magic number.
+
+.Input this WebP image
+image::lossless.webp[Input]
+
+.Decode a QR code from the WebP image
+[source,shell]
+----
+qrtool decode input.webp
+# or
+qrtool decode -t webp input.webp
+----
+
+.Output
+....
+QR code
+....
 
 == Generate shell completion
 
