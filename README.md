@@ -105,6 +105,53 @@ Generate this image:
 
 ![Output](tests/data/colored/fg.png)
 
+### Supported input image formats
+
+`qrtool decode` supports decoding a QR code from the following image formats:
+
+- [BMP]
+- [DDS]
+- [Farbfeld]
+- [GIF]
+- [Radiance RGBE]
+- [ICO][][^ico-note]
+- [JPEG]
+- [OpenEXR]
+- [PNG]
+- [PNM]
+- [QOI]
+- [SVG][][^svg-note]
+- [TGA]
+- [TIFF]
+- [WebP]
+
+To support decoding from SVG image, the `decode-from-svg` feature must be
+enabled at compile time. Note that the SVG image is rasterized before scanning.
+
+Use `-t` option to specify the image format. If this option is not specified,
+the image format is determined based on the extension or the magic number.
+
+Input this WebP image:
+
+![Input](tests/data/decode/lossless.webp)
+
+Decode a QR code from the WebP image:
+
+```sh
+qrtool decode input.webp
+# or
+qrtool decode -t webp input.webp
+```
+
+Output:
+
+```text
+QR code
+```
+
+[^ico-note]: CUR is also supported.
+[^svg-note]: SVGZ is also supported.
+
 ### Generate shell completion
 
 `--generate-completion` option generates shell completions to stdout.
@@ -185,6 +232,21 @@ licensing information.
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
 [CSS color string]: https://www.w3.org/TR/css-color-4/
+[BMP]: https://en.wikipedia.org/wiki/BMP_file_format
+[DDS]: https://en.wikipedia.org/wiki/DirectDraw_Surface
+[Farbfeld]: https://tools.suckless.org/farbfeld/
+[GIF]: https://en.wikipedia.org/wiki/GIF
+[Radiance RGBE]: https://en.wikipedia.org/wiki/RGBE_image_format
+[ICO]: https://en.wikipedia.org/wiki/ICO_(file_format)
+[JPEG]: https://jpeg.org/jpeg/
+[OpenEXR]: https://openexr.com/
+[PNG]: https://en.wikipedia.org/wiki/PNG
+[PNM]: https://netpbm.sourceforge.net/doc/pnm.html
+[QOI]: https://qoiformat.org/
+[SVG]: https://www.w3.org/Graphics/SVG/
+[TGA]: https://en.wikipedia.org/wiki/Truevision_TGA
+[TIFF]: https://en.wikipedia.org/wiki/TIFF
+[WebP]: https://developers.google.com/speed/webp/
 [`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
 [`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
 [`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html

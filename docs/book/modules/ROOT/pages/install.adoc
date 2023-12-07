@@ -4,10 +4,11 @@
 
 = Installation
 :repology-url: https://repology.org
+:github-url: https://github.com
 :repology-badge: {repology-url}/badge/vertical-allrepos/qrtool.svg
 :repology-versions: {repology-url}/project/qrtool/versions
-:nix-package-url: https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/qr/qrtool/package.nix
-:release-page-url: https://github.com/sorairolake/qrtool/releases
+:nix-package-url: {github-url}/NixOS/nixpkgs/blob/master/pkgs/by-name/qr/qrtool/package.nix
+:release-page-url: {github-url}/sorairolake/qrtool/releases
 
 == From source
 
