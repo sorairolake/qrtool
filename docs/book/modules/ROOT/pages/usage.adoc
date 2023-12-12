@@ -6,6 +6,7 @@
 :w3-url: https://www.w3.org
 :enwp-url: https://en.wikipedia.org
 :enwp-article-url: {enwp-url}/wiki
+:github-url: https://github.com
 :css-color-4-url: {w3-url}/TR/css-color-4/
 :bmp-url: {enwp-article-url}/BMP_file_format
 :dds-url: {enwp-article-url}/DirectDraw_Surface
@@ -22,6 +23,8 @@
 :tga-url: {enwp-article-url}/Truevision_TGA
 :tiff-url: {enwp-article-url}/TIFF
 :webp-url: https://developers.google.com/speed/webp/
+:oxipng-repo-url: {github-url}/shssoichiro/oxipng
+:svgcleaner-repo-url: {github-url}/RazrFalcon/svgcleaner
 
 == Basic usage
 
@@ -148,7 +151,29 @@ qrtool --generate-completion bash > qrtool.bash
 
 == Integration with other programs
 
-Both `encode` and `decode` can read from stdin and output to stdout.
+Both `qrtool encode` and `qrtool decode` can read from stdin and output to
+stdout.
+
+=== Optimize the output image
+
+The image output by `qrtool encode` is not optimized. For example, a PNG image
+is always output as the 32-bit RGBA format. If you want to reduce the image
+size or optimize the image, use an optimizer such as
+{oxipng-repo-url}[`oxipng`] or {svgcleaner-repo-url}[`svgcleaner`].
+
+.Optimize the output PNG image
+[source,shell]
+----
+qrtool encode "QR code" | oxipng - > output.png
+----
+
+.Optimize the output SVG image
+[source,shell]
+----
+qrtool encode -t svg "QR code" | svgcleaner -c - > output.svg
+----
+
+=== Reading and writing unsupported image formats
 
 .The following example, the encoded result is saved as a JPEG XL image
 [source,shell]

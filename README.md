@@ -171,9 +171,31 @@ Example:
 qrtool --generate-completion bash > qrtool.bash
 ```
 
-## Integration with other programs
+### Integration with other programs
 
-Both `encode` and `decode` can read from stdin and output to stdout.
+Both `qrtool encode` and `qrtool decode` can read from stdin and output to
+stdout.
+
+#### Optimize the output image
+
+The image output by `qrtool encode` is not optimized. For example, a PNG image
+is always output as the 32-bit RGBA format. If you want to reduce the image
+size or optimize the image, use an optimizer such as [`oxipng`] or
+[`svgcleaner`].
+
+Optimize the output PNG image:
+
+```sh
+qrtool encode "QR code" | oxipng - > output.png
+```
+
+Optimize the output SVG image:
+
+```sh
+qrtool encode -t svg "QR code" | svgcleaner -c - > output.svg
+```
+
+#### Reading and writing unsupported image formats
 
 The following example, the encoded result is saved as a JPEG XL image:
 
@@ -247,6 +269,8 @@ licensing information.
 [TGA]: https://en.wikipedia.org/wiki/Truevision_TGA
 [TIFF]: https://en.wikipedia.org/wiki/TIFF
 [WebP]: https://developers.google.com/speed/webp/
+[`oxipng`]: https://github.com/shssoichiro/oxipng
+[`svgcleaner`]: https://github.com/RazrFalcon/svgcleaner
 [`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
 [`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
 [`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html
