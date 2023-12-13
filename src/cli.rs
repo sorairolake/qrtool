@@ -4,6 +4,7 @@
 
 use std::{
     io::{self, Write},
+    num::NonZeroU32,
     path::PathBuf,
 };
 
@@ -81,6 +82,10 @@ pub struct Encode {
         conflicts_with("input")
     )]
     pub read_from: Option<PathBuf>,
+
+    /// The module size in pixels.
+    #[arg(short, long, default_value("8"), value_name("NUMBER"))]
+    pub size: NonZeroU32,
 
     /// Error correction level.
     #[arg(

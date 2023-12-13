@@ -65,12 +65,18 @@ pub fn run() -> anyhow::Result<()> {
                     eprintln!("Level: {:?}", metadata.error_correction_level());
                 }
 
+                let module_size = arg.size.get();
                 match arg.output_format {
                     format @ (OutputFormat::Svg | OutputFormat::Terminal) => {
                         let string = if format == OutputFormat::Svg {
-                            encode::to_svg(&code, arg.margin, &(arg.foreground, arg.background))
+                            encode::to_svg(
+                                &code,
+                                arg.margin,
+                                &(arg.foreground, arg.background),
+                                module_size,
+                            )
                         } else {
-                            encode::to_terminal(&code, arg.margin)
+                            encode::to_terminal(&code, arg.margin, module_size)
                         };
 
                         if let Some(file) = arg.output {
@@ -82,8 +88,12 @@ pub fn run() -> anyhow::Result<()> {
                         }
                     }
                     OutputFormat::Png => {
-                        let image =
-                            encode::to_image(&code, arg.margin, &(arg.foreground, arg.background));
+                        let image = encode::to_image(
+                            &code,
+                            arg.margin,
+                            &(arg.foreground, arg.background),
+                            module_size,
+                        );
 
                         if let Some(file) = arg.output {
                             image

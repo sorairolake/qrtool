@@ -52,26 +52,34 @@ pub fn push_data_for_selected_mode(
 }
 
 /// Renders the QR code into an image.
-pub fn to_svg(code: &QrCode, margin: u32, colors: &(Color, Color)) -> String {
+pub fn to_svg(code: &QrCode, margin: u32, colors: &(Color, Color), module_size: u32) -> String {
     Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin)
         .dark_color(svg::Color(&colors.0.to_hex_string()))
         .light_color(svg::Color(&colors.1.to_hex_string()))
+        .module_dimensions(module_size, module_size)
         .build()
 }
 
 /// Renders the QR code into the terminal as UTF-8 string.
-pub fn to_terminal(code: &QrCode, margin: u32) -> String {
+pub fn to_terminal(code: &QrCode, margin: u32, module_size: u32) -> String {
     Renderer::<unicode::Dense1x2>::new(&code.to_colors(), code.width(), margin)
         .dark_color(unicode::Dense1x2::Light)
         .light_color(unicode::Dense1x2::Dark)
+        .module_dimensions(module_size, module_size)
         .build()
 }
 
 /// Renders the QR code into an image.
-pub fn to_image(code: &QrCode, margin: u32, colors: &(Color, Color)) -> DynamicImage {
+pub fn to_image(
+    code: &QrCode,
+    margin: u32,
+    colors: &(Color, Color),
+    module_size: u32,
+) -> DynamicImage {
     let image = Renderer::<Rgba<u8>>::new(&code.to_colors(), code.width(), margin)
         .dark_color(Rgba::from(colors.0.to_rgba8()))
         .light_color(Rgba::from(colors.1.to_rgba8()))
+        .module_dimensions(module_size, module_size)
         .build();
     DynamicImage::ImageRgba8(image)
 }

@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2023-12-04
+:docdate: 2023-12-13
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -43,6 +43,10 @@ _STRING_::
 *-r*, *--read-from* _FILE_::
 
   Read input data from a file. This option conflicts with _STRING_.
+
+*-s*, *--size* _NUMBER_::
+
+  The module size in pixels. Default is 8.
 
 *-l*, *--error-correction-level* _LEVEL_::
 

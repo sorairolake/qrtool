@@ -92,6 +92,65 @@ fn encode_data_from_file() {
 }
 
 #[test]
+fn encode_with_module_size() {
+    let output = command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+        image::open("tests/data/module_size/3.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_to_svg_with_module_size() {
+    command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("svg")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/module_size/3.svg")));
+}
+
+#[test]
+fn encode_to_terminal_with_module_size() {
+    command()
+        .arg("encode")
+        .arg("-s")
+        .arg("1")
+        .arg("-t")
+        .arg("terminal")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/module_size/1.txt")));
+}
+
+#[test]
+fn encode_with_invalid_module_size() {
+    command()
+        .arg("encode")
+        .arg("-s")
+        .arg("0")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "number would be zero for non-zero type",
+        ));
+}
+
+#[test]
 fn encode_with_error_correction_level() {
     let output = command()
         .arg("encode")
@@ -174,7 +233,7 @@ fn encode_to_svg() {
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::str::contains("<svg"));
+        .stdout(predicate::eq(include_str!("data/encode/encode.svg")));
 }
 
 #[test]
@@ -186,7 +245,7 @@ fn encode_to_terminal() {
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::str::starts_with('\u{2588}'));
+        .stdout(predicate::eq(include_str!("data/encode/encode.txt")));
 }
 
 #[test]
@@ -255,6 +314,22 @@ fn encode_from_named_color() {
         image::open("tests/data/colored/rgb.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_to_svg_from_named_color() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("brown")
+        .arg("--background")
+        .arg("lightslategray")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
 }
 
 #[test]
@@ -358,6 +433,34 @@ fn encode_from_hex_color() {
 }
 
 #[test]
+fn encode_to_svg_from_hex_color() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("#a52a2a")
+        .arg("--background")
+        .arg("#778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("a52a2a")
+        .arg("--background")
+        .arg("778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
+}
+
+#[test]
 fn encode_from_hex_color_with_alpha() {
     {
         let output = command()
@@ -391,6 +494,34 @@ fn encode_from_hex_color_with_alpha() {
         );
         assert!(output.status.success());
     }
+}
+
+#[test]
+fn encode_to_svg_from_hex_color_with_alpha() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("#a52a2a7f")
+        .arg("--background")
+        .arg("#7788997f")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgba.svg")));
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("a52a2a7f")
+        .arg("--background")
+        .arg("7788997f")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgba.svg")));
 }
 
 #[test]

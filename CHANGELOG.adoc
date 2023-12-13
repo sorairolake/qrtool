@@ -20,6 +20,8 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 * Add methods to optimize the output image to the documents
   ({pull-request-url}/301[#301])
+* Add `--size` option to set the module size in pixels
+  ({pull-request-url}/304[#304])
 
 == {compare-url}/v0.8.8\...v0.8.9[0.8.9] - 2023-12-07
 
