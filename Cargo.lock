@@ -170,12 +170,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
-name = "checked_int_cast"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "17cc5e6b5ab06331c33589842070416baa137e8b0eb912b008cfd4a78ada7919"
-
-[[package]]
 name = "clap"
 version = "4.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -726,12 +720,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "qrencode"
-version = "0.14.0"
+name = "qrcode"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a60db121a642f869443a5d7461fa7978e74248b5299d21d3e97f5c0b1905f7c1"
+checksum = "166f136dfdb199f98186f3649cf7a0536534a61417a1a30221b492b4fb60ce3f"
 dependencies = [
- "checked_int_cast",
  "image",
 ]
 
@@ -747,7 +740,7 @@ dependencies = [
  "csscolorparser",
  "image",
  "predicates",
- "qrencode",
+ "qrcode",
  "resvg",
  "rqrr",
  "sysexits",

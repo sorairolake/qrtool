@@ -295,7 +295,7 @@ pub enum Ecc {
     H,
 }
 
-impl From<Ecc> for qrencode::EcLevel {
+impl From<Ecc> for qrcode::EcLevel {
     fn from(level: Ecc) -> Self {
         match level {
             Ecc::L => Self::L,
@@ -454,10 +454,10 @@ mod tests {
 
     #[test]
     fn from_ecc_to_ec_level() {
-        assert_eq!(qrencode::EcLevel::from(Ecc::L), qrencode::EcLevel::L);
-        assert_eq!(qrencode::EcLevel::from(Ecc::M), qrencode::EcLevel::M);
-        assert_eq!(qrencode::EcLevel::from(Ecc::Q), qrencode::EcLevel::Q);
-        assert_eq!(qrencode::EcLevel::from(Ecc::H), qrencode::EcLevel::H);
+        assert_eq!(qrcode::EcLevel::from(Ecc::L), qrcode::EcLevel::L);
+        assert_eq!(qrcode::EcLevel::from(Ecc::M), qrcode::EcLevel::M);
+        assert_eq!(qrcode::EcLevel::from(Ecc::Q), qrcode::EcLevel::Q);
+        assert_eq!(qrcode::EcLevel::from(Ecc::H), qrcode::EcLevel::H);
     }
 
     #[test]

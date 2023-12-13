@@ -11,7 +11,7 @@ use std::{
 use anyhow::Context;
 use clap::Parser;
 use image::{ImageError, ImageFormat};
-use qrencode::{bits::Bits, QrCode};
+use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
 use crate::{

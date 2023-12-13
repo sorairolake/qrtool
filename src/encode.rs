@@ -4,7 +4,7 @@
 
 use csscolorparser::Color;
 use image::{DynamicImage, Rgba};
-use qrencode::{
+use qrcode::{
     bits::Bits,
     render::{svg, unicode, Renderer},
     types::QrError,
