@@ -25,6 +25,7 @@
 :webp-url: https://developers.google.com/speed/webp/
 :oxipng-repo-url: {github-url}/shssoichiro/oxipng
 :svgcleaner-repo-url: {github-url}/RazrFalcon/svgcleaner
+:imagemagick-url: https://imagemagick.org/
 
 == Basic usage
 
@@ -84,11 +85,11 @@ color is white of CSS's named colors.
 
 [source,shell]
 ----
-qrtool encode --foreground brown "QR code" > output.png
+qrtool encode --foreground brown --background lightslategray "QR code" > output.png
 ----
 
 .Generate this image
-image::fg.png[Output]
+image::rgb.png[Output]
 
 == Supported input image formats
 
@@ -175,13 +176,17 @@ qrtool encode -t svg "QR code" | svgcleaner -c - > output.svg
 
 === Reading and writing unsupported image formats
 
-.The following example, the encoded result is saved as a JPEG XL image
+If you want to save the encoded image in an image format other than PNG or SVG,
+or decode an image in an unsupported image format, convert it using a converter
+such as {imagemagick-url}[ImageMagick].
+
+.Read `Cargo.toml` from stdin and save the encoded result as a JPEG XL image
 [source,shell]
 ----
 cat Cargo.toml | qrtool encode | magick png:- output.jxl
 ----
 
-.The following example, the decoded result is displayed by `bat`
+.Decode this image and print the result using `bat`
 [source,shell]
 ----
 magick output.jxl png:- | qrtool decode | bat -l toml
