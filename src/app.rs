@@ -51,9 +51,13 @@ pub fn run() -> anyhow::Result<()> {
                     let v = encode::set_version(version, &arg.variant)
                         .context("could not set the version")?;
                     let mut bits = Bits::new(v);
-                    encode::push_data_for_selected_mode(&mut bits, input, &arg.mode)
-                        .and_then(|()| bits.push_terminator(level))
-                        .and_then(|()| QrCode::with_bits(bits, level))
+                    if let Some(mode) = arg.mode {
+                        encode::push_data_for_selected_mode(&mut bits, input, &mode)
+                    } else {
+                        bits.push_optimal_data(&input)
+                    }
+                    .and_then(|()| bits.push_terminator(level))
+                    .and_then(|()| QrCode::with_bits(bits, level))
                 } else {
                     QrCode::with_error_correction_level(&input, level)
                 }

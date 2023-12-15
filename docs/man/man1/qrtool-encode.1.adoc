@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2023-12-13
+:docdate: 2023-12-15
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -108,7 +108,8 @@ _STRING_::
 
 *--mode* _MODE_::
 
-  The mode of the output.
+  The mode of the output. If this option is not specified, use the optimal
+  encoding. This option requires *--symbol-version*.
 
   The possible values are:{blank}:::
 
@@ -122,7 +123,7 @@ _STRING_::
 
     *byte*::::
 
-      Arbitrary binary data. This is the default value.
+      Arbitrary binary data.
 
     *kanji*::::
 

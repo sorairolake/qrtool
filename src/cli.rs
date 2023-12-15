@@ -128,14 +128,16 @@ pub struct Encode {
     pub output_format: OutputFormat,
 
     /// The mode of the output.
+    ///
+    /// If this option is not specified, use the optimal encoding.
     #[arg(
         long,
         value_enum,
-        default_value_t,
+        requires("symbol_version"),
         value_name("MODE"),
         ignore_case(true)
     )]
-    pub mode: Mode,
+    pub mode: Option<Mode>,
 
     /// The type of QR code.
     #[arg(
@@ -321,7 +323,7 @@ pub enum OutputFormat {
     Terminal,
 }
 
-#[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
+#[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
 pub enum Mode {
     /// All digits.
     Numeric,
@@ -330,7 +332,6 @@ pub enum Mode {
     Alphanumeric,
 
     /// Arbitrary binary data.
-    #[default]
     Byte,
 
     /// Shift JIS text.
@@ -463,11 +464,6 @@ mod tests {
     #[test]
     fn default_output_format() {
         assert_eq!(OutputFormat::default(), OutputFormat::Png);
-    }
-
-    #[test]
-    fn default_mode() {
-        assert_eq!(Mode::default(), Mode::Byte);
     }
 
     #[test]
