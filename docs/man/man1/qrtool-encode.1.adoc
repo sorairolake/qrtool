@@ -76,8 +76,10 @@ _STRING_::
 
 *-v*, *--symbol-version* _NUMBER_::
 
-  The version of the symbol. For normal QR code, _NUMBER_ should be between *1*
-  and *40*. For Micro QR code, _NUMBER_ should be between *1* and *4*.
+  The version of the symbol. If this option is not specified, the minimum
+  version required to store the data will be automatically chosen. For normal
+  QR code, _NUMBER_ should be between *1* and *40*. For Micro QR code, _NUMBER_
+  should be between *1* and *4*.
 
 *--symversion* _NUMBER_::
 

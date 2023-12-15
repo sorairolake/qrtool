@@ -101,8 +101,10 @@ pub struct Encode {
 
     /// The version of the symbol.
     ///
-    /// For normal QR code, <NUMBER> should be between 1 and 40. For Micro QR
-    /// code, <NUMBER> should be between 1 and 4.
+    /// If this option is not specified, the minimum version required to store
+    /// the data will be automatically chosen. For normal QR code, <NUMBER>
+    /// should be between 1 and 40. For Micro QR code, <NUMBER> should be
+    /// between 1 and 4.
     #[arg(
         value_parser(value_parser!(i16).range(1..=40)),
         short('v'),
