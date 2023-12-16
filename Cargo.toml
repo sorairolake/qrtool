@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.8.9"
+version = "0.9.0"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.70.0"
@@ -26,7 +26,7 @@ clap_complete = "4.4.4"
 clap_complete_nushell = "4.4.2"
 csscolorparser = "0.6.2"
 image = "0.24.7"
-qrencode = "0.14.0"
+qrcode = "0.13.0"
 resvg = { version = "0.36.0", default-features = false, optional = true }
 rqrr = "0.6.0"
 sysexits = "0.7.7"

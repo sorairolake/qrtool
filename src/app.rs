@@ -11,7 +11,7 @@ use std::{
 use anyhow::Context;
 use clap::Parser;
 use image::{ImageError, ImageFormat};
-use qrencode::{bits::Bits, QrCode};
+use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
 use crate::{
@@ -51,9 +51,13 @@ pub fn run() -> anyhow::Result<()> {
                     let v = encode::set_version(version, &arg.variant)
                         .context("could not set the version")?;
                     let mut bits = Bits::new(v);
-                    encode::push_data_for_selected_mode(&mut bits, input, &arg.mode)
-                        .and_then(|()| bits.push_terminator(level))
-                        .and_then(|()| QrCode::with_bits(bits, level))
+                    if let Some(mode) = arg.mode {
+                        encode::push_data_for_selected_mode(&mut bits, input, &mode)
+                    } else {
+                        bits.push_optimal_data(&input)
+                    }
+                    .and_then(|()| bits.push_terminator(level))
+                    .and_then(|()| QrCode::with_bits(bits, level))
                 } else {
                     QrCode::with_error_correction_level(&input, level)
                 }
@@ -65,12 +69,18 @@ pub fn run() -> anyhow::Result<()> {
                     eprintln!("Level: {:?}", metadata.error_correction_level());
                 }
 
+                let module_size = arg.size.get();
                 match arg.output_format {
                     format @ (OutputFormat::Svg | OutputFormat::Terminal) => {
                         let string = if format == OutputFormat::Svg {
-                            encode::to_svg(&code, arg.margin, &(arg.foreground, arg.background))
+                            encode::to_svg(
+                                &code,
+                                arg.margin,
+                                &(arg.foreground, arg.background),
+                                module_size,
+                            )
                         } else {
-                            encode::to_terminal(&code, arg.margin)
+                            encode::to_terminal(&code, arg.margin, module_size)
                         };
 
                         if let Some(file) = arg.output {
@@ -82,8 +92,12 @@ pub fn run() -> anyhow::Result<()> {
                         }
                     }
                     OutputFormat::Png => {
-                        let image =
-                            encode::to_image(&code, arg.margin, &(arg.foreground, arg.background));
+                        let image = encode::to_image(
+                            &code,
+                            arg.margin,
+                            &(arg.foreground, arg.background),
+                            module_size,
+                        );
 
                         if let Some(file) = arg.output {
                             image

@@ -98,12 +98,12 @@ string] such as `brown`, `#a52a2a` or `rgb(165 42 42)`. The default foreground
 color is black and the background color is white of CSS's named colors.
 
 ```sh
-qrtool encode --foreground brown "QR code" > output.png
+qrtool encode --foreground brown --background lightslategray "QR code" > output.png
 ```
 
 Generate this image:
 
-![Output](tests/data/colored/fg.png)
+![Output](tests/data/colored/rgb.png)
 
 ### Supported input image formats
 
@@ -171,17 +171,43 @@ Example:
 qrtool --generate-completion bash > qrtool.bash
 ```
 
-## Integration with other programs
+### Integration with other programs
 
-Both `encode` and `decode` can read from stdin and output to stdout.
+Both `qrtool encode` and `qrtool decode` can read from stdin and output to
+stdout.
 
-The following example, the encoded result is saved as a JPEG XL image:
+#### Optimize the output image
+
+The image output by `qrtool encode` is not optimized. For example, a PNG image
+is always output as the 32-bit RGBA format. If you want to reduce the image
+size or optimize the image, use an optimizer such as [`oxipng`] or
+[`svgcleaner`].
+
+Optimize the output PNG image:
+
+```sh
+qrtool encode "QR code" | oxipng - > output.png
+```
+
+Optimize the output SVG image:
+
+```sh
+qrtool encode -t svg "QR code" | svgcleaner -c - > output.svg
+```
+
+#### Reading and writing unsupported image formats
+
+If you want to save the encoded image in an image format other than PNG or SVG,
+or decode an image in an unsupported image format, convert it using a converter
+such as [ImageMagick].
+
+Read `Cargo.toml` from stdin and save the encoded result as a JPEG XL image:
 
 ```sh
 cat Cargo.toml | qrtool encode | magick png:- output.jxl
 ```
 
-The following example, the decoded result is displayed by `bat`:
+Decode this image and print the result using `bat`:
 
 ```sh
 magick output.jxl png:- | qrtool decode | bat -l toml
@@ -247,6 +273,9 @@ licensing information.
 [TGA]: https://en.wikipedia.org/wiki/Truevision_TGA
 [TIFF]: https://en.wikipedia.org/wiki/TIFF
 [WebP]: https://developers.google.com/speed/webp/
+[`oxipng`]: https://github.com/shssoichiro/oxipng
+[`svgcleaner`]: https://github.com/RazrFalcon/svgcleaner
+[ImageMagick]: https://imagemagick.org/
 [`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
 [`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
 [`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html

@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2023-12-04
+:docdate: 2023-12-15
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -44,6 +44,10 @@ _STRING_::
 
   Read input data from a file. This option conflicts with _STRING_.
 
+*-s*, *--size* _NUMBER_::
+
+  The module size in pixels. Default is 8.
+
 *-l*, *--error-correction-level* _LEVEL_::
 
   Error correction level.
@@ -72,8 +76,10 @@ _STRING_::
 
 *-v*, *--symbol-version* _NUMBER_::
 
-  The version of the symbol. For normal QR code, _NUMBER_ should be between *1*
-  and *40*. For Micro QR code, _NUMBER_ should be between *1* and *4*.
+  The version of the symbol. If this option is not specified, the minimum
+  version required to store the data will be automatically chosen. For normal
+  QR code, _NUMBER_ should be between *1* and *40*. For Micro QR code, _NUMBER_
+  should be between *1* and *4*.
 
 *--symversion* _NUMBER_::
 
@@ -104,7 +110,8 @@ _STRING_::
 
 *--mode* _MODE_::
 
-  The mode of the output.
+  The mode of the output. If this option is not specified, use the optimal
+  encoding. This option requires *--symbol-version*.
 
   The possible values are:{blank}:::
 
@@ -118,7 +125,7 @@ _STRING_::
 
     *byte*::::
 
-      Arbitrary binary data. This is the default value.
+      Arbitrary binary data.
 
     *kanji*::::
 

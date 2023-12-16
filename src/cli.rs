@@ -4,6 +4,7 @@
 
 use std::{
     io::{self, Write},
+    num::NonZeroU32,
     path::PathBuf,
 };
 
@@ -82,6 +83,10 @@ pub struct Encode {
     )]
     pub read_from: Option<PathBuf>,
 
+    /// The module size in pixels.
+    #[arg(short, long, default_value("8"), value_name("NUMBER"))]
+    pub size: NonZeroU32,
+
     /// Error correction level.
     #[arg(
         short('l'),
@@ -96,8 +101,10 @@ pub struct Encode {
 
     /// The version of the symbol.
     ///
-    /// For normal QR code, <NUMBER> should be between 1 and 40. For Micro QR
-    /// code, <NUMBER> should be between 1 and 4.
+    /// If this option is not specified, the minimum version required to store
+    /// the data will be automatically chosen. For normal QR code, <NUMBER>
+    /// should be between 1 and 40. For Micro QR code, <NUMBER> should be
+    /// between 1 and 4.
     #[arg(
         value_parser(value_parser!(i16).range(1..=40)),
         short('v'),
@@ -123,14 +130,16 @@ pub struct Encode {
     pub output_format: OutputFormat,
 
     /// The mode of the output.
+    ///
+    /// If this option is not specified, use the optimal encoding.
     #[arg(
         long,
         value_enum,
-        default_value_t,
+        requires("symbol_version"),
         value_name("MODE"),
         ignore_case(true)
     )]
-    pub mode: Mode,
+    pub mode: Option<Mode>,
 
     /// The type of QR code.
     #[arg(
@@ -290,7 +299,7 @@ pub enum Ecc {
     H,
 }
 
-impl From<Ecc> for qrencode::EcLevel {
+impl From<Ecc> for qrcode::EcLevel {
     fn from(level: Ecc) -> Self {
         match level {
             Ecc::L => Self::L,
@@ -316,7 +325,7 @@ pub enum OutputFormat {
     Terminal,
 }
 
-#[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
+#[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
 pub enum Mode {
     /// All digits.
     Numeric,
@@ -325,7 +334,6 @@ pub enum Mode {
     Alphanumeric,
 
     /// Arbitrary binary data.
-    #[default]
     Byte,
 
     /// Shift JIS text.
@@ -449,20 +457,15 @@ mod tests {
 
     #[test]
     fn from_ecc_to_ec_level() {
-        assert_eq!(qrencode::EcLevel::from(Ecc::L), qrencode::EcLevel::L);
-        assert_eq!(qrencode::EcLevel::from(Ecc::M), qrencode::EcLevel::M);
-        assert_eq!(qrencode::EcLevel::from(Ecc::Q), qrencode::EcLevel::Q);
-        assert_eq!(qrencode::EcLevel::from(Ecc::H), qrencode::EcLevel::H);
+        assert_eq!(qrcode::EcLevel::from(Ecc::L), qrcode::EcLevel::L);
+        assert_eq!(qrcode::EcLevel::from(Ecc::M), qrcode::EcLevel::M);
+        assert_eq!(qrcode::EcLevel::from(Ecc::Q), qrcode::EcLevel::Q);
+        assert_eq!(qrcode::EcLevel::from(Ecc::H), qrcode::EcLevel::H);
     }
 
     #[test]
     fn default_output_format() {
         assert_eq!(OutputFormat::default(), OutputFormat::Png);
-    }
-
-    #[test]
-    fn default_mode() {
-        assert_eq!(Mode::default(), Mode::Byte);
     }
 
     #[test]

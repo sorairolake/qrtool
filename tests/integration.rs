@@ -92,10 +92,129 @@ fn encode_data_from_file() {
 }
 
 #[test]
-fn encode_with_error_correction_level() {
+fn encode_with_module_size() {
     let output = command()
         .arg("encode")
-        .arg("-l")
+        .arg("-s")
+        .arg("3")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+        image::open("tests/data/module_size/3.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_to_svg_with_module_size() {
+    command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("svg")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/module_size/3.svg")));
+}
+
+#[test]
+fn encode_to_terminal_with_module_size() {
+    command()
+        .arg("encode")
+        .arg("-s")
+        .arg("1")
+        .arg("-t")
+        .arg("terminal")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/module_size/1.txt")));
+}
+
+#[test]
+fn encode_with_invalid_module_size() {
+    command()
+        .arg("encode")
+        .arg("-s")
+        .arg("0")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "number would be zero for non-zero type",
+        ));
+}
+
+#[test]
+fn encode_with_error_correction_level() {
+    {
+        let output = command()
+            .arg("encode")
+            .arg("-l")
+            .arg("l")
+            .arg("QR code")
+            .output()
+            .unwrap();
+        assert_eq!(
+            DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+            image::open("tests/data/level/low.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+    {
+        let output = command()
+            .arg("encode")
+            .arg("-l")
+            .arg("m")
+            .arg("QR code")
+            .output()
+            .unwrap();
+        assert_eq!(
+            DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+            image::open("tests/data/level/medium.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+    {
+        let output = command()
+            .arg("encode")
+            .arg("-l")
+            .arg("q")
+            .arg("QR code")
+            .output()
+            .unwrap();
+        assert_eq!(
+            DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+            image::open("tests/data/level/quartile.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+    {
+        let output = command()
+            .arg("encode")
+            .arg("-l")
+            .arg("h")
+            .arg("QR code")
+            .output()
+            .unwrap();
+        assert_eq!(
+            DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+            image::open("tests/data/level/high.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+}
+
+#[test]
+fn validate_alias_for_error_correction_level_option_of_encode_command() {
+    let output = command()
+        .arg("encode")
+        .arg("--level")
         .arg("l")
         .arg("QR code")
         .output()
@@ -105,32 +224,81 @@ fn encode_with_error_correction_level() {
         image::open("tests/data/level/low.png").unwrap()
     );
     assert!(output.status.success());
+}
 
-    let output = command()
+#[test]
+fn encode_with_invalid_error_correction_level() {
+    command()
         .arg("encode")
         .arg("-l")
-        .arg("q")
+        .arg("a")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--error-correction-level <LEVEL>'",
+        ));
+}
+
+#[test]
+fn encode_with_symbol_version() {
+    let output = command()
+        .arg("encode")
+        .arg("-v")
+        .arg("40")
         .arg("QR code")
         .output()
         .unwrap();
     assert_eq!(
         DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
-        image::open("tests/data/level/quartile.png").unwrap()
+        image::open("tests/data/symbol_version/40.png").unwrap()
     );
     assert!(output.status.success());
+}
 
+#[test]
+fn validate_alias_for_symbol_version_option_of_encode_command() {
     let output = command()
         .arg("encode")
-        .arg("-l")
-        .arg("h")
+        .arg("--symversion")
+        .arg("40")
         .arg("QR code")
         .output()
         .unwrap();
     assert_eq!(
         DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
-        image::open("tests/data/level/high.png").unwrap()
+        image::open("tests/data/symbol_version/40.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_with_invalid_symbol_version() {
+    command()
+        .arg("encode")
+        .arg("-v")
+        .arg("0")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value '0' for '--symbol-version <NUMBER>'",
+        ))
+        .stderr(predicate::str::contains("0 is not in 1..=40"));
+    command()
+        .arg("encode")
+        .arg("-v")
+        .arg("41")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value '41' for '--symbol-version <NUMBER>'",
+        ))
+        .stderr(predicate::str::contains("41 is not in 1..=40"));
 }
 
 #[test]
@@ -150,6 +318,49 @@ fn encode_with_margin() {
 }
 
 #[test]
+fn encode_to_svg_with_margin() {
+    command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("svg")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/margin/8.svg")));
+}
+
+#[test]
+fn encode_to_terminal_with_margin() {
+    command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("terminal")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/margin/8.txt")));
+}
+
+#[test]
+fn encode_with_invalid_margin() {
+    command()
+        .arg("encode")
+        .arg("-m")
+        .arg("4294967296")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "4294967296 is not in 0..=4294967295",
+        ));
+}
+
+#[test]
 fn encode_to_png() {
     let output = command()
         .arg("encode")
@@ -160,7 +371,7 @@ fn encode_to_png() {
         .unwrap();
     assert_eq!(
         DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
-        image::open("tests/data/basic/basic.png").unwrap()
+        image::open("tests/data/encode/encode.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -174,7 +385,7 @@ fn encode_to_svg() {
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::str::contains("<svg"));
+        .stdout(predicate::eq(include_str!("data/encode/encode.svg")));
 }
 
 #[test]
@@ -186,7 +397,132 @@ fn encode_to_terminal() {
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::str::starts_with('\u{2588}'));
+        .stdout(predicate::eq(include_str!("data/encode/encode.txt")));
+}
+
+#[test]
+fn encode_in_numeric_mode() {
+    let output = command()
+        .arg("encode")
+        .arg("-v")
+        .arg("1")
+        .arg("--mode")
+        .arg("numeric")
+        .arg("42")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+        image::open("tests/data/mode/numeric.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_in_alphanumeric_mode() {
+    let output = command()
+        .arg("encode")
+        .arg("-v")
+        .arg("1")
+        .arg("--mode")
+        .arg("alphanumeric")
+        .arg("URL")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+        image::open("tests/data/mode/alphanumeric.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_in_byte_mode() {
+    let output = command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/byte.txt")
+        .arg("-v")
+        .arg("1")
+        .arg("--mode")
+        .arg("byte")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+        image::open("tests/data/mode/byte.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_in_kanji_mode() {
+    let output = command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/kanji.txt")
+        .arg("-v")
+        .arg("1")
+        .arg("--mode")
+        .arg("kanji")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+        image::open("tests/data/mode/kanji.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_with_invalid_mode() {
+    command()
+        .arg("encode")
+        .arg("-v")
+        .arg("1")
+        .arg("--mode")
+        .arg("a")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--mode <MODE>'",
+        ));
+}
+
+#[test]
+fn encode_with_mode_without_symbol_version() {
+    command()
+        .arg("encode")
+        .arg("--mode")
+        .arg("numeric")
+        .arg("42")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "the following required arguments were not provided",
+        ))
+        .stderr(predicate::str::contains("--symbol-version <NUMBER>"));
+}
+
+#[test]
+fn encode_as_normal_qr_code() {
+    let output = command()
+        .arg("encode")
+        .arg("-v")
+        .arg("1")
+        .arg("--variant")
+        .arg("normal")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(image::load_from_memory(&output.stdout).unwrap().to_luma8()),
+        image::open("tests/data/variant/normal.png").unwrap()
+    );
+    assert!(output.status.success());
 }
 
 #[test]
@@ -205,6 +541,54 @@ fn encode_as_micro_qr_code() {
         image::open("tests/data/variant/micro.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_as_micro_qr_code_with_invalid_symbol_version() {
+    command()
+        .arg("encode")
+        .arg("-v")
+        .arg("5")
+        .arg("--variant")
+        .arg("micro")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("invalid version"));
+}
+
+#[test]
+fn encode_with_invalid_variant() {
+    command()
+        .arg("encode")
+        .arg("-v")
+        .arg("3")
+        .arg("--variant")
+        .arg("a")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--variant <TYPE>'",
+        ));
+}
+
+#[test]
+fn encode_with_variant_without_symbol_version() {
+    command()
+        .arg("encode")
+        .arg("--variant")
+        .arg("micro")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "the following required arguments were not provided",
+        ))
+        .stderr(predicate::str::contains("--symbol-version <NUMBER>"));
 }
 
 #[test]
@@ -255,6 +639,22 @@ fn encode_from_named_color() {
         image::open("tests/data/colored/rgb.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_to_svg_from_named_color() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("brown")
+        .arg("--background")
+        .arg("lightslategray")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
 }
 
 #[test]
@@ -358,6 +758,34 @@ fn encode_from_hex_color() {
 }
 
 #[test]
+fn encode_to_svg_from_hex_color() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("#a52a2a")
+        .arg("--background")
+        .arg("#778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("a52a2a")
+        .arg("--background")
+        .arg("778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
+}
+
+#[test]
 fn encode_from_hex_color_with_alpha() {
     {
         let output = command()
@@ -391,6 +819,34 @@ fn encode_from_hex_color_with_alpha() {
         );
         assert!(output.status.success());
     }
+}
+
+#[test]
+fn encode_to_svg_from_hex_color_with_alpha() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("#a52a2a7f")
+        .arg("--background")
+        .arg("#7788997f")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgba.svg")));
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("svg")
+        .arg("--foreground")
+        .arg("a52a2a7f")
+        .arg("--background")
+        .arg("7788997f")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgba.svg")));
 }
 
 #[test]
@@ -1082,7 +1538,7 @@ fn decode_from_png() {
         .arg("decode")
         .arg("-t")
         .arg("png")
-        .arg("data/basic/basic.png")
+        .arg("data/decode/decode.png")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
@@ -1292,7 +1748,7 @@ fn decode_from_svg_with_wrong_format() {
         .arg("decode")
         .arg("-t")
         .arg("svg")
-        .arg("data/basic/basic.png")
+        .arg("data/decode/decode.png")
         .assert()
         .failure()
         .code(69)
