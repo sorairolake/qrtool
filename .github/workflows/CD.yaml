@@ -130,7 +130,7 @@ jobs:
           fi
           rm -rv qrtool-*/
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
           path: "qrtool-*.*"
