@@ -130,7 +130,7 @@ jobs:
           fi
           rm -rv qrtool-*/
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
           path: "qrtool-*.*"
@@ -141,7 +141,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
       - name: Calculate checksums
         run: |
           mv qrtool-*/* .
