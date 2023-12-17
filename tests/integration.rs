@@ -146,7 +146,24 @@ fn encode_with_invalid_module_size() {
         .failure()
         .code(2)
         .stderr(predicate::str::contains(
+            "invalid value '0' for '--size <NUMBER>'",
+        ))
+        .stderr(predicate::str::contains(
             "number would be zero for non-zero type",
+        ));
+    command()
+        .arg("encode")
+        .arg("-s")
+        .arg("4294967296")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value '4294967296' for '--size <NUMBER>'",
+        ))
+        .stderr(predicate::str::contains(
+            "number too large to fit in target type",
         ));
 }
 
@@ -350,11 +367,23 @@ fn encode_with_invalid_margin() {
     command()
         .arg("encode")
         .arg("-m")
+        .arg("-1")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains("unexpected argument '-1' found"));
+    command()
+        .arg("encode")
+        .arg("-m")
         .arg("4294967296")
         .arg("QR code")
         .assert()
         .failure()
         .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value '4294967296' for '--margin <NUMBER>'",
+        ))
         .stderr(predicate::str::contains(
             "4294967296 is not in 0..=4294967295",
         ));
@@ -398,6 +427,21 @@ fn encode_to_terminal() {
         .assert()
         .success()
         .stdout(predicate::eq(include_str!("data/encode/encode.txt")));
+}
+
+#[test]
+fn encode_to_invalid_output_format() {
+    command()
+        .arg("encode")
+        .arg("-t")
+        .arg("a")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--type <FORMAT>'",
+        ));
 }
 
 #[test]
@@ -555,6 +599,7 @@ fn encode_as_micro_qr_code_with_invalid_symbol_version() {
         .assert()
         .failure()
         .code(65)
+        .stderr(predicate::str::contains("could not set the version"))
         .stderr(predicate::str::contains("invalid version"));
 }
 
@@ -922,6 +967,38 @@ fn encode_from_short_hex_color_with_alpha() {
 }
 
 #[test]
+fn encode_from_invalid_hex_fg_color() {
+    command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("#g")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value '#g' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid hex format"));
+}
+
+#[test]
+fn encode_from_invalid_hex_bg_color() {
+    command()
+        .arg("encode")
+        .arg("--background")
+        .arg("#g")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value '#g' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid hex format"));
+}
+
+#[test]
 fn encode_from_rgb_color() {
     {
         let output = command()
@@ -1027,6 +1104,62 @@ fn encode_from_rgba_color() {
         );
         assert!(output.status.success());
     }
+}
+
+#[test]
+fn encode_from_invalid_rgb_fg_color() {
+    command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("rgb(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'rgb(0)' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid rgb format"));
+    command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("rgba(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'rgba(0)' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid rgb format"));
+}
+
+#[test]
+fn encode_from_invalid_rgb_bg_color() {
+    command()
+        .arg("encode")
+        .arg("--background")
+        .arg("rgb(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'rgb(0)' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid rgb format"));
+    command()
+        .arg("encode")
+        .arg("--background")
+        .arg("rgba(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'rgba(0)' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid rgb format"));
 }
 
 #[test]
@@ -1138,6 +1271,62 @@ fn encode_from_hsla_color() {
 }
 
 #[test]
+fn encode_from_invalid_hsl_fg_color() {
+    command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("hsl(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'hsl(0)' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid hsl format"));
+    command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("hsla(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'hsla(0)' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid hsl format"));
+}
+
+#[test]
+fn encode_from_invalid_hsl_bg_color() {
+    command()
+        .arg("encode")
+        .arg("--background")
+        .arg("hsl(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'hsl(0)' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid hsl format"));
+    command()
+        .arg("encode")
+        .arg("--background")
+        .arg("hsla(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'hsla(0)' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid hsl format"));
+}
+
+#[test]
 fn encode_from_hwb_color() {
     let output = command()
         .arg("encode")
@@ -1171,6 +1360,102 @@ fn encode_from_hwb_color_with_alpha() {
         image::open("tests/data/colored/hwba.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_from_invalid_hwb_fg_color() {
+    command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("hwb(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'hwb(0)' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid hwb format"));
+}
+
+#[test]
+fn encode_from_invalid_hwb_bg_color() {
+    command()
+        .arg("encode")
+        .arg("--background")
+        .arg("hwb(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'hwb(0)' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid hwb format"));
+}
+
+#[test]
+fn encode_from_invalid_fg_color_function() {
+    command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("fn(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'fn(0)' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid color function"));
+}
+
+#[test]
+fn encode_from_invalid_bg_color_function() {
+    command()
+        .arg("encode")
+        .arg("--background")
+        .arg("fn(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'fn(0)' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid color function"));
+}
+
+#[test]
+fn encode_from_unknown_fg_color() {
+    command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("a")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid unknown format"));
+}
+
+#[test]
+fn encode_from_unknown_bg_color() {
+    command()
+        .arg("encode")
+        .arg("--background")
+        .arg("a")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid unknown format"));
 }
 
 #[test]
@@ -1858,6 +2143,21 @@ fn decode_from_web_p_with_wrong_format() {
         .failure()
         .code(65)
         .stderr(predicate::str::contains("could not read the image"));
+}
+
+#[test]
+fn decode_from_invalid_input_format() {
+    command()
+        .arg("decode")
+        .arg("-t")
+        .arg("a")
+        .arg("data/decode/decode.png")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--type <FORMAT>'",
+        ));
 }
 
 #[test]
