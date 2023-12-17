@@ -52,21 +52,35 @@ pub fn push_data_for_selected_mode(
 }
 
 /// Renders the QR code into an image.
-pub fn to_svg(code: &QrCode, margin: u32, colors: &(Color, Color), module_size: u32) -> String {
-    Renderer::<svg::Color<'_>>::new(&code.to_colors(), code.width(), margin)
-        .dark_color(svg::Color(&colors.0.to_hex_string()))
-        .light_color(svg::Color(&colors.1.to_hex_string()))
-        .module_dimensions(module_size, module_size)
-        .build()
+pub fn to_svg(
+    code: &QrCode,
+    margin: u32,
+    colors: &(Color, Color),
+    module_size: Option<u32>,
+) -> String {
+    let c = code.to_colors();
+    let mut renderer = Renderer::<svg::Color<'_>>::new(&c, code.width(), margin);
+    let (foreground, background) = (colors.0.to_hex_string(), colors.1.to_hex_string());
+    let mut renderer = renderer
+        .dark_color(svg::Color(&foreground))
+        .light_color(svg::Color(&background));
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
+    renderer.build()
 }
 
 /// Renders the QR code into the terminal as UTF-8 string.
-pub fn to_terminal(code: &QrCode, margin: u32, module_size: u32) -> String {
-    Renderer::<unicode::Dense1x2>::new(&code.to_colors(), code.width(), margin)
+pub fn to_terminal(code: &QrCode, margin: u32, module_size: Option<u32>) -> String {
+    let c = code.to_colors();
+    let mut renderer = Renderer::<unicode::Dense1x2>::new(&c, code.width(), margin);
+    let mut renderer = renderer
         .dark_color(unicode::Dense1x2::Light)
-        .light_color(unicode::Dense1x2::Dark)
-        .module_dimensions(module_size, module_size)
-        .build()
+        .light_color(unicode::Dense1x2::Dark);
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
+    renderer.build()
 }
 
 /// Renders the QR code into an image.
@@ -74,13 +88,17 @@ pub fn to_image(
     code: &QrCode,
     margin: u32,
     colors: &(Color, Color),
-    module_size: u32,
+    module_size: Option<u32>,
 ) -> DynamicImage {
-    let image = Renderer::<Rgba<u8>>::new(&code.to_colors(), code.width(), margin)
+    let c = code.to_colors();
+    let mut renderer = Renderer::<Rgba<u8>>::new(&c, code.width(), margin);
+    let mut renderer = renderer
         .dark_color(Rgba::from(colors.0.to_rgba8()))
-        .light_color(Rgba::from(colors.1.to_rgba8()))
-        .module_dimensions(module_size, module_size)
-        .build();
+        .light_color(Rgba::from(colors.1.to_rgba8()));
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
+    let image = renderer.build();
     DynamicImage::ImageRgba8(image)
 }
 

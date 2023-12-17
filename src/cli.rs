@@ -84,8 +84,11 @@ pub struct Encode {
     pub read_from: Option<PathBuf>,
 
     /// The module size in pixels.
-    #[arg(short, long, default_value("8"), value_name("NUMBER"))]
-    pub size: NonZeroU32,
+    ///
+    /// If this option is not specified, the module size is 8 when the output
+    /// format is PNG or SVG, and 1 when the output format is UTF-8 string.
+    #[arg(short, long, value_name("NUMBER"))]
+    pub size: Option<NonZeroU32>,
 
     /// Error correction level.
     #[arg(
@@ -115,8 +118,11 @@ pub struct Encode {
     pub symbol_version: Option<i16>,
 
     /// The width of margin.
-    #[arg(short, long, default_value("4"), value_name("NUMBER"))]
-    pub margin: u32,
+    ///
+    /// If this option is not specified, the margin will be 4 for normal QR code
+    /// and 2 for Micro QR code.
+    #[arg(short, long, value_name("NUMBER"))]
+    pub margin: Option<u32>,
 
     /// The format of the output.
     #[arg(
@@ -154,13 +160,15 @@ pub struct Encode {
 
     /// Foreground color.
     ///
-    /// <COLOR> takes a CSS color string.
+    /// <COLOR> takes a CSS color string. Colored output is only available when
+    /// the output format is PNG or SVG.
     #[arg(long, default_value("black"), value_name("COLOR"))]
     pub foreground: Color,
 
     /// Background color.
     ///
-    /// <COLOR> takes a CSS color string.
+    /// <COLOR> takes a CSS color string. Colored output is only available when
+    /// the output format is PNG or SVG.
     #[arg(long, default_value("white"), value_name("COLOR"))]
     pub background: Color,
 

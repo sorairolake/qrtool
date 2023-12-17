@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2023-12-15
+:docdate: 2023-12-17
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -46,7 +46,9 @@ _STRING_::
 
 *-s*, *--size* _NUMBER_::
 
-  The module size in pixels. Default is 8.
+  The module size in pixels. If this option is not specified, the module size
+  is 8 when the output format is PNG or SVG, and 1 when the output format is
+  UTF-8 string.
 
 *-l*, *--error-correction-level* _LEVEL_::
 
@@ -87,7 +89,8 @@ _STRING_::
 
 *-m*, *--margin* _NUMBER_::
 
-  The width of margin. Default is 4.
+  The width of margin. If this option is not specified, the margin will be 4
+  for normal QR code and 2 for Micro QR code.
 
 *-t*, *--type* _FORMAT_::
 
@@ -147,11 +150,13 @@ _STRING_::
 
 *--foreground* _COLOR_::
 
-  Foreground color. _COLOR_ takes a CSS color string. Default is black.
+  Foreground color. _COLOR_ takes a CSS color string. Colored output is only
+  available when the output format is PNG or SVG. Default is black.
 
 *--background* _COLOR_::
 
-  Background color. _COLOR_ takes a CSS color string. Default is white.
+  Background color. _COLOR_ takes a CSS color string. Colored output is only
+  available when the output format is PNG or SVG. Default is white.
 
 *--verbose*::
 
