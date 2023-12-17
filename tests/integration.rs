@@ -126,13 +126,13 @@ fn encode_to_terminal_with_module_size() {
     command()
         .arg("encode")
         .arg("-s")
-        .arg("1")
+        .arg("3")
         .arg("-t")
         .arg("terminal")
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::eq(include_str!("data/module_size/1.txt")));
+        .stdout(predicate::eq(include_str!("data/module_size/3.txt")));
 }
 
 #[test]

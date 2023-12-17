@@ -5,6 +5,7 @@
 use std::{
     fs,
     io::{self, Cursor, Read, Write},
+    num::NonZeroU32,
     str,
 };
 
@@ -69,18 +70,21 @@ pub fn run() -> anyhow::Result<()> {
                     eprintln!("Level: {:?}", metadata.error_correction_level());
                 }
 
-                let module_size = arg.size.get();
+                let margin =
+                    arg.margin
+                        .unwrap_or_else(|| if code.version().is_micro() { 2 } else { 4 });
+                let module_size = arg.size.map(NonZeroU32::get);
                 match arg.output_format {
                     format @ (OutputFormat::Svg | OutputFormat::Terminal) => {
                         let string = if format == OutputFormat::Svg {
                             encode::to_svg(
                                 &code,
-                                arg.margin,
+                                margin,
                                 &(arg.foreground, arg.background),
                                 module_size,
                             )
                         } else {
-                            encode::to_terminal(&code, arg.margin, module_size)
+                            encode::to_terminal(&code, margin, module_size)
                         };
 
                         if let Some(file) = arg.output {
@@ -94,7 +98,7 @@ pub fn run() -> anyhow::Result<()> {
                     OutputFormat::Png => {
                         let image = encode::to_image(
                             &code,
-                            arg.margin,
+                            margin,
                             &(arg.foreground, arg.background),
                             module_size,
                         );
