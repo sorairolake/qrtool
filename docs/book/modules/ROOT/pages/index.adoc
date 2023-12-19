@@ -17,4 +17,4 @@ image:{license-badge}[License]
 
 *qrtool* is a command-line utility for encoding or decoding QR code.
 
-image::demo.gif[Demonstration of qrtool]
+image::screenshot.webp[Screenshot of qrtool]
