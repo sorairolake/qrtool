@@ -25,8 +25,6 @@ jobs:
       matrix:
         target:
           - aarch64-unknown-linux-musl
-          - arm-unknown-linux-musleabihf
-          - armv7-unknown-linux-musleabihf
           - x86_64-unknown-linux-musl
           - aarch64-apple-darwin
           - x86_64-apple-darwin
@@ -34,12 +32,6 @@ jobs:
           - x86_64-pc-windows-msvc
         include:
           - target: aarch64-unknown-linux-musl
-            os: ubuntu-22.04
-            use-cross: true
-          - target: arm-unknown-linux-musleabihf
-            os: ubuntu-22.04
-            use-cross: true
-          - target: armv7-unknown-linux-musleabihf
             os: ubuntu-22.04
             use-cross: true
           - target: x86_64-unknown-linux-musl
@@ -86,17 +78,6 @@ jobs:
       - name: Build a package with cross
         if: ${{ matrix.use-cross }}
         run: cross build --release --target ${{ matrix.target }}
-      - name: Install lzip
-        if: matrix.os != 'windows-2022'
-        run: |
-          if [ "${{ matrix.os }}" == "ubuntu-22.04" ] ; then
-            sudo apt-get update
-            sudo apt-get install lzip
-          else
-            brew update
-            brew install lzip
-          fi
-          lzip -V
       - name: Get version
         id: get_version
         uses: battila7/get-version-action@v2.3.0
@@ -121,12 +102,9 @@ jobs:
 
           if [ "${{ matrix.os }}" != "windows-2022" ] ; then
             tar -cvf "${package}.tar" "${package}"
-            zstd -19 -v "${package}.tar"
-            gzip -k -v -9 "${package}.tar"
-            lzip -v -9 "${package}.tar"
+            zstd --rm -19 -v "${package}.tar"
           else
             7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
-            7z a -bb -mx=9 -mm=Deflate "${package}.zip" "${package}"
           fi
           rm -rv qrtool-*/
       - name: Upload artifact
