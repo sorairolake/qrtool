@@ -29,7 +29,7 @@ image = "0.24.7"
 qrcode = "0.13.0"
 resvg = { version = "0.37.0", default-features = false, optional = true }
 rqrr = "0.6.0"
-sysexits = "0.7.7"
+sysexits = "0.7.10"
 
 [dev-dependencies]
 assert_cmd = "2.0.12"
