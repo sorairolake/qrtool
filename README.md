@@ -236,7 +236,7 @@ This program is inspired by [`qrencode`] and [`zbarimg`].
 
 ## License
 
-Copyright &copy; 2022&ndash;2023 Shun Sakai (see [AUTHORS.adoc])
+Copyright &copy; 2022&ndash;2024 Shun Sakai (see [AUTHORS.adoc])
 
 1. This program is distributed under the terms of either the _Apache License
    2.0_ or the _MIT License_.
