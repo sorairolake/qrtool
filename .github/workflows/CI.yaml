@@ -47,7 +47,7 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           targets: ${{ matrix.target }}
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.7.1
+        uses: Swatinem/rust-cache@v2.7.3
         with:
           key: ${{ matrix.target }}
       - name: Run tests
@@ -67,7 +67,7 @@ jobs:
           toolchain: stable
           components: rustfmt
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.7.1
+        uses: Swatinem/rust-cache@v2.7.3
       - name: Check code formatted
         run: cargo fmt -- --check
 
@@ -83,7 +83,7 @@ jobs:
           toolchain: stable
           components: clippy
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.7.1
+        uses: Swatinem/rust-cache@v2.7.3
       - name: Check no lint warnings
         run: cargo clippy -- -D warnings
       - name: Check no lint warnings (no default features)
