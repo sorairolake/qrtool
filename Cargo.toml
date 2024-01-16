@@ -21,8 +21,8 @@ include = ["/LICENSES", "/README.md", "/src"]
 
 [dependencies]
 anyhow = "1.0.79"
-clap = { version = "4.4.17", features = ["derive", "wrap_help"] }
-clap_complete = "4.4.6"
+clap = { version = "4.4.18", features = ["derive", "wrap_help"] }
+clap_complete = "4.4.7"
 clap_complete_nushell = "4.4.2"
 csscolorparser = "0.6.2"
 image = "0.24.8"
@@ -33,7 +33,7 @@ sysexits = "0.7.10"
 
 [dev-dependencies]
 assert_cmd = "2.0.13"
-predicates = "3.0.4"
+predicates = "3.1.0"
 
 [features]
 default = ["decode-from-svg"]
