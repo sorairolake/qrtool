@@ -15,27 +15,31 @@ use image::{ImageError, ImageFormat};
 
 const LONG_VERSION: &str = concat!(
     env!("CARGO_PKG_VERSION"),
-    "
-Copyright (C) 2022-2024 Shun Sakai
-
-This program is distributed under the terms of either the Apache License 2.0 or
-the MIT License.
-
-This is free software: you are free to change and redistribute it. There is NO
-WARRANTY, to the extent permitted by law.
-
-Report bugs to <https://github.com/sorairolake/qrtool/issues>."
+    '\n',
+    "Copyright (C) 2022-2024 Shun Sakai\n",
+    '\n',
+    "This program is distributed under the terms of either the Apache License 2.0 or\n",
+    "the MIT License.\n",
+    '\n',
+    "This is free software: you are free to change and redistribute it. There is NO\n",
+    "WARRANTY, to the extent permitted by law.\n",
+    '\n',
+    "Report bugs to <https://github.com/sorairolake/qrtool/issues>."
 );
 
 const AFTER_LONG_HELP: &str = "See `qrtool(1)` for more details.";
 
-const ENCODE_AFTER_LONG_HELP: &str = "By default, the result will be output to stdout.
+const ENCODE_AFTER_LONG_HELP: &str = concat!(
+    "By default, the result will be output to stdout.\n",
+    '\n',
+    "See `qrtool-encode(1)` for more details."
+);
 
-See `qrtool-encode(1)` for more details.";
-
-const DECODE_AFTER_LONG_HELP: &str = "By default, the result will be output to stdout.
-
-See `qrtool-decode(1)` for more details.";
+const DECODE_AFTER_LONG_HELP: &str = concat!(
+    "By default, the result will be output to stdout.\n",
+    '\n',
+    "See `qrtool-decode(1)` for more details."
+);
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
