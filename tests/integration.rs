@@ -28,14 +28,20 @@ fn generate_completion_conflicts_with_subcommands() {
         .arg("encode")
         .assert()
         .failure()
-        .code(2);
+        .code(2)
+        .stderr(predicate::str::contains(
+            "the subcommand 'encode' cannot be used with '--generate-completion <SHELL>'",
+        ));
     command()
         .arg("--generate-completion")
         .arg("bash")
         .arg("decode")
         .assert()
         .failure()
-        .code(2);
+        .code(2)
+        .stderr(predicate::str::contains(
+            "the subcommand 'decode' cannot be used with '--generate-completion <SHELL>'",
+        ));
 }
 
 #[test]
