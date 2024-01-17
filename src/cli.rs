@@ -15,15 +15,27 @@ use image::{ImageError, ImageFormat};
 
 const LONG_VERSION: &str = concat!(
     env!("CARGO_PKG_VERSION"),
-    "\n",
-    include_str!("assets/long-version.md")
+    "
+Copyright (C) 2022-2024 Shun Sakai
+
+This program is distributed under the terms of either the Apache License 2.0 or
+the MIT License.
+
+This is free software: you are free to change and redistribute it. There is NO
+WARRANTY, to the extent permitted by law.
+
+Report bugs to <https://github.com/sorairolake/qrtool/issues>."
 );
 
-const AFTER_LONG_HELP: &str = include_str!("assets/after-long-help.md");
+const AFTER_LONG_HELP: &str = "See `qrtool(1)` for more details.";
 
-const ENCODE_AFTER_LONG_HELP: &str = include_str!("assets/encode-after-long-help.md");
+const ENCODE_AFTER_LONG_HELP: &str = "By default, the result will be output to stdout.
 
-const DECODE_AFTER_LONG_HELP: &str = include_str!("assets/decode-after-long-help.md");
+See `qrtool-encode(1)` for more details.";
+
+const DECODE_AFTER_LONG_HELP: &str = "By default, the result will be output to stdout.
+
+See `qrtool-decode(1)` for more details.";
 
 #[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]

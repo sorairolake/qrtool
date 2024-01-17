@@ -45,7 +45,7 @@ fn long_version() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/long-version.md"
+            "assets/long-version.md"
         )));
 }
 
@@ -56,7 +56,7 @@ fn after_long_help() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/after-long-help.md"
+            "assets/after-long-help.md"
         )));
 }
 
@@ -1478,7 +1478,7 @@ fn long_version_for_encode_command() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/long-version.md"
+            "assets/long-version.md"
         )));
 }
 
@@ -1490,7 +1490,7 @@ fn after_long_help_for_encode_command() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/encode-after-long-help.md"
+            "assets/encode-after-long-help.md"
         )));
 }
 
@@ -2203,7 +2203,7 @@ fn long_version_for_decode_command() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/long-version.md"
+            "assets/long-version.md"
         )));
 }
 
@@ -2215,6 +2215,6 @@ fn after_long_help_for_decode_command() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/decode-after-long-help.md"
+            "assets/decode-after-long-help.md"
         )));
 }
