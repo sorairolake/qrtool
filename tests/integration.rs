@@ -45,6 +45,59 @@ fn generate_completion_conflicts_with_subcommands() {
 }
 
 #[test]
+fn generate_completion() {
+    command()
+        .arg("--generate-completion")
+        .arg("bash")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("elvish")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("fish")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("nushell")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("powershell")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("zsh")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+}
+
+#[test]
+fn generate_completion_with_invalid_shell() {
+    command()
+        .arg("--generate-completion")
+        .arg("a")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--generate-completion <SHELL>'",
+        ));
+}
+
+#[test]
 fn long_version() {
     command()
         .arg("--version")
