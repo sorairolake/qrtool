@@ -28,14 +28,73 @@ fn generate_completion_conflicts_with_subcommands() {
         .arg("encode")
         .assert()
         .failure()
-        .code(2);
+        .code(2)
+        .stderr(predicate::str::contains(
+            "the subcommand 'encode' cannot be used with '--generate-completion <SHELL>'",
+        ));
     command()
         .arg("--generate-completion")
         .arg("bash")
         .arg("decode")
         .assert()
         .failure()
-        .code(2);
+        .code(2)
+        .stderr(predicate::str::contains(
+            "the subcommand 'decode' cannot be used with '--generate-completion <SHELL>'",
+        ));
+}
+
+#[test]
+fn generate_completion() {
+    command()
+        .arg("--generate-completion")
+        .arg("bash")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("elvish")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("fish")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("nushell")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("powershell")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+    command()
+        .arg("--generate-completion")
+        .arg("zsh")
+        .assert()
+        .success()
+        .stdout(predicate::ne(""));
+}
+
+#[test]
+fn generate_completion_with_invalid_shell() {
+    command()
+        .arg("--generate-completion")
+        .arg("a")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'a' for '--generate-completion <SHELL>'",
+        ));
 }
 
 #[test]
@@ -45,7 +104,7 @@ fn long_version() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/long-version.md"
+            "assets/long-version.md"
         )));
 }
 
@@ -56,7 +115,7 @@ fn after_long_help() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/after-long-help.md"
+            "assets/after-long-help.md"
         )));
 }
 
@@ -77,7 +136,47 @@ fn validate_aliases_for_encode_command() {
 }
 
 #[test]
-fn encode_data_from_file() {
+fn encode_if_output_is_directory() {
+    let command = command()
+        .arg("encode")
+        .arg("-o")
+        .arg("data/dummy")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "could not write the image to data/dummy",
+        ));
+    if cfg!(windows) {
+        command.stderr(predicate::str::contains("Access is denied. (os error 5)"));
+    } else {
+        command.stderr(predicate::str::contains("Is a directory (os error 21)"));
+    }
+}
+
+#[test]
+fn encode_to_svg_if_output_is_directory() {
+    let command = command()
+        .arg("encode")
+        .arg("-o")
+        .arg("data/dummy")
+        .arg("-t")
+        .arg("svg")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "could not write the image to data/dummy",
+        ));
+    if cfg!(windows) {
+        command.stderr(predicate::str::contains("Access is denied. (os error 5)"));
+    } else {
+        command.stderr(predicate::str::contains("Is a directory (os error 21)"));
+    }
+}
+
+#[test]
+fn encode_from_file() {
     let output = command()
         .arg("encode")
         .arg("-r")
@@ -89,6 +188,29 @@ fn encode_data_from_file() {
         image::open("tests/data/basic/basic.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_from_non_existent_file() {
+    let command = command()
+        .arg("encode")
+        .arg("-r")
+        .arg("non_existent.txt")
+        .assert()
+        .failure()
+        .code(66)
+        .stderr(predicate::str::contains(
+            "could not read data from non_existent.txt",
+        ));
+    if cfg!(windows) {
+        command.stderr(predicate::str::contains(
+            "The system cannot find the file specified. (os error 2)",
+        ));
+    } else {
+        command.stderr(predicate::str::contains(
+            "No such file or directory (os error 2)",
+        ));
+    }
 }
 
 #[test]
@@ -1478,7 +1600,7 @@ fn long_version_for_encode_command() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/long-version.md"
+            "assets/long-version.md"
         )));
 }
 
@@ -1490,7 +1612,7 @@ fn after_long_help_for_encode_command() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/encode-after-long-help.md"
+            "assets/encode-after-long-help.md"
         )));
 }
 
@@ -1528,6 +1650,41 @@ fn basic_decode() {
 fn validate_aliases_for_decode_command() {
     command().arg("dec").arg("-V").assert().success();
     command().arg("d").arg("-V").assert().success();
+}
+
+#[test]
+fn decode_from_non_existent_image_file() {
+    let command = command()
+        .arg("decode")
+        .arg("non_existent.png")
+        .assert()
+        .failure()
+        .code(66)
+        .stderr(predicate::str::contains(
+            "could not read data from non_existent.png",
+        ));
+    if cfg!(windows) {
+        command.stderr(predicate::str::contains(
+            "The system cannot find the file specified. (os error 2)",
+        ));
+    } else {
+        command.stderr(predicate::str::contains(
+            "No such file or directory (os error 2)",
+        ));
+    }
+}
+
+#[test]
+fn decode_from_non_image_file() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.txt")
+        .assert()
+        .failure()
+        .code(69)
+        .stderr(predicate::str::contains(
+            "could not determine the image format",
+        ));
 }
 
 #[test]
@@ -2203,7 +2360,7 @@ fn long_version_for_decode_command() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/long-version.md"
+            "assets/long-version.md"
         )));
 }
 
@@ -2215,6 +2372,6 @@ fn after_long_help_for_decode_command() {
         .assert()
         .success()
         .stdout(predicate::str::contains(include_str!(
-            "../src/assets/decode-after-long-help.md"
+            "assets/decode-after-long-help.md"
         )));
 }

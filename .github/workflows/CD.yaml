@@ -55,11 +55,11 @@ jobs:
           targets: ${{ matrix.target }}
       - name: Install cross
         if: ${{ matrix.use-cross }}
-        uses: taiki-e/install-action@v2.23.9
+        uses: taiki-e/install-action@v2.25.2
         with:
           tool: cross
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.7.1
+        uses: Swatinem/rust-cache@v2.7.3
         with:
           key: ${{ matrix.target }}
       - name: Setup Ruby

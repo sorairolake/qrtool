@@ -34,9 +34,10 @@ fn main() -> ExitCode {
                 return sysexits::ExitCode::DataErr.into();
             }
             if let Some(e) = err.downcast_ref::<DeQRError>() {
-                return match e {
-                    DeQRError::IoError => sysexits::ExitCode::IoErr.into(),
-                    _ => sysexits::ExitCode::DataErr.into(),
+                return if matches!(e, DeQRError::IoError) {
+                    sysexits::ExitCode::IoErr.into()
+                } else {
+                    sysexits::ExitCode::DataErr.into()
                 };
             }
             if let Some(e) = err.downcast_ref::<ImageError>() {

@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.10.2"
+version = "0.10.3"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.70.0"
@@ -21,19 +21,19 @@ include = ["/LICENSES", "/README.md", "/src"]
 
 [dependencies]
 anyhow = "1.0.79"
-clap = { version = "4.4.13", features = ["derive", "wrap_help"] }
-clap_complete = "4.4.6"
+clap = { version = "4.4.18", features = ["derive", "wrap_help"] }
+clap_complete = "4.4.7"
 clap_complete_nushell = "4.4.2"
 csscolorparser = "0.6.2"
-image = "0.24.7"
+image = "0.24.8"
 qrcode = "0.13.0"
 resvg = { version = "0.37.0", default-features = false, optional = true }
 rqrr = "0.6.0"
-sysexits = "0.7.10"
+sysexits = "0.7.11"
 
 [dev-dependencies]
-assert_cmd = "2.0.12"
-predicates = "3.0.4"
+assert_cmd = "2.0.13"
+predicates = "3.1.0"
 
 [features]
 default = ["decode-from-svg"]

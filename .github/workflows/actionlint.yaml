@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: 2023 Kevin Matthes
+# SPDX-FileCopyrightText: 2023 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+name: actionlint
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/*.yaml
+  push:
+    paths:
+      - .github/workflows/*.yaml
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    name: Validate
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check no lint warnings
+        uses: docker://rhysd/actionlint:latest
+        with:
+          args: -color -verbose
