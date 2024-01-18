@@ -83,7 +83,47 @@ fn validate_aliases_for_encode_command() {
 }
 
 #[test]
-fn encode_data_from_file() {
+fn encode_if_output_is_directory() {
+    let command = command()
+        .arg("encode")
+        .arg("-o")
+        .arg("data/dummy")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "could not write the image to data/dummy",
+        ));
+    if cfg!(windows) {
+        command.stderr(predicate::str::contains("Access is denied. (os error 5)"));
+    } else {
+        command.stderr(predicate::str::contains("Is a directory (os error 21)"));
+    }
+}
+
+#[test]
+fn encode_to_svg_if_output_is_directory() {
+    let command = command()
+        .arg("encode")
+        .arg("-o")
+        .arg("data/dummy")
+        .arg("-t")
+        .arg("svg")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains(
+            "could not write the image to data/dummy",
+        ));
+    if cfg!(windows) {
+        command.stderr(predicate::str::contains("Access is denied. (os error 5)"));
+    } else {
+        command.stderr(predicate::str::contains("Is a directory (os error 21)"));
+    }
+}
+
+#[test]
+fn encode_from_file() {
     let output = command()
         .arg("encode")
         .arg("-r")
@@ -95,6 +135,29 @@ fn encode_data_from_file() {
         image::open("tests/data/basic/basic.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_from_non_existent_file() {
+    let command = command()
+        .arg("encode")
+        .arg("-r")
+        .arg("non_existent.txt")
+        .assert()
+        .failure()
+        .code(66)
+        .stderr(predicate::str::contains(
+            "could not read data from non_existent.txt",
+        ));
+    if cfg!(windows) {
+        command.stderr(predicate::str::contains(
+            "The system cannot find the file specified. (os error 2)",
+        ));
+    } else {
+        command.stderr(predicate::str::contains(
+            "No such file or directory (os error 2)",
+        ));
+    }
 }
 
 #[test]
@@ -1534,6 +1597,41 @@ fn basic_decode() {
 fn validate_aliases_for_decode_command() {
     command().arg("dec").arg("-V").assert().success();
     command().arg("d").arg("-V").assert().success();
+}
+
+#[test]
+fn decode_from_non_existent_image_file() {
+    let command = command()
+        .arg("decode")
+        .arg("non_existent.png")
+        .assert()
+        .failure()
+        .code(66)
+        .stderr(predicate::str::contains(
+            "could not read data from non_existent.png",
+        ));
+    if cfg!(windows) {
+        command.stderr(predicate::str::contains(
+            "The system cannot find the file specified. (os error 2)",
+        ));
+    } else {
+        command.stderr(predicate::str::contains(
+            "No such file or directory (os error 2)",
+        ));
+    }
+}
+
+#[test]
+fn decode_from_non_image_file() {
+    command()
+        .arg("decode")
+        .arg("data/decode/decode.txt")
+        .assert()
+        .failure()
+        .code(69)
+        .stderr(predicate::str::contains(
+            "could not determine the image format",
+        ));
 }
 
 #[test]
