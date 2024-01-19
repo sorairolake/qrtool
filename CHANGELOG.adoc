@@ -14,6 +14,13 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.10.3\...HEAD[Unreleased]
+
+=== Changed
+
+* Add description about behavior of `-h`, `--help` and `--version` in man pages
+  ({pull-request-url}/360[#360])
+
 == {compare-url}/v0.10.2\...v0.10.3[0.10.3] - 2024-01-18
 
 === Changed

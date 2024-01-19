@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2023-12-17
+:docdate: 2024-01-19
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 :manmanual: General Commands Manual
@@ -164,11 +164,13 @@ _STRING_::
 
 *-h*, *--help*::
 
-  Print help information.
+  Print help message. The short flag (*-h*) will print a condensed help message
+  while the long flag (*--help*) will print a detailed help message.
 
 *-V*, *--version*::
 
-  Print version information.
+  Print version number. The long flag (*--version*) will also print the
+  copyright notice, the license notice and where to report bugs.
 
 include::{includedir}/section-exit-status.adoc[]
 
