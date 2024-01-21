@@ -35,6 +35,10 @@ jobs:
         uses: extractions/setup-just@v1
       - name: Build a book
         run: just build-book
+      - name: Minify a book
+        uses: docker://tdewolff/minify:latest
+        with:
+          args: --exclude "build/site/_/**" -o build/ -r build/
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3.9.3
         if: startsWith(github.ref, 'refs/tags/')

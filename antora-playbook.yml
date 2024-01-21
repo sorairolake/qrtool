@@ -16,7 +16,12 @@ ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
+  supplemental_files: docs/book/supplemental-ui
 
 runtime:
   log:
     failure_level: warn
+
+antora:
+  extensions:
+    - "@antora/lunr-extension"
