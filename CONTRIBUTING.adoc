@@ -38,19 +38,19 @@ The https://github.com/casey/just[just] command runner can be used. Run
 `just --list` for more details.
 
 .Run tests
-[source,shell]
+[source,sh]
 ----
 just test
 ----
 
 .Run the formatter
-[source,shell]
+[source,sh]
 ----
 just fmt
 ----
 
 .Run the linter
-[source,shell]
+[source,sh]
 ----
 just lint
 ----

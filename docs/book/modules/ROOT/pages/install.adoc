@@ -12,7 +12,7 @@
 
 == From source
 
-[source,shell]
+[source,sh]
 ----
 cargo install qrtool
 ----
