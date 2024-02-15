@@ -7,7 +7,7 @@
 :shields-url: https://img.shields.io
 :ci-badge: {shields-url}/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&label=CI&logo=github&style=for-the-badge
 :ci-url: {project-url}/actions?query=branch%3Adevelop+workflow%3ACI++
-:version-badge: {shields-url}/crates/v/qrtool?style=for-the-badge
+:version-badge: {shields-url}/crates/v/qrtool?logo=rust&style=for-the-badge
 :version-url: https://crates.io/crates/qrtool
 :license-badge: {shields-url}/crates/l/qrtool?style=for-the-badge
 
