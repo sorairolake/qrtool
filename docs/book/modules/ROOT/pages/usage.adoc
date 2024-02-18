@@ -30,7 +30,7 @@
 == Basic usage
 
 .Encode a string in a QR code
-[source,shell]
+[source,sh]
 ----
 qrtool encode "QR code" > output.png
 ----
@@ -39,7 +39,7 @@ qrtool encode "QR code" > output.png
 image::basic.png[Output]
 
 .Decode a QR code from this image
-[source,shell]
+[source,sh]
 ----
 qrtool decode output.png
 ----
@@ -54,7 +54,7 @@ QR code
 Use `-t` option to change the format of the generated image. The format is
 `png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
 
-[source,shell]
+[source,sh]
 ----
 qrtool encode -o output.svg -t svg "QR code"
 ----
@@ -67,7 +67,7 @@ image::decode.svg[Output]
 Use `--variant` option to change the variant of the generated QR code. The
 variant is `normal` (default) or `micro` (Micro QR code).
 
-[source,shell]
+[source,sh]
 ----
 qrtool encode -v 3 --variant micro "QR code" > output.png
 ----
@@ -83,7 +83,7 @@ background colors of the generated image. These options takes a
 `rgb(165 42 42)`. The default foreground color is black and the background
 color is white of CSS's named colors.
 
-[source,shell]
+[source,sh]
 ----
 qrtool encode --foreground brown --background lightslategray "QR code" > output.png
 ----
@@ -120,7 +120,7 @@ the image format is determined based on the extension or the magic number.
 image::lossless.webp[Input]
 
 .Decode a QR code from the WebP image
-[source,shell]
+[source,sh]
 ----
 qrtool decode input.webp
 # or
@@ -145,7 +145,7 @@ QR code
 * `zsh`
 
 .Example
-[source,shell]
+[source,sh]
 ----
 qrtool --generate-completion bash > qrtool.bash
 ----
@@ -163,13 +163,13 @@ size or optimize the image, use an optimizer such as
 {oxipng-repo-url}[`oxipng`] or {svgcleaner-repo-url}[`svgcleaner`].
 
 .Optimize the output PNG image
-[source,shell]
+[source,sh]
 ----
 qrtool encode "QR code" | oxipng - > output.png
 ----
 
 .Optimize the output SVG image
-[source,shell]
+[source,sh]
 ----
 qrtool encode -t svg "QR code" | svgcleaner -c - > output.svg
 ----
@@ -181,13 +181,13 @@ or decode an image in an unsupported image format, convert it using a converter
 such as {imagemagick-url}[ImageMagick].
 
 .Read `Cargo.toml` from stdin and save the encoded result as a JPEG XL image
-[source,shell]
+[source,sh]
 ----
 cat Cargo.toml | qrtool encode | magick png:- output.jxl
 ----
 
 .Decode this image and print the result using `bat`
-[source,shell]
+[source,sh]
 ----
 magick output.jxl png:- | qrtool decode | bat -l toml
 ----

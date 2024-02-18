@@ -7,7 +7,7 @@
 == Prerequisites
 
 .To build *qrtool*, you will need the following dependencies
-* https://doc.rust-lang.org/stable/cargo/[Cargo] (v1.70.0 or later)
+* https://doc.rust-lang.org/stable/cargo/[Cargo] (v1.74.0 or later)
 
 .To build man pages, you will need the following additional dependencies
 * https://asciidoctor.org/[Asciidoctor]
@@ -15,20 +15,20 @@
 == Building from source
 
 .To clone the repository
-[source,shell]
+[source,sh]
 ----
 git clone https://github.com/sorairolake/qrtool.git
 cd qrtool
 ----
 
 .To build a package
-[source,shell]
+[source,sh]
 ----
 just build
 ----
 
 .To find the directory where manual pages are generated
-[source,shell]
+[source,sh]
 ----
 fd -t directory out ./target/*/build/qrtool-*
 ----

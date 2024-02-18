@@ -24,7 +24,7 @@ jobs:
           - x86_64-apple-darwin
           - x86_64-pc-windows-msvc
         toolchain:
-          - 1.70.0 # MSRV
+          - 1.74.0 # MSRV
           - stable
         include:
           - target: x86_64-unknown-linux-gnu

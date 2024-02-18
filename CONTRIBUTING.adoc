@@ -5,6 +5,9 @@
 = Contribution Guide
 :git-flow-url: https://nvie.com/posts/a-successful-git-branching-model/
 :commit-messages-guide-url: https://github.com/RomuloOliveira/commit-messages-guide
+ifdef::site-gen-antora[]
+:coc-url: https://www.contributor-covenant.org/version/2/1/code_of_conduct/
+endif::[]
 
 == Branching model
 
@@ -27,8 +30,18 @@ Please see the {commit-messages-guide-url}[Commit messages guide].
   https://reuse.software/spec/[_REUSE Specification_].
   https://github.com/fsfe/reuse-tool[`reuse`] is useful for updating the
   copyright information.
+ifdef::site-gen-antora[]
+. Please update the xref:changelog.adoc[] if possible.
+endif::[]
+ifndef::site-gen-antora[]
 . Please update the link:CHANGELOG.adoc[Changelog] if possible.
+endif::[]
+ifdef::site-gen-antora[]
+. Please read and agree to follow the {coc-url}[Code of Conduct].
+endif::[]
+ifndef::site-gen-antora[]
 . Please read and agree to follow the link:CODE_OF_CONDUCT.md[Code of Conduct].
+endif::[]
 
 == Development
 
@@ -38,19 +51,19 @@ The https://github.com/casey/just[just] command runner can be used. Run
 `just --list` for more details.
 
 .Run tests
-[source,shell]
+[source,sh]
 ----
 just test
 ----
 
 .Run the formatter
-[source,shell]
+[source,sh]
 ----
 just fmt
 ----
 
 .Run the linter
-[source,shell]
+[source,sh]
 ----
 just lint
 ----

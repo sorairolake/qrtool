@@ -4,10 +4,10 @@
 
 [package]
 name = "qrtool"
-version = "0.10.4"
+version = "0.10.5"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
-rust-version = "1.70.0"
+rust-version = "1.74.0"
 description = "An utility for encoding or decoding QR code"
 readme = "README.md"
 homepage = "https://sorairolake.github.io/qrtool/"
@@ -21,13 +21,13 @@ include = ["/LICENSES", "/README.md", "/src"]
 
 [dependencies]
 anyhow = "1.0.79"
-clap = { version = "4.4.18", features = ["derive", "wrap_help"] }
-clap_complete = "4.4.8"
-clap_complete_nushell = "4.4.2"
+clap = { version = "4.5.1", features = ["derive", "wrap_help"] }
+clap_complete = "4.5.1"
+clap_complete_nushell = "4.5.1"
 csscolorparser = "0.6.2"
 image = "0.24.8"
 qrcode = "0.13.0"
-resvg = { version = "0.37.0", default-features = false, optional = true }
+resvg = { version = "0.40.0", default-features = false, optional = true }
 rqrr = "0.6.0"
 sysexits = "0.7.11"
 
