@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
-== {compare-url}/v0.10.4\...HEAD[Unreleased]
+== {compare-url}/v0.10.4\...v0.10.5[0.10.5] - 2024-02-18
 
 === Changed
 
