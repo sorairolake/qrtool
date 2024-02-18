@@ -14,5 +14,6 @@
 
 .Resources
 * xref:changelog.adoc[]
+* xref:contributing.adoc[]
 * xref:authors.adoc[]
 * xref:license.adoc[]
