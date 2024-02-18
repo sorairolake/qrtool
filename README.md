@@ -247,9 +247,9 @@ This project is compliant with version 3.0 of the [_REUSE Specification_]. See
 copyright notices of individual files for more details on copyright and
 licensing information.
 
-[ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&label=CI&logo=github&style=for-the-badge
+[ci-badge]: https://img.shields.io/github/actions/workflow/status/sorairolake/qrtool/CI.yaml?branch=develop&style=for-the-badge&logo=github&label=CI
 [ci-url]: https://github.com/sorairolake/qrtool/actions?query=branch%3Adevelop+workflow%3ACI++
-[version-badge]: https://img.shields.io/crates/v/qrtool?logo=rust&style=for-the-badge
+[version-badge]: https://img.shields.io/crates/v/qrtool?style=for-the-badge&logo=rust
 [version-url]: https://crates.io/crates/qrtool
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
 [repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg
