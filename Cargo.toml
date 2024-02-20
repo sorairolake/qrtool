@@ -32,7 +32,7 @@ rqrr = "0.6.0"
 sysexits = "0.7.11"
 
 [dev-dependencies]
-assert_cmd = "2.0.13"
+assert_cmd = "2.0.14"
 predicates = "3.1.0"
 
 [features]
