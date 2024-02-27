@@ -25,7 +25,7 @@ clap = { version = "4.5.1", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.1"
 clap_complete_nushell = "4.5.1"
 csscolorparser = "0.6.2"
-image = "0.24.8"
+image = "0.24.9"
 qrcode = "0.13.0"
 resvg = { version = "0.40.0", default-features = false, optional = true }
 rqrr = "0.6.0"
