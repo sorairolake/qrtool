@@ -21,7 +21,7 @@ include = ["/LICENSES", "/README.md", "/src"]
 
 [dependencies]
 anyhow = "1.0.81"
-clap = { version = "4.5.2", features = ["derive", "wrap_help"] }
+clap = { version = "4.5.3", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.1"
 clap_complete_nushell = "4.5.1"
 csscolorparser = "0.6.2"
