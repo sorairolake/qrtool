@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.10.5\...v0.10.6[0.10.6] - 2024-03-17
+
+=== Changed
+
+* Bump `image` to 0.25.0 ({pull-request-url}/408[#408])
+
 == {compare-url}/v0.10.4\...v0.10.5[0.10.5] - 2024-02-18
 
 === Changed
