@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use csscolorparser::Color;
-use image::{DynamicImage, Rgba};
+use image::{Rgba, RgbaImage};
 use qrcode::{
     bits::Bits,
     render::{svg, unicode, Renderer},
@@ -89,7 +89,7 @@ pub fn to_image(
     margin: u32,
     colors: &(Color, Color),
     module_size: Option<u32>,
-) -> DynamicImage {
+) -> RgbaImage {
     let c = code.to_colors();
     let mut renderer = Renderer::<Rgba<u8>>::new(&c, code.width(), margin);
     let mut renderer = renderer
@@ -98,8 +98,7 @@ pub fn to_image(
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
-    let image = renderer.build();
-    DynamicImage::ImageRgba8(image)
+    renderer.build()
 }
 
 impl Extractor for QrCode {

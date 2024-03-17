@@ -9,6 +9,8 @@ use crate::{
     metadata::{Extractor, Metadata},
 };
 
+type DecodedBytes = (MetaData, Vec<u8>);
+
 /// Returns `true` if `path` is SVG.
 #[cfg(feature = "decode-from-svg")]
 pub fn is_svg(path: impl AsRef<std::path::Path>) -> bool {
@@ -46,8 +48,6 @@ pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<image::DynamicImage> {
     image::load_from_memory_with_format(&image, image::ImageFormat::Png)
         .map_err(anyhow::Error::from)
 }
-
-type DecodedBytes = (MetaData, Vec<u8>);
 
 fn grid_as_bytes<G: BitGrid>(grid: &Grid<G>) -> Result<DecodedBytes, DeQRError> {
     let mut writer = Vec::new();
