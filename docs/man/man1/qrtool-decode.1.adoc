@@ -7,6 +7,7 @@
 :docdate: 2024-01-19
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
+ifndef::revnumber[:mansource: qrtool]
 :manmanual: General Commands Manual
 :includedir: ./include
 
