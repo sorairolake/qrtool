@@ -24,7 +24,6 @@ fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
     command.args(["-a", "decode-from-svg"]);
     command
         .args(["-D", out_dir])
-        .args(["--failure-level", "WARN"])
         .arg(man_dir.join("*.1.adoc"))
         .status()
 }
