@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-01-19
+:docdate: 2024-04-15
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -194,6 +194,22 @@ CSS Color Module Level 4:{blank}::
 Encode the given string in a QR code:{blank}::
 
   $ *qrtool encode "QR code" > output.png*
+
+Encode the given file and output to the specified image:{blank}::
+
+  $ *qrtool encode -o output.png -r go.mod*
+
+Encode to a SVG image:{blank}::
+
+  $ *qrtool encode -t svg "QR code" > output.svg*
+
+Encode to a Micro QR code:{blank}::
+
+  $ *qrtool encode -v 3 --variant micro "QR code" > output.png*
+
+Encode with the specified colors:{blank}::
+
+  $ *qrtool encode -o output.png --foreground brown --background lightslategray "QR code"*
 
 include::{includedir}/section-reporting-bugs.adoc[]
 

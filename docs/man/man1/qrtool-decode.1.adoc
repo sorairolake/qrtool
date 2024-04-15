@@ -4,7 +4,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2024-01-19
+:docdate: 2024-04-15
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -150,6 +150,14 @@ image crate:{blank}::
 Detect and decode a QR code from the given image:{blank}::
 
   $ *qrtool decode input.png*
+
+Decode a QR code from the given WebP image:{blank}::
+
+  $ *qrtool decode -t webp input.webp*
+
+Also print the metadata when decoding a QR code:{blank}::
+
+  $ *qrtool decode --verbose input.qoi*
 
 include::{includedir}/section-reporting-bugs.adoc[]
 
