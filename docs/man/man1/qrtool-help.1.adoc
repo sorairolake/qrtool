@@ -9,7 +9,7 @@
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
 :manmanual: General Commands Manual
-:includedir: ./include
+ifndef::site-gen-antora[:includedir: ./include]
 
 == NAME
 
@@ -33,7 +33,8 @@ _COMMAND_::
 
   Subcommand to print the help.
 
-include::{includedir}/section-exit-status.adoc[]
+ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
+ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]
 
 == NOTES
 
@@ -45,9 +46,11 @@ QR code.com:{blank}::
 
   https://www.qrcode.com/
 
-include::{includedir}/section-reporting-bugs.adoc[]
+ifndef::site-gen-antora[include::{includedir}/section-reporting-bugs.adoc[]]
+ifdef::site-gen-antora[include::partial$man/man1/include/section-reporting-bugs.adoc[]]
 
-include::{includedir}/section-copyright.adoc[]
+ifndef::site-gen-antora[include::{includedir}/section-copyright.adoc[]]
+ifdef::site-gen-antora[include::partial$man/man1/include/section-copyright.adoc[]]
 
 == SEE ALSO
 
