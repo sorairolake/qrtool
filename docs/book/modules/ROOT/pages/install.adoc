@@ -7,6 +7,7 @@
 :github-url: https://github.com
 :repology-badge: {repology-url}/badge/vertical-allrepos/qrtool.svg
 :repology-versions: {repology-url}/project/qrtool/versions
+:brew-url: https://brew.sh/
 :nix-package-url: {github-url}/NixOS/nixpkgs/blob/master/pkgs/by-name/qr/qrtool/package.nix
 :release-page-url: {github-url}/sorairolake/qrtool/releases
 
@@ -23,6 +24,10 @@ image::{repology-badge}[Packaging status,link={repology-versions}]
 
 |===
 |OS |Package manager |Command
+
+|_Any_
+|{brew-url}[Homebrew]
+|`brew install sorairolake/tap/qrtool`
 
 |_Any_
 |{nix-package-url}[Nix]

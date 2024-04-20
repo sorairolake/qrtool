@@ -27,9 +27,10 @@ cargo install qrtool
 
 [![Packaging status][repology-badge]][repology-versions]
 
-| OS    | Package manager | Command                      |
-| ----- | --------------- | ---------------------------- |
-| _Any_ | [Nix]           | `nix-env -iA nixpkgs.qrtool` |
+| OS    | Package manager | Command                               |
+| ----- | --------------- | ------------------------------------- |
+| _Any_ | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
+| _Any_ | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
 
 ### From binaries
 
@@ -256,6 +257,7 @@ licensing information.
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
 [repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg
 [repology-versions]: https://repology.org/project/qrtool/versions
+[Homebrew]: https://brew.sh/
 [Nix]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/qr/qrtool/package.nix
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
