@@ -1688,6 +1688,7 @@ fn decode_from_non_image_file() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-bmp")]
 fn decode_from_bmp() {
     command()
         .arg("decode")
@@ -1716,6 +1717,7 @@ fn decode_from_bmp() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-dds")]
 fn decode_from_dds() {
     command()
         .arg("decode")
@@ -1744,6 +1746,7 @@ fn decode_from_dds() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-ff")]
 fn decode_from_farbfeld() {
     command()
         .arg("decode")
@@ -1772,6 +1775,7 @@ fn decode_from_farbfeld() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-gif")]
 fn decode_from_gif() {
     command()
         .arg("decode")
@@ -1800,6 +1804,7 @@ fn decode_from_gif() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-hdr")]
 fn decode_from_hdr() {
     command()
         .arg("decode")
@@ -1828,6 +1833,7 @@ fn decode_from_hdr() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-ico")]
 fn decode_from_bmp_cur() {
     command()
         .arg("decode")
@@ -1849,6 +1855,7 @@ fn decode_from_bmp_cur() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-ico")]
 fn decode_from_png_cur() {
     command()
         .arg("decode")
@@ -1870,6 +1877,7 @@ fn decode_from_png_cur() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-ico")]
 fn decode_from_bmp_ico() {
     command()
         .arg("decode")
@@ -1888,6 +1896,7 @@ fn decode_from_bmp_ico() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-ico")]
 fn decode_from_png_ico() {
     command()
         .arg("decode")
@@ -1906,6 +1915,7 @@ fn decode_from_png_ico() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-ico")]
 fn decode_from_ico_with_wrong_format() {
     command()
         .arg("decode")
@@ -1919,6 +1929,7 @@ fn decode_from_ico_with_wrong_format() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-jpeg")]
 fn decode_from_jpeg() {
     command()
         .arg("decode")
@@ -1947,6 +1958,7 @@ fn decode_from_jpeg() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-exr")]
 fn decode_from_open_exr() {
     command()
         .arg("decode")
@@ -1997,6 +2009,7 @@ fn decode_from_png() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-pnm")]
 fn decode_from_ascii_pbm() {
     command()
         .arg("decode")
@@ -2015,6 +2028,7 @@ fn decode_from_ascii_pbm() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-pnm")]
 fn decode_from_ascii_pgm() {
     command()
         .arg("decode")
@@ -2033,6 +2047,7 @@ fn decode_from_ascii_pgm() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-pnm")]
 fn decode_from_ascii_ppm() {
     command()
         .arg("decode")
@@ -2051,6 +2066,7 @@ fn decode_from_ascii_ppm() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-pnm")]
 fn decode_from_binary_pbm() {
     command()
         .arg("decode")
@@ -2069,6 +2085,7 @@ fn decode_from_binary_pbm() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-pnm")]
 fn decode_from_binary_pgm() {
     command()
         .arg("decode")
@@ -2087,6 +2104,7 @@ fn decode_from_binary_pgm() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-pnm")]
 fn decode_from_binary_ppm() {
     command()
         .arg("decode")
@@ -2105,6 +2123,7 @@ fn decode_from_binary_ppm() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-pnm")]
 fn decode_from_pnm_with_wrong_format() {
     command()
         .arg("decode")
@@ -2118,6 +2137,7 @@ fn decode_from_pnm_with_wrong_format() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-qoi")]
 fn decode_from_qoi() {
     command()
         .arg("decode")
@@ -2198,6 +2218,7 @@ fn decode_from_svg_with_wrong_format() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-tga")]
 fn decode_from_tga() {
     command()
         .arg("decode")
@@ -2226,6 +2247,7 @@ fn decode_from_tga() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-tiff")]
 fn decode_from_tiff() {
     command()
         .arg("decode")
@@ -2254,6 +2276,7 @@ fn decode_from_tiff() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-webp")]
 fn decode_from_lossy_web_p() {
     command()
         .arg("decode")
@@ -2272,6 +2295,7 @@ fn decode_from_lossy_web_p() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-webp")]
 fn decode_from_lossless_web_p() {
     command()
         .arg("decode")
@@ -2290,6 +2314,7 @@ fn decode_from_lossless_web_p() {
 }
 
 #[test]
+#[cfg(feature = "decode-from-webp")]
 fn decode_from_web_p_with_wrong_format() {
     command()
         .arg("decode")

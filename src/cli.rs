@@ -379,38 +379,48 @@ pub enum Variant {
 #[value(rename_all = "lower")]
 pub enum InputFormat {
     /// Windows Bitmap.
+    #[cfg(feature = "decode-from-bmp")]
     Bmp,
 
     /// DirectDraw Surface.
+    #[cfg(feature = "decode-from-dds")]
     Dds,
 
     /// Farbfeld.
+    #[cfg(feature = "decode-from-ff")]
     Farbfeld,
 
     /// Graphics Interchange Format.
+    #[cfg(feature = "decode-from-gif")]
     Gif,
 
     /// Radiance RGBE.
+    #[cfg(feature = "decode-from-hdr")]
     Hdr,
 
     /// ICO file format.
     ///
     /// This value also includes the CUR file format.
+    #[cfg(feature = "decode-from-ico")]
     Ico,
 
     /// JPEG.
+    #[cfg(feature = "decode-from-jpeg")]
     Jpeg,
 
     /// OpenEXR.
+    #[cfg(feature = "decode-from-exr")]
     OpenExr,
 
     /// Portable Network Graphics.
     Png,
 
     /// Portable Anymap Format.
+    #[cfg(feature = "decode-from-pnm")]
     Pnm,
 
     /// Quite OK Image Format.
+    #[cfg(feature = "decode-from-qoi")]
     Qoi,
 
     /// Scalable Vector Graphics.
@@ -420,12 +430,15 @@ pub enum InputFormat {
     Svg,
 
     /// Truevision TGA.
+    #[cfg(feature = "decode-from-tga")]
     Tga,
 
     /// Tag Image File Format.
+    #[cfg(feature = "decode-from-tiff")]
     Tiff,
 
     /// WebP.
+    #[cfg(feature = "decode-from-webp")]
     WebP,
 }
 
@@ -434,23 +447,36 @@ impl TryFrom<InputFormat> for ImageFormat {
 
     fn try_from(format: InputFormat) -> Result<Self, Self::Error> {
         match format {
+            #[cfg(feature = "decode-from-bmp")]
             InputFormat::Bmp => Ok(Self::Bmp),
+            #[cfg(feature = "decode-from-dds")]
             InputFormat::Dds => Ok(Self::Dds),
+            #[cfg(feature = "decode-from-ff")]
             InputFormat::Farbfeld => Ok(Self::Farbfeld),
+            #[cfg(feature = "decode-from-gif")]
             InputFormat::Gif => Ok(Self::Gif),
+            #[cfg(feature = "decode-from-hdr")]
             InputFormat::Hdr => Ok(Self::Hdr),
+            #[cfg(feature = "decode-from-ico")]
             InputFormat::Ico => Ok(Self::Ico),
+            #[cfg(feature = "decode-from-jpeg")]
             InputFormat::Jpeg => Ok(Self::Jpeg),
+            #[cfg(feature = "decode-from-exr")]
             InputFormat::OpenExr => Ok(Self::OpenExr),
             InputFormat::Png => Ok(Self::Png),
+            #[cfg(feature = "decode-from-pnm")]
             InputFormat::Pnm => Ok(Self::Pnm),
+            #[cfg(feature = "decode-from-qoi")]
             InputFormat::Qoi => Ok(Self::Qoi),
             #[cfg(feature = "decode-from-svg")]
             InputFormat::Svg => Err(Self::Error::Unsupported(
                 image::error::ImageFormatHint::Unknown.into(),
             )),
+            #[cfg(feature = "decode-from-tga")]
             InputFormat::Tga => Ok(Self::Tga),
+            #[cfg(feature = "decode-from-tiff")]
             InputFormat::Tiff => Ok(Self::Tiff),
+            #[cfg(feature = "decode-from-webp")]
             InputFormat::WebP => Ok(Self::WebP),
         }
     }
@@ -500,34 +526,42 @@ mod tests {
 
     #[test]
     fn try_from_input_format_to_image_format() {
+        #[cfg(feature = "decode-from-bmp")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Bmp).unwrap(),
             ImageFormat::Bmp
         );
+        #[cfg(feature = "decode-from-dds")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Dds).unwrap(),
             ImageFormat::Dds
         );
+        #[cfg(feature = "decode-from-ff")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Farbfeld).unwrap(),
             ImageFormat::Farbfeld
         );
+        #[cfg(feature = "decode-from-gif")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Gif).unwrap(),
             ImageFormat::Gif
         );
+        #[cfg(feature = "decode-from-hdr")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Hdr).unwrap(),
             ImageFormat::Hdr
         );
+        #[cfg(feature = "decode-from-ico")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Ico).unwrap(),
             ImageFormat::Ico
         );
+        #[cfg(feature = "decode-from-jpeg")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Jpeg).unwrap(),
             ImageFormat::Jpeg
         );
+        #[cfg(feature = "decode-from-exr")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::OpenExr).unwrap(),
             ImageFormat::OpenExr
@@ -536,22 +570,27 @@ mod tests {
             ImageFormat::try_from(InputFormat::Png).unwrap(),
             ImageFormat::Png
         );
+        #[cfg(feature = "decode-from-pnm")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Pnm).unwrap(),
             ImageFormat::Pnm
         );
+        #[cfg(feature = "decode-from-qoi")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Qoi).unwrap(),
             ImageFormat::Qoi
         );
+        #[cfg(feature = "decode-from-tga")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Tga).unwrap(),
             ImageFormat::Tga
         );
+        #[cfg(feature = "decode-from-tiff")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Tiff).unwrap(),
             ImageFormat::Tiff
         );
+        #[cfg(feature = "decode-from-webp")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::WebP).unwrap(),
             ImageFormat::WebP

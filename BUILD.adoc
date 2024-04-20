@@ -35,6 +35,58 @@ fd -t directory out ./target/*/build/qrtool-*
 
 == Crate features
 
+`decode-from-bmp`::
+
+  Enable decoding from the BMP image. This is enabled by default.
+
+`decode-from-dds`::
+
+  Enable decoding from the DDS image. This is enabled by default.
+
+`decode-from-ff`::
+
+  Enable decoding from the Farbfeld image. This is enabled by default.
+
+`decode-from-gif`::
+
+  Enable decoding from the GIF image. This is enabled by default.
+
+`decode-from-hdr`::
+
+  Enable decoding from the Radiance RGBE image. This is enabled by default.
+
+`decode-from-ico`::
+
+  Enable decoding from the ICO image. This is enabled by default.
+
+`decode-from-jpeg`::
+
+  Enable decoding from the JPEG image. This is enabled by default.
+
+`decode-from-exr`::
+
+  Enable decoding from the OpenEXR image. This is enabled by default.
+
+`decode-from-pnm`::
+
+  Enable decoding from the PNM image. This is enabled by default.
+
+`decode-from-qoi`::
+
+  Enable decoding from the QOI image. This is enabled by default.
+
+`decode-from-tga`::
+
+  Enable decoding from the TGA image. This is enabled by default.
+
+`decode-from-tiff`::
+
+  Enable decoding from the TIFF image. This is enabled by default.
+
+`decode-from-webp`::
+
+  Enable decoding from the WebP image. This is enabled by default.
+
 `decode-from-svg`::
 
   Enable decoding from the SVG image. This is enabled by default.
