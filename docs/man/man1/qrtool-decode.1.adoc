@@ -46,49 +46,69 @@ _IMAGE_::
 
   The possible values are:{blank}:::
 
+ifdef::decode-from-bmp,env-github,site-gen-antora[]
     *bmp*::::
 
       Windows Bitmap.
+endif::[]
 
+ifdef::decode-from-dds,env-github,site-gen-antora[]
     *dds*::::
 
       DirectDraw Surface.
+endif::[]
 
+ifdef::decode-from-ff,env-github,site-gen-antora[]
     *farbfeld*::::
 
       Farbfeld.
+endif::[]
 
+ifdef::decode-from-gif,env-github,site-gen-antora[]
     *gif*::::
 
       Graphics Interchange Format.
+endif::[]
 
+ifdef::decode-from-hdr,env-github,site-gen-antora[]
     *hdr*::::
 
       Radiance RGBE.
+endif::[]
 
+ifdef::decode-from-ico,env-github,site-gen-antora[]
     *ico*::::
 
       ICO file format. This value also includes the CUR file format.
+endif::[]
 
+ifdef::decode-from-jpeg,env-github,site-gen-antora[]
     *jpeg*::::
 
       JPEG.
+endif::[]
 
+ifdef::decode-from-exr,env-github,site-gen-antora[]
     *openexr*::::
 
       OpenEXR.
+endif::[]
 
     *png*::::
 
       Portable Network Graphics.
 
+ifdef::decode-from-pnm,env-github,site-gen-antora[]
     *pnm*::::
 
       Portable Anymap Format.
+endif::[]
 
+ifdef::decode-from-qoi,env-github,site-gen-antora[]
     *qoi*::::
 
       Quite OK Image Format.
+endif::[]
 
 ifdef::decode-from-svg,env-github,site-gen-antora[]
     *svg*::::
@@ -97,17 +117,23 @@ ifdef::decode-from-svg,env-github,site-gen-antora[]
       SVG image.
 endif::[]
 
+ifdef::decode-from-tga,env-github,site-gen-antora[]
     *tga*::::
 
       Truevision TGA.
+endif::[]
 
+ifdef::decode-from-tiff,env-github,site-gen-antora[]
     *tiff*::::
 
       Tag Image File Format.
+endif::[]
 
+ifdef::decode-from-webp,env-github,site-gen-antora[]
     *webp*::::
 
       WebP.
+endif::[]
 
 *--verbose*::
 

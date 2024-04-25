@@ -27,9 +27,11 @@ cargo install qrtool
 
 [![Packaging status][repology-badge]][repology-versions]
 
-| OS    | Package manager | Command                      |
-| ----- | --------------- | ---------------------------- |
-| _Any_ | [Nix]           | `nix-env -iA nixpkgs.qrtool` |
+| OS           | Package manager | Command                               |
+| ------------ | --------------- | ------------------------------------- |
+| _Any_        | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
+| _Any_        | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
+| [_openSUSE_] | Zypper          | `zypper install qrtool`               |
 
 ### From binaries
 
@@ -128,6 +130,9 @@ Generate this image:
 
 To support decoding from SVG image, the `decode-from-svg` feature must be
 enabled at compile time. Note that the SVG image is rasterized before scanning.
+
+Image formats other than PNG can be disabled by disabling the `default`
+feature, and can be enabled individually.
 
 Use `-t` option to specify the image format. If this option is not specified,
 the image format is determined based on the extension or the magic number.
@@ -256,7 +261,9 @@ licensing information.
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
 [repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg
 [repology-versions]: https://repology.org/project/qrtool/versions
-[Nix]: https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/qr/qrtool/package.nix
+[Homebrew]: https://brew.sh/
+[Nix]: https://nixos.org/
+[_openSUSE_]: https://www.opensuse.org/
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
 [CSS color string]: https://www.w3.org/TR/css-color-4/

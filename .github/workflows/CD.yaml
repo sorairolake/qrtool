@@ -16,11 +16,24 @@ permissions:
   contents: write
 
 jobs:
+  get-version:
+    name: Get version
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      version_without_v: ${{ steps.get_version_without_v.outputs.version-without-v }}
+    steps:
+      - name: Get version
+        id: get_version
+        run: echo "version=${GITHUB_REF_NAME##*/}" >> "$GITHUB_OUTPUT"
+      - name: Get version without v
+        id: get_version_without_v
+        run: echo "version-without-v=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
   build:
     name: Build
+    needs: get-version
     runs-on: ${{ matrix.os }}
-    outputs:
-      get_version: ${{ steps.get_version.outputs.version-without-v }}
     strategy:
       matrix:
         target:
@@ -38,9 +51,9 @@ jobs:
             os: ubuntu-22.04
             use-cross: true
           - target: aarch64-apple-darwin
-            os: macos-12
+            os: macos-14
           - target: x86_64-apple-darwin
-            os: macos-12
+            os: macos-14
           - target: aarch64-pc-windows-msvc
             os: windows-2022
           - target: x86_64-pc-windows-msvc
@@ -55,7 +68,7 @@ jobs:
           targets: ${{ matrix.target }}
       - name: Install cross
         if: ${{ matrix.use-cross }}
-        uses: taiki-e/install-action@v2.32.20
+        uses: taiki-e/install-action@v2.33.8
         with:
           tool: cross
       - name: Cache build artifacts
@@ -78,9 +91,6 @@ jobs:
       - name: Build a package with cross
         if: ${{ matrix.use-cross }}
         run: cross build --release --target ${{ matrix.target }}
-      - name: Get version
-        id: get_version
-        uses: battila7/get-version-action@v2.3.0
       - name: Create a package
         shell: bash
         run: |
@@ -89,7 +99,7 @@ jobs:
           else
             bin="target/${{ matrix.target }}/release/qrtool.exe"
           fi
-          package="qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
+          package="qrtool-${{ needs.get-version.outputs.version }}-${{ matrix.target }}"
 
           mkdir -p "${package}"/docs
           cp README.md "${bin}" "${package}"
@@ -110,12 +120,14 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "qrtool-${{ steps.get_version.outputs.version }}-${{ matrix.target }}"
-          path: "qrtool-*.*"
+          name: "qrtool-${{ needs.get-version.outputs.version }}-${{ matrix.target }}"
+          path: "qrtool-*-*"
 
   release:
     name: Release
-    needs: build
+    needs:
+      - get-version
+      - build
     runs-on: ubuntu-22.04
     steps:
       - name: Download artifact
@@ -135,6 +147,6 @@ jobs:
             qrtool-*
             sha256sums.txt
             b2sums.txt
-          name: "Release version ${{ needs.build.outputs.get_version }}"
+          name: "Release version ${{ needs.get-version.outputs.version_without_v }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
