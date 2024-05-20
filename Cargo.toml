@@ -29,7 +29,7 @@ image = { version = "0.25.1", default-features = false, features = ["png", "rayo
 qrcode = "0.14.0"
 resvg = { version = "0.41.0", default-features = false, optional = true }
 rqrr = "0.7.1"
-sysexits = "0.7.13"
+sysexits = "0.7.14"
 
 [dev-dependencies]
 assert_cmd = "2.0.14"
