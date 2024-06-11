@@ -23,7 +23,7 @@ include = ["/LICENSES", "/README.md", "/src"]
 anyhow = "1.0.86"
 clap = { version = "4.5.7", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.2"
-clap_complete_nushell = "4.5.1"
+clap_complete_nushell = "4.5.2"
 csscolorparser = "0.6.2"
 image = { version = "0.25.1", default-features = false, features = ["png", "rayon"] }
 qrcode = "0.14.0"
