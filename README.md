@@ -27,11 +27,12 @@ cargo install qrtool
 
 [![Packaging status][repology-badge]][repology-versions]
 
-| OS           | Package manager | Command                               |
-| ------------ | --------------- | ------------------------------------- |
-| _Any_        | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
-| _Any_        | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
-| [_openSUSE_] | Zypper          | `zypper install qrtool`               |
+| OS             | Package manager | Command                               |
+| -------------- | --------------- | ------------------------------------- |
+| _Any_          | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
+| _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
+| [_openSUSE_]   | Zypper          | `zypper install qrtool`               |
+| [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`                    |
 
 ### From binaries
 
@@ -156,7 +157,6 @@ QR code
 ```
 
 [^ico-note]: CUR is also supported.
-
 [^svg-note]: SVGZ is also supported.
 
 ### Generate shell completion
@@ -265,6 +265,8 @@ licensing information.
 [Homebrew]: https://brew.sh/
 [Nix]: https://nixos.org/
 [_openSUSE_]: https://www.opensuse.org/
+[_Arch Linux_]: https://archlinux.org/
+[Pacman]: https://wiki.archlinux.org/title/pacman
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
 [CSS color string]: https://www.w3.org/TR/css-color-4/
