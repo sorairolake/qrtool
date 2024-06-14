@@ -157,6 +157,7 @@ QR code
 ```
 
 [^ico-note]: CUR is also supported.
+
 [^svg-note]: SVGZ is also supported.
 
 ### Generate shell completion
