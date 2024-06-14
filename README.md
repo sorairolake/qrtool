@@ -31,8 +31,8 @@ cargo install qrtool
 | -------------- | --------------- | ------------------------------------- |
 | _Any_          | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
 | _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
-| [_openSUSE_]   | Zypper          | `zypper install qrtool`               |
 | [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`                    |
+| [_openSUSE_]   | Zypper          | `zypper install qrtool`               |
 
 ### From binaries
 
