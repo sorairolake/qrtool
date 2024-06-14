@@ -264,9 +264,9 @@ licensing information.
 [repology-versions]: https://repology.org/project/qrtool/versions
 [Homebrew]: https://brew.sh/
 [Nix]: https://nixos.org/
-[_openSUSE_]: https://www.opensuse.org/
 [_Arch Linux_]: https://archlinux.org/
 [Pacman]: https://wiki.archlinux.org/title/pacman
+[_openSUSE_]: https://www.opensuse.org/
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
 [CSS color string]: https://www.w3.org/TR/css-color-4/
