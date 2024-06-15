@@ -1,5 +1,6 @@
 <!--
 SPDX-FileCopyrightText: 2022 Shun Sakai
+SPDX-FileCopyrightText: 2024 Orhun Parmaksız
 
 SPDX-License-Identifier: Apache-2.0 OR MIT
 -->
@@ -244,7 +245,8 @@ This program is inspired by [`qrencode`] and [`zbarimg`].
 
 ## License
 
-Copyright &copy; 2022&ndash;2024 Shun Sakai (see [AUTHORS.adoc])
+Copyright &copy; 2022&ndash;2024 Shun Sakai and other contributors (see
+[AUTHORS.adoc])
 
 1. This program is distributed under the terms of either the _Apache License
    2.0_ or the _MIT License_.
