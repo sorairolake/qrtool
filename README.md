@@ -27,11 +27,12 @@ cargo install qrtool
 
 [![Packaging status][repology-badge]][repology-versions]
 
-| OS           | Package manager | Command                               |
-| ------------ | --------------- | ------------------------------------- |
-| _Any_        | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
-| _Any_        | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
-| [_openSUSE_] | Zypper          | `zypper install qrtool`               |
+| OS             | Package manager | Command                               |
+| -------------- | --------------- | ------------------------------------- |
+| _Any_          | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
+| _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
+| [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`                    |
+| [_openSUSE_]   | Zypper          | `zypper install qrtool`               |
 
 ### From binaries
 
@@ -264,6 +265,8 @@ licensing information.
 [repology-versions]: https://repology.org/project/qrtool/versions
 [Homebrew]: https://brew.sh/
 [Nix]: https://nixos.org/
+[_Arch Linux_]: https://archlinux.org/
+[Pacman]: https://wiki.archlinux.org/title/pacman
 [_openSUSE_]: https://www.opensuse.org/
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
