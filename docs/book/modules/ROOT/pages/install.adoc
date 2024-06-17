@@ -5,7 +5,7 @@
 = Installation
 :repology-url: https://repology.org
 :github-url: https://github.com
-:repology-badge: {repology-url}/badge/vertical-allrepos/qrtool.svg
+:repology-badge: {repology-url}/badge/vertical-allrepos/qrtool.svg?columns=3
 :repology-versions: {repology-url}/project/qrtool/versions
 :brew-url: https://brew.sh/
 :nix-package-url: https://nixos.org/
