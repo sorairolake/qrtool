@@ -1,5 +1,6 @@
 <!--
 SPDX-FileCopyrightText: 2022 Shun Sakai
+SPDX-FileCopyrightText: 2024 Orhun Parmaksız
 
 SPDX-License-Identifier: Apache-2.0 OR MIT
 -->
@@ -27,11 +28,12 @@ cargo install qrtool
 
 [![Packaging status][repology-badge]][repology-versions]
 
-| OS           | Package manager | Command                               |
-| ------------ | --------------- | ------------------------------------- |
-| _Any_        | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
-| _Any_        | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
-| [_openSUSE_] | Zypper          | `zypper install qrtool`               |
+| OS             | Package manager | Command                               |
+| -------------- | --------------- | ------------------------------------- |
+| _Any_          | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
+| _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
+| [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`                    |
+| [_openSUSE_]   | Zypper          | `zypper install qrtool`               |
 
 ### From binaries
 
@@ -156,6 +158,7 @@ QR code
 ```
 
 [^ico-note]: CUR is also supported.
+
 [^svg-note]: SVGZ is also supported.
 
 ### Generate shell completion
@@ -242,7 +245,8 @@ This program is inspired by [`qrencode`] and [`zbarimg`].
 
 ## License
 
-Copyright &copy; 2022&ndash;2024 Shun Sakai (see [AUTHORS.adoc])
+Copyright &copy; 2022&ndash;2024 Shun Sakai and other contributors (see
+[AUTHORS.adoc])
 
 1. This program is distributed under the terms of either the _Apache License
    2.0_ or the _MIT License_.
@@ -263,6 +267,8 @@ licensing information.
 [repology-versions]: https://repology.org/project/qrtool/versions
 [Homebrew]: https://brew.sh/
 [Nix]: https://nixos.org/
+[_Arch Linux_]: https://archlinux.org/
+[Pacman]: https://wiki.archlinux.org/title/pacman
 [_openSUSE_]: https://www.opensuse.org/
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc

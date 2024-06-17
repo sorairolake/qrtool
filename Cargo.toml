@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.10.10"
+version = "0.10.11"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -20,16 +20,16 @@ include = ["/LICENSES", "/README.md", "/src"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0.82"
-clap = { version = "4.5.4", features = ["derive", "wrap_help"] }
-clap_complete = "4.5.2"
-clap_complete_nushell = "4.5.1"
+anyhow = "1.0.86"
+clap = { version = "4.5.7", features = ["derive", "wrap_help"] }
+clap_complete = "4.5.5"
+clap_complete_nushell = "4.5.2"
 csscolorparser = "0.6.2"
 image = { version = "0.25.1", default-features = false, features = ["png", "rayon"] }
 qrcode = "0.14.0"
-resvg = { version = "0.41.0", default-features = false, optional = true }
+resvg = { version = "0.42.0", default-features = false, optional = true }
 rqrr = "0.7.1"
-sysexits = "0.7.13"
+sysexits = "0.8.0"
 
 [dev-dependencies]
 assert_cmd = "2.0.14"

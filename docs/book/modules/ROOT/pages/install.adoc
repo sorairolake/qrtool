@@ -9,6 +9,8 @@
 :repology-versions: {repology-url}/project/qrtool/versions
 :brew-url: https://brew.sh/
 :nix-package-url: https://nixos.org/
+:archlinux-url: https://archlinux.org/
+:pacman-url: https://wiki.archlinux.org/title/pacman
 :opensuse-url: https://www.opensuse.org/
 :release-page-url: {github-url}/sorairolake/qrtool/releases
 
@@ -33,6 +35,10 @@ image::{repology-badge}[Packaging status,link={repology-versions}]
 |_Any_
 |{nix-package-url}[Nix]
 |`nix-env -iA nixpkgs.qrtool`
+
+|{archlinux-url}[_Arch Linux_]
+|{pacman-url}[Pacman]
+|`pacman -S qrtool`
 
 |{opensuse-url}[_openSUSE_]
 |Zypper
