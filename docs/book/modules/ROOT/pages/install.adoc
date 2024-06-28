@@ -30,7 +30,7 @@ image::{repology-badge}[Packaging status,link={repology-versions}]
 
 |_Any_
 |{brew-url}[Homebrew]
-|`brew install sorairolake/tap/qrtool`
+|`brew install qrtool`
 
 |_Any_
 |{nix-package-url}[Nix]
