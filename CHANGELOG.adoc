@@ -14,7 +14,13 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
-== {compare-url}/v0.10.11\...v0.10.12[0.10.12] - 2024-06-29
+== {compare-url}/v0.10.12\...v0.10.13[0.10.13] - 2024-06-29
+
+=== Fixed
+
+* Wrap long lines
+
+== {compare-url}/v0.10.11\...v0.10.12[0.10.12] - 2024-06-29 [YANKED]
 
 === Added
 
