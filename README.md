@@ -28,12 +28,12 @@ cargo install qrtool
 
 [![Packaging status][repology-badge]][repology-versions]
 
-| OS             | Package manager | Command                               |
-| -------------- | --------------- | ------------------------------------- |
-| _Any_          | [Homebrew]      | `brew install sorairolake/tap/qrtool` |
-| _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool`          |
-| [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`                    |
-| [_openSUSE_]   | Zypper          | `zypper install qrtool`               |
+| OS             | Package manager | Command                      |
+| -------------- | --------------- | ---------------------------- |
+| _Any_          | [Homebrew]      | `brew install qrtool`        |
+| _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool` |
+| [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`           |
+| [_openSUSE_]   | Zypper          | `zypper install qrtool`      |
 
 ### From binaries
 
@@ -204,6 +204,10 @@ Optimize the output SVG image:
 qrtool encode -t svg "QR code" | svgcleaner -c - > output.svg
 ```
 
+If the `optimize-output-png` feature is enabled, you can also use
+`--optimize-png` option and `--zopfli` option of this command to optimize
+output PNG image.
+
 #### Reading and writing unsupported image formats
 
 If you want to save the encoded image in an image format other than PNG or SVG,
@@ -263,7 +267,7 @@ licensing information.
 [version-url]: https://crates.io/crates/qrtool
 [msrv-badge]: https://img.shields.io/crates/msrv/qrtool?style=for-the-badge&logo=rust
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
-[repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg
+[repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg?columns=3
 [repology-versions]: https://repology.org/project/qrtool/versions
 [Homebrew]: https://brew.sh/
 [Nix]: https://nixos.org/

@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-04-15
+:docdate: 2024-06-29
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -111,6 +111,54 @@ _STRING_::
     *terminal*::::
 
       To the terminal as UTF-8 string.
+
+ifdef::optimize-output-png,env-github,site-gen-antora[]
+*--optimize-png* [_LEVEL_]::
+
+  Set the optimization level for a PNG image. Lower levels are faster, higher
+  levels provide better compression. If the value is not specified, it is
+  assumed that the default level 2 is specified.
+
+  The possible values are:{blank}:::
+
+    *0*::::
+
+      Level 0. This value is the minimum optimization level.
+
+    *1*::::
+
+      Level 1.
+
+    *2*::::
+
+      Level 2. This is the default value.
+
+    *3*::::
+
+      Level 3.
+
+    *4*::::
+
+      Level 4.
+
+    *5*::::
+
+      Level 5.
+
+    *6*::::
+
+      Level 6. This value is the maximum optimization level.
+
+    *max*::::
+
+      This value is an alias for the maximum optimization level.
+endif::[]
+
+ifdef::optimize-output-png,env-github,site-gen-antora[]
+*--zopfli*::
+
+  Use Zopfli to compress PNG image. This option requires *--optimize-png*.
+endif::[]
 
 *--mode* _MODE_::
 
@@ -220,4 +268,4 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-copyright.adoc[
 
 == SEE ALSO
 
-*qrencode*(1), *qrtool*(1), *qrtool-decode*(1), *qrtool-help*(1)
+*oxipng*(1), *qrencode*(1), *qrtool*(1), *qrtool-decode*(1), *qrtool-help*(1)

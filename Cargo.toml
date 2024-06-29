@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.10.11"
+version = "0.10.12"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -21,11 +21,12 @@ include = ["/LICENSES", "/README.md", "/src"]
 
 [dependencies]
 anyhow = "1.0.86"
-clap = { version = "4.5.7", features = ["derive", "wrap_help"] }
-clap_complete = "4.5.5"
+clap = { version = "4.5.8", features = ["derive", "wrap_help"] }
+clap_complete = "4.5.7"
 clap_complete_nushell = "4.5.2"
 csscolorparser = "0.6.2"
 image = { version = "0.25.1", default-features = false, features = ["png", "rayon"] }
+oxipng = { version = "9.1.1", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.0"
 resvg = { version = "0.42.0", default-features = false, optional = true }
 rqrr = "0.7.1"
@@ -51,6 +52,7 @@ default = [
   "decode-from-tiff",
   "decode-from-webp",
   "decode-from-svg",
+  "optimize-output-png",
 ]
 decode-from-bmp = ["image/bmp"]
 decode-from-dds = ["image/dds"]
@@ -66,6 +68,7 @@ decode-from-tga = ["image/tga"]
 decode-from-tiff = ["image/tiff"]
 decode-from-webp = ["image/webp"]
 decode-from-svg = ["dep:resvg"]
+optimize-output-png = ["dep:oxipng"]
 
 [profile.release]
 codegen-units = 1

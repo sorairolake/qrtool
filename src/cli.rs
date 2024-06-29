@@ -8,6 +8,7 @@ use std::{
     path::PathBuf,
 };
 
+use anyhow::anyhow;
 use clap::{value_parser, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
 use clap_complete::Generator;
 use csscolorparser::Color;
@@ -151,6 +152,20 @@ pub struct Encode {
     )]
     pub output_format: OutputFormat,
 
+    /// Set the optimization level for a PNG image.
+    ///
+    /// Lower levels are faster, higher levels provide better compression. If
+    /// the value is not specified, it is assumed that the default level 2 is
+    /// specified.
+    #[cfg(feature = "optimize-output-png")]
+    #[arg(long, value_enum, num_args(0..=1), value_name("LEVEL"), ignore_case(true), default_missing_value("2"))]
+    pub optimize_png: Option<PngOptimizationLevel>,
+
+    /// Use Zopfli to compress PNG image.
+    #[cfg(feature = "optimize-output-png")]
+    #[arg(long, requires("optimize_png"))]
+    pub zopfli: bool,
+
     /// The mode of the output.
     ///
     /// If this option is not specified, use the optimal encoding.
@@ -242,6 +257,25 @@ pub struct Decode {
 }
 
 impl Opt {
+    /// Validates arguments.
+    pub fn validate(self) -> anyhow::Result<Self> {
+        if let Some(Command::Encode(ref arg)) = self.command {
+            #[cfg(feature = "optimize-output-png")]
+            if arg.optimize_png.is_some() && (arg.output_format != OutputFormat::Png) {
+                return Err(anyhow!("output format is not PNG"));
+            }
+            if (arg.output_format == OutputFormat::Terminal)
+                && ((arg.foreground != Color::from_rgba8(u8::MIN, u8::MIN, u8::MIN, u8::MAX))
+                    || (arg.background != Color::from_rgba8(u8::MAX, u8::MAX, u8::MAX, u8::MAX)))
+            {
+                return Err(anyhow!(
+                    "foreground and/or background colors cannot be changed"
+                ));
+            }
+        }
+        Ok(self)
+    }
+
     /// Generates shell completion and print it.
     pub fn print_completion(gen: impl Generator) {
         clap_complete::generate(
@@ -349,6 +383,49 @@ pub enum OutputFormat {
 
     /// To the terminal as UTF-8 string.
     Terminal,
+}
+
+#[cfg(feature = "optimize-output-png")]
+#[derive(Clone, Debug, ValueEnum)]
+pub enum PngOptimizationLevel {
+    /// Level 0.
+    ///
+    /// This value is the minimum optimization level.
+    #[value(name = "0")]
+    Level0,
+
+    /// Level 1.
+    #[value(name = "1")]
+    Level1,
+
+    /// Level 2.
+    #[value(name = "2")]
+    Level2,
+
+    /// Level 3.
+    #[value(name = "3")]
+    Level3,
+
+    /// Level 4.
+    #[value(name = "4")]
+    Level4,
+
+    /// Level 5.
+    #[value(name = "5")]
+    Level5,
+
+    /// Level 6.
+    ///
+    /// This value is the maximum optimization level.
+    #[value(name = "6", alias("max"))]
+    Level6,
+}
+
+#[cfg(feature = "optimize-output-png")]
+impl From<PngOptimizationLevel> for u8 {
+    fn from(level: PngOptimizationLevel) -> Self {
+        level as Self
+    }
 }
 
 #[derive(Clone, Debug, Eq, PartialEq, ValueEnum)]
@@ -522,6 +599,18 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "optimize-output-png")]
+    fn from_png_optimization_level_to_u8() {
+        assert_eq!(u8::from(PngOptimizationLevel::Level0), 0);
+        assert_eq!(u8::from(PngOptimizationLevel::Level1), 1);
+        assert_eq!(u8::from(PngOptimizationLevel::Level2), 2);
+        assert_eq!(u8::from(PngOptimizationLevel::Level3), 3);
+        assert_eq!(u8::from(PngOptimizationLevel::Level4), 4);
+        assert_eq!(u8::from(PngOptimizationLevel::Level5), 5);
+        assert_eq!(u8::from(PngOptimizationLevel::Level6), 6);
+    }
+
+    #[test]
     fn default_variant() {
         assert_eq!(Variant::default(), Variant::Normal);
     }
@@ -599,8 +688,8 @@ mod tests {
         );
     }
 
-    #[cfg(feature = "decode-from-svg")]
     #[test]
+    #[cfg(feature = "decode-from-svg")]
     fn try_from_input_format_to_image_format_when_svg() {
         assert!(ImageFormat::try_from(InputFormat::Svg).is_err());
     }
