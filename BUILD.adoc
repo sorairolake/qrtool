@@ -90,3 +90,7 @@ fd -t directory out ./target/*/build/qrtool-*
 `decode-from-svg`::
 
   Enable decoding from the SVG image. This is enabled by default.
+
+`optimize-output-png`::
+
+  Enable options to optimize output PNG image. This is enabled by default.

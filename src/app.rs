@@ -11,7 +11,7 @@ use std::{
 
 use anyhow::Context;
 use clap::Parser;
-use image::{ImageError, ImageFormat};
+use image::ImageFormat;
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
@@ -24,7 +24,7 @@ use crate::{
 /// Runs the program and returns the result.
 #[allow(clippy::too_many_lines)]
 pub fn run() -> anyhow::Result<()> {
-    let opt = Opt::parse();
+    let opt = Opt::parse().validate()?;
 
     if let Some(shell) = opt.generate_completion {
         Opt::print_completion(shell);
@@ -102,20 +102,31 @@ pub fn run() -> anyhow::Result<()> {
                             &(arg.foreground, arg.background),
                             module_size,
                         );
+                        let mut buf = Vec::new();
+                        image
+                            .write_to(&mut Cursor::new(&mut buf), ImageFormat::Png)
+                            .context("could not write the image to the buffer")?;
+
+                        #[cfg(feature = "optimize-output-png")]
+                        if let Some(level) = arg.optimize_png {
+                            let mut optimize_opt = oxipng::Options::from_preset(level.into());
+                            if arg.zopfli {
+                                let iterations = std::num::NonZeroU8::new(15).expect(
+                                    "the number of compression iterations should be non-zero",
+                                );
+                                optimize_opt.deflate = oxipng::Deflaters::Zopfli { iterations };
+                            }
+                            buf = oxipng::optimize_from_memory(&buf, &optimize_opt)
+                                .context("could not optimize the image")?;
+                        }
 
                         if let Some(file) = arg.output {
-                            image
-                                .save_with_format(&file, ImageFormat::Png)
-                                .with_context(|| {
-                                    format!("could not write the image to {}", file.display())
-                                })?;
+                            fs::write(&file, buf).with_context(|| {
+                                format!("could not write the image to {}", file.display())
+                            })?;
                         } else {
-                            let mut buf = Vec::new();
-                            image
-                                .write_to(&mut Cursor::new(&mut buf), ImageFormat::Png)
-                                .and_then(|()| {
-                                    io::stdout().write_all(&buf).map_err(ImageError::from)
-                                })
+                            io::stdout()
+                                .write_all(&buf)
                                 .context("could not write the image to stdout")?;
                         }
                     }

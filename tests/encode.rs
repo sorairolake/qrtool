@@ -474,6 +474,329 @@ fn encode_to_invalid_output_format() {
         ));
 }
 
+#[allow(clippy::too_many_lines)]
+#[test]
+#[cfg(feature = "optimize-output-png")]
+fn encode_to_optimized_png() {
+    let default_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("QR code")
+        .output()
+        .unwrap();
+
+    let level0_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("0")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&level0_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(level0_output.stdout.len() <= default_output.stdout.len());
+    assert!(level0_output.status.success());
+
+    let level1_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("1")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&level1_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(level1_output.stdout.len() <= level0_output.stdout.len());
+    assert!(level1_output.status.success());
+
+    let level2_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("2")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&level2_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(level2_output.stdout.len() <= level1_output.stdout.len());
+    assert!(level2_output.status.success());
+
+    let level3_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("3")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&level3_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(level3_output.stdout.len() <= level2_output.stdout.len());
+    assert!(level3_output.status.success());
+
+    let level4_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("4")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&level4_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(level4_output.stdout.len() <= level3_output.stdout.len());
+    assert!(level4_output.status.success());
+
+    let level5_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("5")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&level5_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(level5_output.stdout.len() <= level4_output.stdout.len());
+    assert!(level5_output.status.success());
+
+    let level6_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("6")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&level6_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(level6_output.stdout.len() <= level5_output.stdout.len());
+    assert!(level6_output.status.success());
+}
+
+#[test]
+#[cfg(feature = "optimize-output-png")]
+fn encode_to_maximum_optimized_png() {
+    let level6_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("6")
+        .arg("QR code")
+        .output()
+        .unwrap();
+
+    let max_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("max")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&max_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert_eq!(max_output.stdout.len(), level6_output.stdout.len());
+    assert!(max_output.status.success());
+}
+
+#[test]
+#[cfg(feature = "optimize-output-png")]
+fn encode_to_optimized_png_without_value() {
+    let level2_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("2")
+        .arg("QR code")
+        .output()
+        .unwrap();
+
+    let without_value_output = utils::command::command()
+        .arg("encode")
+        .arg("--optimize-png")
+        .arg("-t")
+        .arg("png")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&without_value_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert_eq!(
+        without_value_output.stdout.len(),
+        level2_output.stdout.len()
+    );
+    assert!(without_value_output.status.success());
+}
+
+#[test]
+#[cfg(feature = "optimize-output-png")]
+fn encode_to_optimized_png_with_invalid_level() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("7")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value '7' for '--optimize-png [<LEVEL>]'",
+        ));
+}
+
+#[test]
+#[cfg(feature = "optimize-output-png")]
+fn encode_to_optimized_png_with_invalid_output_format() {
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("svg")
+            .arg("--optimize-png")
+            .arg("0")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains("output format is not PNG"));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("terminal")
+            .arg("--optimize-png")
+            .arg("0")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains("output format is not PNG"));
+    }
+}
+
+#[test]
+#[cfg(feature = "optimize-output-png")]
+fn encode_to_optimized_png_using_zopfli() {
+    let without_value_output = utils::command::command()
+        .arg("encode")
+        .arg("--optimize-png")
+        .arg("-t")
+        .arg("png")
+        .arg("QR code")
+        .output()
+        .unwrap();
+
+    let zopfli_output = utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--optimize-png")
+        .arg("--zopfli")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&zopfli_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(zopfli_output.stdout.len() < without_value_output.stdout.len());
+    assert!(zopfli_output.status.success());
+}
+
+#[test]
+#[cfg(feature = "optimize-output-png")]
+fn encode_to_optimized_png_using_zopfli_without_level() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("png")
+        .arg("--zopfli")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "the following required arguments were not provided",
+        ))
+        .stderr(predicate::str::contains("--optimize-png [<LEVEL>]"));
+}
+
 #[test]
 fn encode_in_numeric_mode() {
     let output = utils::command::command()
@@ -1486,6 +1809,57 @@ fn encode_from_unknown_bg_color() {
             "invalid value 'a' for '--background <COLOR>'",
         ))
         .stderr(predicate::str::contains("invalid unknown format"));
+}
+
+#[test]
+fn encode_with_colors_to_terminal() {
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("terminal")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("terminal")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("terminal")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
 }
 
 #[test]

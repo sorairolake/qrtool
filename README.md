@@ -204,6 +204,10 @@ Optimize the output SVG image:
 qrtool encode -t svg "QR code" | svgcleaner -c - > output.svg
 ```
 
+If the `optimize-output-png` feature is enabled, you can also use
+`--optimize-png` option and `--zopfli` option of this command to optimize
+output PNG image.
+
 #### Reading and writing unsupported image formats
 
 If you want to save the encoded image in an image format other than PNG or SVG,
