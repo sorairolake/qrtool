@@ -158,7 +158,14 @@ pub struct Encode {
     /// the value is not specified, it is assumed that the default level 2 is
     /// specified.
     #[cfg(feature = "optimize-output-png")]
-    #[arg(long, value_enum, num_args(0..=1), value_name("LEVEL"), ignore_case(true), default_missing_value("2"))]
+    #[arg(
+        long,
+        value_enum,
+        num_args(0..=1),
+        value_name("LEVEL"),
+        ignore_case(true),
+        default_missing_value("2")
+    )]
     pub optimize_png: Option<PngOptimizationLevel>,
 
     /// Use Zopfli to compress PNG image.
