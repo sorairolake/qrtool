@@ -267,7 +267,7 @@ licensing information.
 [version-url]: https://crates.io/crates/qrtool
 [msrv-badge]: https://img.shields.io/crates/msrv/qrtool?style=for-the-badge&logo=rust
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
-[repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg
+[repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg?columns=3
 [repology-versions]: https://repology.org/project/qrtool/versions
 [Homebrew]: https://brew.sh/
 [Nix]: https://nixos.org/
