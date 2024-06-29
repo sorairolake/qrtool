@@ -83,15 +83,15 @@ impl Extractor for MetaData {
 mod tests {
     use super::*;
 
-    #[test]
     #[cfg(feature = "decode-from-svg")]
+    #[test]
     fn valid_extension_as_svg() {
         assert!(is_svg("image.svg"));
         assert!(is_svg("image.svgz"));
     }
 
-    #[test]
     #[cfg(feature = "decode-from-svg")]
+    #[test]
     fn invalid_extension_as_svg() {
         assert!(!is_svg("image.png"));
     }

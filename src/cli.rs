@@ -42,8 +42,8 @@ const DECODE_AFTER_LONG_HELP: &str = concat!(
     "See `qrtool-decode(1)` for more details."
 );
 
-#[allow(clippy::struct_excessive_bools)]
 #[derive(Debug, Parser)]
+#[allow(clippy::struct_excessive_bools)]
 #[command(
     version,
     long_version(LONG_VERSION),
@@ -294,8 +294,8 @@ impl Opt {
     }
 }
 
-#[allow(clippy::doc_markdown)]
 #[derive(Clone, Debug, ValueEnum)]
+#[allow(clippy::doc_markdown)]
 #[value(rename_all = "lower")]
 pub enum Shell {
     /// Bash.
@@ -460,8 +460,8 @@ pub enum Variant {
     Micro,
 }
 
-#[allow(clippy::doc_markdown)]
 #[derive(Clone, Debug, ValueEnum)]
+#[allow(clippy::doc_markdown)]
 #[value(rename_all = "lower")]
 pub enum InputFormat {
     /// Windows Bitmap.
@@ -605,8 +605,8 @@ mod tests {
         assert_eq!(OutputFormat::default(), OutputFormat::Png);
     }
 
-    #[test]
     #[cfg(feature = "optimize-output-png")]
+    #[test]
     fn from_png_optimization_level_to_u8() {
         assert_eq!(u8::from(PngOptimizationLevel::Level0), 0);
         assert_eq!(u8::from(PngOptimizationLevel::Level1), 1);
@@ -695,8 +695,8 @@ mod tests {
         );
     }
 
-    #[test]
     #[cfg(feature = "decode-from-svg")]
+    #[test]
     fn try_from_input_format_to_image_format_when_svg() {
         assert!(ImageFormat::try_from(InputFormat::Svg).is_err());
     }

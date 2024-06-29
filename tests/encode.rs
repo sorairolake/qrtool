@@ -474,9 +474,9 @@ fn encode_to_invalid_output_format() {
         ));
 }
 
-#[allow(clippy::too_many_lines)]
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
+#[allow(clippy::too_many_lines)]
 fn encode_to_optimized_png() {
     let default_output = utils::command::command()
         .arg("encode")
@@ -627,8 +627,8 @@ fn encode_to_optimized_png() {
     assert!(level6_output.status.success());
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_maximum_optimized_png() {
     let level6_output = utils::command::command()
         .arg("encode")
@@ -661,8 +661,8 @@ fn encode_to_maximum_optimized_png() {
     assert!(max_output.status.success());
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_without_value() {
     let level2_output = utils::command::command()
         .arg("encode")
@@ -697,8 +697,8 @@ fn encode_to_optimized_png_without_value() {
     assert!(without_value_output.status.success());
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_with_invalid_level() {
     utils::command::command()
         .arg("encode")
@@ -715,8 +715,8 @@ fn encode_to_optimized_png_with_invalid_level() {
         ));
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_with_invalid_output_format() {
     {
         utils::command::command()
@@ -746,8 +746,8 @@ fn encode_to_optimized_png_with_invalid_output_format() {
     }
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_using_zopfli() {
     let without_value_output = utils::command::command()
         .arg("encode")
@@ -779,8 +779,8 @@ fn encode_to_optimized_png_using_zopfli() {
     assert!(zopfli_output.status.success());
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_using_zopfli_without_level() {
     utils::command::command()
         .arg("encode")

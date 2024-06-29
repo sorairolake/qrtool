@@ -73,8 +73,8 @@ fn decode_from_non_image_file() {
         ));
 }
 
-#[test]
 #[cfg(feature = "decode-from-bmp")]
+#[test]
 fn decode_from_bmp() {
     utils::command::command()
         .arg("decode")
@@ -102,8 +102,8 @@ fn decode_from_bmp() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-dds")]
+#[test]
 fn decode_from_dds() {
     utils::command::command()
         .arg("decode")
@@ -131,8 +131,8 @@ fn decode_from_dds() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-ff")]
+#[test]
 fn decode_from_farbfeld() {
     utils::command::command()
         .arg("decode")
@@ -160,8 +160,8 @@ fn decode_from_farbfeld() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-gif")]
+#[test]
 fn decode_from_gif() {
     utils::command::command()
         .arg("decode")
@@ -189,8 +189,8 @@ fn decode_from_gif() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-hdr")]
+#[test]
 fn decode_from_hdr() {
     utils::command::command()
         .arg("decode")
@@ -218,8 +218,8 @@ fn decode_from_hdr() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-ico")]
+#[test]
 fn decode_from_bmp_cur() {
     utils::command::command()
         .arg("decode")
@@ -240,8 +240,8 @@ fn decode_from_bmp_cur() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-ico")]
+#[test]
 fn decode_from_png_cur() {
     utils::command::command()
         .arg("decode")
@@ -262,8 +262,8 @@ fn decode_from_png_cur() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-ico")]
+#[test]
 fn decode_from_bmp_ico() {
     utils::command::command()
         .arg("decode")
@@ -281,8 +281,8 @@ fn decode_from_bmp_ico() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-ico")]
+#[test]
 fn decode_from_png_ico() {
     utils::command::command()
         .arg("decode")
@@ -300,8 +300,8 @@ fn decode_from_png_ico() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-ico")]
+#[test]
 fn decode_from_ico_with_wrong_format() {
     utils::command::command()
         .arg("decode")
@@ -314,8 +314,8 @@ fn decode_from_ico_with_wrong_format() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-jpeg")]
+#[test]
 fn decode_from_jpeg() {
     utils::command::command()
         .arg("decode")
@@ -343,8 +343,8 @@ fn decode_from_jpeg() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-exr")]
+#[test]
 fn decode_from_open_exr() {
     utils::command::command()
         .arg("decode")
@@ -394,8 +394,8 @@ fn decode_from_png() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-pnm")]
+#[test]
 fn decode_from_ascii_pbm() {
     utils::command::command()
         .arg("decode")
@@ -413,8 +413,8 @@ fn decode_from_ascii_pbm() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-pnm")]
+#[test]
 fn decode_from_ascii_pgm() {
     utils::command::command()
         .arg("decode")
@@ -432,8 +432,8 @@ fn decode_from_ascii_pgm() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-pnm")]
+#[test]
 fn decode_from_ascii_ppm() {
     utils::command::command()
         .arg("decode")
@@ -451,8 +451,8 @@ fn decode_from_ascii_ppm() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-pnm")]
+#[test]
 fn decode_from_binary_pbm() {
     utils::command::command()
         .arg("decode")
@@ -470,8 +470,8 @@ fn decode_from_binary_pbm() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-pnm")]
+#[test]
 fn decode_from_binary_pgm() {
     utils::command::command()
         .arg("decode")
@@ -489,8 +489,8 @@ fn decode_from_binary_pgm() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-pnm")]
+#[test]
 fn decode_from_binary_ppm() {
     utils::command::command()
         .arg("decode")
@@ -508,8 +508,8 @@ fn decode_from_binary_ppm() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-pnm")]
+#[test]
 fn decode_from_pnm_with_wrong_format() {
     utils::command::command()
         .arg("decode")
@@ -522,8 +522,8 @@ fn decode_from_pnm_with_wrong_format() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-qoi")]
+#[test]
 fn decode_from_qoi() {
     utils::command::command()
         .arg("decode")
@@ -551,8 +551,8 @@ fn decode_from_qoi() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-svg")]
+#[test]
 fn decode_from_svg() {
     utils::command::command()
         .arg("decode")
@@ -570,8 +570,8 @@ fn decode_from_svg() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-svg")]
+#[test]
 fn decode_from_svgz() {
     utils::command::command()
         .arg("decode")
@@ -589,8 +589,8 @@ fn decode_from_svgz() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-svg")]
+#[test]
 fn decode_from_svg_with_wrong_format() {
     utils::command::command()
         .arg("decode")
@@ -603,8 +603,8 @@ fn decode_from_svg_with_wrong_format() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-tga")]
+#[test]
 fn decode_from_tga() {
     utils::command::command()
         .arg("decode")
@@ -632,8 +632,8 @@ fn decode_from_tga() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-tiff")]
+#[test]
 fn decode_from_tiff() {
     utils::command::command()
         .arg("decode")
@@ -661,8 +661,8 @@ fn decode_from_tiff() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-webp")]
+#[test]
 fn decode_from_lossy_web_p() {
     utils::command::command()
         .arg("decode")
@@ -680,8 +680,8 @@ fn decode_from_lossy_web_p() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-webp")]
+#[test]
 fn decode_from_lossless_web_p() {
     utils::command::command()
         .arg("decode")
@@ -699,8 +699,8 @@ fn decode_from_lossless_web_p() {
         .stdout(predicate::eq("QR code"));
 }
 
-#[test]
 #[cfg(feature = "decode-from-webp")]
+#[test]
 fn decode_from_web_p_with_wrong_format() {
     utils::command::command()
         .arg("decode")
