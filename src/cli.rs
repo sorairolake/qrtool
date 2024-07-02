@@ -155,7 +155,7 @@ pub struct Encode {
     /// Set the optimization level for a PNG image.
     ///
     /// Lower levels are faster, higher levels provide better compression. If
-    /// the value is not specified, it is assumed that the default level 2 is
+    /// <LEVEL> is not specified, it is assumed that the default level 2 is
     /// specified.
     #[cfg(feature = "optimize-output-png")]
     #[arg(
@@ -170,9 +170,9 @@ pub struct Encode {
 
     /// Use Zopfli to compress PNG image.
     ///
-    /// Performs compression for the number of iterations specified by the
-    /// value. If the value is not specified, it is assumed that 15 is
-    /// specified.
+    /// Perform compression for the number of iterations specified by
+    /// <ITERATION>. If <ITERATION> is not specified, it is assumed that 15 is
+    /// specified as the number of iterations.
     #[cfg(feature = "optimize-output-png")]
     #[arg(
         long,
