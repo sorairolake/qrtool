@@ -110,10 +110,7 @@ pub fn run() -> anyhow::Result<()> {
                         #[cfg(feature = "optimize-output-png")]
                         if let Some(level) = arg.optimize_png {
                             let mut optimize_opt = oxipng::Options::from_preset(level.into());
-                            if arg.zopfli {
-                                let iterations = std::num::NonZeroU8::new(15).expect(
-                                    "the number of compression iterations should be non-zero",
-                                );
+                            if let Some(iterations) = arg.zopfli {
                                 optimize_opt.deflate = oxipng::Deflaters::Zopfli { iterations };
                             }
                             buf = oxipng::optimize_from_memory(&buf, &optimize_opt)

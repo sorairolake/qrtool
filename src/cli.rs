@@ -169,9 +169,19 @@ pub struct Encode {
     pub optimize_png: Option<PngOptimizationLevel>,
 
     /// Use Zopfli to compress PNG image.
+    ///
+    /// Performs compression for the number of iterations specified by the
+    /// value. If the value is not specified, it is assumed that 15 is
+    /// specified.
     #[cfg(feature = "optimize-output-png")]
-    #[arg(long, requires("optimize_png"))]
-    pub zopfli: bool,
+    #[arg(
+        long,
+        requires("optimize_png"),
+        num_args(0..=1),
+        value_name("ITERATION"),
+        default_missing_value("15")
+    )]
+    pub zopfli: Option<std::num::NonZeroU8>,
 
     /// The mode of the output.
     ///
