@@ -14,6 +14,14 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.10.13\...v0.11.0[0.11.0] - 2024-07-03
+
+=== Changed
+
+* Change `--zopfli` to allow it to take a value. If the value is not specified,
+  it is assumed that 15 is specified. This is the same as before the change
+  ({pull-request-url}/534[#534])
+
 == {compare-url}/v0.10.12\...v0.10.13[0.10.13] - 2024-06-29
 
 === Fixed

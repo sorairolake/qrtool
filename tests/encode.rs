@@ -474,9 +474,9 @@ fn encode_to_invalid_output_format() {
         ));
 }
 
-#[allow(clippy::too_many_lines)]
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
+#[allow(clippy::too_many_lines)]
 fn encode_to_optimized_png() {
     let default_output = utils::command::command()
         .arg("encode")
@@ -627,8 +627,8 @@ fn encode_to_optimized_png() {
     assert!(level6_output.status.success());
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_maximum_optimized_png() {
     let level6_output = utils::command::command()
         .arg("encode")
@@ -661,8 +661,8 @@ fn encode_to_maximum_optimized_png() {
     assert!(max_output.status.success());
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_without_value() {
     let level2_output = utils::command::command()
         .arg("encode")
@@ -697,8 +697,8 @@ fn encode_to_optimized_png_without_value() {
     assert!(without_value_output.status.success());
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_with_invalid_level() {
     utils::command::command()
         .arg("encode")
@@ -715,8 +715,8 @@ fn encode_to_optimized_png_with_invalid_level() {
         ));
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_with_invalid_output_format() {
     {
         utils::command::command()
@@ -746,8 +746,8 @@ fn encode_to_optimized_png_with_invalid_output_format() {
     }
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_using_zopfli() {
     let without_value_output = utils::command::command()
         .arg("encode")
@@ -758,35 +758,58 @@ fn encode_to_optimized_png_using_zopfli() {
         .output()
         .unwrap();
 
-    let zopfli_output = utils::command::command()
+    let zopfli_5_iterations_output = utils::command::command()
         .arg("encode")
         .arg("-t")
         .arg("png")
         .arg("--optimize-png")
         .arg("--zopfli")
+        .arg("5")
         .arg("QR code")
         .output()
         .unwrap();
     assert_eq!(
         DynamicImage::ImageLuma8(
-            image::load_from_memory(&zopfli_output.stdout)
+            image::load_from_memory(&zopfli_5_iterations_output.stdout)
                 .unwrap()
                 .to_luma8()
         ),
         image::open("tests/data/encode/encode.png").unwrap()
     );
-    assert!(zopfli_output.stdout.len() < without_value_output.stdout.len());
-    assert!(zopfli_output.status.success());
+    assert!(zopfli_5_iterations_output.stdout.len() < without_value_output.stdout.len());
+    assert!(zopfli_5_iterations_output.status.success());
+
+    let zopfli_default_iterations_output = utils::command::command()
+        .arg("encode")
+        .arg("--optimize-png")
+        .arg("--zopfli")
+        .arg("-t")
+        .arg("png")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageLuma8(
+            image::load_from_memory(&zopfli_default_iterations_output.stdout)
+                .unwrap()
+                .to_luma8()
+        ),
+        image::open("tests/data/encode/encode.png").unwrap()
+    );
+    assert!(
+        zopfli_default_iterations_output.stdout.len() < zopfli_5_iterations_output.stdout.len()
+    );
+    assert!(zopfli_default_iterations_output.status.success());
 }
 
-#[test]
 #[cfg(feature = "optimize-output-png")]
+#[test]
 fn encode_to_optimized_png_using_zopfli_without_level() {
     utils::command::command()
         .arg("encode")
+        .arg("--zopfli")
         .arg("-t")
         .arg("png")
-        .arg("--zopfli")
         .arg("QR code")
         .assert()
         .failure()
@@ -795,6 +818,49 @@ fn encode_to_optimized_png_using_zopfli_without_level() {
             "the following required arguments were not provided",
         ))
         .stderr(predicate::str::contains("--optimize-png [<LEVEL>]"));
+}
+
+#[cfg(feature = "optimize-output-png")]
+#[test]
+fn encode_to_optimized_png_using_zopfli_with_invalid_value() {
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("png")
+            .arg("--optimize-png")
+            .arg("--zopfli")
+            .arg("0")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(2)
+            .stderr(predicate::str::contains(
+                "invalid value '0' for '--zopfli [<ITERATION>]'",
+            ))
+            .stderr(predicate::str::contains(
+                "number would be zero for non-zero type",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("png")
+            .arg("--optimize-png")
+            .arg("--zopfli")
+            .arg("256")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(2)
+            .stderr(predicate::str::contains(
+                "invalid value '256' for '--zopfli [<ITERATION>]'",
+            ))
+            .stderr(predicate::str::contains(
+                "number too large to fit in target type",
+            ));
+    }
 }
 
 #[test]
