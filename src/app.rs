@@ -75,7 +75,7 @@ pub fn run() -> anyhow::Result<()> {
                         .unwrap_or_else(|| if code.version().is_micro() { 2 } else { 4 });
                 let module_size = arg.size.map(NonZeroU32::get);
                 match arg.output_format {
-                    format @ (OutputFormat::Svg | OutputFormat::Terminal) => {
+                    format @ (OutputFormat::Pic | OutputFormat::Svg | OutputFormat::Terminal) => {
                         let string = if format == OutputFormat::Svg {
                             encode::to_svg(
                                 &code,
@@ -83,6 +83,8 @@ pub fn run() -> anyhow::Result<()> {
                                 &(arg.foreground, arg.background),
                                 module_size,
                             )
+                        } else if format == OutputFormat::Pic {
+                            encode::to_pic(&code, margin, module_size)
                         } else {
                             encode::to_terminal(&code, margin, module_size)
                         };

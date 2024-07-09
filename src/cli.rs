@@ -389,6 +389,9 @@ impl From<Ecc> for qrcode::EcLevel {
 
 #[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum OutputFormat {
+    /// PIC markup language.
+    Pic,
+
     /// Portable Network Graphics.
     ///
     /// This outputs 32-bit RGBA PNG image.
