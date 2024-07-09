@@ -53,16 +53,12 @@ pub fn push_data_for_selected_mode(
 
 /// Renders the QR code into a PIC image.
 pub fn to_pic(code: &QrCode, margin: u32, module_size: Option<u32>) -> String {
-    let mut result = String::new();
+    let c = code.to_colors();
+    let mut renderer = &mut Renderer::<pic::Color>::new(&c, code.width(), margin);
     if let Some(size) = module_size {
-        result = code
-            .render::<pic::Color>()
-            .min_dimensions(size, size)
-            .build();
-    } else {
-        result = code.render::<pic::Color>().build();
+        renderer = renderer.module_dimensions(size, size);
     }
-    return result;
+    renderer.build()
 }
 
 /// Renders the QR code into an image.
