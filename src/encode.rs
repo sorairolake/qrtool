@@ -6,7 +6,7 @@ use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
 use qrcode::{
     bits::Bits,
-    render::{svg, unicode, Renderer},
+    render::{pic, svg, unicode, Renderer},
     types::QrError,
     EcLevel, QrCode, QrResult, Version,
 };
@@ -49,6 +49,20 @@ pub fn push_data_for_selected_mode(
         Mode::Byte => bits.push_byte_data(data),
         Mode::Kanji => bits.push_kanji_data(data),
     }
+}
+
+/// Renders the QR code into a PIC image.
+pub fn to_pic(code: &QrCode, margin: u32, module_size: Option<u32>) -> String {
+    let mut result = String::new();
+    if let Some(size) = module_size {
+        result = code
+            .render::<pic::Color>()
+            .min_dimensions(size, size)
+            .build();
+    } else {
+        result = code.render::<pic::Color>().build();
+    }
+    return result;
 }
 
 /// Renders the QR code into an image.
