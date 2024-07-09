@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-07-02
+:docdate: 2024-07-09
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -98,6 +98,10 @@ _STRING_::
   The format of the output.
 
   The possible values are:{blank}:::
+
+    *pic*::::
+
+      PIC markup language.
 
     *png*::::
 
