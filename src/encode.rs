@@ -78,7 +78,7 @@ pub fn to_svg(
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
-    renderer.build()
+    renderer.build() + "\n"
 }
 
 /// Renders the QR code into the terminal as UTF-8 string.
@@ -91,7 +91,7 @@ pub fn to_terminal(code: &QrCode, margin: u32, module_size: Option<u32>) -> Stri
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
-    renderer.build()
+    renderer.build() + "\n"
 }
 
 /// Renders the QR code into an image.

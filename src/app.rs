@@ -96,7 +96,7 @@ pub fn run() -> anyhow::Result<()> {
                                 format!("could not write the image to {}", file.display())
                             })?;
                         } else {
-                            println!("{string}");
+                            print!("{string}");
                         }
                     }
                     OutputFormat::Png => {
