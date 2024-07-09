@@ -1,4 +1,5 @@
 // SPDX-FileCopyrightText: 2023 Shun Sakai
+// SPDX-FileCopyrightText: 2024 Alexis Hildebrandt
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
