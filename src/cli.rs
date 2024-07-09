@@ -282,7 +282,8 @@ impl Opt {
             if arg.optimize_png.is_some() && (arg.output_format != OutputFormat::Png) {
                 return Err(anyhow!("output format is not PNG"));
             }
-            if (arg.output_format == OutputFormat::Terminal)
+            if ((arg.output_format == OutputFormat::Pic)
+                || (arg.output_format == OutputFormat::Terminal))
                 && ((arg.foreground != Color::from_rgba8(u8::MIN, u8::MIN, u8::MIN, u8::MAX))
                     || (arg.background != Color::from_rgba8(u8::MAX, u8::MAX, u8::MAX, u8::MAX)))
             {

@@ -138,6 +138,20 @@ fn encode_with_module_size() {
 }
 
 #[test]
+fn encode_to_pic_with_module_size() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("pic")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/module_size/3.pic")));
+}
+
+#[test]
 fn encode_to_svg_with_module_size() {
     utils::command::command()
         .arg("encode")
@@ -365,6 +379,20 @@ fn encode_with_margin() {
 }
 
 #[test]
+fn encode_to_pic_with_margin() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("pic")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/margin/8.pic")));
+}
+
+#[test]
 fn encode_to_svg_with_margin() {
     utils::command::command()
         .arg("encode")
@@ -417,6 +445,18 @@ fn encode_with_invalid_margin() {
         .stderr(predicate::str::contains(
             "4294967296 is not in 0..=4294967295",
         ));
+}
+
+#[test]
+fn encode_to_pic() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("pic")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/encode.pic")));
 }
 
 #[test]
@@ -1875,6 +1915,57 @@ fn encode_from_unknown_bg_color() {
             "invalid value 'a' for '--background <COLOR>'",
         ))
         .stderr(predicate::str::contains("invalid unknown format"));
+}
+
+#[test]
+fn encode_with_colors_to_pic() {
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("pic")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("pic")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("pic")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
 }
 
 #[test]

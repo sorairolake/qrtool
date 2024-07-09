@@ -77,17 +77,18 @@ pub fn run() -> anyhow::Result<()> {
                 let module_size = arg.size.map(NonZeroU32::get);
                 match arg.output_format {
                     format @ (OutputFormat::Pic | OutputFormat::Svg | OutputFormat::Terminal) => {
-                        let string = if format == OutputFormat::Svg {
-                            encode::to_svg(
+                        let string = match format {
+                            OutputFormat::Pic => encode::to_pic(&code, margin, module_size),
+                            OutputFormat::Svg => encode::to_svg(
                                 &code,
                                 margin,
                                 &(arg.foreground, arg.background),
                                 module_size,
-                            )
-                        } else if format == OutputFormat::Pic {
-                            encode::to_pic(&code, margin, module_size)
-                        } else {
-                            encode::to_terminal(&code, margin, module_size)
+                            ),
+                            OutputFormat::Terminal => {
+                                encode::to_terminal(&code, margin, module_size)
+                            }
+                            OutputFormat::Png => unreachable!(),
                         };
 
                         if let Some(file) = arg.output {
