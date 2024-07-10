@@ -69,10 +69,12 @@ Output:
 QR code
 ```
 
-### SVG generation
+### Output formats
 
 Use `-t` option to change the format of the generated image. The format is
-`png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
+`pic`, `png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
+
+Encode to a SVG image:
 
 ```sh
 qrtool encode -o output.svg -t svg "QR code"
@@ -81,6 +83,21 @@ qrtool encode -o output.svg -t svg "QR code"
 Generate this image:
 
 ![Output](tests/data/decode/decode.svg)
+
+Output to the terminal as UTF-8 string:
+
+```sh
+qrtool encode -t terminal "QR code"
+```
+
+Generate a PDF file from the PIC code:
+
+```sh
+qrtool encode -t pic "QR code" \
+    | awk 'BEGIN { print ".vs 0\n.po 0\n.PS" } END { print "scale = 25.4 * 3\n.PE" } { print }' \
+    | groff -Tpdf -p -P-p3i,3i \
+    > output.pdf
+```
 
 ### Micro QR code generation
 
