@@ -5,9 +5,13 @@
 = Contribution Guide
 :git-flow-url: https://nvie.com/posts/a-successful-git-branching-model/
 :commit-messages-guide-url: https://github.com/RomuloOliveira/commit-messages-guide
+:conventionalcommits-url: https://www.conventionalcommits.org/en/v1.0.0/
 ifdef::site-gen-antora[]
 :coc-url: https://www.contributor-covenant.org/version/2/1/code_of_conduct/
 endif::[]
+
+Thank you for your interest in contributing to this project! If you would like
+to contribute to this project, please follow the instructions below if possible.
 
 == Branching model
 
@@ -17,7 +21,8 @@ The branching model of this project is based on the {git-flow-url}[git-flow].
 
 === Commit message
 
-Please see the {commit-messages-guide-url}[Commit messages guide].
+Please see the {commit-messages-guide-url}[Commit messages guide] and the
+{conventionalcommits-url}[Conventional Commits].
 
 == Submitting a pull request
 
