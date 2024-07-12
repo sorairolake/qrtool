@@ -139,6 +139,16 @@ Generate this image:
 
 ![Output](tests/data/colored/rgb.png)
 
+Colored output is also available when the output format is any ANSI escape
+sequences:
+
+```sh
+qrtool encode -t ansi-true-color --foreground brown --background lightslategray "QR code"
+```
+
+Note that lossy conversion may be performed depending on the color depth
+supported by the output format.
+
 ### Supported input image formats
 
 `qrtool decode` supports decoding a QR code from the following image formats:
