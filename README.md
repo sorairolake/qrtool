@@ -69,10 +69,24 @@ Output:
 QR code
 ```
 
-### SVG generation
+### Output formats
 
-Use `-t` option to change the format of the generated image. The format is
-`png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
+Use `-t` option to change the format of the generated image.
+
+The format is:
+
+- `png` (default)
+- `svg`
+- `pic` ([PIC] markup language)
+- `ansi` (to the terminal using 4-bit ANSI escape sequences)
+- `ansi256` (to the terminal using 8-bit ANSI escape sequences)
+- `ansi-true-color` (to the terminal using 24-bit ANSI escape sequences)
+- `ascii` (to the terminal as ASCII string)
+- `ascii-invert`
+- `unicode` (to the terminal as UTF-8 string)
+- `unicode-invert`
+
+Encode to a SVG image:
 
 ```sh
 qrtool encode -o output.svg -t svg "QR code"
@@ -81,6 +95,21 @@ qrtool encode -o output.svg -t svg "QR code"
 Generate this image:
 
 ![Output](tests/data/decode/decode.svg)
+
+Generate a PDF file from the PIC code:
+
+```sh
+qrtool encode -t pic "QR code" \
+    | awk 'BEGIN { print ".vs 0\n.po 0\n.PS" } END { print "scale = 25.4 * 3\n.PE" } { print }' \
+    | groff -Tpdf -p -P-p3i,3i \
+    > output.pdf
+```
+
+Output to the terminal as UTF-8 string:
+
+```sh
+qrtool encode -t unicode "QR code"
+```
 
 ### Micro QR code generation
 
@@ -109,6 +138,16 @@ qrtool encode --foreground brown --background lightslategray "QR code" > output.
 Generate this image:
 
 ![Output](tests/data/colored/rgb.png)
+
+Colored output is also available when the output format is any ANSI escape
+sequences:
+
+```sh
+qrtool encode -t ansi-true-color --foreground brown --background lightslategray "QR code"
+```
+
+Note that lossy conversion may be performed depending on the color depth
+supported by the output format.
 
 ### Supported input image formats
 
@@ -257,7 +296,7 @@ Copyright &copy; 2022&ndash;2024 Shun Sakai and other contributors (see
 2. Some files are distributed under the terms of the _Creative Commons
    Attribution 4.0 International Public License_.
 
-This project is compliant with version 3.0 of the [_REUSE Specification_]. See
+This project is compliant with version 3.2 of the [_REUSE Specification_]. See
 copyright notices of individual files for more details on copyright and
 licensing information.
 
@@ -276,6 +315,7 @@ licensing information.
 [_openSUSE_]: https://www.opensuse.org/
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
+[PIC]: https://en.wikipedia.org/wiki/PIC_(markup_language)
 [CSS color string]: https://www.w3.org/TR/css-color-4/
 [BMP]: https://en.wikipedia.org/wiki/BMP_file_format
 [DDS]: https://en.wikipedia.org/wiki/DirectDraw_Surface

@@ -1,4 +1,5 @@
 // SPDX-FileCopyrightText: 2023 Shun Sakai
+// SPDX-FileCopyrightText: 2024 Alexis Hildebrandt
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
@@ -6,7 +7,6 @@ use std::{
     fs,
     io::{self, Cursor, Read, Write},
     num::NonZeroU32,
-    str,
 };
 
 use anyhow::Context;
@@ -74,27 +74,11 @@ pub fn run() -> anyhow::Result<()> {
                     arg.margin
                         .unwrap_or_else(|| if code.version().is_micro() { 2 } else { 4 });
                 let module_size = arg.size.map(NonZeroU32::get);
-                match arg.output_format {
-                    format @ (OutputFormat::Svg | OutputFormat::Terminal) => {
-                        let string = if format == OutputFormat::Svg {
-                            encode::to_svg(
-                                &code,
-                                margin,
-                                &(arg.foreground, arg.background),
-                                module_size,
-                            )
-                        } else {
-                            encode::to_terminal(&code, margin, module_size)
-                        };
-
-                        if let Some(file) = arg.output {
-                            fs::write(&file, string).with_context(|| {
-                                format!("could not write the image to {}", file.display())
-                            })?;
-                        } else {
-                            println!("{string}");
-                        }
-                    }
+                let is_invert = matches!(
+                    arg.output_format,
+                    OutputFormat::AsciiInvert | OutputFormat::UnicodeInvert
+                );
+                let output = match arg.output_format {
                     OutputFormat::Png => {
                         let image = encode::to_image(
                             &code,
@@ -116,17 +100,56 @@ pub fn run() -> anyhow::Result<()> {
                             buf = oxipng::optimize_from_memory(&buf, &optimize_opt)
                                 .context("could not optimize the image")?;
                         }
-
-                        if let Some(file) = arg.output {
-                            fs::write(&file, buf).with_context(|| {
-                                format!("could not write the image to {}", file.display())
-                            })?;
-                        } else {
-                            io::stdout()
-                                .write_all(&buf)
-                                .context("could not write the image to stdout")?;
-                        }
+                        buf
                     }
+                    OutputFormat::Svg => encode::to_svg(
+                        &code,
+                        margin,
+                        &(arg.foreground, arg.background),
+                        module_size,
+                    )
+                    .into(),
+                    OutputFormat::Pic => encode::to_pic(&code, margin, module_size).into(),
+                    #[cfg(feature = "output-as-ansi")]
+                    OutputFormat::Ansi => encode::to_ansi(
+                        &code,
+                        margin,
+                        &(arg.foreground, arg.background),
+                        module_size,
+                    )
+                    .into(),
+                    #[cfg(feature = "output-as-ansi")]
+                    OutputFormat::Ansi256 => encode::to_ansi_256(
+                        &code,
+                        margin,
+                        &(arg.foreground, arg.background),
+                        module_size,
+                    )
+                    .into(),
+                    #[cfg(feature = "output-as-ansi")]
+                    OutputFormat::AnsiTrueColor => encode::to_ansi_true_color(
+                        &code,
+                        margin,
+                        &(arg.foreground, arg.background),
+                        module_size,
+                    )
+                    .into(),
+                    OutputFormat::Ascii | OutputFormat::AsciiInvert => {
+                        encode::to_ascii(&code, margin, module_size, is_invert).into()
+                    }
+                    OutputFormat::Unicode | OutputFormat::UnicodeInvert => {
+                        encode::to_unicode(&code, margin, module_size, is_invert).into()
+                    }
+                };
+
+                if let Some(file) = arg.output {
+                    fs::write(&file, output).with_context(|| {
+                        format!("could not write the image to {}", file.display())
+                    })?;
+                } else {
+                    io::stdout()
+                        .write_all(&output)
+                        .context("could not write the image to stdout")?;
                 }
             }
             Command::Decode(arg) => {
@@ -185,13 +208,9 @@ pub fn run() -> anyhow::Result<()> {
                         }
                     }
 
-                    if let Ok(string) = str::from_utf8(&content.1) {
-                        print!("{string}");
-                    } else {
-                        io::stdout()
-                            .write_all(&content.1)
-                            .context("could not write data to stdout")?;
-                    }
+                    io::stdout()
+                        .write_all(&content.1)
+                        .context("could not write data to stdout")?;
                 }
             }
         }

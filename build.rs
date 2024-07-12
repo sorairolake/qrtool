@@ -50,6 +50,8 @@ fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
     command.args(["-a", "decode-from-svg"]);
     #[cfg(feature = "optimize-output-png")]
     command.args(["-a", "optimize-output-png"]);
+    #[cfg(feature = "output-as-ansi")]
+    command.args(["-a", "output-as-ansi"]);
     command
         .args(["-D", out_dir])
         .arg(man_dir.join("*.1.adoc"))

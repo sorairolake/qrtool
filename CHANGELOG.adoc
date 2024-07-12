@@ -14,6 +14,23 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.11.0\...v0.11.1[0.11.1] - 2024-07-12
+
+=== Added
+
+* Add support for PIC output format ({pull-request-url}/543[#543])
+* Add ASCII string and ANSI escape sequences to the output format
+  ({pull-request-url}/553[#553])
+* Add values ​​for inverting foreground and background colors when the output format is a string ({pull-request-url}/553[#553])
+
+=== Changed
+
+* Rename `terminal` to `unicode`, and making `terminal` an alias for `unicode`
+  ({pull-request-url}/553[#553])
+* Change the `encode` command to return an error if `--type` is `terminal` and
+  the `--foreground` and/or `--background` options specify values ​​other than
+  the default ({pull-request-url}/531[#531])
+
 == {compare-url}/v0.10.13\...v0.11.0[0.11.0] - 2024-07-03
 
 === Changed
