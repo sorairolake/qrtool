@@ -94,3 +94,7 @@ fd -t directory out ./target/*/build/qrtool-*
 `optimize-output-png`::
 
   Enable options to optimize output PNG image. This is enabled by default.
+
+`output-as-ansi`::
+
+  Enable output using ANSI escape sequences. This is enabled by default.

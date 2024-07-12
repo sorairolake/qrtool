@@ -71,8 +71,20 @@ QR code
 
 ### Output formats
 
-Use `-t` option to change the format of the generated image. The format is
-`pic`, `png` (default), `svg` or `terminal` (to the terminal as UTF-8 string).
+Use `-t` option to change the format of the generated image.
+
+The format is:
+
+- `png` (default)
+- `svg`
+- `pic` ([PIC] markup language)
+- `ansi` (to the terminal using 4-bit ANSI escape sequences)
+- `ansi256` (to the terminal using 8-bit ANSI escape sequences)
+- `ansi-true-color` (to the terminal using 24-bit ANSI escape sequences)
+- `ascii` (to the terminal as ASCII string)
+- `ascii-invert`
+- `unicode` (to the terminal as UTF-8 string)
+- `unicode-invert`
 
 Encode to a SVG image:
 
@@ -84,12 +96,6 @@ Generate this image:
 
 ![Output](tests/data/decode/decode.svg)
 
-Output to the terminal as UTF-8 string:
-
-```sh
-qrtool encode -t terminal "QR code"
-```
-
 Generate a PDF file from the PIC code:
 
 ```sh
@@ -97,6 +103,12 @@ qrtool encode -t pic "QR code" \
     | awk 'BEGIN { print ".vs 0\n.po 0\n.PS" } END { print "scale = 25.4 * 3\n.PE" } { print }' \
     | groff -Tpdf -p -P-p3i,3i \
     > output.pdf
+```
+
+Output to the terminal as UTF-8 string:
+
+```sh
+qrtool encode -t unicode "QR code"
 ```
 
 ### Micro QR code generation
@@ -293,6 +305,7 @@ licensing information.
 [_openSUSE_]: https://www.opensuse.org/
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
+[PIC]: https://en.wikipedia.org/wiki/PIC_(markup_language)
 [CSS color string]: https://www.w3.org/TR/css-color-4/
 [BMP]: https://en.wikipedia.org/wiki/BMP_file_format
 [DDS]: https://en.wikipedia.org/wiki/DirectDraw_Surface

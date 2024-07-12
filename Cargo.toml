@@ -20,6 +20,9 @@ include = ["/LICENSES", "/README.md", "/src"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anstyle = { version = "1.0.7", default-features = false, optional = true }
+anstyle-lossy = { version = "1.1.1", optional = true }
+anstyle-yansi = { version = "2.0.0", optional = true }
 anyhow = "1.0.86"
 clap = { version = "4.5.9", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.7"
@@ -31,6 +34,7 @@ qrcode = "0.14.1"
 resvg = { version = "0.42.0", default-features = false, optional = true }
 rqrr = "0.7.1"
 sysexits = "0.8.1"
+yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
 assert_cmd = "2.0.14"
@@ -53,6 +57,7 @@ default = [
   "decode-from-webp",
   "decode-from-svg",
   "optimize-output-png",
+  "output-as-ansi",
 ]
 decode-from-bmp = ["image/bmp"]
 decode-from-dds = ["image/dds"]
@@ -69,6 +74,12 @@ decode-from-tiff = ["image/tiff"]
 decode-from-webp = ["image/webp"]
 decode-from-svg = ["dep:resvg"]
 optimize-output-png = ["dep:oxipng"]
+output-as-ansi = [
+  "dep:anstyle",
+  "dep:anstyle-lossy",
+  "dep:anstyle-yansi",
+  "dep:yansi",
+]
 
 [profile.release]
 codegen-units = 1

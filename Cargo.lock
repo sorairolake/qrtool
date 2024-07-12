@@ -57,6 +57,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "038dfcf04a5feb68e9c60b21c9625a54c2c0616e79b72b0fd87075a056ae1d1b"
 
 [[package]]
+name = "anstyle-lossy"
+version = "1.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6fcff6599f06e21b0165c85052ccd6e67dc388ddd1c516a9dc5f55dc8cacf004"
+dependencies = [
+ "anstyle",
+]
+
+[[package]]
 name = "anstyle-parse"
 version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -82,6 +91,16 @@ checksum = "61a38449feb7068f52bb06c12759005cf459ee52bb4adc1d5a7c4322d716fb19"
 dependencies = [
  "anstyle",
  "windows-sys 0.52.0",
+]
+
+[[package]]
+name = "anstyle-yansi"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ddc25af2c94c63b555e4722eed74847b3631d44ff1f3fb2a6c859e94614ac4f3"
+dependencies = [
+ "anstyle",
+ "yansi",
 ]
 
 [[package]]
@@ -825,6 +844,9 @@ dependencies = [
 name = "qrtool"
 version = "0.11.0"
 dependencies = [
+ "anstyle",
+ "anstyle-lossy",
+ "anstyle-yansi",
  "anyhow",
  "assert_cmd",
  "clap",
@@ -838,6 +860,7 @@ dependencies = [
  "resvg",
  "rqrr",
  "sysexits",
+ "yansi",
 ]
 
 [[package]]
@@ -1407,6 +1430,12 @@ name = "xmlwriter"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec7a2a501ed189703dba8b08142f057e887dfc4b2cc4db2d343ac6376ba3e0b9"
+
+[[package]]
+name = "yansi"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cfe53a6657fd280eaa890a3bc59152892ffa3e30101319d168b781ed6529b049"
 
 [[package]]
 name = "zerocopy"

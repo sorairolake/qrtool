@@ -7,7 +7,7 @@ use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
 use qrcode::{
     bits::Bits,
-    render::{pic, svg, unicode, Renderer},
+    render::{pic, svg, unicode, Pixel, Renderer},
     types::QrError,
     EcLevel, QrCode, QrResult, Version,
 };
@@ -52,10 +52,18 @@ pub fn push_data_for_selected_mode(
     }
 }
 
-/// Renders the QR code into a PIC image.
-pub fn to_pic(code: &QrCode, margin: u32, module_size: Option<u32>) -> String {
+/// Renders the QR code into an image.
+pub fn to_image(
+    code: &QrCode,
+    margin: u32,
+    colors: &(Color, Color),
+    module_size: Option<u32>,
+) -> RgbaImage {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<pic::Color>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<Rgba<u8>>::new(&c, code.width(), margin);
+    renderer = renderer
+        .dark_color(Rgba::from(colors.0.to_rgba8()))
+        .light_color(Rgba::from(colors.1.to_rgba8()));
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
@@ -70,9 +78,9 @@ pub fn to_svg(
     module_size: Option<u32>,
 ) -> String {
     let c = code.to_colors();
-    let mut renderer = Renderer::<svg::Color<'_>>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<svg::Color<'_>>::new(&c, code.width(), margin);
     let (foreground, background) = (colors.0.to_hex_string(), colors.1.to_hex_string());
-    let mut renderer = renderer
+    renderer = renderer
         .dark_color(svg::Color(&foreground))
         .light_color(svg::Color(&background));
     if let Some(size) = module_size {
@@ -81,35 +89,150 @@ pub fn to_svg(
     renderer.build() + "\n"
 }
 
-/// Renders the QR code into the terminal as UTF-8 string.
-pub fn to_terminal(code: &QrCode, margin: u32, module_size: Option<u32>) -> String {
+/// Renders the QR code into a PIC image.
+pub fn to_pic(code: &QrCode, margin: u32, module_size: Option<u32>) -> String {
     let c = code.to_colors();
-    let mut renderer = Renderer::<unicode::Dense1x2>::new(&c, code.width(), margin);
-    let mut renderer = renderer
-        .dark_color(unicode::Dense1x2::Light)
-        .light_color(unicode::Dense1x2::Dark);
-    if let Some(size) = module_size {
-        renderer = renderer.module_dimensions(size, size);
-    }
-    renderer.build() + "\n"
-}
-
-/// Renders the QR code into an image.
-pub fn to_image(
-    code: &QrCode,
-    margin: u32,
-    colors: &(Color, Color),
-    module_size: Option<u32>,
-) -> RgbaImage {
-    let c = code.to_colors();
-    let mut renderer = Renderer::<Rgba<u8>>::new(&c, code.width(), margin);
-    let mut renderer = renderer
-        .dark_color(Rgba::from(colors.0.to_rgba8()))
-        .light_color(Rgba::from(colors.1.to_rgba8()));
+    let mut renderer = &mut Renderer::<pic::Color>::new(&c, code.width(), margin);
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
     renderer.build()
+}
+
+/// Renders the QR code into the terminal using 4-bit ANSI escape sequences.
+#[cfg(feature = "output-as-ansi")]
+pub fn to_ansi(
+    code: &QrCode,
+    margin: u32,
+    colors: &(Color, Color),
+    module_size: Option<u32>,
+) -> String {
+    fn convert(color: &Color) -> String {
+        use anstyle::RgbColor;
+        use anstyle_lossy::palette::Palette;
+        use yansi::Paint;
+
+        let rgba = color.to_rgba8();
+        let ansi =
+            anstyle_lossy::rgb_to_ansi(RgbColor(rgba[0], rgba[1], rgba[2]), Palette::default());
+        let ansi = anstyle_yansi::to_yansi_color(ansi.into());
+        debug_assert!(!matches!(
+            ansi,
+            yansi::Color::Primary | yansi::Color::Fixed(_) | yansi::Color::Rgb(..)
+        ));
+        format!("{}", " ".bg(ansi))
+    }
+
+    let c = code.to_colors();
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let (foreground, background) = (convert(&colors.0), convert(&colors.1));
+    renderer = renderer.dark_color(&foreground).light_color(&background);
+    let default_module_size = <&str>::default_unit_size();
+    debug_assert!((default_module_size.0 == 1) && (default_module_size.1 == 1));
+    renderer = if let Some(size) = module_size {
+        renderer.module_dimensions(size.saturating_mul(2), size)
+    } else {
+        renderer.module_dimensions(default_module_size.0 * 2, default_module_size.1)
+    };
+    renderer.build() + "\n"
+}
+
+/// Renders the QR code into the terminal using 8-bit ANSI escape sequences.
+#[cfg(feature = "output-as-ansi")]
+pub fn to_ansi_256(
+    code: &QrCode,
+    margin: u32,
+    colors: &(Color, Color),
+    module_size: Option<u32>,
+) -> String {
+    fn convert(color: &Color) -> String {
+        use anstyle::RgbColor;
+        use yansi::Paint;
+
+        let rgba = color.to_rgba8();
+        let ansi_256 = anstyle_lossy::rgb_to_xterm(RgbColor(rgba[0], rgba[1], rgba[2]));
+        format!("{}", " ".on_fixed(ansi_256.index()))
+    }
+
+    let c = code.to_colors();
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let (foreground, background) = (convert(&colors.0), convert(&colors.1));
+    renderer = renderer.dark_color(&foreground).light_color(&background);
+    let default_module_size = <&str>::default_unit_size();
+    debug_assert!((default_module_size.0 == 1) && (default_module_size.1 == 1));
+    renderer = if let Some(size) = module_size {
+        renderer.module_dimensions(size.saturating_mul(2), size)
+    } else {
+        renderer.module_dimensions(default_module_size.0 * 2, default_module_size.1)
+    };
+    renderer.build() + "\n"
+}
+
+/// Renders the QR code into the terminal using 24-bit ANSI escape sequences.
+#[cfg(feature = "output-as-ansi")]
+pub fn to_ansi_true_color(
+    code: &QrCode,
+    margin: u32,
+    colors: &(Color, Color),
+    module_size: Option<u32>,
+) -> String {
+    use yansi::Paint;
+
+    let c = code.to_colors();
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let (foreground, background) = (
+        {
+            let fg = colors.0.to_rgba8();
+            format!("{}", " ".on_rgb(fg[0], fg[1], fg[2]))
+        },
+        {
+            let bg = colors.1.to_rgba8();
+            format!("{}", " ".on_rgb(bg[0], bg[1], bg[2]))
+        },
+    );
+    renderer = renderer.dark_color(&foreground).light_color(&background);
+    let default_module_size = <&str>::default_unit_size();
+    debug_assert!((default_module_size.0 == 1) && (default_module_size.1 == 1));
+    renderer = if let Some(size) = module_size {
+        renderer.module_dimensions(size.saturating_mul(2), size)
+    } else {
+        renderer.module_dimensions(default_module_size.0 * 2, default_module_size.1)
+    };
+    renderer.build() + "\n"
+}
+
+/// Renders the QR code into the terminal as ASCII string.
+pub fn to_ascii(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
+    let c = code.to_colors();
+    let mut renderer = &mut Renderer::<char>::new(&c, code.width(), margin);
+    renderer = if invert {
+        renderer.dark_color(' ').light_color('#')
+    } else {
+        renderer.dark_color('#').light_color(' ')
+    };
+    let default_module_size = char::default_unit_size();
+    debug_assert!((default_module_size.0 == 1) && (default_module_size.1 == 1));
+    renderer = if let Some(size) = module_size {
+        renderer.module_dimensions(size.saturating_mul(2), size)
+    } else {
+        renderer.module_dimensions(default_module_size.0 * 2, default_module_size.1)
+    };
+    renderer.build() + "\n"
+}
+
+/// Renders the QR code into the terminal as UTF-8 string.
+pub fn to_unicode(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
+    let c = code.to_colors();
+    let mut renderer = &mut Renderer::<unicode::Dense1x2>::new(&c, code.width(), margin);
+    if !invert {
+        renderer = renderer
+            .dark_color(unicode::Dense1x2::Light)
+            .light_color(unicode::Dense1x2::Dark);
+    }
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
+    renderer.build() + "\n"
 }
 
 impl Extractor for QrCode {

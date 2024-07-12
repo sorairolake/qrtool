@@ -104,7 +104,7 @@ pub struct Encode {
     /// The module size in pixels.
     ///
     /// If this option is not specified, the module size is 8 when the output
-    /// format is PNG or SVG, and 1 when the output format is UTF-8 string.
+    /// format is PNG or SVG, and 1 otherwise.
     #[arg(short, long, value_name("NUMBER"))]
     pub size: Option<NonZeroU32>,
 
@@ -210,14 +210,18 @@ pub struct Encode {
     /// Foreground color.
     ///
     /// <COLOR> takes a CSS color string. Colored output is only available when
-    /// the output format is PNG or SVG.
+    /// the output format is PNG, SVG or any ANSI escape sequences. Note that
+    /// lossy conversion may be performed depending on the color depth supported
+    /// by the output format.
     #[arg(long, default_value("black"), value_name("COLOR"))]
     pub foreground: Color,
 
     /// Background color.
     ///
     /// <COLOR> takes a CSS color string. Colored output is only available when
-    /// the output format is PNG or SVG.
+    /// the output format is PNG, SVG or any ANSI escape sequences. Note that
+    /// lossy conversion may be performed depending on the color depth supported
+    /// by the output format.
     #[arg(long, default_value("white"), value_name("COLOR"))]
     pub background: Color,
 
@@ -282,11 +286,18 @@ impl Opt {
             if arg.optimize_png.is_some() && (arg.output_format != OutputFormat::Png) {
                 return Err(anyhow!("output format is not PNG"));
             }
-            if ((arg.output_format == OutputFormat::Pic)
-                || (arg.output_format == OutputFormat::Terminal))
-                && ((arg.foreground != Color::from_rgba8(u8::MIN, u8::MIN, u8::MIN, u8::MAX))
-                    || (arg.background != Color::from_rgba8(u8::MAX, u8::MAX, u8::MAX, u8::MAX)))
-            {
+            let is_monochrome = matches!(
+                arg.output_format,
+                OutputFormat::Pic
+                    | OutputFormat::Ascii
+                    | OutputFormat::AsciiInvert
+                    | OutputFormat::Unicode
+                    | OutputFormat::UnicodeInvert
+            );
+            let is_default_colors = (arg.foreground
+                == Color::from_rgba8(u8::MIN, u8::MIN, u8::MIN, u8::MAX))
+                && (arg.background == Color::from_rgba8(u8::MAX, u8::MAX, u8::MAX, u8::MAX));
+            if is_monochrome && !is_default_colors {
                 return Err(anyhow!(
                     "foreground and/or background colors cannot be changed"
                 ));
@@ -391,9 +402,6 @@ impl From<Ecc> for qrcode::EcLevel {
 
 #[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum OutputFormat {
-    /// PIC markup language.
-    Pic,
-
     /// Portable Network Graphics.
     ///
     /// This outputs 32-bit RGBA PNG image.
@@ -403,8 +411,39 @@ pub enum OutputFormat {
     /// Scalable Vector Graphics.
     Svg,
 
+    /// PIC markup language.
+    Pic,
+
+    /// To the terminal using 4-bit ANSI escape sequences.
+    #[cfg(feature = "output-as-ansi")]
+    Ansi,
+
+    /// To the terminal using 8-bit ANSI escape sequences.
+    #[cfg(feature = "output-as-ansi")]
+    Ansi256,
+
+    /// To the terminal using 24-bit ANSI escape sequences.
+    #[cfg(feature = "output-as-ansi")]
+    AnsiTrueColor,
+
+    /// To the terminal as ASCII string.
+    Ascii,
+
+    /// To the terminal as ASCII string.
+    ///
+    /// This value inverts foreground and background colors.
+    #[value(alias("ASCIIi"))]
+    AsciiInvert,
+
     /// To the terminal as UTF-8 string.
-    Terminal,
+    #[value(alias("terminal"), alias("UTF8"))]
+    Unicode,
+
+    /// To the terminal as UTF-8 string.
+    ///
+    /// This value inverts foreground and background colors.
+    #[value(alias("UTF8i"))]
+    UnicodeInvert,
 }
 
 #[cfg(feature = "optimize-output-png")]

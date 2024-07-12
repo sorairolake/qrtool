@@ -138,20 +138,6 @@ fn encode_with_module_size() {
 }
 
 #[test]
-fn encode_to_pic_with_module_size() {
-    utils::command::command()
-        .arg("encode")
-        .arg("-s")
-        .arg("3")
-        .arg("-t")
-        .arg("pic")
-        .arg("QR code")
-        .assert()
-        .success()
-        .stdout(predicate::eq(include_str!("data/module_size/3.pic")));
-}
-
-#[test]
 fn encode_to_svg_with_module_size() {
     utils::command::command()
         .arg("encode")
@@ -166,17 +152,128 @@ fn encode_to_svg_with_module_size() {
 }
 
 #[test]
-fn encode_to_terminal_with_module_size() {
+fn encode_to_pic_with_module_size() {
     utils::command::command()
         .arg("encode")
         .arg("-s")
         .arg("3")
         .arg("-t")
-        .arg("terminal")
+        .arg("pic")
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::eq(include_str!("data/module_size/3.txt")));
+        .stdout(predicate::eq(include_str!("data/module_size/3.pic")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_with_module_size() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("ansi")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/module_size/3_ansi.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_256_with_module_size() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("ansi256")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/module_size/3_ansi_256.txt"
+        )));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_true_color_with_module_size() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("ansi-true-color")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/module_size/3_ansi_true_color.txt"
+        )));
+}
+
+#[test]
+fn encode_to_ascii_with_module_size() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("ascii")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/module_size/3_ascii.txt")));
+}
+
+#[test]
+fn encode_to_ascii_invert_with_module_size() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("ascii-invert")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/module_size/3_ascii_invert.txt"
+        )));
+}
+
+#[test]
+fn encode_to_unicode_with_module_size() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("unicode")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/module_size/3_unicode.txt"
+        )));
+}
+
+#[test]
+fn encode_to_unicode_invert_with_module_size() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("unicode-invert")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/module_size/3_unicode_invert.txt"
+        )));
 }
 
 #[test]
@@ -379,20 +476,6 @@ fn encode_with_margin() {
 }
 
 #[test]
-fn encode_to_pic_with_margin() {
-    utils::command::command()
-        .arg("encode")
-        .arg("-m")
-        .arg("8")
-        .arg("-t")
-        .arg("pic")
-        .arg("QR code")
-        .assert()
-        .success()
-        .stdout(predicate::eq(include_str!("data/margin/8.pic")));
-}
-
-#[test]
 fn encode_to_svg_with_margin() {
     utils::command::command()
         .arg("encode")
@@ -407,17 +490,124 @@ fn encode_to_svg_with_margin() {
 }
 
 #[test]
-fn encode_to_terminal_with_margin() {
+fn encode_to_pic_with_margin() {
     utils::command::command()
         .arg("encode")
         .arg("-m")
         .arg("8")
         .arg("-t")
-        .arg("terminal")
+        .arg("pic")
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::eq(include_str!("data/margin/8.txt")));
+        .stdout(predicate::eq(include_str!("data/margin/8.pic")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_with_margin() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("ansi")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/margin/8_ansi.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_256_with_margin() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("ansi256")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/margin/8_ansi_256.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_true_color_with_margin() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("ansi-true-color")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/margin/8_ansi_true_color.txt"
+        )));
+}
+
+#[test]
+fn encode_to_ascii_with_margin() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("ascii")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/margin/8_ascii.txt")));
+}
+
+#[test]
+fn encode_to_ascii_invert_with_margin() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("ascii-invert")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/margin/8_ascii_invert.txt"
+        )));
+}
+
+#[test]
+fn encode_to_unicode_with_margin() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("unicode")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/margin/8_unicode.txt")));
+}
+
+#[test]
+fn encode_to_unicode_invert_with_margin() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("unicode-invert")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/margin/8_unicode_invert.txt"
+        )));
 }
 
 #[test]
@@ -445,18 +635,6 @@ fn encode_with_invalid_margin() {
         .stderr(predicate::str::contains(
             "4294967296 is not in 0..=4294967295",
         ));
-}
-
-#[test]
-fn encode_to_pic() {
-    utils::command::command()
-        .arg("encode")
-        .arg("-t")
-        .arg("pic")
-        .arg("QR code")
-        .assert()
-        .success()
-        .stdout(predicate::eq(include_str!("data/encode/encode.pic")));
 }
 
 #[test]
@@ -488,7 +666,100 @@ fn encode_to_svg() {
 }
 
 #[test]
-fn encode_to_terminal() {
+fn encode_to_pic() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("pic")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/encode.pic")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/ansi.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_256() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi256")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/ansi_256.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_true_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi-true-color")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/encode/ansi_true_color.txt"
+        )));
+}
+
+#[test]
+fn encode_to_ascii() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ascii")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/ascii.txt")));
+}
+
+#[test]
+fn encode_to_ascii_invert() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ascii-invert")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/ascii_invert.txt")));
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ASCIIi")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/ascii_invert.txt")));
+}
+
+#[test]
+fn encode_to_unicode() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("unicode")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/unicode.txt")));
     utils::command::command()
         .arg("encode")
         .arg("-t")
@@ -496,7 +767,39 @@ fn encode_to_terminal() {
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::eq(include_str!("data/encode/encode.txt")));
+        .stdout(predicate::eq(include_str!("data/encode/unicode.txt")));
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("UTF8")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/unicode.txt")));
+}
+
+#[test]
+fn encode_to_unicode_invert() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("unicode-invert")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/encode/unicode_invert.txt"
+        )));
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("UTF8i")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/encode/unicode_invert.txt"
+        )));
 }
 
 #[test]
@@ -775,7 +1078,7 @@ fn encode_to_optimized_png_with_invalid_output_format() {
         utils::command::command()
             .arg("encode")
             .arg("-t")
-            .arg("terminal")
+            .arg("unicode")
             .arg("--optimize-png")
             .arg("0")
             .arg("QR code")
@@ -1161,6 +1464,59 @@ fn encode_to_svg_from_named_color() {
         .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
 }
 
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_from_named_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi")
+        .arg("--foreground")
+        .arg("brown")
+        .arg("--background")
+        .arg("lightslategray")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_256_from_named_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi256")
+        .arg("--foreground")
+        .arg("brown")
+        .arg("--background")
+        .arg("lightslategray")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi_256.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_true_color_from_named_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi-true-color")
+        .arg("--foreground")
+        .arg("brown")
+        .arg("--background")
+        .arg("lightslategray")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/colored/rgb_ansi_true_color.txt"
+        )));
+}
+
 #[test]
 fn encode_from_hex_fg_color() {
     {
@@ -1287,6 +1643,97 @@ fn encode_to_svg_from_hex_color() {
         .assert()
         .success()
         .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_from_hex_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi")
+        .arg("--foreground")
+        .arg("#a52a2a")
+        .arg("--background")
+        .arg("#778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi.txt")));
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi")
+        .arg("--foreground")
+        .arg("a52a2a")
+        .arg("--background")
+        .arg("778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_256_from_hex_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi256")
+        .arg("--foreground")
+        .arg("#a52a2a")
+        .arg("--background")
+        .arg("#778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi_256.txt")));
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi256")
+        .arg("--foreground")
+        .arg("a52a2a")
+        .arg("--background")
+        .arg("778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi_256.txt")));
+}
+
+#[cfg(all(feature = "output-as-ansi", unix))]
+#[test]
+fn encode_to_ansi_true_color_from_hex_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi-true-color")
+        .arg("--foreground")
+        .arg("#a52a2a")
+        .arg("--background")
+        .arg("#778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/colored/rgb_ansi_true_color.txt"
+        )));
+    utils::command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("ansi-true-color")
+        .arg("--foreground")
+        .arg("a52a2a")
+        .arg("--background")
+        .arg("778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!(
+            "data/colored/rgb_ansi_true_color.txt"
+        )));
 }
 
 #[test]
@@ -1969,12 +2416,12 @@ fn encode_with_colors_to_pic() {
 }
 
 #[test]
-fn encode_with_colors_to_terminal() {
+fn encode_with_colors_to_ascii() {
     {
         utils::command::command()
             .arg("encode")
             .arg("-t")
-            .arg("terminal")
+            .arg("ascii")
             .arg("--foreground")
             .arg("brown")
             .arg("QR code")
@@ -1989,7 +2436,7 @@ fn encode_with_colors_to_terminal() {
         utils::command::command()
             .arg("encode")
             .arg("-t")
-            .arg("terminal")
+            .arg("ascii")
             .arg("--background")
             .arg("lightslategray")
             .arg("QR code")
@@ -2004,7 +2451,160 @@ fn encode_with_colors_to_terminal() {
         utils::command::command()
             .arg("encode")
             .arg("-t")
-            .arg("terminal")
+            .arg("ascii")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+}
+
+#[test]
+fn encode_with_colors_to_ascii_invert() {
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("ascii-invert")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("ascii-invert")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("ascii-invert")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+}
+
+#[test]
+fn encode_with_colors_to_unicode() {
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("unicode")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("unicode")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("unicode")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+}
+
+#[test]
+fn encode_with_colors_to_unicode_invert() {
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("unicode-invert")
+            .arg("--foreground")
+            .arg("brown")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("unicode-invert")
+            .arg("--background")
+            .arg("lightslategray")
+            .arg("QR code")
+            .assert()
+            .failure()
+            .code(1)
+            .stderr(predicate::str::contains(
+                "foreground and/or background colors cannot be changed",
+            ));
+    }
+    {
+        utils::command::command()
+            .arg("encode")
+            .arg("-t")
+            .arg("unicode-invert")
             .arg("--foreground")
             .arg("brown")
             .arg("--background")
