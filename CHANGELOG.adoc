@@ -27,9 +27,6 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 * Rename `terminal` to `unicode`, and making `terminal` an alias for `unicode`
   ({pull-request-url}/553[#553])
-* Change the `encode` command to return an error if `--type` is `terminal` and
-  the `--foreground` and/or `--background` options specify values ​​other than
-  the default ({pull-request-url}/531[#531])
 
 == {compare-url}/v0.10.13\...v0.11.0[0.11.0] - 2024-07-03
 
