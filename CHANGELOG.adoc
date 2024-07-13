@@ -14,6 +14,13 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.11.2\...HEAD[Unreleased]
+
+=== Changed
+
+* Predict input SVG image based on file contents instead of filename extension
+  ({pull-request-url}/559[#559])
+
 == {compare-url}/v0.11.1\...v0.11.2[0.11.2] - 2024-07-12
 
 === Fixed

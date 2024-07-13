@@ -271,7 +271,7 @@ echo "The quick brown fox jumps over the lazy dog." \
 Decode this image and print the result to stdout:
 
 ```sh
-$ inkscape -o - --export-type svg output.eps | qrtool decode -t svg
+$ inkscape -o - --export-type svg output.eps | qrtool decode
 The quick brown fox jumps over the lazy dog.
 ```
 

@@ -11,17 +11,6 @@ use crate::{
 
 type DecodedBytes = (MetaData, Vec<u8>);
 
-/// Returns `true` if `path` is SVG.
-#[cfg(feature = "decode-from-svg")]
-pub fn is_svg(path: impl AsRef<std::path::Path>) -> bool {
-    use std::ffi::OsStr;
-
-    matches!(
-        path.as_ref().extension().and_then(OsStr::to_str),
-        Some("svg" | "svgz")
-    )
-}
-
 #[cfg(feature = "decode-from-svg")]
 fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
     use anyhow::Context;
@@ -82,19 +71,6 @@ impl Extractor for MetaData {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[cfg(feature = "decode-from-svg")]
-    #[test]
-    fn valid_extension_as_svg() {
-        assert!(is_svg("image.svg"));
-        assert!(is_svg("image.svgz"));
-    }
-
-    #[cfg(feature = "decode-from-svg")]
-    #[test]
-    fn invalid_extension_as_svg() {
-        assert!(!is_svg("image.png"));
-    }
 
     #[test]
     fn validate_metadata_extraction() {
