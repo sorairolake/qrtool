@@ -166,11 +166,8 @@ pub fn run() -> anyhow::Result<()> {
                 };
                 let input_format = arg.input_format;
                 #[cfg(feature = "decode-from-svg")]
-                let input_format = input_format.or_else(|| {
-                    let usvg_opt = resvg::usvg::Options::default();
-                    resvg::usvg::Tree::from_data(&input, &usvg_opt)
-                        .map_or(input_format, |_| Some(crate::cli::InputFormat::Svg))
-                });
+                let input_format = input_format
+                    .or_else(|| is_svg::is_svg(&input).then_some(crate::cli::InputFormat::Svg));
                 #[allow(clippy::option_if_let_else)]
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]
