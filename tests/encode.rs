@@ -165,7 +165,7 @@ fn encode_to_pic_with_module_size() {
         .stdout(predicate::eq(include_str!("data/module_size/3.pic")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_with_module_size() {
     utils::command::command()
@@ -180,7 +180,7 @@ fn encode_to_ansi_with_module_size() {
         .stdout(predicate::eq(include_str!("data/module_size/3_ansi.txt")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_256_with_module_size() {
     utils::command::command()
@@ -197,7 +197,7 @@ fn encode_to_ansi_256_with_module_size() {
         )));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_true_color_with_module_size() {
     utils::command::command()
@@ -503,7 +503,7 @@ fn encode_to_pic_with_margin() {
         .stdout(predicate::eq(include_str!("data/margin/8.pic")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_with_margin() {
     utils::command::command()
@@ -518,7 +518,7 @@ fn encode_to_ansi_with_margin() {
         .stdout(predicate::eq(include_str!("data/margin/8_ansi.txt")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_256_with_margin() {
     utils::command::command()
@@ -533,7 +533,7 @@ fn encode_to_ansi_256_with_margin() {
         .stdout(predicate::eq(include_str!("data/margin/8_ansi_256.txt")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_true_color_with_margin() {
     utils::command::command()
@@ -677,7 +677,7 @@ fn encode_to_pic() {
         .stdout(predicate::eq(include_str!("data/encode/encode.pic")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi() {
     utils::command::command()
@@ -690,7 +690,7 @@ fn encode_to_ansi() {
         .stdout(predicate::eq(include_str!("data/encode/ansi.txt")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_256() {
     utils::command::command()
@@ -703,7 +703,7 @@ fn encode_to_ansi_256() {
         .stdout(predicate::eq(include_str!("data/encode/ansi_256.txt")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_true_color() {
     utils::command::command()
@@ -1464,7 +1464,7 @@ fn encode_to_svg_from_named_color() {
         .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_from_named_color() {
     utils::command::command()
@@ -1478,10 +1478,14 @@ fn encode_to_ansi_from_named_color() {
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi.txt")));
+        .stdout(predicate::eq(if cfg!(windows) {
+            include_str!("data/colored/rgb_ansi_windows_10_console.txt")
+        } else {
+            include_str!("data/colored/rgb_ansi_vga.txt")
+        }));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_256_from_named_color() {
     utils::command::command()
@@ -1498,7 +1502,7 @@ fn encode_to_ansi_256_from_named_color() {
         .stdout(predicate::eq(include_str!("data/colored/rgb_ansi_256.txt")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_true_color_from_named_color() {
     utils::command::command()
@@ -1645,7 +1649,7 @@ fn encode_to_svg_from_hex_color() {
         .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_from_hex_color() {
     utils::command::command()
@@ -1659,7 +1663,11 @@ fn encode_to_ansi_from_hex_color() {
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi.txt")));
+        .stdout(predicate::eq(if cfg!(windows) {
+            include_str!("data/colored/rgb_ansi_windows_10_console.txt")
+        } else {
+            include_str!("data/colored/rgb_ansi_vga.txt")
+        }));
     utils::command::command()
         .arg("encode")
         .arg("-t")
@@ -1671,10 +1679,14 @@ fn encode_to_ansi_from_hex_color() {
         .arg("QR code")
         .assert()
         .success()
-        .stdout(predicate::eq(include_str!("data/colored/rgb_ansi.txt")));
+        .stdout(predicate::eq(if cfg!(windows) {
+            include_str!("data/colored/rgb_ansi_windows_10_console.txt")
+        } else {
+            include_str!("data/colored/rgb_ansi_vga.txt")
+        }));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_256_from_hex_color() {
     utils::command::command()
@@ -1703,7 +1715,7 @@ fn encode_to_ansi_256_from_hex_color() {
         .stdout(predicate::eq(include_str!("data/colored/rgb_ansi_256.txt")));
 }
 
-#[cfg(all(feature = "output-as-ansi", unix))]
+#[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_true_color_from_hex_color() {
     utils::command::command()
