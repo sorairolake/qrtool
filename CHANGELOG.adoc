@@ -20,6 +20,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 * Predict input SVG image based on file contents instead of filename extension
   ({pull-request-url}/559[#559])
+* Reduce size of ANSI escaped string ({pull-request-url}/563[#563])
 
 == {compare-url}/v0.11.1\...v0.11.2[0.11.2] - 2024-07-12
 
