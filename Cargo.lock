@@ -578,9 +578,9 @@ dependencies = [
 
 [[package]]
 name = "is-svg"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a95e1eb540241ec683418394510ee0d1e29596f22a40bbade0eb136604e3ca4"
+checksum = "57672fed95854c46fe7e0c241a325c5d86c4704a746329f888713046c6204705"
 dependencies = [
  "usvg",
 ]
