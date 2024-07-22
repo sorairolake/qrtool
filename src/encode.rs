@@ -7,7 +7,7 @@ use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
 use qrcode::{
     bits::Bits,
-    render::{pic, svg, unicode, Pixel, Renderer},
+    render::{pic, svg, unicode, Renderer},
     types::QrError,
     EcLevel, QrCode, QrResult, Version,
 };
@@ -120,20 +120,16 @@ pub fn to_ansi(
             ansi,
             yansi::Color::Primary | yansi::Color::Fixed(_) | yansi::Color::Rgb(..)
         ));
-        format!("{}", " ".bg(ansi))
+        format!("{}", "  ".bg(ansi))
     }
 
     let c = code.to_colors();
     let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
     let (foreground, background) = (convert(&colors.0), convert(&colors.1));
     renderer = renderer.dark_color(&foreground).light_color(&background);
-    let default_module_size = <&str>::default_unit_size();
-    debug_assert!((default_module_size.0 == 1) && (default_module_size.1 == 1));
-    renderer = if let Some(size) = module_size {
-        renderer.module_dimensions(size.saturating_mul(2), size)
-    } else {
-        renderer.module_dimensions(default_module_size.0 * 2, default_module_size.1)
-    };
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
     renderer.build() + "\n"
 }
 
@@ -151,20 +147,16 @@ pub fn to_ansi_256(
 
         let rgba = color.to_rgba8();
         let ansi_256 = anstyle_lossy::rgb_to_xterm(RgbColor(rgba[0], rgba[1], rgba[2]));
-        format!("{}", " ".on_fixed(ansi_256.index()))
+        format!("{}", "  ".on_fixed(ansi_256.index()))
     }
 
     let c = code.to_colors();
     let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
     let (foreground, background) = (convert(&colors.0), convert(&colors.1));
     renderer = renderer.dark_color(&foreground).light_color(&background);
-    let default_module_size = <&str>::default_unit_size();
-    debug_assert!((default_module_size.0 == 1) && (default_module_size.1 == 1));
-    renderer = if let Some(size) = module_size {
-        renderer.module_dimensions(size.saturating_mul(2), size)
-    } else {
-        renderer.module_dimensions(default_module_size.0 * 2, default_module_size.1)
-    };
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
     renderer.build() + "\n"
 }
 
@@ -183,40 +175,32 @@ pub fn to_ansi_true_color(
     let (foreground, background) = (
         {
             let fg = colors.0.to_rgba8();
-            format!("{}", " ".on_rgb(fg[0], fg[1], fg[2]))
+            format!("{}", "  ".on_rgb(fg[0], fg[1], fg[2]))
         },
         {
             let bg = colors.1.to_rgba8();
-            format!("{}", " ".on_rgb(bg[0], bg[1], bg[2]))
+            format!("{}", "  ".on_rgb(bg[0], bg[1], bg[2]))
         },
     );
     renderer = renderer.dark_color(&foreground).light_color(&background);
-    let default_module_size = <&str>::default_unit_size();
-    debug_assert!((default_module_size.0 == 1) && (default_module_size.1 == 1));
-    renderer = if let Some(size) = module_size {
-        renderer.module_dimensions(size.saturating_mul(2), size)
-    } else {
-        renderer.module_dimensions(default_module_size.0 * 2, default_module_size.1)
-    };
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
     renderer.build() + "\n"
 }
 
 /// Renders the QR code into the terminal as ASCII string.
 pub fn to_ascii(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<char>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
     renderer = if invert {
-        renderer.dark_color(' ').light_color('#')
+        renderer.dark_color("  ").light_color("##")
     } else {
-        renderer.dark_color('#').light_color(' ')
+        renderer.dark_color("##").light_color("  ")
     };
-    let default_module_size = char::default_unit_size();
-    debug_assert!((default_module_size.0 == 1) && (default_module_size.1 == 1));
-    renderer = if let Some(size) = module_size {
-        renderer.module_dimensions(size.saturating_mul(2), size)
-    } else {
-        renderer.module_dimensions(default_module_size.0 * 2, default_module_size.1)
-    };
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
     renderer.build() + "\n"
 }
 

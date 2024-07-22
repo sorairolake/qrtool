@@ -153,15 +153,6 @@ pub fn run() -> anyhow::Result<()> {
                 }
             }
             Command::Decode(arg) => {
-                let input_format = arg.input_format;
-                #[cfg(feature = "decode-from-svg")]
-                #[allow(clippy::option_if_let_else)]
-                let input_format = match (&input_format, &arg.input) {
-                    (None, Some(path)) if decode::is_svg(path) => {
-                        Some(crate::cli::InputFormat::Svg)
-                    }
-                    _ => input_format,
-                };
                 let input = match arg.input {
                     Some(ref path) if path.to_str().unwrap_or_default() != "-" => fs::read(path)
                         .with_context(|| format!("could not read data from {}", path.display()))?,
@@ -173,6 +164,10 @@ pub fn run() -> anyhow::Result<()> {
                         buf
                     }
                 };
+                let input_format = arg.input_format;
+                #[cfg(feature = "decode-from-svg")]
+                let input_format = input_format
+                    .or_else(|| is_svg::is_svg(&input).then_some(crate::cli::InputFormat::Svg));
                 #[allow(clippy::option_if_let_else)]
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]

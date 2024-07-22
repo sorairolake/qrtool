@@ -514,7 +514,7 @@ pub enum Variant {
     Micro,
 }
 
-#[derive(Clone, Debug, ValueEnum)]
+#[derive(Clone, Copy, Debug, ValueEnum)]
 #[allow(clippy::doc_markdown)]
 #[value(rename_all = "lower")]
 pub enum InputFormat {

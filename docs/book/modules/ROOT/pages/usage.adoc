@@ -42,13 +42,9 @@ image::basic.png[Output]
 .Decode a QR code from this image
 [source,sh]
 ----
-qrtool decode output.png
-----
-
-.Output
-....
+$ qrtool decode output.png
 QR code
-....
+----
 
 == Output formats
 
@@ -162,15 +158,12 @@ image::lossless.webp[Input]
 .Decode a QR code from the WebP image
 [source,sh]
 ----
-qrtool decode input.webp
-# or
-qrtool decode -t webp input.webp
-----
-
-.Output
-....
+$ qrtool decode input.webp
 QR code
-....
+# or
+$ qrtool decode -t webp input.webp
+QR code
+----
 
 == Generate shell completion
 
@@ -224,14 +217,33 @@ If you want to save the encoded image in an image format other than PNG or SVG,
 or decode an image in an unsupported image format, convert it using a converter
 such as {imagemagick-url}[ImageMagick].
 
-.Read `Cargo.toml` from stdin and save the encoded result as a JPEG XL image
+==== Raster formats
+
+.Read `Cargo.toml` from stdin and save the encoded result as a XPM image
 [source,sh]
 ----
-cat Cargo.toml | qrtool encode | magick png:- output.jxl
+cat Cargo.toml | qrtool encode | magick png:- output.xpm
 ----
 
 .Decode this image and print the result using `bat`
 [source,sh]
 ----
-magick output.jxl png:- | qrtool decode | bat -l toml
+magick output.xpm png:- | qrtool decode | bat -l toml
+----
+
+==== Vector formats
+
+.Read a string from stdin and save the encoded result as an EPS image
+[source,sh]
+----
+echo "The quick brown fox jumps over the lazy dog." \
+    | qrtool encode -t svg \
+    | inkscape -p -o output.eps
+----
+
+.Decode this image and print the result to stdout
+[source,sh]
+----
+$ inkscape -o - --export-type svg output.eps | qrtool decode
+The quick brown fox jumps over the lazy dog.
 ----

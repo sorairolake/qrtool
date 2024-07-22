@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.11.2"
+version = "0.11.3"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -28,8 +28,9 @@ clap = { version = "4.5.9", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.8"
 clap_complete_nushell = "4.5.2"
 csscolorparser = "0.6.2"
-image = { version = "0.25.1", default-features = false, features = ["png", "rayon"] }
-oxipng = { version = "9.1.1", default-features = false, features = ["parallel", "zopfli"], optional = true }
+image = { version = "0.25.2", default-features = false, features = ["png", "rayon"] }
+is-svg = { version = "0.1.1", optional = true }
+oxipng = { version = "9.1.2", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.1"
 resvg = { version = "0.42.0", default-features = false, optional = true }
 rqrr = "0.7.1"
@@ -72,7 +73,7 @@ decode-from-qoi = ["image/qoi"]
 decode-from-tga = ["image/tga"]
 decode-from-tiff = ["image/tiff"]
 decode-from-webp = ["image/webp"]
-decode-from-svg = ["dep:resvg"]
+decode-from-svg = ["dep:is-svg", "dep:resvg"]
 optimize-output-png = ["dep:oxipng"]
 output-as-ansi = [
   "dep:anstyle",
