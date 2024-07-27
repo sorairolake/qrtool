@@ -26,7 +26,7 @@ anstyle-yansi = { version = "2.0.1", optional = true }
 anyhow = "1.0.86"
 clap = { version = "4.5.11", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.8"
-clap_complete_nushell = "4.5.2"
+clap_complete_nushell = "4.5.3"
 csscolorparser = "0.6.2"
 image = { version = "0.25.2", default-features = false, features = ["png", "rayon"] }
 is-svg = { version = "0.1.1", optional = true }
