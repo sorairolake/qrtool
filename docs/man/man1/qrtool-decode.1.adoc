@@ -34,7 +34,7 @@ _IMAGE_::
 
   Input image file. If _IMAGE_ is not specified, or if "-" is specified, the
   image will be read from stdin. Supported raster image formats are based on
-  the formats supported by the {image-crates-url}[image] crate. The format of
+  the formats supported by the {image-crates-url}[`image`] crate. The format of
   _IMAGE_ is determined based on the extension or the magic number if possible.
   If the format cannot be determined, use *--type*. Note that the SVG image is
   rasterized before scanning.
