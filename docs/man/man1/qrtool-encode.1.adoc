@@ -4,12 +4,14 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-07-12
+:docdate: 2024-07-30
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
+:qrcode-url: https://www.qrcode.com/
+:css-color-url: https://www.w3.org/TR/css-color-4/
 
 == NAME
 
@@ -21,8 +23,8 @@ qrtool-encode - encode input data in a QR code
 
 == DESCRIPTION
 
-This command encodes input data in a QR code. By default, the result will be
-output to stdout.
+This command encodes input data in a {qrcode-url}[QR code]. By default, the
+result will be output to stdout.
 
 *qrtool enc* and *qrtool e* are aliases for this command.
 
@@ -236,10 +238,10 @@ endif::[]
 
 *--foreground* _COLOR_::
 
-  Foreground color. _COLOR_ takes a CSS color string. Colored output is only
-  available when the output format is PNG, SVG or any ANSI escape sequences.
-  Note that lossy conversion may be performed depending on the color depth
-  supported by the output format. Default is black.
+  Foreground color. _COLOR_ takes a {css-color-url}[CSS color string]. Colored
+  output is only available when the output format is PNG, SVG or any ANSI
+  escape sequences. Note that lossy conversion may be performed depending on
+  the color depth supported by the output format. Default is black.
 
 *--background* _COLOR_::
 
@@ -270,14 +272,6 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.ado
 Source repository:{blank}::
 
   https://github.com/sorairolake/qrtool
-
-QR code.com:{blank}::
-
-  https://www.qrcode.com/
-
-CSS Color Module Level 4:{blank}::
-
-  https://www.w3.org/TR/css-color-4/
 
 == EXAMPLES
 

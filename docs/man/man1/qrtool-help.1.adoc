@@ -4,7 +4,7 @@
 
 = qrtool-help(1)
 // Specify in UTC.
-:docdate: 2023-07-17
+:docdate: 2024-07-30
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -41,10 +41,6 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.ado
 Source repository:{blank}::
 
   https://github.com/sorairolake/qrtool
-
-QR code.com:{blank}::
-
-  https://www.qrcode.com/
 
 ifndef::site-gen-antora[include::{includedir}/section-reporting-bugs.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-reporting-bugs.adoc[]]

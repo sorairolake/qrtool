@@ -4,12 +4,14 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2024-04-15
+:docdate: 2024-07-30
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
+:qrcode-url: https://www.qrcode.com/
+:image-crates-url: https://crates.io/crates/image
 
 == NAME
 
@@ -21,8 +23,8 @@ qrtool-decode - detect and decode a QR code
 
 == DESCRIPTION
 
-This command detects and decodes a QR code. By default, the result will be
-output to stdout.
+This command detects and decodes a {qrcode-url}[QR code]. By default, the
+result will be output to stdout.
 
 *qrtool dec* and *qrtool d* are aliases for this command.
 
@@ -32,10 +34,10 @@ _IMAGE_::
 
   Input image file. If _IMAGE_ is not specified, or if "-" is specified, the
   image will be read from stdin. Supported raster image formats are based on
-  the formats supported by the image crate. The format of _IMAGE_ is determined
-  based on the extension or the magic number if possible. If the format cannot
-  be determined, use *--type*. Note that the SVG image is rasterized before
-  scanning.
+  the formats supported by the {image-crates-url}[image] crate. The format of
+  _IMAGE_ is determined based on the extension or the magic number if possible.
+  If the format cannot be determined, use *--type*. Note that the SVG image is
+  rasterized before scanning.
 
 == OPTIONS
 
@@ -163,14 +165,6 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.ado
 Source repository:{blank}::
 
   https://github.com/sorairolake/qrtool
-
-QR code.com:{blank}::
-
-  https://www.qrcode.com/
-
-image crate:{blank}::
-
-  https://crates.io/crates/image
 
 == EXAMPLES
 

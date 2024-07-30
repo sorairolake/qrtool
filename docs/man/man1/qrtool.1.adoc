@@ -4,12 +4,13 @@
 
 = qrtool(1)
 // Specify in UTC.
-:docdate: 2024-01-19
+:docdate: 2024-07-30
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
+:qrcode-url: https://www.qrcode.com/
 
 == NAME
 
@@ -21,7 +22,8 @@ qrtool - an utility for encoding or decoding QR code
 
 == DESCRIPTION
 
-*{manname}* is a command-line utility for encoding or decoding QR code.
+*{manname}* is a command-line utility for encoding or decoding
+{qrcode-url}[QR code].
 
 == COMMANDS
 
@@ -87,10 +89,6 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.ado
 Source repository:{blank}::
 
   https://github.com/sorairolake/qrtool
-
-QR code.com:{blank}::
-
-  https://www.qrcode.com/
 
 ifndef::site-gen-antora[include::{includedir}/section-reporting-bugs.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-reporting-bugs.adoc[]]
