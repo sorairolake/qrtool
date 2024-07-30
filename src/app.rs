@@ -4,8 +4,8 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 use std::{
-    fs,
-    io::{self, Cursor, Read, Write},
+    fs::{self, File},
+    io::{self, BufReader, Cursor, Read, Write},
     num::NonZeroU32,
 };
 
@@ -18,8 +18,11 @@ use rqrr::PreparedImage;
 use crate::{
     cli::{Command, Opt, OutputFormat},
     decode, encode,
+    input::Input,
     metadata::Extractor,
 };
+
+const MAX_DATA_SIZE: u64 = 7089;
 
 /// Runs the program and returns the result.
 #[allow(clippy::too_many_lines)]
@@ -35,17 +38,20 @@ pub fn run() -> anyhow::Result<()> {
         match command {
             Command::Encode(arg) => {
                 let input = if let Some(string) = arg.input {
-                    string.into_bytes()
-                } else if let Some(path) = arg.read_from {
-                    fs::read(&path)
-                        .with_context(|| format!("could not read data from {}", path.display()))?
+                    Input::String(Cursor::new(string))
+                } else if let Some(ref path) = arg.read_from {
+                    let f = File::open(path)
+                        .with_context(|| format!("could not open {}", path.display()))?;
+                    Input::File(f)
                 } else {
-                    let mut buf = Vec::new();
-                    io::stdin()
-                        .read_to_end(&mut buf)
-                        .context("could not read data from stdin")?;
-                    buf
+                    Input::Stdin(io::stdin())
                 };
+                let reader = BufReader::new(input);
+                let mut buf = Vec::new();
+                reader
+                    .take(MAX_DATA_SIZE + 1)
+                    .read_to_end(&mut buf)
+                    .context("could not read data")?;
 
                 let level = arg.error_correction_level.into();
                 let code = if let Some(version) = arg.symbol_version {
@@ -53,14 +59,14 @@ pub fn run() -> anyhow::Result<()> {
                         .context("could not set the version")?;
                     let mut bits = Bits::new(v);
                     if let Some(mode) = arg.mode {
-                        encode::push_data_for_selected_mode(&mut bits, input, &mode)
+                        encode::push_data_for_selected_mode(&mut bits, buf, &mode)
                     } else {
-                        bits.push_optimal_data(&input)
+                        bits.push_optimal_data(&buf)
                     }
                     .and_then(|()| bits.push_terminator(level))
                     .and_then(|()| QrCode::with_bits(bits, level))
                 } else {
-                    QrCode::with_error_correction_level(&input, level)
+                    QrCode::with_error_correction_level(&buf, level)
                 }
                 .context("could not construct a QR code")?;
 

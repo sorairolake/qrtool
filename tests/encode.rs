@@ -107,9 +107,7 @@ fn encode_from_non_existent_file() {
         .assert()
         .failure()
         .code(66)
-        .stderr(predicate::str::contains(
-            "could not read data from non_existent.txt",
-        ));
+        .stderr(predicate::str::contains("could not open non_existent.txt"));
     if cfg!(windows) {
         command.stderr(predicate::str::contains(
             "The system cannot find the file specified. (os error 2)",
