@@ -160,7 +160,7 @@ pub fn run() -> anyhow::Result<()> {
             }
             Command::Decode(arg) => {
                 let input = match arg.input {
-                    Some(ref path) if path.to_str().unwrap_or_default() != "-" => fs::read(path)
+                    Some(ref path) if path.as_os_str() != "-" => fs::read(path)
                         .with_context(|| format!("could not read data from {}", path.display()))?,
                     _ => {
                         let mut buf = Vec::new();
