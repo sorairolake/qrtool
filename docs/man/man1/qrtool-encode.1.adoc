@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-07-30
+:docdate: 2024-08-01
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -23,8 +23,64 @@ qrtool-encode - encode input data in a QR code
 
 == DESCRIPTION
 
-This command encodes input data in a {qrcode-url}[QR code]. By default, the
-result will be output to stdout.
+This command encodes input data in a {qrcode-url}[QR code] and outputs it as a
+PNG image, SVG image or string. By default, the result will be output to stdout.
+
+This command will read up to the first 7,090 bytes of the input data. The
+amount of data that can be represented by a QR code depends on the mode,
+version and error correction level. The storage capacity is maximized for
+version 40 and error correction level L (40-L).
+
+.Maximum character storage capacity (40-L)
+|===
+|Input mode |Max. characters |Possible characters
+
+|Numeric
+|7,089
+|0&#8211;9
+
+|Alphanumeric
+|4,296
+|0&#8211;9, A&#8211;Z (uppercase only), and few symbols (space, `$`, `%`, `*`,
+`+`, `-`, `.`, `/`, `:`)
+
+|Byte
+|2,953
+|Arbitrary binary data
+
+|Kanji
+|1,817
+|Any double-byte JIS X 0208 character
+|===
+
+By default, this command encodes the input data in a QR code with a black
+foreground and white background, but this can be changed by specifying
+*--foreground* and/or *--background*. The {css-color-url}[CSS color string] can
+be specified as a value for these options.
+
+.List of methods to specify a color
+|===
+|Format |Examples
+
+|Named colors
+|`brown`, `lightslategray`
+
+|Hexadecimal notations
+|`#111`, `#eee8`, `#a52a2a`, `#7788997f`
+
+|RGB functions
+|`rgb(165 42 42)`, `rgb(119 136 153 / 49.8%)`
+
+|HSL functions
+|`hsl(248 39% 39.2%)`, `hsl(0 0% 66.3% / 49.8%)`
+
+|HWB function
+|`hwb(50.6 0% 0%)`, `hwb(0 66.3% 33.7% / 49.8%)`
+|===
+
+This command can also encode the input data in a Micro QR code. This can embed
+data in a smaller area than with QR code, but the storage capacity is strongly
+limited.
 
 *qrtool enc* and *qrtool e* are aliases for this command.
 
@@ -238,10 +294,10 @@ endif::[]
 
 *--foreground* _COLOR_::
 
-  Foreground color. _COLOR_ takes a {css-color-url}[CSS color string]. Colored
-  output is only available when the output format is PNG, SVG or any ANSI
-  escape sequences. Note that lossy conversion may be performed depending on
-  the color depth supported by the output format. Default is black.
+  Foreground color. _COLOR_ takes a CSS color string. Colored output is only
+  available when the output format is PNG, SVG or any ANSI escape sequences.
+  Note that lossy conversion may be performed depending on the color depth
+  supported by the output format. Default is black.
 
 *--background* _COLOR_::
 
