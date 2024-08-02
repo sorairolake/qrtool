@@ -155,7 +155,7 @@ pub fn run() -> anyhow::Result<()> {
                 } else {
                     io::stdout()
                         .write_all(&output)
-                        .context("could not write the image to stdout")?;
+                        .context("could not write the image to standard output")?;
                 }
             }
             Command::Decode(arg) => {
@@ -166,7 +166,7 @@ pub fn run() -> anyhow::Result<()> {
                         let mut buf = Vec::new();
                         io::stdin()
                             .read_to_end(&mut buf)
-                            .context("could not read data from stdin")?;
+                            .context("could not read data from standard input")?;
                         buf
                     }
                 };
@@ -211,7 +211,7 @@ pub fn run() -> anyhow::Result<()> {
 
                     io::stdout()
                         .write_all(&content.1)
-                        .context("could not write data to stdout")?;
+                        .context("could not write data to standard output")?;
                 }
             }
         }

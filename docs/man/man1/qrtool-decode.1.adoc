@@ -4,7 +4,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2024-08-01
+:docdate: 2024-08-02
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -72,7 +72,7 @@ qrtool-decode - detect and decode a QR code
 == DESCRIPTION
 
 This command detects and decodes a {qrcode-url}[QR code] from a raster or
-vector image. By default, the result will be output to stdout.
+vector image. By default, the result will be output to standard output.
 
 .Supported image file formats
 ifdef::decode-from-bmp,env-github,site-gen-antora[]
@@ -129,11 +129,11 @@ the image format is determined based on the extension or the magic number.
 _IMAGE_::
 
   Input image file. If _IMAGE_ is not specified, or if "-" is specified, the
-  image will be read from stdin. Supported raster image formats are based on
-  the formats supported by the {image-crates-url}[`image`] crate. The format of
-  _IMAGE_ is determined based on the extension or the magic number if possible.
-  If the format cannot be determined, use *--type*. Note that the SVG image is
-  rasterized before scanning.
+  image will be read from standard input. Supported raster image formats are
+  based on the formats supported by the {image-crates-url}[`image`] crate. The
+  format of _IMAGE_ is determined based on the extension or the magic number if
+  possible. If the format cannot be determined, use *--type*. Note that the SVG
+  image is rasterized before scanning.
 
 == OPTIONS
 

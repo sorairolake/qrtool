@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-08-01
+:docdate: 2024-08-02
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -24,7 +24,8 @@ qrtool-encode - encode input data in a QR code
 == DESCRIPTION
 
 This command encodes input data in a {qrcode-url}[QR code] and outputs it as a
-PNG image, SVG image or string. By default, the result will be output to stdout.
+PNG image, SVG image or string. By default, the result will be output to
+standard output.
 
 This command will read up to the first 7,090 bytes of the input data. The
 amount of data that can be represented by a QR code depends on the mode,
@@ -88,10 +89,10 @@ limited.
 
 _STRING_::
 
-  Input data. If _STRING_ is not specified, data will be read from stdin.
-  _STRING_ must be a valid UTF-8 string. Use *--read-from* or read from stdin
-  if taking other than a valid UTF-8 string. This positional argument conflicts
-  with *--read-from*.
+  Input data. If _STRING_ is not specified, data will be read from standard
+  input. _STRING_ must be a valid UTF-8 string. Use *--read-from* or read from
+  standard input if taking other than a valid UTF-8 string. This positional
+  argument conflicts with *--read-from*.
 
 == OPTIONS
 
