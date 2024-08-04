@@ -32,13 +32,13 @@ const LONG_VERSION: &str = concat!(
 const AFTER_LONG_HELP: &str = "See `qrtool(1)` for more details.";
 
 const ENCODE_AFTER_LONG_HELP: &str = concat!(
-    "By default, the result will be output to stdout.\n",
+    "By default, the result will be output to standard output.\n",
     '\n',
     "See `qrtool-encode(1)` for more details."
 );
 
 const DECODE_AFTER_LONG_HELP: &str = concat!(
-    "By default, the result will be output to stdout.\n",
+    "By default, the result will be output to standard output.\n",
     '\n',
     "See `qrtool-decode(1)` for more details."
 );
@@ -58,7 +58,7 @@ const DECODE_AFTER_LONG_HELP: &str = concat!(
 pub struct Opt {
     /// Generate shell completion.
     ///
-    /// The completion is output to stdout.
+    /// The completion is output to standard output.
     #[arg(long, value_enum, value_name("SHELL"))]
     pub generate_completion: Option<Shell>,
 
@@ -233,8 +233,8 @@ pub struct Encode {
 
     /// Input data.
     ///
-    /// If [STRING] is not specified, data will be read from stdin. [STRING]
-    /// must be a valid UTF-8 string.
+    /// If [STRING] is not specified, data will be read from standard input.
+    /// [STRING] must be a valid UTF-8 string.
     #[arg(value_name("STRING"))]
     pub input: Option<String>,
 }
@@ -269,11 +269,11 @@ pub struct Decode {
     /// Input image file.
     ///
     /// If [IMAGE] is not specified, or if "-" is specified, the image will be
-    /// read from stdin. Supported raster image formats are based on the formats
-    /// supported by the image crate. The format of [IMAGE] is determined based
-    /// on the extension or the magic number if possible. If the format cannot
-    /// be determined, use '--type'. Note that the SVG image is rasterized
-    /// before scanning.
+    /// read from standard input. Supported raster image formats are based on
+    /// the formats supported by the image crate. The format of [IMAGE] is
+    /// determined based on the extension or the magic number if possible. If
+    /// the format cannot be determined, use '--type'. Note that the SVG image
+    /// is rasterized before scanning.
     #[arg(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
     pub input: Option<PathBuf>,
 }

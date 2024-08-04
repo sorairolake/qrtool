@@ -4,12 +4,62 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2024-04-15
+:docdate: 2024-08-02
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
+:qrcode-url: https://www.qrcode.com/
+:enwp-url: https://en.wikipedia.org
+:enwp-article-url: {enwp-url}/wiki
+ifdef::decode-from-svg,env-github,site-gen-antora[]
+:w3-url: https://www.w3.org
+endif::[]
+ifdef::decode-from-bmp,env-github,site-gen-antora[]
+:bmp-url: {enwp-article-url}/BMP_file_format
+endif::[]
+ifdef::decode-from-dds,env-github,site-gen-antora[]
+:dds-url: {enwp-article-url}/DirectDraw_Surface
+endif::[]
+ifdef::decode-from-ff,env-github,site-gen-antora[]
+:farbfeld-url: https://tools.suckless.org/farbfeld/
+endif::[]
+ifdef::decode-from-gif,env-github,site-gen-antora[]
+:gif-url: {enwp-article-url}/GIF
+endif::[]
+ifdef::decode-from-hdr,env-github,site-gen-antora[]
+:radiance-rgbe-url: {enwp-article-url}/RGBE_image_format
+endif::[]
+ifdef::decode-from-ico,env-github,site-gen-antora[]
+:ico-url: {enwp-article-url}/ICO_(file_format)
+endif::[]
+ifdef::decode-from-jpeg,env-github,site-gen-antora[]
+:jpeg-url: https://jpeg.org/jpeg/
+endif::[]
+ifdef::decode-from-exr,env-github,site-gen-antora[]
+:openexr-url: https://openexr.com/
+endif::[]
+:png-url: {enwp-article-url}/PNG
+ifdef::decode-from-pnm,env-github,site-gen-antora[]
+:pnm-url: https://netpbm.sourceforge.net/doc/pnm.html
+endif::[]
+ifdef::decode-from-qoi,env-github,site-gen-antora[]
+:qoi-url: https://qoiformat.org/
+endif::[]
+ifdef::decode-from-svg,env-github,site-gen-antora[]
+:svg-url: {w3-url}/Graphics/SVG/
+endif::[]
+ifdef::decode-from-tga,env-github,site-gen-antora[]
+:tga-url: {enwp-article-url}/Truevision_TGA
+endif::[]
+ifdef::decode-from-tiff,env-github,site-gen-antora[]
+:tiff-url: {enwp-article-url}/TIFF
+endif::[]
+ifdef::decode-from-webp,env-github,site-gen-antora[]
+:webp-url: https://developers.google.com/speed/webp/
+endif::[]
+:image-crates-url: https://crates.io/crates/image
 
 == NAME
 
@@ -21,8 +71,56 @@ qrtool-decode - detect and decode a QR code
 
 == DESCRIPTION
 
-This command detects and decodes a QR code. By default, the result will be
-output to stdout.
+This command detects and decodes a {qrcode-url}[QR code] from a raster or
+vector image. By default, the result will be output to standard output.
+
+.Supported image file formats
+ifdef::decode-from-bmp,env-github,site-gen-antora[]
+* {bmp-url}[BMP]
+endif::[]
+ifdef::decode-from-dds,env-github,site-gen-antora[]
+* {dds-url}[DDS]
+endif::[]
+ifdef::decode-from-ff,env-github,site-gen-antora[]
+* {farbfeld-url}[Farbfeld]
+endif::[]
+ifdef::decode-from-gif,env-github,site-gen-antora[]
+* {gif-url}[GIF]
+endif::[]
+ifdef::decode-from-hdr,env-github,site-gen-antora[]
+* {radiance-rgbe-url}[Radiance RGBE]
+endif::[]
+ifdef::decode-from-ico,env-github,site-gen-antora[]
+* {ico-url}[ICO]
+endif::[]
+ifdef::decode-from-jpeg,env-github,site-gen-antora[]
+* {jpeg-url}[JPEG]
+endif::[]
+ifdef::decode-from-exr,env-github,site-gen-antora[]
+* {openexr-url}[OpenEXR]
+endif::[]
+* {png-url}[PNG]
+ifdef::decode-from-pnm,env-github,site-gen-antora[]
+* {pnm-url}[PNM]
+endif::[]
+ifdef::decode-from-qoi,env-github,site-gen-antora[]
+* {qoi-url}[QOI]
+endif::[]
+ifdef::decode-from-svg,env-github,site-gen-antora[]
+* {svg-url}[SVG]
+endif::[]
+ifdef::decode-from-tga,env-github,site-gen-antora[]
+* {tga-url}[TGA]
+endif::[]
+ifdef::decode-from-tiff,env-github,site-gen-antora[]
+* {tiff-url}[TIFF]
+endif::[]
+ifdef::decode-from-webp,env-github,site-gen-antora[]
+* {webp-url}[WebP]
+endif::[]
+
+Use *-t* option to specify the image format. If this option is not specified,
+the image format is determined based on the extension or the magic number.
 
 *qrtool dec* and *qrtool d* are aliases for this command.
 
@@ -31,11 +129,11 @@ output to stdout.
 _IMAGE_::
 
   Input image file. If _IMAGE_ is not specified, or if "-" is specified, the
-  image will be read from stdin. Supported raster image formats are based on
-  the formats supported by the image crate. The format of _IMAGE_ is determined
-  based on the extension or the magic number if possible. If the format cannot
-  be determined, use *--type*. Note that the SVG image is rasterized before
-  scanning.
+  image will be read from standard input. Supported raster image formats are
+  based on the formats supported by the {image-crates-url}[`image`] crate. The
+  format of _IMAGE_ is determined based on the extension or the magic number if
+  possible. If the format cannot be determined, use *--type*. Note that the SVG
+  image is rasterized before scanning.
 
 == OPTIONS
 
@@ -163,14 +261,6 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.ado
 Source repository:{blank}::
 
   https://github.com/sorairolake/qrtool
-
-QR code.com:{blank}::
-
-  https://www.qrcode.com/
-
-image crate:{blank}::
-
-  https://crates.io/crates/image
 
 == EXAMPLES
 

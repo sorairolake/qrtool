@@ -107,9 +107,7 @@ fn encode_from_non_existent_file() {
         .assert()
         .failure()
         .code(66)
-        .stderr(predicate::str::contains(
-            "could not read data from non_existent.txt",
-        ));
+        .stderr(predicate::str::contains("could not open non_existent.txt"));
     if cfg!(windows) {
         command.stderr(predicate::str::contains(
             "The system cannot find the file specified. (os error 2)",
@@ -1225,6 +1223,37 @@ fn encode_in_numeric_mode() {
 }
 
 #[test]
+fn encode_in_numeric_mode_max() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/numeric_max.txt")
+        .arg("-l")
+        .arg("l")
+        .arg("-v")
+        .arg("40")
+        .arg("--mode")
+        .arg("numeric")
+        .assert()
+        .success();
+    utils::command::command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/numeric_over_max.txt")
+        .arg("-l")
+        .arg("l")
+        .arg("-v")
+        .arg("40")
+        .arg("--mode")
+        .arg("numeric")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not construct a QR code"))
+        .stderr(predicate::str::contains("data too long"));
+}
+
+#[test]
 fn encode_in_alphanumeric_mode() {
     let output = utils::command::command()
         .arg("encode")
@@ -1240,6 +1269,37 @@ fn encode_in_alphanumeric_mode() {
         image::open("tests/data/mode/alphanumeric.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_in_alphanumeric_mode_max() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/alphanumeric_max.txt")
+        .arg("-l")
+        .arg("l")
+        .arg("-v")
+        .arg("40")
+        .arg("--mode")
+        .arg("alphanumeric")
+        .assert()
+        .success();
+    utils::command::command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/alphanumeric_over_max.txt")
+        .arg("-l")
+        .arg("l")
+        .arg("-v")
+        .arg("40")
+        .arg("--mode")
+        .arg("alphanumeric")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not construct a QR code"))
+        .stderr(predicate::str::contains("data too long"));
 }
 
 #[test]
@@ -1262,6 +1322,37 @@ fn encode_in_byte_mode() {
 }
 
 #[test]
+fn encode_in_byte_mode_max() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/byte_max.txt")
+        .arg("-l")
+        .arg("l")
+        .arg("-v")
+        .arg("40")
+        .arg("--mode")
+        .arg("byte")
+        .assert()
+        .success();
+    utils::command::command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/byte_over_max.txt")
+        .arg("-l")
+        .arg("l")
+        .arg("-v")
+        .arg("40")
+        .arg("--mode")
+        .arg("byte")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not construct a QR code"))
+        .stderr(predicate::str::contains("data too long"));
+}
+
+#[test]
 fn encode_in_kanji_mode() {
     let output = utils::command::command()
         .arg("encode")
@@ -1278,6 +1369,37 @@ fn encode_in_kanji_mode() {
         image::open("tests/data/mode/kanji.png").unwrap()
     );
     assert!(output.status.success());
+}
+
+#[test]
+fn encode_in_kanji_mode_max() {
+    utils::command::command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/kanji_max.txt")
+        .arg("-l")
+        .arg("l")
+        .arg("-v")
+        .arg("40")
+        .arg("--mode")
+        .arg("kanji")
+        .assert()
+        .success();
+    utils::command::command()
+        .arg("encode")
+        .arg("-r")
+        .arg("data/mode/kanji_over_max.txt")
+        .arg("-l")
+        .arg("l")
+        .arg("-v")
+        .arg("40")
+        .arg("--mode")
+        .arg("kanji")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("could not construct a QR code"))
+        .stderr(predicate::str::contains("data too long"));
 }
 
 #[test]

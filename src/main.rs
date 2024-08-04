@@ -14,6 +14,7 @@ mod app;
 mod cli;
 mod decode;
 mod encode;
+mod input;
 mod metadata;
 
 use std::{io, process::ExitCode};

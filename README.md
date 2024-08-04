@@ -193,7 +193,7 @@ QR code
 
 ### Generate shell completion
 
-`--generate-completion` option generates shell completions to stdout.
+`--generate-completion` option generates shell completions to standard output.
 
 The following shells are supported:
 
@@ -212,8 +212,8 @@ qrtool --generate-completion bash > qrtool.bash
 
 ### Integration with other programs
 
-Both `qrtool encode` and `qrtool decode` can read from stdin and output to
-stdout.
+Both `qrtool encode` and `qrtool decode` can read from standard input and
+output to standard output.
 
 #### Optimize the output image
 
@@ -246,7 +246,8 @@ such as [ImageMagick].
 
 ##### Raster formats
 
-Read `Cargo.toml` from stdin and save the encoded result as a XPM image:
+Read `Cargo.toml` from standard input and save the encoded result as a XPM
+image:
 
 ```sh
 cat Cargo.toml | qrtool encode | magick png:- output.xpm
@@ -260,7 +261,7 @@ magick output.xpm png:- | qrtool decode | bat -l toml
 
 ##### Vector formats
 
-Read a string from stdin and save the encoded result as an EPS image:
+Read a string from standard input and save the encoded result as an EPS image:
 
 ```sh
 echo "The quick brown fox jumps over the lazy dog." \
@@ -268,7 +269,7 @@ echo "The quick brown fox jumps over the lazy dog." \
     | inkscape -p -o output.eps
 ```
 
-Decode this image and print the result to stdout:
+Decode this image and print the result to standard output:
 
 ```sh
 $ inkscape -o - --export-type svg output.eps | qrtool decode
