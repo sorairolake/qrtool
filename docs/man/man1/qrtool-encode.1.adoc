@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-08-02
+:docdate: 2024-09-03
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -77,6 +77,12 @@ be specified as a value for these options.
 
 |HWB function
 |`hwb(50.6 0% 0%)`, `hwb(0 66.3% 33.7% / 49.8%)`
+
+|Oklab function
+|`oklab(50.4% -0.0906 0.0069)`, `oklab(61.9% -0.0120 -0.0302 / 0.5)`
+
+|Oklch function
+|`oklch(59.41% 0.16 301.29)`, `oklch(61.9% 0.032 248.35 / 49.8%)`
 |===
 
 This command can also encode the input data in a Micro QR code. This can embed
