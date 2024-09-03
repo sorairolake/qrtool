@@ -2397,7 +2397,7 @@ fn encode_from_hwb_color_with_alpha() {
         .unwrap();
     assert_eq!(
         image::load_from_memory(&output.stdout).unwrap(),
-        image::open("tests/data/colored/hwba.png").unwrap()
+        image::open("tests/data/colored/hwb_with_alpha.png").unwrap()
     );
     assert!(output.status.success());
 }
@@ -2432,6 +2432,142 @@ fn encode_from_invalid_hwb_bg_color() {
             "invalid value 'hwb(0)' for '--background <COLOR>'",
         ))
         .stderr(predicate::str::contains("invalid hwb format"));
+}
+
+#[test]
+fn encode_from_oklab_color() {
+    let output = utils::command::command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("oklab(50.4% -0.0906 0.0069)")
+        .arg("--background")
+        .arg("oklab(61.9% -0.0120 -0.0302)")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageRgb8(image::load_from_memory(&output.stdout).unwrap().to_rgb8()),
+        image::open("tests/data/colored/oklab.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_from_oklab_color_with_alpha() {
+    let output = utils::command::command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("oklab(50.4% -0.0906 0.0069 / 0.5)")
+        .arg("--background")
+        .arg("oklab(61.9% -0.0120 -0.0302 / 0.5)")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        image::load_from_memory(&output.stdout).unwrap(),
+        image::open("tests/data/colored/oklab_with_alpha.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_from_invalid_oklab_fg_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("oklab(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'oklab(0)' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid oklab format"));
+}
+
+#[test]
+fn encode_from_invalid_oklab_bg_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("--background")
+        .arg("oklab(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'oklab(0)' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid oklab format"));
+}
+
+#[test]
+fn encode_from_oklch_color() {
+    let output = utils::command::command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("oklch(59.41% 0.16 301.29)")
+        .arg("--background")
+        .arg("oklch(61.9% 0.032 248.35)")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        DynamicImage::ImageRgb8(image::load_from_memory(&output.stdout).unwrap().to_rgb8()),
+        image::open("tests/data/colored/oklch.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_from_oklch_color_with_alpha() {
+    let output = utils::command::command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("oklch(59.41% 0.16 301.29 / 49.8%)")
+        .arg("--background")
+        .arg("oklch(61.9% 0.032 248.35 / 49.8%)")
+        .arg("QR code")
+        .output()
+        .unwrap();
+    assert_eq!(
+        image::load_from_memory(&output.stdout).unwrap(),
+        image::open("tests/data/colored/oklch_with_alpha.png").unwrap()
+    );
+    assert!(output.status.success());
+}
+
+#[test]
+fn encode_from_invalid_oklch_fg_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("--foreground")
+        .arg("oklch(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'oklch(0)' for '--foreground <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid oklch format"));
+}
+
+#[test]
+fn encode_from_invalid_oklch_bg_color() {
+    utils::command::command()
+        .arg("encode")
+        .arg("--background")
+        .arg("oklch(0)")
+        .arg("QR code")
+        .assert()
+        .failure()
+        .code(2)
+        .stderr(predicate::str::contains(
+            "invalid value 'oklch(0)' for '--background <COLOR>'",
+        ))
+        .stderr(predicate::str::contains("invalid oklch format"));
 }
 
 #[test]
