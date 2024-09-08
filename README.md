@@ -122,9 +122,10 @@ Generate this image:
 ### Colored output
 
 Use `--foreground` and `--background` options to change the foreground and
-background colors of the generated image. These options takes a [CSS color
-string] such as `brown`, `#a52a2a` or `rgb(165 42 42)`. The default foreground
-color is black and the background color is white of CSS's named colors.
+background colors of the generated image. These options takes a
+[CSS color string] such as `brown`, `#a52a2a` or `rgb(165 42 42)`. The default
+foreground color is black and the background color is white of CSS's named
+colors.
 
 ```sh
 qrtool encode --foreground brown --background lightslategray "QR code" > output.png
