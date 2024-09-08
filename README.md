@@ -302,10 +302,10 @@ This program is inspired by [`qrencode`] and [`zbarimg`].
 Copyright &copy; 2022&ndash;2024 Shun Sakai and other contributors (see
 [AUTHORS.adoc])
 
-1. This program is distributed under the terms of either the _Apache License
-   2.0_ or the _MIT License_.
-2. Some files are distributed under the terms of the _Creative Commons
-   Attribution 4.0 International Public License_.
+1.  This program is distributed under the terms of either the _Apache License
+    2.0_ or the _MIT License_.
+2.  Some files are distributed under the terms of the _Creative Commons
+    Attribution 4.0 International Public License_.
 
 This project is compliant with version 3.2 of the [_REUSE Specification_]. See
 copyright notices of individual files for more details on copyright and
