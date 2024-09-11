@@ -23,7 +23,7 @@ include = ["/LICENSES", "/README.md", "/src"]
 anstyle = { version = "1.0.8", default-features = false, optional = true }
 anstyle-lossy = { version = "1.1.2", optional = true }
 anstyle-yansi = { version = "2.0.1", optional = true }
-anyhow = "1.0.87"
+anyhow = "1.0.88"
 clap = { version = "4.5.17", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.26"
 clap_complete_nushell = "4.5.3"
