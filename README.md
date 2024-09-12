@@ -286,6 +286,16 @@ Please see the following:
 - [`qrtool-decode(1)`]
 - [`qrtool-help(1)`]
 
+## Source code
+
+The upstream repository is available at
+<https://github.com/sorairolake/qrtool.git>.
+
+The source code is also available at:
+
+- <https://gitlab.com/sorairolake/qrtool.git>
+- <https://codeberg.org/sorairolake/qrtool.git>
+
 ## Changelog
 
 Please see [CHANGELOG.adoc].
