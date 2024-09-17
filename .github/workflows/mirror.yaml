@@ -25,7 +25,7 @@ jobs:
         uses: yesolutions/mirror-action@v0.7.0
         with:
           REMOTE: "https://gitlab.com/sorairolake/qrtool.git"
-          GIT_USERNAME: sorairolake
+          GIT_USERNAME: ${{ github.actor }}
           GIT_PASSWORD: ${{ secrets.GITLAB_TOKEN }}
           PUSH_ALL_REFS: "false"
 
@@ -42,6 +42,6 @@ jobs:
         uses: yesolutions/mirror-action@v0.7.0
         with:
           REMOTE: "https://codeberg.org/sorairolake/qrtool.git"
-          GIT_USERNAME: sorairolake
+          GIT_USERNAME: ${{ github.actor }}
           GIT_PASSWORD: ${{ secrets.CODEBERG_TOKEN }}
           PUSH_ALL_REFS: "false"
