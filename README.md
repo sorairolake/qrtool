@@ -142,8 +142,9 @@ sequences:
 qrtool encode -t ansi-true-color --foreground brown --background lightslategray "QR code"
 ```
 
-Note that lossy conversion may be performed depending on the color depth
-supported by the output format.
+Note that lossy conversion may be performed depending on the color space
+supported by the method to specify a color, the color depth supported by the
+output format, etc.
 
 ### Supported input image formats
 

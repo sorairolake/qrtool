@@ -211,8 +211,9 @@ pub struct Encode {
     ///
     /// <COLOR> takes a CSS color string. Colored output is only available when
     /// the output format is PNG, SVG or any ANSI escape sequences. Note that
-    /// lossy conversion may be performed depending on the color depth supported
-    /// by the output format.
+    /// lossy conversion may be performed depending on the color space supported
+    /// by the method to specify a color, the color depth supported by the
+    /// output format, etc.
     #[arg(long, default_value("black"), value_name("COLOR"))]
     pub foreground: Color,
 
@@ -220,8 +221,9 @@ pub struct Encode {
     ///
     /// <COLOR> takes a CSS color string. Colored output is only available when
     /// the output format is PNG, SVG or any ANSI escape sequences. Note that
-    /// lossy conversion may be performed depending on the color depth supported
-    /// by the output format.
+    /// lossy conversion may be performed depending on the color space supported
+    /// by the method to specify a color, the color depth supported by the
+    /// output format, etc.
     #[arg(long, default_value("white"), value_name("COLOR"))]
     pub background: Color,
 

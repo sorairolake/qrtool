@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-09-03
+:docdate: 2024-09-20
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -303,15 +303,17 @@ endif::[]
 
   Foreground color. _COLOR_ takes a CSS color string. Colored output is only
   available when the output format is PNG, SVG or any ANSI escape sequences.
-  Note that lossy conversion may be performed depending on the color depth
-  supported by the output format. Default is black.
+  Note that lossy conversion may be performed depending on the color space
+  supported by the method to specify a color, the color depth supported by the
+  output format, etc. Default is black.
 
 *--background* _COLOR_::
 
   Background color. _COLOR_ takes a CSS color string. Colored output is only
   available when the output format is PNG, SVG or any ANSI escape sequences.
-  Note that lossy conversion may be performed depending on the color depth
-  supported by the output format. Default is white.
+  Note that lossy conversion may be performed depending on the color space
+  supported by the method to specify a color, the color depth supported by the
+  output format, etc. Default is white.
 
 *--verbose*::
 
