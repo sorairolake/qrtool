@@ -122,9 +122,10 @@ Generate this image:
 ### Colored output
 
 Use `--foreground` and `--background` options to change the foreground and
-background colors of the generated image. These options takes a [CSS color
-string] such as `brown`, `#a52a2a` or `rgb(165 42 42)`. The default foreground
-color is black and the background color is white of CSS's named colors.
+background colors of the generated image. These options takes a
+[CSS color string] such as `brown`, `#a52a2a` or `rgb(165 42 42)`. The default
+foreground color is black and the background color is white of CSS's named
+colors.
 
 ```sh
 qrtool encode --foreground brown --background lightslategray "QR code" > output.png
@@ -141,8 +142,9 @@ sequences:
 qrtool encode -t ansi-true-color --foreground brown --background lightslategray "QR code"
 ```
 
-Note that lossy conversion may be performed depending on the color depth
-supported by the output format.
+Note that lossy conversion may be performed depending on the color space
+supported by the method to specify a color, the color depth supported by the
+output format, etc.
 
 ### Supported input image formats
 
@@ -285,6 +287,16 @@ Please see the following:
 - [`qrtool-decode(1)`]
 - [`qrtool-help(1)`]
 
+## Source code
+
+The upstream repository is available at
+<https://github.com/sorairolake/qrtool.git>.
+
+The source code is also available at:
+
+- <https://gitlab.com/sorairolake/qrtool.git>
+- <https://codeberg.org/sorairolake/qrtool.git>
+
 ## Changelog
 
 Please see [CHANGELOG.adoc].
@@ -302,10 +314,10 @@ This program is inspired by [`qrencode`] and [`zbarimg`].
 Copyright &copy; 2022&ndash;2024 Shun Sakai and other contributors (see
 [AUTHORS.adoc])
 
-1. This program is distributed under the terms of either the _Apache License
-   2.0_ or the _MIT License_.
-2. Some files are distributed under the terms of the _Creative Commons
-   Attribution 4.0 International Public License_.
+1.  This program is distributed under the terms of either the _Apache License
+    2.0_ or the _MIT License_.
+2.  Some files are distributed under the terms of the _Creative Commons
+    Attribution 4.0 International Public License_.
 
 This project is compliant with version 3.2 of the [_REUSE Specification_]. See
 copyright notices of individual files for more details on copyright and

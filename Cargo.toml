@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.11.4"
+version = "0.11.5"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -23,22 +23,22 @@ include = ["/LICENSES", "/README.md", "/src"]
 anstyle = { version = "1.0.8", default-features = false, optional = true }
 anstyle-lossy = { version = "1.1.2", optional = true }
 anstyle-yansi = { version = "2.0.1", optional = true }
-anyhow = "1.0.86"
-clap = { version = "4.5.13", features = ["derive", "wrap_help"] }
-clap_complete = "4.5.12"
+anyhow = "1.0.89"
+clap = { version = "4.5.18", features = ["derive", "wrap_help"] }
+clap_complete = "4.5.29"
 clap_complete_nushell = "4.5.3"
-csscolorparser = "0.6.2"
+csscolorparser = "0.7.0"
 image = { version = "0.25.2", default-features = false, features = ["png", "rayon"] }
-is-svg = { version = "0.1.1", optional = true }
+is-svg = { version = "0.1.2", optional = true }
 oxipng = { version = "9.1.2", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.1"
-resvg = { version = "0.42.0", default-features = false, optional = true }
+resvg = { version = "0.43.0", default-features = false, optional = true }
 rqrr = "0.7.1"
-sysexits = "0.8.1"
+sysexits = "0.8.2"
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
-assert_cmd = "2.0.15"
+assert_cmd = "2.0.16"
 predicates = "3.1.2"
 
 [features]
