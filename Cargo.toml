@@ -32,7 +32,7 @@ image = { version = "0.25.2", default-features = false, features = ["png", "rayo
 is-svg = { version = "0.1.2", optional = true }
 oxipng = { version = "9.1.2", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.1"
-resvg = { version = "0.43.0", default-features = false, optional = true }
+resvg = { version = "0.44.0", default-features = false, optional = true }
 rqrr = "0.7.1"
 sysexits = "0.8.2"
 yansi = { version = "1.0.1", default-features = false, optional = true }
