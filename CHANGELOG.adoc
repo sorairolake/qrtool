@@ -48,7 +48,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Add support for PIC output format ({pull-request-url}/543[#543])
 * Add ASCII string and ANSI escape sequences to the output format
   ({pull-request-url}/553[#553])
-* Add values ​​for inverting foreground and background colors when the output format is a string ({pull-request-url}/553[#553])
+* Add values for inverting foreground and background colors when the output format is a string ({pull-request-url}/553[#553])
 
 === Changed
 
@@ -78,7 +78,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 === Changed
 
 * Change the `encode` command to return an error if `--type` is `terminal` and
-  the `--foreground` and/or `--background` options specify values ​​other than
+  the `--foreground` and/or `--background` options specify values other than
   the default ({pull-request-url}/531[#531])
 
 == {compare-url}/v0.10.10\...v0.10.11[0.10.11] - 2024-06-17
