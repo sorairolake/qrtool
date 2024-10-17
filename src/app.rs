@@ -11,7 +11,7 @@ use std::{
 
 use anyhow::Context;
 use clap::Parser;
-use image::ImageFormat;
+use image::{imageops, ImageFormat};
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
@@ -192,12 +192,28 @@ pub fn run() -> anyhow::Result<()> {
                     }
                 }
                 .context("could not read the image")?;
-                let image = image.into_luma8();
+                let mut image = image.into_luma8();
 
-                let mut image = PreparedImage::prepare(image);
-                let grids = image.detect_grids();
-                let contents =
-                    decode::grids_as_bytes(grids).context("could not decode the grid")?;
+                let get_contents = |image| {
+                    let mut image = PreparedImage::prepare(image);
+                    let grids = image.detect_grids();
+                    decode::grids_as_bytes(grids).context("could not decode the grid")
+                };
+
+                // NOTE: rqrr doesn't appear to work if the background is darker than
+                // the foreground. So we try with an inverted image if decoding fails
+                // or no content is returned.
+                let contents = match get_contents(image.clone()) {
+                    Err(e) => {
+                        imageops::invert(&mut image);
+                        get_contents(image).map_err(|_| e)?
+                    }
+                    Ok(contents) if contents.is_empty() => {
+                        imageops::invert(&mut image);
+                        get_contents(image).unwrap_or(contents)
+                    }
+                    Ok(contents) => contents,
+                };
 
                 for content in contents {
                     if arg.verbose || arg.metadata {
