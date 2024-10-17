@@ -894,6 +894,27 @@ fn decode_from_invalid_input_format() {
 }
 
 #[test]
+fn decode_with_invert() {
+    utils::command::command()
+        .arg("decode")
+        .arg("data/invert/basic.png")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[cfg(feature = "decode-from-svg")]
+#[test]
+fn decode_from_svg_with_invert() {
+    utils::command::command()
+        .arg("decode")
+        .arg("data/invert/basic.svg")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[test]
 fn decode_with_verbose() {
     utils::command::command()
         .arg("decode")
