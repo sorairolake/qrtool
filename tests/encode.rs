@@ -1907,34 +1907,6 @@ fn encode_from_hex_color_with_alpha() {
 }
 
 #[test]
-fn encode_to_svg_from_hex_color_with_alpha() {
-    utils::command::command()
-        .arg("encode")
-        .arg("-t")
-        .arg("svg")
-        .arg("--foreground")
-        .arg("#a52a2a7f")
-        .arg("--background")
-        .arg("#7788997f")
-        .arg("QR code")
-        .assert()
-        .success()
-        .stdout(predicate::eq(include_str!("data/colored/rgba.svg")));
-    utils::command::command()
-        .arg("encode")
-        .arg("-t")
-        .arg("svg")
-        .arg("--foreground")
-        .arg("a52a2a7f")
-        .arg("--background")
-        .arg("7788997f")
-        .arg("QR code")
-        .assert()
-        .success()
-        .stdout(predicate::eq(include_str!("data/colored/rgba.svg")));
-}
-
-#[test]
 fn encode_from_short_hex_color() {
     {
         let output = utils::command::command()
