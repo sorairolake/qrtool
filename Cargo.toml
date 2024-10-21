@@ -28,7 +28,7 @@ clap = { version = "4.5.20", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.33"
 clap_complete_nushell = "4.5.4"
 csscolorparser = "0.7.0"
-image = { version = "0.25.2", default-features = false, features = ["png", "rayon"] }
+image = { version = "0.25.4", default-features = false, features = ["png", "rayon"] }
 is-svg = { version = "0.1.2", optional = true }
 oxipng = { version = "9.1.2", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.1"
