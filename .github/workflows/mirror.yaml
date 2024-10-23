@@ -10,7 +10,7 @@ on:
       - "develop"
       - "master"
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * FRI"
   workflow_dispatch:
 
 jobs:
