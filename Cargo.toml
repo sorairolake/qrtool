@@ -83,9 +83,10 @@ output-as-ansi = [
 ]
 
 [lints.clippy]
-cargo = "warn"
-nursery = "warn"
-pedantic = "warn"
+cargo = { level = "warn", priority = -1 }
+multiple_crate_versions = "allow"
+nursery = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
 
 [lints.rust]
 missing_debug_implementations = "deny"

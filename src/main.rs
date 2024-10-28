@@ -2,9 +2,6 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-// Lint levels of Clippy.
-#![allow(clippy::multiple_crate_versions)]
-
 mod app;
 mod cli;
 mod decode;
