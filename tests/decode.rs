@@ -883,11 +883,8 @@ fn decode_from_xbm() {
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.xbm"))
         .assert()
-        .failure()
-        .code(69)
-        .stderr(predicate::str::contains(
-            "could not determine the image format",
-        ));
+        .success()
+        .stdout(predicate::eq("QR code"));
     utils::command::command()
         .arg("decode")
         .arg("-t")

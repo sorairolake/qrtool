@@ -176,14 +176,10 @@ pub fn run() -> anyhow::Result<()> {
                 let input_format = input_format
                     .or_else(|| is_svg::is_svg(&input).then_some(crate::cli::InputFormat::Svg));
                 #[cfg(feature = "decode-from-xbm")]
-                #[allow(clippy::option_if_let_else)]
                 let input_format = input_format.or_else(|| {
-                    if let Some(ref path) = arg.input {
-                        path.extension() == Some(std::ffi::OsStr::new("xbm"))
-                    } else {
-                        bool::default()
-                    }
-                    .then_some(crate::cli::InputFormat::Xbm)
+                    input
+                        .starts_with(b"#define")
+                        .then_some(crate::cli::InputFormat::Xbm)
                 });
                 #[allow(clippy::option_if_let_else)]
                 let image = match input_format {
