@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2023 Shun Sakai
 // SPDX-FileCopyrightText: 2024 Alexis Hildebrandt
+// SPDX-FileCopyrightText: 2024 Mohammad AlSaleh
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
@@ -11,7 +12,7 @@ use std::{
 
 use anyhow::Context;
 use clap::Parser;
-use image::ImageFormat;
+use image::{imageops, ImageFormat};
 use qrcode::{bits::Bits, QrCode};
 use rqrr::PreparedImage;
 
@@ -174,10 +175,22 @@ pub fn run() -> anyhow::Result<()> {
                 #[cfg(feature = "decode-from-svg")]
                 let input_format = input_format
                     .or_else(|| is_svg::is_svg(&input).then_some(crate::cli::InputFormat::Svg));
+                #[cfg(feature = "decode-from-xbm")]
+                let input_format = input_format.or_else(|| {
+                    input
+                        .starts_with(b"#define")
+                        .then_some(crate::cli::InputFormat::Xbm)
+                });
                 #[allow(clippy::option_if_let_else)]
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]
                     Some(crate::cli::InputFormat::Svg) => decode::from_svg(&input),
+                    #[cfg(feature = "decode-from-xbm")]
+                    Some(crate::cli::InputFormat::Xbm) => {
+                        let decoder = xbm::Decoder::new(Cursor::new(input))
+                            .context("could not create new XBM decoder")?;
+                        image::DynamicImage::from_decoder(decoder).map_err(anyhow::Error::from)
+                    }
                     format => {
                         let format = if let Some(f) = format {
                             f.try_into()
@@ -192,12 +205,28 @@ pub fn run() -> anyhow::Result<()> {
                     }
                 }
                 .context("could not read the image")?;
-                let image = image.into_luma8();
+                let mut image = image.into_luma8();
 
-                let mut image = PreparedImage::prepare(image);
-                let grids = image.detect_grids();
-                let contents =
-                    decode::grids_as_bytes(grids).context("could not decode the grid")?;
+                let get_contents = |image| {
+                    let mut image = PreparedImage::prepare(image);
+                    let grids = image.detect_grids();
+                    decode::grids_as_bytes(grids).context("could not decode the grid")
+                };
+
+                // NOTE: rqrr doesn't appear to work if the background is darker than
+                // the foreground. So we try with an inverted image if decoding fails
+                // or no content is returned.
+                let contents = match get_contents(image.clone()) {
+                    Err(e) => {
+                        imageops::invert(&mut image);
+                        get_contents(image).map_err(|_| e)?
+                    }
+                    Ok(contents) if contents.is_empty() => {
+                        imageops::invert(&mut image);
+                        get_contents(image).unwrap_or(contents)
+                    }
+                    Ok(contents) => contents,
+                };
 
                 for content in contents {
                     if arg.verbose || arg.metadata {

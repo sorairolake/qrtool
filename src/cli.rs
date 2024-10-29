@@ -582,6 +582,10 @@ pub enum InputFormat {
     /// WebP.
     #[cfg(feature = "decode-from-webp")]
     WebP,
+
+    /// X BitMap.
+    #[cfg(feature = "decode-from-xbm")]
+    Xbm,
 }
 
 impl TryFrom<InputFormat> for ImageFormat {
@@ -620,6 +624,10 @@ impl TryFrom<InputFormat> for ImageFormat {
             InputFormat::Tiff => Ok(Self::Tiff),
             #[cfg(feature = "decode-from-webp")]
             InputFormat::WebP => Ok(Self::WebP),
+            #[cfg(feature = "decode-from-xbm")]
+            InputFormat::Xbm => Err(Self::Error::Unsupported(
+                image::error::ImageFormatHint::Unknown.into(),
+            )),
         }
     }
 }
@@ -734,6 +742,8 @@ mod tests {
             ImageFormat::try_from(InputFormat::Qoi).unwrap(),
             ImageFormat::Qoi
         );
+        #[cfg(feature = "decode-from-svg")]
+        assert!(ImageFormat::try_from(InputFormat::Svg).is_err());
         #[cfg(feature = "decode-from-tga")]
         assert_eq!(
             ImageFormat::try_from(InputFormat::Tga).unwrap(),
@@ -749,11 +759,7 @@ mod tests {
             ImageFormat::try_from(InputFormat::WebP).unwrap(),
             ImageFormat::WebP
         );
-    }
-
-    #[cfg(feature = "decode-from-svg")]
-    #[test]
-    fn try_from_input_format_to_image_format_when_svg() {
-        assert!(ImageFormat::try_from(InputFormat::Svg).is_err());
+        #[cfg(feature = "decode-from-xbm")]
+        assert!(ImageFormat::try_from(InputFormat::Xbm).is_err());
     }
 }

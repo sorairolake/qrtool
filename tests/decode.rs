@@ -2,14 +2,6 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-// Lint levels of rustc.
-#![forbid(unsafe_code)]
-#![deny(missing_debug_implementations)]
-#![warn(rust_2018_idioms)]
-// Lint levels of Clippy.
-#![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
-#![allow(clippy::multiple_crate_versions)]
-
 mod utils;
 
 use predicates::prelude::predicate;
@@ -878,6 +870,41 @@ fn decode_from_web_p_with_wrong_format() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
+#[cfg(feature = "decode-from-xbm")]
+#[test]
+fn decode_from_xbm() {
+    utils::command::command()
+        .arg("decode")
+        .arg("data/decode/decode.xbm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    utils::command::command()
+        .arg("decode")
+        .write_stdin(include_bytes!("data/decode/decode.xbm"))
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+    utils::command::command()
+        .arg("decode")
+        .arg("-t")
+        .arg("xbm")
+        .arg("data/decode/decode.xbm")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+
+    utils::command::command()
+        .arg("decode")
+        .arg("-t")
+        .arg("xbm")
+        .arg("data/decode/decode.svg")
+        .assert()
+        .failure()
+        .code(1)
+        .stderr(predicate::str::contains("could not create new XBM decoder"));
+}
+
 #[test]
 fn decode_from_invalid_input_format() {
     utils::command::command()
@@ -891,6 +918,27 @@ fn decode_from_invalid_input_format() {
         .stderr(predicate::str::contains(
             "invalid value 'a' for '--type <FORMAT>'",
         ));
+}
+
+#[test]
+fn decode_with_invert() {
+    utils::command::command()
+        .arg("decode")
+        .arg("data/invert/basic.png")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
+}
+
+#[cfg(feature = "decode-from-svg")]
+#[test]
+fn decode_from_svg_with_invert() {
+    utils::command::command()
+        .arg("decode")
+        .arg("data/invert/basic.svg")
+        .assert()
+        .success()
+        .stdout(predicate::eq("QR code"));
 }
 
 #[test]

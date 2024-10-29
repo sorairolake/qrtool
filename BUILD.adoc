@@ -75,6 +75,10 @@ fd -t directory out ./target/*/build/qrtool-*
 
   Enable decoding from the QOI image. This is enabled by default.
 
+`decode-from-svg`::
+
+  Enable decoding from the SVG image. This is enabled by default.
+
 `decode-from-tga`::
 
   Enable decoding from the TGA image. This is enabled by default.
@@ -87,9 +91,9 @@ fd -t directory out ./target/*/build/qrtool-*
 
   Enable decoding from the WebP image. This is enabled by default.
 
-`decode-from-svg`::
+`decode-from-xbm`::
 
-  Enable decoding from the SVG image. This is enabled by default.
+  Enable decoding from the XBM image. This is enabled by default.
 
 `optimize-output-png`::
 

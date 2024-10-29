@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.11.5"
+version = "0.11.6"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -20,21 +20,22 @@ include = ["/LICENSES", "/README.md", "/src"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anstyle = { version = "1.0.8", default-features = false, optional = true }
-anstyle-lossy = { version = "1.1.2", optional = true }
-anstyle-yansi = { version = "2.0.1", optional = true }
-anyhow = "1.0.89"
-clap = { version = "4.5.18", features = ["derive", "wrap_help"] }
-clap_complete = "4.5.29"
-clap_complete_nushell = "4.5.3"
+anstyle = { version = "1.0.9", default-features = false, optional = true }
+anstyle-lossy = { version = "1.1.3", optional = true }
+anstyle-yansi = { version = "2.0.2", optional = true }
+anyhow = "1.0.91"
+clap = { version = "4.5.20", features = ["derive", "wrap_help"] }
+clap_complete = "4.5.36"
+clap_complete_nushell = "4.5.4"
 csscolorparser = "0.7.0"
-image = { version = "0.25.2", default-features = false, features = ["png", "rayon"] }
+image = { version = "0.25.4", default-features = false, features = ["png", "rayon"] }
 is-svg = { version = "0.1.2", optional = true }
 oxipng = { version = "9.1.2", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.1"
-resvg = { version = "0.43.0", default-features = false, optional = true }
-rqrr = "0.7.1"
+resvg = { version = "0.44.0", default-features = false, optional = true }
+rqrr = "0.8.0"
 sysexits = "0.8.2"
+xbm = { version = "0.1.2", optional = true }
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
@@ -53,10 +54,11 @@ default = [
   "decode-from-exr",
   "decode-from-pnm",
   "decode-from-qoi",
+  "decode-from-svg",
   "decode-from-tga",
   "decode-from-tiff",
   "decode-from-webp",
-  "decode-from-svg",
+  "decode-from-xbm",
   "optimize-output-png",
   "output-as-ansi",
 ]
@@ -70,10 +72,11 @@ decode-from-jpeg = ["image/jpeg"]
 decode-from-exr = ["image/exr"]
 decode-from-pnm = ["image/pnm"]
 decode-from-qoi = ["image/qoi"]
+decode-from-svg = ["dep:is-svg", "dep:resvg"]
 decode-from-tga = ["image/tga"]
 decode-from-tiff = ["image/tiff"]
 decode-from-webp = ["image/webp"]
-decode-from-svg = ["dep:is-svg", "dep:resvg"]
+decode-from-xbm = ["dep:xbm"]
 optimize-output-png = ["dep:oxipng"]
 output-as-ansi = [
   "dep:anstyle",
@@ -81,6 +84,17 @@ output-as-ansi = [
   "dep:anstyle-yansi",
   "dep:yansi",
 ]
+
+[lints.clippy]
+cargo = { level = "warn", priority = -1 }
+multiple_crate_versions = "allow"
+nursery = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+
+[lints.rust]
+missing_debug_implementations = "deny"
+rust_2018_idioms = { level = "warn", priority = -1 }
+unsafe_code = "forbid"
 
 [profile.release]
 codegen-units = 1

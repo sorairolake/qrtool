@@ -2,13 +2,6 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-// Lint levels of rustc.
-#![forbid(unsafe_code)]
-#![deny(missing_debug_implementations)]
-#![warn(rust_2018_idioms)]
-// Lint levels of Clippy.
-#![warn(clippy::cargo, clippy::nursery, clippy::pedantic)]
-
 use std::{
     env, io,
     process::{Command, ExitStatus},
@@ -46,6 +39,8 @@ fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
     command.args(["-a", "decode-from-tiff"]);
     #[cfg(feature = "decode-from-webp")]
     command.args(["-a", "decode-from-webp"]);
+    #[cfg(feature = "decode-from-xbm")]
+    command.args(["-a", "decode-from-xbm"]);
     #[cfg(feature = "decode-from-svg")]
     command.args(["-a", "decode-from-svg"]);
     #[cfg(feature = "optimize-output-png")]

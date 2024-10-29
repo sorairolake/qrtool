@@ -14,6 +14,16 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.11.5\...v0.11.6[0.11.6] - 2024-10-29
+
+=== Added
+
+* Supports decoding from XBM ({pull-request-url}/645[#645])
+
+=== Fixed
+
+* Fall-back to decoding an inverted image ({pull-request-url}/633[#633])
+
 == {compare-url}/v0.11.4\...v0.11.5[0.11.5] - 2024-09-22
 
 === Added
@@ -48,7 +58,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Add support for PIC output format ({pull-request-url}/543[#543])
 * Add ASCII string and ANSI escape sequences to the output format
   ({pull-request-url}/553[#553])
-* Add values ​​for inverting foreground and background colors when the output format is a string ({pull-request-url}/553[#553])
+* Add values for inverting foreground and background colors when the output format is a string ({pull-request-url}/553[#553])
 
 === Changed
 
@@ -78,7 +88,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 === Changed
 
 * Change the `encode` command to return an error if `--type` is `terminal` and
-  the `--foreground` and/or `--background` options specify values ​​other than
+  the `--foreground` and/or `--background` options specify values other than
   the default ({pull-request-url}/531[#531])
 
 == {compare-url}/v0.10.10\...v0.10.11[0.10.11] - 2024-06-17
