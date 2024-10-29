@@ -175,10 +175,26 @@ pub fn run() -> anyhow::Result<()> {
                 #[cfg(feature = "decode-from-svg")]
                 let input_format = input_format
                     .or_else(|| is_svg::is_svg(&input).then_some(crate::cli::InputFormat::Svg));
+                #[cfg(feature = "decode-from-xbm")]
+                #[allow(clippy::option_if_let_else)]
+                let input_format = input_format.or_else(|| {
+                    if let Some(ref path) = arg.input {
+                        path.extension() == Some(std::ffi::OsStr::new("xbm"))
+                    } else {
+                        bool::default()
+                    }
+                    .then_some(crate::cli::InputFormat::Xbm)
+                });
                 #[allow(clippy::option_if_let_else)]
                 let image = match input_format {
                     #[cfg(feature = "decode-from-svg")]
                     Some(crate::cli::InputFormat::Svg) => decode::from_svg(&input),
+                    #[cfg(feature = "decode-from-xbm")]
+                    Some(crate::cli::InputFormat::Xbm) => {
+                        let decoder = xbm::Decoder::new(Cursor::new(input))
+                            .context("could not create new XBM decoder")?;
+                        image::DynamicImage::from_decoder(decoder).map_err(anyhow::Error::from)
+                    }
                     format => {
                         let format = if let Some(f) = format {
                             f.try_into()

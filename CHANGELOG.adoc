@@ -16,6 +16,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 == {compare-url}/v0.11.5\...HEAD[Unreleased]
 
+=== Added
+
+* Supports decoding from XBM ({pull-request-url}/645[#645])
+
 === Fixed
 
 * Fall-back to decoding an inverted image ({pull-request-url}/633[#633])

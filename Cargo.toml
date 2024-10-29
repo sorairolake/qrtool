@@ -35,6 +35,7 @@ qrcode = "0.14.1"
 resvg = { version = "0.44.0", default-features = false, optional = true }
 rqrr = "0.8.0"
 sysexits = "0.8.2"
+xbm = { version = "0.1.2", optional = true }
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
@@ -53,10 +54,11 @@ default = [
   "decode-from-exr",
   "decode-from-pnm",
   "decode-from-qoi",
+  "decode-from-svg",
   "decode-from-tga",
   "decode-from-tiff",
   "decode-from-webp",
-  "decode-from-svg",
+  "decode-from-xbm",
   "optimize-output-png",
   "output-as-ansi",
 ]
@@ -70,10 +72,11 @@ decode-from-jpeg = ["image/jpeg"]
 decode-from-exr = ["image/exr"]
 decode-from-pnm = ["image/pnm"]
 decode-from-qoi = ["image/qoi"]
+decode-from-svg = ["dep:is-svg", "dep:resvg"]
 decode-from-tga = ["image/tga"]
 decode-from-tiff = ["image/tiff"]
 decode-from-webp = ["image/webp"]
-decode-from-svg = ["dep:is-svg", "dep:resvg"]
+decode-from-xbm = ["dep:xbm"]
 optimize-output-png = ["dep:oxipng"]
 output-as-ansi = [
   "dep:anstyle",

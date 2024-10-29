@@ -4,7 +4,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2024-08-02
+:docdate: 2024-10-29
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -58,6 +58,9 @@ ifdef::decode-from-tiff,env-github,site-gen-antora[]
 endif::[]
 ifdef::decode-from-webp,env-github,site-gen-antora[]
 :webp-url: https://developers.google.com/speed/webp/
+endif::[]
+ifdef::decode-from-xbm,env-github,site-gen-antora[]
+:xbm-url: {enwp-article-url}/X_BitMap
 endif::[]
 :image-crates-url: https://crates.io/crates/image
 
@@ -117,6 +120,9 @@ ifdef::decode-from-tiff,env-github,site-gen-antora[]
 endif::[]
 ifdef::decode-from-webp,env-github,site-gen-antora[]
 * {webp-url}[WebP]
+endif::[]
+ifdef::decode-from-xbm,env-github,site-gen-antora[]
+* {xbm-url}[XBM]
 endif::[]
 
 Use *-t* option to specify the image format. If this option is not specified,
@@ -231,6 +237,12 @@ ifdef::decode-from-webp,env-github,site-gen-antora[]
     *webp*::::
 
       WebP.
+endif::[]
+
+ifdef::decode-from-xbm,env-github,site-gen-antora[]
+    *xbm*::::
+
+      X BitMap.
 endif::[]
 
 *--verbose*::

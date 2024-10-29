@@ -24,6 +24,7 @@
 :tga-url: {enwp-article-url}/Truevision_TGA
 :tiff-url: {enwp-article-url}/TIFF
 :webp-url: https://developers.google.com/speed/webp/
+:xbm-url: {enwp-article-url}/X_BitMap
 :oxipng-repo-url: {github-url}/shssoichiro/oxipng
 :svgcleaner-repo-url: {github-url}/RazrFalcon/svgcleaner
 :imagemagick-url: https://imagemagick.org/
@@ -143,6 +144,7 @@ the output format, etc.
 * {tga-url}[TGA]
 * {tiff-url}[TIFF]
 * {webp-url}[WebP]
+* {xbm-url}[XBM]
 
 To support decoding from SVG image, the `decode-from-svg` feature must be
 enabled at compile time. Note that the SVG image is rasterized before scanning.

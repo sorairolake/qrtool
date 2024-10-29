@@ -39,6 +39,8 @@ fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
     command.args(["-a", "decode-from-tiff"]);
     #[cfg(feature = "decode-from-webp")]
     command.args(["-a", "decode-from-webp"]);
+    #[cfg(feature = "decode-from-xbm")]
+    command.args(["-a", "decode-from-xbm"]);
     #[cfg(feature = "decode-from-svg")]
     command.args(["-a", "decode-from-svg"]);
     #[cfg(feature = "optimize-output-png")]
