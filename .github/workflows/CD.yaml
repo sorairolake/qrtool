@@ -77,7 +77,7 @@ jobs:
         if: matrix.os != 'windows-2022' && !matrix.use-cross
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2
+          ruby-version: 3.3
       - name: Install Asciidoctor
         if: matrix.os != 'windows-2022' && !matrix.use-cross
         run: |
