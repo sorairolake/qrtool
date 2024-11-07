@@ -14,6 +14,42 @@ on:
     - cron: "0 0 * * 0"
 
 jobs:
+  check:
+    name: Check
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-gnu
+          - aarch64-apple-darwin
+          - x86_64-pc-windows-msvc
+        toolchain:
+          - 1.74.0 # MSRV
+          - stable
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-22.04
+          - target: aarch64-apple-darwin
+            os: macos-14
+          - target: x86_64-pc-windows-msvc
+            os: windows-2022
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          targets: ${{ matrix.target }}
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.7.5
+        with:
+          key: ${{ matrix.target }}
+      - name: Check a package
+        run: cargo check --target ${{ matrix.target }}
+      - name: Check a package (no default features)
+        run: cargo check --target ${{ matrix.target }} --no-default-features
+
   test:
     name: Test
     runs-on: ${{ matrix.os }}
@@ -24,7 +60,7 @@ jobs:
           - aarch64-apple-darwin
           - x86_64-pc-windows-msvc
         toolchain:
-          - 1.74.0 # MSRV
+          - 1.74.0
           - stable
         include:
           - target: x86_64-unknown-linux-gnu
