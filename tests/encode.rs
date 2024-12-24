@@ -845,7 +845,6 @@ fn encode_to_invalid_output_format() {
 
 #[cfg(feature = "optimize-output-png")]
 #[test]
-#[allow(clippy::too_many_lines)]
 fn encode_to_optimized_png() {
     let default_output = utils::command::command()
         .arg("encode")

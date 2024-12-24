@@ -44,7 +44,6 @@ const DECODE_AFTER_LONG_HELP: &str = concat!(
 );
 
 #[derive(Debug, Parser)]
-#[allow(clippy::struct_excessive_bools)]
 #[command(
     version,
     long_version(LONG_VERSION),
