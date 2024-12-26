@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-09-20
+:docdate: 2024-12-26
 :doctype: manpage
 ifdef::revnumber[:mansource: qrtool {revnumber}]
 ifndef::revnumber[:mansource: qrtool]
@@ -38,12 +38,12 @@ version 40 and error correction level L (40-L).
 
 |Numeric
 |7,089
-|0&#8211;9
+|0-9
 
 |Alphanumeric
 |4,296
-|0&#8211;9, A&#8211;Z (uppercase only), and few symbols (space, `$`, `%`, `*`,
-`+`, `-`, `.`, `/`, `:`)
+|0-9, A-Z (uppercase only), and few symbols (space, `$`, `%`, `*`, `+`, `-`,
+`.`, `/`, `:`)
 
 |Byte
 |2,953
