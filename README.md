@@ -310,6 +310,10 @@ Please see [CONTRIBUTING.adoc].
 
 This program is inspired by [`qrencode`] and [`zbarimg`].
 
+## Home page
+
+<https://sorairolake.github.io/qrtool/>
+
 ## License
 
 Copyright (C) 2022-2024 Shun Sakai and other contributors (see [AUTHORS.adoc])
