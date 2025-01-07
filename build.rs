@@ -12,42 +12,6 @@ fn generate_man_page(out_dir: &str) -> io::Result<ExitStatus> {
     let mut command = Command::new("asciidoctor");
     command
         .args(["-b", "manpage"])
-        .args(["-a", concat!("revnumber=", env!("CARGO_PKG_VERSION"))]);
-    #[cfg(feature = "decode-from-bmp")]
-    command.args(["-a", "decode-from-bmp"]);
-    #[cfg(feature = "decode-from-dds")]
-    command.args(["-a", "decode-from-dds"]);
-    #[cfg(feature = "decode-from-ff")]
-    command.args(["-a", "decode-from-ff"]);
-    #[cfg(feature = "decode-from-gif")]
-    command.args(["-a", "decode-from-gif"]);
-    #[cfg(feature = "decode-from-hdr")]
-    command.args(["-a", "decode-from-hdr"]);
-    #[cfg(feature = "decode-from-ico")]
-    command.args(["-a", "decode-from-ico"]);
-    #[cfg(feature = "decode-from-jpeg")]
-    command.args(["-a", "decode-from-jpeg"]);
-    #[cfg(feature = "decode-from-exr")]
-    command.args(["-a", "decode-from-exr"]);
-    #[cfg(feature = "decode-from-pnm")]
-    command.args(["-a", "decode-from-pnm"]);
-    #[cfg(feature = "decode-from-qoi")]
-    command.args(["-a", "decode-from-qoi"]);
-    #[cfg(feature = "decode-from-tga")]
-    command.args(["-a", "decode-from-tga"]);
-    #[cfg(feature = "decode-from-tiff")]
-    command.args(["-a", "decode-from-tiff"]);
-    #[cfg(feature = "decode-from-webp")]
-    command.args(["-a", "decode-from-webp"]);
-    #[cfg(feature = "decode-from-xbm")]
-    command.args(["-a", "decode-from-xbm"]);
-    #[cfg(feature = "decode-from-svg")]
-    command.args(["-a", "decode-from-svg"]);
-    #[cfg(feature = "optimize-output-png")]
-    command.args(["-a", "optimize-output-png"]);
-    #[cfg(feature = "output-as-ansi")]
-    command.args(["-a", "output-as-ansi"]);
-    command
         .args(["-D", out_dir])
         .arg(man_dir.join("*.1.adoc"))
         .status()

@@ -4,64 +4,32 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2024-10-29
+:docdate: 2025-01-07
+:revnumber: 0.11.6
 :doctype: manpage
-ifdef::revnumber[:mansource: qrtool {revnumber}]
-ifndef::revnumber[:mansource: qrtool]
+:mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
 :qrcode-url: https://www.qrcode.com/
 :enwp-url: https://en.wikipedia.org
 :enwp-article-url: {enwp-url}/wiki
-ifdef::decode-from-svg,env-github,site-gen-antora[]
 :w3-url: https://www.w3.org
-endif::[]
-ifdef::decode-from-bmp,env-github,site-gen-antora[]
 :bmp-url: {enwp-article-url}/BMP_file_format
-endif::[]
-ifdef::decode-from-dds,env-github,site-gen-antora[]
 :dds-url: {enwp-article-url}/DirectDraw_Surface
-endif::[]
-ifdef::decode-from-ff,env-github,site-gen-antora[]
 :farbfeld-url: https://tools.suckless.org/farbfeld/
-endif::[]
-ifdef::decode-from-gif,env-github,site-gen-antora[]
 :gif-url: {enwp-article-url}/GIF
-endif::[]
-ifdef::decode-from-hdr,env-github,site-gen-antora[]
 :radiance-rgbe-url: {enwp-article-url}/RGBE_image_format
-endif::[]
-ifdef::decode-from-ico,env-github,site-gen-antora[]
 :ico-url: {enwp-article-url}/ICO_(file_format)
-endif::[]
-ifdef::decode-from-jpeg,env-github,site-gen-antora[]
 :jpeg-url: https://jpeg.org/jpeg/
-endif::[]
-ifdef::decode-from-exr,env-github,site-gen-antora[]
 :openexr-url: https://openexr.com/
-endif::[]
 :png-url: {enwp-article-url}/PNG
-ifdef::decode-from-pnm,env-github,site-gen-antora[]
 :pnm-url: https://netpbm.sourceforge.net/doc/pnm.html
-endif::[]
-ifdef::decode-from-qoi,env-github,site-gen-antora[]
 :qoi-url: https://qoiformat.org/
-endif::[]
-ifdef::decode-from-svg,env-github,site-gen-antora[]
 :svg-url: {w3-url}/Graphics/SVG/
-endif::[]
-ifdef::decode-from-tga,env-github,site-gen-antora[]
 :tga-url: {enwp-article-url}/Truevision_TGA
-endif::[]
-ifdef::decode-from-tiff,env-github,site-gen-antora[]
 :tiff-url: {enwp-article-url}/TIFF
-endif::[]
-ifdef::decode-from-webp,env-github,site-gen-antora[]
 :webp-url: https://developers.google.com/speed/webp/
-endif::[]
-ifdef::decode-from-xbm,env-github,site-gen-antora[]
 :xbm-url: {enwp-article-url}/X_BitMap
-endif::[]
 :image-crates-url: https://crates.io/crates/image
 
 == NAME
@@ -78,52 +46,22 @@ This command detects and decodes a {qrcode-url}[QR code] from a raster or
 vector image. By default, the result will be output to standard output.
 
 .Supported image file formats
-ifdef::decode-from-bmp,env-github,site-gen-antora[]
-* {bmp-url}[BMP]
-endif::[]
-ifdef::decode-from-dds,env-github,site-gen-antora[]
-* {dds-url}[DDS]
-endif::[]
-ifdef::decode-from-ff,env-github,site-gen-antora[]
-* {farbfeld-url}[Farbfeld]
-endif::[]
-ifdef::decode-from-gif,env-github,site-gen-antora[]
-* {gif-url}[GIF]
-endif::[]
-ifdef::decode-from-hdr,env-github,site-gen-antora[]
-* {radiance-rgbe-url}[Radiance RGBE]
-endif::[]
-ifdef::decode-from-ico,env-github,site-gen-antora[]
-* {ico-url}[ICO]
-endif::[]
-ifdef::decode-from-jpeg,env-github,site-gen-antora[]
-* {jpeg-url}[JPEG]
-endif::[]
-ifdef::decode-from-exr,env-github,site-gen-antora[]
-* {openexr-url}[OpenEXR]
-endif::[]
+* {bmp-url}[BMP] (if enabled at compile time)
+* {dds-url}[DDS] (if enabled at compile time)
+* {farbfeld-url}[Farbfeld] (if enabled at compile time)
+* {gif-url}[GIF] (if enabled at compile time)
+* {radiance-rgbe-url}[Radiance RGBE] (if enabled at compile time)
+* {ico-url}[ICO] (if enabled at compile time)
+* {jpeg-url}[JPEG] (if enabled at compile time)
+* {openexr-url}[OpenEXR] (if enabled at compile time)
 * {png-url}[PNG]
-ifdef::decode-from-pnm,env-github,site-gen-antora[]
-* {pnm-url}[PNM]
-endif::[]
-ifdef::decode-from-qoi,env-github,site-gen-antora[]
-* {qoi-url}[QOI]
-endif::[]
-ifdef::decode-from-svg,env-github,site-gen-antora[]
-* {svg-url}[SVG]
-endif::[]
-ifdef::decode-from-tga,env-github,site-gen-antora[]
-* {tga-url}[TGA]
-endif::[]
-ifdef::decode-from-tiff,env-github,site-gen-antora[]
-* {tiff-url}[TIFF]
-endif::[]
-ifdef::decode-from-webp,env-github,site-gen-antora[]
-* {webp-url}[WebP]
-endif::[]
-ifdef::decode-from-xbm,env-github,site-gen-antora[]
-* {xbm-url}[XBM]
-endif::[]
+* {pnm-url}[PNM] (if enabled at compile time)
+* {qoi-url}[QOI] (if enabled at compile time)
+* {svg-url}[SVG] (if enabled at compile time)
+* {tga-url}[TGA] (if enabled at compile time)
+* {tiff-url}[TIFF] (if enabled at compile time)
+* {webp-url}[WebP] (if enabled at compile time)
+* {xbm-url}[XBM] (if enabled at compile time)
 
 Use *-t* option to specify the image format. If this option is not specified,
 the image format is determined based on the extension or the magic number.
@@ -150,100 +88,85 @@ _IMAGE_::
 
   The possible values are:{blank}:::
 
-ifdef::decode-from-bmp,env-github,site-gen-antora[]
     *bmp*::::
 
-      Windows Bitmap.
-endif::[]
+      Windows Bitmap. This value is available if the `decode-from-bmp` feature
+      is enabled at compile time.
 
-ifdef::decode-from-dds,env-github,site-gen-antora[]
     *dds*::::
 
-      DirectDraw Surface.
-endif::[]
+      DirectDraw Surface. This value is available if the `decode-from-dds`
+      feature is enabled at compile time.
 
-ifdef::decode-from-ff,env-github,site-gen-antora[]
     *farbfeld*::::
 
-      Farbfeld.
-endif::[]
+      Farbfeld. This value is available if the `decode-from-ff` feature is
+      enabled at compile time.
 
-ifdef::decode-from-gif,env-github,site-gen-antora[]
     *gif*::::
 
-      Graphics Interchange Format.
-endif::[]
+      Graphics Interchange Format. This value is available if the
+      `decode-from-gif` feature is enabled at compile time.
 
-ifdef::decode-from-hdr,env-github,site-gen-antora[]
     *hdr*::::
 
-      Radiance RGBE.
-endif::[]
+      Radiance RGBE. This value is available if the `decode-from-hdr` feature
+      is enabled at compile time.
 
-ifdef::decode-from-ico,env-github,site-gen-antora[]
     *ico*::::
 
-      ICO file format. This value also includes the CUR file format.
-endif::[]
+      ICO file format. This value also includes the CUR file format. This value
+      is available if the `decode-from-ico` feature is enabled at compile time.
 
-ifdef::decode-from-jpeg,env-github,site-gen-antora[]
     *jpeg*::::
 
-      JPEG.
-endif::[]
+      JPEG. This value is available if the `decode-from-jpeg` feature is
+      enabled at compile time.
 
-ifdef::decode-from-exr,env-github,site-gen-antora[]
     *openexr*::::
 
-      OpenEXR.
-endif::[]
+      OpenEXR. This value is available if the `decode-from-exr` feature is
+      enabled at compile time.
 
     *png*::::
 
       Portable Network Graphics.
 
-ifdef::decode-from-pnm,env-github,site-gen-antora[]
     *pnm*::::
 
-      Portable Anymap Format.
-endif::[]
+      Portable Anymap Format. This value is available if the `decode-from-pnm`
+      feature is enabled at compile time.
 
-ifdef::decode-from-qoi,env-github,site-gen-antora[]
     *qoi*::::
 
-      Quite OK Image Format.
-endif::[]
+      Quite OK Image Format. This value is available if the `decode-from-qoi`
+      feature is enabled at compile time.
 
-ifdef::decode-from-svg,env-github,site-gen-antora[]
     *svg*::::
 
       Scalable Vector Graphics. This value also includes the gzip-compressed
-      SVG image.
-endif::[]
+      SVG image. This value is available if the `decode-from-svg` feature is
+      enabled at compile time.
 
-ifdef::decode-from-tga,env-github,site-gen-antora[]
     *tga*::::
 
-      Truevision TGA.
-endif::[]
+      Truevision TGA. This value is available if the `decode-from-tga` feature
+      is enabled at compile time.
 
-ifdef::decode-from-tiff,env-github,site-gen-antora[]
     *tiff*::::
 
-      Tag Image File Format.
-endif::[]
+      Tag Image File Format. This value is available if the `decode-from-tiff`
+      feature is enabled at compile time.
 
-ifdef::decode-from-webp,env-github,site-gen-antora[]
     *webp*::::
 
-      WebP.
-endif::[]
+      WebP. This value is available if the `decode-from-webp` feature is
+      enabled at compile time.
 
-ifdef::decode-from-xbm,env-github,site-gen-antora[]
     *xbm*::::
 
-      X BitMap.
-endif::[]
+      X BitMap. This value is available if the `decode-from-xbm` feature is
+      enabled at compile time.
 
 *--verbose*::
 
