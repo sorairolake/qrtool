@@ -4,10 +4,10 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2024-09-20
+:docdate: 2025-01-07
+:revnumber: 0.11.7
 :doctype: manpage
-ifdef::revnumber[:mansource: qrtool {revnumber}]
-ifndef::revnumber[:mansource: qrtool]
+:mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
 :qrcode-url: https://www.qrcode.com/
@@ -38,12 +38,12 @@ version 40 and error correction level L (40-L).
 
 |Numeric
 |7,089
-|0&#8211;9
+|0-9
 
 |Alphanumeric
 |4,296
-|0&#8211;9, A&#8211;Z (uppercase only), and few symbols (space, `$`, `%`, `*`,
-`+`, `-`, `.`, `/`, `:`)
+|0-9, A-Z (uppercase only), and few symbols (space, `$`, `%`, `*`, `+`, `-`,
+`.`, `/`, `:`)
 
 |Byte
 |2,953
@@ -176,19 +176,20 @@ _STRING_::
 
       PIC markup language.
 
-ifdef::output-as-ansi,env-github,site-gen-antora[]
     *ansi*::::
 
-      To the terminal using 4-bit ANSI escape sequences.
+      To the terminal using 4-bit ANSI escape sequences. This value is
+      available if the `output-as-ansi` feature is enabled at compile time.
 
     *ansi256*::::
 
-      To the terminal using 8-bit ANSI escape sequences.
+      To the terminal using 8-bit ANSI escape sequences. This value is
+      available if the `output-as-ansi` feature is enabled at compile time.
 
     *ansi-true-color*::::
 
-      To the terminal using 24-bit ANSI escape sequences.
-endif::[]
+      To the terminal using 24-bit ANSI escape sequences. This value is
+      available if the `output-as-ansi` feature is enabled at compile time.
 
     *ascii*::::
 
@@ -211,12 +212,12 @@ endif::[]
       background colors of *unicode* and outputs the inverted string. *UTF8i*
       is an alias for this value.
 
-ifdef::optimize-output-png,env-github,site-gen-antora[]
 *--optimize-png* [_LEVEL_]::
 
   Set the optimization level for a PNG image. Lower levels are faster, higher
   levels provide better compression. If _LEVEL_ is not specified, it is assumed
-  that the default level 2 is specified.
+  that the default level 2 is specified. This option is available if the
+  `optimize-output-png` feature is enabled at compile time.
 
   The possible values are:{blank}:::
 
@@ -251,16 +252,14 @@ ifdef::optimize-output-png,env-github,site-gen-antora[]
     *max*::::
 
       This value is an alias for the maximum optimization level.
-endif::[]
 
-ifdef::optimize-output-png,env-github,site-gen-antora[]
 *--zopfli* [_ITERATION_]::
 
   Use Zopfli to compress PNG image. Perform compression for the number of
   iterations specified by _ITERATION_. If _ITERATION_ is not specified, it is
   assumed that 15 is specified as the number of iterations. This option
-  requires *--optimize-png*.
-endif::[]
+  requires *--optimize-png*. This option is available if the
+  `optimize-output-png` feature is enabled at compile time.
 
 *--mode* _MODE_::
 

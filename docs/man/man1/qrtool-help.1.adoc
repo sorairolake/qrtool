@@ -5,9 +5,9 @@
 = qrtool-help(1)
 // Specify in UTC.
 :docdate: 2024-07-30
+:revnumber: 0.11.7
 :doctype: manpage
-ifdef::revnumber[:mansource: qrtool {revnumber}]
-ifndef::revnumber[:mansource: qrtool]
+:mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
 

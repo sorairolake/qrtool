@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.11.6"
+version = "0.11.7"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2021"
 rust-version = "1.74.0"
@@ -20,27 +20,27 @@ include = ["/LICENSES", "/README.md", "/src"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anstyle = { version = "1.0.9", default-features = false, optional = true }
+anstyle = { version = "1.0.10", default-features = false, optional = true }
 anstyle-lossy = { version = "1.1.3", optional = true }
 anstyle-yansi = { version = "2.0.2", optional = true }
-anyhow = "1.0.91"
-clap = { version = "4.5.20", features = ["derive", "wrap_help"] }
-clap_complete = "4.5.36"
-clap_complete_nushell = "4.5.4"
+anyhow = "1.0.95"
+clap = { version = "4.5.24", features = ["derive", "wrap_help"] }
+clap_complete = "4.5.41"
+clap_complete_nushell = "4.5.5"
 csscolorparser = "0.7.0"
-image = { version = "0.25.4", default-features = false, features = ["png", "rayon"] }
-is-svg = { version = "0.1.2", optional = true }
-oxipng = { version = "9.1.2", default-features = false, features = ["parallel", "zopfli"], optional = true }
+image = { version = "0.25.5", default-features = false, features = ["png", "rayon"] }
+is-svg = { version = "0.1.4", optional = true }
+oxipng = { version = "9.1.3", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.1"
 resvg = { version = "0.44.0", default-features = false, optional = true }
-rqrr = "0.8.0"
-sysexits = "0.8.2"
-xbm = { version = "0.1.2", optional = true }
+rqrr = "0.9.0"
+sysexits = "0.8.5"
+xbm = { version = "0.1.3", optional = true }
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
 assert_cmd = "2.0.16"
-predicates = "3.1.2"
+predicates = "3.1.3"
 
 [features]
 default = [

@@ -17,7 +17,7 @@ jobs:
   gitlab:
     name: Mirror to GitLab
     if: (github.actor == 'sorairolake' || github.event_name == 'schedule') && github.repository_owner == 'sorairolake'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
   codeberg:
     name: Mirror to Codeberg
     if: (github.actor == 'sorairolake' || github.event_name == 'schedule') && github.repository_owner == 'sorairolake'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

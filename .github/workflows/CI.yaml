@@ -14,25 +14,75 @@ on:
     - cron: "0 0 * * 0"
 
 jobs:
+  check:
+    name: Check
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os-alias:
+          - ubuntu
+          - macos
+          - windows
+        toolchain-alias:
+          - msrv
+          - stable
+        include:
+          - os-alias: ubuntu
+            os: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+          - os-alias: macos
+            os: macos-14
+            target: aarch64-apple-darwin
+          - os-alias: windows
+            os: windows-2022
+            target: x86_64-pc-windows-msvc
+          - toolchain-alias: msrv
+            toolchain: 1.74.0
+          - toolchain-alias: stable
+            toolchain: stable
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: ${{ matrix.toolchain }}
+          targets: ${{ matrix.target }}
+      - name: Cache build artifacts
+        uses: Swatinem/rust-cache@v2.7.7
+        with:
+          key: ${{ matrix.target }}
+      - name: Check a package
+        run: cargo check --target ${{ matrix.target }}
+      - name: Check a package (no default features)
+        run: cargo check --target ${{ matrix.target }} --no-default-features
+
   test:
     name: Test
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - aarch64-apple-darwin
-          - x86_64-pc-windows-msvc
-        toolchain:
-          - 1.74.0 # MSRV
+        os-alias:
+          - ubuntu
+          - macos
+          - windows
+        toolchain-alias:
+          - msrv
           - stable
         include:
-          - target: x86_64-unknown-linux-gnu
-            os: ubuntu-22.04
-          - target: aarch64-apple-darwin
+          - os-alias: ubuntu
+            os: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+          - os-alias: macos
             os: macos-14
-          - target: x86_64-pc-windows-msvc
+            target: aarch64-apple-darwin
+          - os-alias: windows
             os: windows-2022
+            target: x86_64-pc-windows-msvc
+          - toolchain-alias: msrv
+            toolchain: 1.74.0
+          - toolchain-alias: stable
+            toolchain: stable
     steps:
       - name: Set Git to use LF
         if: matrix.os == 'windows-2022'
@@ -47,7 +97,7 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           targets: ${{ matrix.target }}
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.7.5
+        uses: Swatinem/rust-cache@v2.7.7
         with:
           key: ${{ matrix.target }}
       - name: Run tests
@@ -57,7 +107,7 @@ jobs:
 
   rustfmt:
     name: Rustfmt
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -67,13 +117,13 @@ jobs:
           toolchain: stable
           components: rustfmt
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.7.5
+        uses: Swatinem/rust-cache@v2.7.7
       - name: Check code formatted
         run: cargo fmt -- --check
 
   clippy:
     name: Clippy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -83,7 +133,7 @@ jobs:
           toolchain: stable
           components: clippy
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.7.5
+        uses: Swatinem/rust-cache@v2.7.7
       - name: Check no lint warnings
         run: cargo clippy -- -D warnings
       - name: Check no lint warnings (no default features)

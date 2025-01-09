@@ -18,7 +18,7 @@ use image::{ImageError, ImageFormat};
 const LONG_VERSION: &str = concat!(
     env!("CARGO_PKG_VERSION"),
     '\n',
-    "Copyright (C) 2022-2024 Shun Sakai and other contributors\n",
+    "Copyright (C) 2022 Shun Sakai and other contributors\n",
     '\n',
     "This program is distributed under the terms of either the Apache License 2.0 or\n",
     "the MIT License.\n",
@@ -44,7 +44,6 @@ const DECODE_AFTER_LONG_HELP: &str = concat!(
 );
 
 #[derive(Debug, Parser)]
-#[allow(clippy::struct_excessive_bools)]
 #[command(
     version,
     long_version(LONG_VERSION),

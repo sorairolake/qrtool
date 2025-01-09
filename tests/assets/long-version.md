@@ -1,4 +1,4 @@
-Copyright (C) 2022-2024 Shun Sakai and other contributors
+Copyright (C) 2022 Shun Sakai and other contributors
 
 This program is distributed under the terms of either the Apache License 2.0 or
 the MIT License.
