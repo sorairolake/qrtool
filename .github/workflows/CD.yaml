@@ -109,7 +109,7 @@ jobs:
           fi
 
           if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-            tar -cvf "${package}.tar" "${package}"
+            tar -cv --format=pax -f "${package}.tar" "${package}"
             zstd --rm -19 -v "${package}.tar"
           else
             7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
