@@ -137,7 +137,7 @@ jobs:
           sha256sum qrtool-* | tee sha256sums.txt
           b2sum qrtool-* | tee b2sums.txt
       - name: Release
-        uses: softprops/action-gh-release@v2.1.0
+        uses: softprops/action-gh-release@v2.2.0
         if: startsWith(github.ref, 'refs/tags/')
         with:
           draft: true
