@@ -46,12 +46,12 @@ predicates = "3.1.3"
 default = [
   "decode-from-bmp",
   "decode-from-dds",
+  "decode-from-exr",
   "decode-from-ff",
   "decode-from-gif",
   "decode-from-hdr",
   "decode-from-ico",
   "decode-from-jpeg",
-  "decode-from-exr",
   "decode-from-pnm",
   "decode-from-qoi",
   "decode-from-svg",
@@ -64,12 +64,12 @@ default = [
 ]
 decode-from-bmp = ["image/bmp"]
 decode-from-dds = ["image/dds"]
+decode-from-exr = ["image/exr"]
 decode-from-ff = ["image/ff"]
 decode-from-gif = ["image/gif"]
 decode-from-hdr = ["image/hdr"]
 decode-from-ico = ["image/ico"]
 decode-from-jpeg = ["image/jpeg"]
-decode-from-exr = ["image/exr"]
 decode-from-pnm = ["image/pnm"]
 decode-from-qoi = ["image/qoi"]
 decode-from-svg = ["dep:is-svg", "dep:resvg"]

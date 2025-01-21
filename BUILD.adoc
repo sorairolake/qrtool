@@ -43,6 +43,10 @@ fd -t directory out ./target/*/build/qrtool-*
 
   Enable decoding from the DDS image. This is enabled by default.
 
+`decode-from-exr`::
+
+  Enable decoding from the OpenEXR image. This is enabled by default.
+
 `decode-from-ff`::
 
   Enable decoding from the Farbfeld image. This is enabled by default.
@@ -62,10 +66,6 @@ fd -t directory out ./target/*/build/qrtool-*
 `decode-from-jpeg`::
 
   Enable decoding from the JPEG image. This is enabled by default.
-
-`decode-from-exr`::
-
-  Enable decoding from the OpenEXR image. This is enabled by default.
 
 `decode-from-pnm`::
 
