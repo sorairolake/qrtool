@@ -30,7 +30,7 @@ clap_complete_nushell = "4.5.5"
 csscolorparser = "0.7.0"
 image = { version = "0.25.5", default-features = false, features = ["png", "rayon"] }
 is-svg = { version = "0.1.4", optional = true }
-oxipng = { version = "9.1.3", default-features = false, features = ["parallel", "zopfli"], optional = true }
+oxipng = { version = "9.1.4", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.1"
 resvg = { version = "0.44.0", default-features = false, optional = true }
 rqrr = "0.9.0"
