@@ -12,8 +12,8 @@ use std::{
 
 use anyhow::Context;
 use clap::Parser;
-use image::{imageops, ImageFormat};
-use qrcode::{bits::Bits, QrCode};
+use image::{ImageFormat, imageops};
+use qrcode::{QrCode, bits::Bits};
 use rqrr::PreparedImage;
 
 use crate::{
@@ -77,9 +77,9 @@ pub fn run() -> anyhow::Result<()> {
                     eprintln!("Level: {:?}", metadata.error_correction_level());
                 }
 
-                let margin =
-                    arg.margin
-                        .unwrap_or_else(|| if code.version().is_micro() { 2 } else { 4 });
+                let margin = arg
+                    .margin
+                    .unwrap_or_else(|| if code.version().is_micro() { 2 } else { 4 });
                 let module_size = arg.size.map(NonZeroU32::get);
                 let is_invert = matches!(
                     arg.output_format,

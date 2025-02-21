@@ -6,10 +6,10 @@
 use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
 use qrcode::{
-    bits::Bits,
-    render::{pic, svg, unicode, Renderer},
-    types::QrError,
     EcLevel, QrCode, QrResult, Version,
+    bits::Bits,
+    render::{Renderer, pic, svg, unicode},
+    types::QrError,
 };
 
 use crate::{
