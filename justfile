@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
-alias all := default
 alias lint := clippy
 
 # Run default recipe
-default: build
+@_default:
+    just -l
 
 # Build a package
 @build:
