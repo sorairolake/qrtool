@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: CC-BY-4.0
 
 == EXIT STATUS
+:sysexits-man-page-url: https://man.openbsd.org/sysexits
 
 *0*::
 
@@ -16,26 +17,5 @@
 
   An error occurred while parsing command-line arguments.
 
-*65*::
-
-  The input data was incorrect in some way.
-
-*66*::
-
-  An input file did not exist or was not readable.
-
-*69*::
-
-  A service is unavailable.
-
-*71*::
-
-  An operating system error has been detected.
-
-*74*::
-
-  An error occurred while doing I/O on some file.
-
-*77*::
-
-  You did not have sufficient permission to perform the operation.
+Exit statuses other than these are defined by
+{sysexits-man-page-url}[`<sysexits.h>`].
