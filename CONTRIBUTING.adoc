@@ -32,7 +32,7 @@ Please see the {commit-messages-guide-url}[Commit messages guide] and the
   case if possible. Note that the change must pass the CI.
 . Please update the copyright information if possible. This project is
   compliant with version 3.3 of the
-  https://reuse.software/spec/[_REUSE Specification_].
+  https://reuse.software/spec-3.3/[_REUSE Specification_].
   https://github.com/fsfe/reuse-tool[`reuse`] is useful for updating the
   copyright information.
 ifdef::site-gen-antora[]

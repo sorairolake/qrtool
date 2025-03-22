@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: CC-BY-4.0
 
 = License
-:reuse-spec-url: https://reuse.software/spec/
+:reuse-spec-url: https://reuse.software/spec-3.3/
 
 Copyright (C) 2022 Shun Sakai and other contributors
 
