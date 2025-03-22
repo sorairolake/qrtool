@@ -11,6 +11,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 [![Version][version-badge]][version-url]
 ![MSRV][msrv-badge]
 ![License][license-badge]
+[![REUSE status][reuse-badge]][reuse-url]
 
 **qrtool** is a command-line utility for encoding or decoding QR code.
 
@@ -333,6 +334,8 @@ licensing information.
 [version-url]: https://crates.io/crates/qrtool
 [msrv-badge]: https://img.shields.io/crates/msrv/qrtool?style=for-the-badge&logo=rust
 [license-badge]: https://img.shields.io/crates/l/qrtool?style=for-the-badge
+[reuse-badge]: https://img.shields.io/reuse/compliance/github.com%2Fsorairolake%2Fqrtool?style=for-the-badge
+[reuse-url]: https://api.reuse.software/info/github.com/sorairolake/qrtool
 [repology-badge]: https://repology.org/badge/vertical-allrepos/qrtool.svg?columns=3
 [repology-versions]: https://repology.org/project/qrtool/versions
 [Homebrew]: https://brew.sh/
