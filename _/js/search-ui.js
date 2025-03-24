@@ -97,8 +97,8 @@
 
     if (index >= 0) {
       // extend term until word boundary to return the entire word
-      const boundaries = str.substr(index).match(/^\w+/);
-      if (boundaries.length >= 0) {
+      const boundaries = str.substr(index).match(/^[\p{Alpha}]+/u);
+      if (boundaries !== null && boundaries.length >= 0) {
         return {
           start: index,
           length: boundaries[0].length,
