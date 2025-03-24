@@ -597,6 +597,18 @@ checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 
 [[package]]
 name = "image"
+version = "0.24.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5690139d2f55868e080017335e4b94cb7414274c74f1669c84fb5feba2c9f69d"
+dependencies = [
+ "bytemuck",
+ "byteorder",
+ "color_quant",
+ "num-traits",
+]
+
+[[package]]
+name = "image"
 version = "0.25.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cd6f44aed642f18953a158afeb30206f4d50da59fbc66ecb53c66488de73563b"
@@ -1074,7 +1086,7 @@ version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d68782463e408eb1e668cf6152704bd856c78c5b6417adaee3203d8f4c1fc9ec"
 dependencies = [
- "image",
+ "image 0.25.5",
 ]
 
 [[package]]
@@ -1090,7 +1102,7 @@ dependencies = [
  "clap_complete",
  "clap_complete_nushell",
  "csscolorparser",
- "image",
+ "image 0.25.5",
  "is-svg",
  "oxipng",
  "predicates",
@@ -1283,12 +1295,12 @@ checksum = "6c20b6793b5c2fa6553b250154b78d6d0db37e72700ae35fad9387a46f487c97"
 
 [[package]]
 name = "rqrr"
-version = "0.9.0"
+version = "0.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f126a9b02152815d84315316e7a759ee18a216d057095d56d19cec68a428b385"
+checksum = "aeac129c92ff0305d8bf9da5511039e27261d1d29af65c7ef17dc7568dfa7064"
 dependencies = [
  "g2p",
- "image",
+ "image 0.24.9",
  "lru",
 ]
 
@@ -1789,7 +1801,7 @@ version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d2b7187d407751348c3f13cb0baf189a142562fca2eae93a9cdd29e5ea8746d"
 dependencies = [
- "image",
+ "image 0.25.5",
  "unicode-ident",
 ]
 
