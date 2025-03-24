@@ -10,7 +10,7 @@ use std::{
 };
 
 use anyhow::anyhow;
-use clap::{value_parser, Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
+use clap::{Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint, value_parser};
 use clap_complete::Generator;
 use csscolorparser::Color;
 use image::{ImageError, ImageFormat};
@@ -308,9 +308,9 @@ impl Opt {
     }
 
     /// Generates shell completion and print it.
-    pub fn print_completion(gen: impl Generator) {
+    pub fn print_completion(generator: impl Generator) {
         clap_complete::generate(
-            gen,
+            generator,
             &mut Self::command(),
             Self::command().get_name(),
             &mut io::stdout(),

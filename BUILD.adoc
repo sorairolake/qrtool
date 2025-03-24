@@ -7,7 +7,7 @@
 == Prerequisites
 
 .To build *qrtool*, you will need the following dependencies
-* https://doc.rust-lang.org/stable/cargo/[Cargo] (v1.74.0 or later)
+* https://doc.rust-lang.org/stable/cargo/[Cargo] (v1.85.0 or later)
 
 .To build man pages, you will need the following additional dependencies
 * https://asciidoctor.org/[Asciidoctor]
@@ -43,6 +43,10 @@ fd -t directory out ./target/*/build/qrtool-*
 
   Enable decoding from the DDS image. This is enabled by default.
 
+`decode-from-exr`::
+
+  Enable decoding from the OpenEXR image. This is enabled by default.
+
 `decode-from-ff`::
 
   Enable decoding from the Farbfeld image. This is enabled by default.
@@ -62,10 +66,6 @@ fd -t directory out ./target/*/build/qrtool-*
 `decode-from-jpeg`::
 
   Enable decoding from the JPEG image. This is enabled by default.
-
-`decode-from-exr`::
-
-  Enable decoding from the OpenEXR image. This is enabled by default.
 
 `decode-from-pnm`::
 

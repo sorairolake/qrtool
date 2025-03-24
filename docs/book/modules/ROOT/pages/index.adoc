@@ -11,11 +11,14 @@
 :version-url: https://crates.io/crates/qrtool
 :msrv-badge: {shields-url}/crates/msrv/qrtool?style=for-the-badge&logo=rust
 :license-badge: {shields-url}/crates/l/qrtool?style=for-the-badge
+:reuse-badge: {shields-url}/reuse/compliance/github.com%2Fsorairolake%2Fqrtool?style=for-the-badge
+:reuse-url: https://api.reuse.software/info/github.com/sorairolake/qrtool
 
 image:{ci-badge}[CI,link={ci-url}]
 image:{version-badge}[Version,link={version-url}]
 image:{msrv-badge}[MSRV]
 image:{license-badge}[License]
+image:{reuse-badge}[REUSE status,link={reuse-url}]
 
 *qrtool* is a command-line utility for encoding or decoding QR code.
 

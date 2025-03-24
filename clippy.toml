@@ -2,4 +2,4 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
-msrv = "1.74.0"
+msrv = "1.85.0"

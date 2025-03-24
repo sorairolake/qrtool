@@ -66,11 +66,11 @@ jobs:
           targets: ${{ matrix.target }}
       - name: Install cross
         if: ${{ matrix.use-cross }}
-        uses: taiki-e/install-action@v2.47.7
+        uses: taiki-e/install-action@v2.49.34
         with:
           tool: cross
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.7.7
+        uses: Swatinem/rust-cache@v2.7.8
         with:
           key: ${{ matrix.target }}
       - name: Setup Ruby
@@ -109,7 +109,7 @@ jobs:
           fi
 
           if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-            tar -cvf "${package}.tar" "${package}"
+            tar -cv --format=pax -f "${package}.tar" "${package}"
             zstd --rm -19 -v "${package}.tar"
           else
             7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
@@ -137,7 +137,7 @@ jobs:
           sha256sum qrtool-* | tee sha256sums.txt
           b2sum qrtool-* | tee b2sums.txt
       - name: Release
-        uses: softprops/action-gh-release@v2.1.0
+        uses: softprops/action-gh-release@v2.2.1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           draft: true

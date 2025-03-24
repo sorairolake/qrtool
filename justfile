@@ -2,11 +2,11 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
-alias all := default
 alias lint := clippy
 
 # Run default recipe
-default: build
+@_default:
+    just -l
 
 # Build a package
 @build:
@@ -54,5 +54,5 @@ default: build
 
 # Increment the version
 @bump part:
-    bump-my-version bump {{part}}
-    cargo set-version --bump {{part}}
+    bump-my-version bump {{ part }}
+    cargo set-version --bump {{ part }}
