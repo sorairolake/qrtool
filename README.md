@@ -15,7 +15,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 
 **qrtool** is a command-line utility for encoding or decoding QR code.
 
-![Screenshot of qrtool](assets/screenshot.webp)
+![Demo animation](assets/demo.gif)
 
 ## Installation
 

@@ -1,0 +1,82 @@
+# SPDX-FileCopyrightText: 2025 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+settings:
+  width: 120
+  height: 30
+  title: qrtool demo
+
+instructions:
+  - !Command
+    command: echo 'print("Hello, world!")' > main.py
+    hidden: true
+  - !Command
+    command: echo 'puts "Hello, world!"' > main.rb
+    hidden: true
+
+  - !Marker Basic usage
+  - !Command
+    command: qrtool encode "Hello, world!" > output.png
+  - !Wait 1s
+  - !Command
+    command: magick identify output.png
+  - !Wait 1s
+  - !Command
+    command: qrtool decode output.png && echo
+  - !Wait 3s
+  - !Clear
+
+  - !Marker Output formats
+  - !Command
+    command: bat -pp main.py
+  - !Wait 1s
+  - !Command
+    command: qrtool encode -o output.svg -r main.py -t svg
+  - !Wait 1s
+  - !Command
+    command: magick identify output.svg
+  - !Wait 1s
+  - !Command
+    command: qrtool decode output.svg | bat -pp -l py
+  - !Wait 3s
+  - !Clear
+
+  - !Marker Micro QR code generation
+  - !Command
+    command: qrtool encode -v 3 -t ansi --variant micro "QR code"
+  - !Wait 3s
+  - !Clear
+
+  - !Marker Colored output
+  - !Command
+    command: qrtool encode -v 3 -t ansi-true-color --variant micro --foreground crimson --background snow "Ruby"
+  - !Wait 3s
+  - !Clear
+
+  - !Marker Optimize the output image
+  - !Command
+    command: bat -pp main.rb
+  - !Wait 1s
+  - !Command
+    command: qrtool encode -r main.rb > basic.png
+  - !Wait 1s
+  - !Command
+    command: qrtool encode -r main.rb --optimize-png max --zopfli > opt.png
+  - !Wait 1s
+  - !Command
+    command: magick identify basic.png opt.png
+  - !Wait 1s
+  - !Command
+    command: dua -A basic.png opt.png
+  - !Wait 1s
+  - !Command
+    command: qrtool decode basic.png | bat -pp -l rb
+  - !Wait 1s
+  - !Command
+    command: qrtool decode opt.png | bat -pp -l rb
+  - !Wait 3s
+
+  - !Command
+    command: git clean -f
+    hidden: true

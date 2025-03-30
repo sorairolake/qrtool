@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.11.8\...HEAD[Unreleased]
+
+=== Changed
+
+* Restore demo animation ({pull-request-url}/734[#734])
+
 == {compare-url}/v0.11.7\...v0.11.8[0.11.8] - 2025-03-24
 
 === Changed
