@@ -294,11 +294,6 @@ Please see the following:
 The upstream repository is available at
 <https://github.com/sorairolake/qrtool.git>.
 
-The source code is also available at:
-
-- <https://gitlab.com/sorairolake/qrtool.git>
-- <https://codeberg.org/sorairolake/qrtool.git>
-
 ## Changelog
 
 Please see [CHANGELOG.adoc].
