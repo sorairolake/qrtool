@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2022 Shun Sakai
 //
-// SPDX-License-Identifier: Apache-2.0 OR MIT
+// SPDX-License-Identifier: CC-BY-4.0
 
 = Changelog
 :toc: preamble
@@ -19,6 +19,8 @@ project adheres to https://semver.org/[Semantic Versioning].
 === Changed
 
 * Restore demo animation ({pull-request-url}/734[#734])
+* Change the license for documents and assets to CC BY 4.0
+  ({pull-request-url}/747[#747])
 
 == {compare-url}/v0.11.7\...v0.11.8[0.11.8] - 2025-03-24
 
