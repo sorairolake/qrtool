@@ -56,7 +56,8 @@ const COMPLETION_AFTER_LONG_HELP: &str = concat!(
     about,
     max_term_width(100),
     propagate_version(true),
-    after_long_help(AFTER_LONG_HELP)
+    after_long_help(AFTER_LONG_HELP),
+    arg_required_else_help(false)
 )]
 pub struct Opt {
     #[command(subcommand)]
