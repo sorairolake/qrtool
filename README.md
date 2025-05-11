@@ -197,7 +197,7 @@ QR code
 
 ### Generate shell completion
 
-`--generate-completion` option generates shell completions to standard output.
+`completion` subcommand generates shell completions to standard output.
 
 The following shells are supported:
 
@@ -211,7 +211,7 @@ The following shells are supported:
 Example:
 
 ```sh
-qrtool --generate-completion bash > qrtool.bash
+qrtool completion bash > qrtool.bash
 ```
 
 ### Integration with other programs
@@ -287,6 +287,7 @@ Please see the following:
 - [`qrtool(1)`]
 - [`qrtool-encode(1)`]
 - [`qrtool-decode(1)`]
+- [`qrtool-completion(1)`]
 - [`qrtool-help(1)`]
 
 ## Source code
@@ -364,6 +365,7 @@ licensing information.
 [`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
 [`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
 [`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html
+[`qrtool-completion(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-completion.1.html
 [`qrtool-help(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-help.1.html
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc

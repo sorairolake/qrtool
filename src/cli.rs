@@ -43,6 +43,12 @@ const DECODE_AFTER_LONG_HELP: &str = concat!(
     "See `qrtool-decode(1)` for more details."
 );
 
+const COMPLETION_AFTER_LONG_HELP: &str = concat!(
+    "The completion is output to standard output.\n",
+    '\n',
+    "See `qrtool-completion(1)` for more details."
+);
+
 #[derive(Debug, Parser)]
 #[command(
     version,
@@ -50,19 +56,11 @@ const DECODE_AFTER_LONG_HELP: &str = concat!(
     about,
     max_term_width(100),
     propagate_version(true),
-    after_long_help(AFTER_LONG_HELP),
-    arg_required_else_help(true),
-    args_conflicts_with_subcommands(true)
+    after_long_help(AFTER_LONG_HELP)
 )]
 pub struct Opt {
-    /// Generate shell completion.
-    ///
-    /// The completion is output to standard output.
-    #[arg(long, value_enum, value_name("SHELL"))]
-    pub generate_completion: Option<Shell>,
-
     #[command(subcommand)]
-    pub command: Option<Command>,
+    pub command: Command,
 }
 
 #[derive(Debug, Subcommand)]
@@ -82,6 +80,10 @@ pub enum Command {
         visible_alias("d")
     )]
     Decode(Decode),
+
+    /// Generate shell completion.
+    #[command(after_long_help(COMPLETION_AFTER_LONG_HELP))]
+    Completion(Completion),
 }
 
 #[derive(Args, Debug)]
@@ -279,10 +281,17 @@ pub struct Decode {
     pub input: Option<PathBuf>,
 }
 
+#[derive(Args, Debug)]
+pub struct Completion {
+    /// Shell to generate completion for.
+    #[arg(value_enum)]
+    pub shell: Shell,
+}
+
 impl Opt {
     /// Validates arguments.
     pub fn validate(self) -> anyhow::Result<Self> {
-        if let Some(Command::Encode(ref arg)) = self.command {
+        if let Command::Encode(ref arg) = self.command {
             #[cfg(feature = "optimize-output-png")]
             if arg.optimize_png.is_some() && (arg.output_format != OutputFormat::Png) {
                 return Err(anyhow!("output format is not PNG"));

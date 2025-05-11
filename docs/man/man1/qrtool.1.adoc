@@ -35,6 +35,10 @@ qrtool - an utility for encoding or decoding QR code
 
   Detect and decode a QR code.
 
+*qrtool-completion*(1)::
+
+  Generate shell completion.
+
 *qrtool-help*(1)::
 
   Print the help for a command.
@@ -50,36 +54,6 @@ qrtool - an utility for encoding or decoding QR code
 
   Print version number. The long flag (*--version*) will also print the
   copyright notice, the license notice and where to report bugs.
-
-*--generate-completion* _SHELL_::
-
-  Generate shell completion. The completion is output to standard output.
-
-  The possible values are:{blank}:::
-
-    *bash*::::
-
-      Bash.
-
-    *elvish*::::
-
-      Elvish.
-
-    *fish*::::
-
-      fish.
-
-    *nushell*::::
-
-      Nushell.
-
-    *powershell*::::
-
-      PowerShell.
-
-    *zsh*::::
-
-      Zsh.
 
 ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]
