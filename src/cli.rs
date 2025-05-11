@@ -284,7 +284,7 @@ pub struct Decode {
 #[derive(Args, Debug)]
 pub struct Completion {
     /// Shell to generate completion for.
-    #[arg(value_enum)]
+    #[arg(value_enum, ignore_case(true))]
     pub shell: Shell,
 }
 
