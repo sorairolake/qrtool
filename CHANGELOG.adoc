@@ -23,6 +23,10 @@ project adheres to https://semver.org/[Semantic Versioning].
   ({pull-request-url}/747[#747])
 * Replace `--generate-completion` with `completion` subcommand
   ({pull-request-url}/755[#755])
+* Remove help text for after auto-generated `--help`
+  ({pull-request-url}/761[#761])
+* Make the message for `--version` the same as the message for `-V`
+  ({pull-request-url}/761[#761])
 
 == {compare-url}/v0.11.7\...v0.11.8[0.11.8] - 2025-03-24
 

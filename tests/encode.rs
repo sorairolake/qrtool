@@ -2962,30 +2962,6 @@ fn encode_with_verbose() {
 }
 
 #[test]
-fn long_version_for_encode_command() {
-    utils::command::command()
-        .arg("encode")
-        .arg("--version")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/long-version.md"
-        )));
-}
-
-#[test]
-fn after_long_help_for_encode_command() {
-    utils::command::command()
-        .arg("encode")
-        .arg("--help")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/encode-after-long-help.md"
-        )));
-}
-
-#[test]
 fn validate_the_options_dependencies_for_encode_command() {
     utils::command::command()
         .arg("encode")

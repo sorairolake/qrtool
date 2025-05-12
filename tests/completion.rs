@@ -56,27 +56,3 @@ fn completion_with_invalid_shell() {
         .code(2)
         .stderr(predicate::str::contains("invalid value 'a' for '<SHELL>'"));
 }
-
-#[test]
-fn long_version_for_completion_command() {
-    utils::command::command()
-        .arg("completion")
-        .arg("--version")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/long-version.md"
-        )));
-}
-
-#[test]
-fn after_long_help_for_completion_command() {
-    utils::command::command()
-        .arg("completion")
-        .arg("--help")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/completion-after-long-help.md"
-        )));
-}

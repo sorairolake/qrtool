@@ -4,7 +4,7 @@
 
 = qrtool(1)
 // Specify in UTC.
-:docdate: 2025-03-10
+:docdate: 2025-05-12
 :revnumber: 0.11.8
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -52,8 +52,7 @@ qrtool - an utility for encoding or decoding QR code
 
 *-V*, *--version*::
 
-  Print version number. The long flag (*--version*) will also print the
-  copyright notice, the license notice and where to report bugs.
+  Print version number.
 
 ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]

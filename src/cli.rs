@@ -15,48 +15,12 @@ use clap_complete::Generator;
 use csscolorparser::Color;
 use image::{ImageError, ImageFormat};
 
-const LONG_VERSION: &str = concat!(
-    env!("CARGO_PKG_VERSION"),
-    '\n',
-    "Copyright (C) 2022 Shun Sakai and other contributors\n",
-    '\n',
-    "This program is distributed under the terms of either the Apache License 2.0 or\n",
-    "the MIT License.\n",
-    '\n',
-    "This is free software: you are free to change and redistribute it. There is NO\n",
-    "WARRANTY, to the extent permitted by law.\n",
-    '\n',
-    "Report bugs to <https://github.com/sorairolake/qrtool/issues>."
-);
-
-const AFTER_LONG_HELP: &str = "See `qrtool(1)` for more details.";
-
-const ENCODE_AFTER_LONG_HELP: &str = concat!(
-    "By default, the result will be output to standard output.\n",
-    '\n',
-    "See `qrtool-encode(1)` for more details."
-);
-
-const DECODE_AFTER_LONG_HELP: &str = concat!(
-    "By default, the result will be output to standard output.\n",
-    '\n',
-    "See `qrtool-decode(1)` for more details."
-);
-
-const COMPLETION_AFTER_LONG_HELP: &str = concat!(
-    "The completion is output to standard output.\n",
-    '\n',
-    "See `qrtool-completion(1)` for more details."
-);
-
 #[derive(Debug, Parser)]
 #[command(
     version,
-    long_version(LONG_VERSION),
     about,
     max_term_width(100),
     propagate_version(true),
-    after_long_help(AFTER_LONG_HELP),
     arg_required_else_help(false)
 )]
 pub struct Opt {
@@ -67,23 +31,14 @@ pub struct Opt {
 #[derive(Debug, Subcommand)]
 pub enum Command {
     /// Encode input data in a QR code.
-    #[command(
-        after_long_help(ENCODE_AFTER_LONG_HELP),
-        visible_alias("enc"),
-        visible_alias("e")
-    )]
+    #[command(visible_alias("enc"), visible_alias("e"))]
     Encode(Encode),
 
     /// Detect and decode a QR code.
-    #[command(
-        after_long_help(DECODE_AFTER_LONG_HELP),
-        visible_alias("dec"),
-        visible_alias("d")
-    )]
+    #[command(visible_alias("dec"), visible_alias("d"))]
     Decode(Decode),
 
     /// Generate shell completion.
-    #[command(after_long_help(COMPLETION_AFTER_LONG_HELP))]
     Completion(Completion),
 }
 
