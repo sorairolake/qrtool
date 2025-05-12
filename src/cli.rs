@@ -31,14 +31,20 @@ pub struct Opt {
 #[derive(Debug, Subcommand)]
 pub enum Command {
     /// Encode input data in a QR code.
+    ///
+    /// By default, the result will be output to standard output.
     #[command(visible_alias("enc"), visible_alias("e"))]
     Encode(Encode),
 
     /// Detect and decode a QR code.
+    ///
+    /// By default, the result will be output to standard output.
     #[command(visible_alias("dec"), visible_alias("d"))]
     Decode(Decode),
 
     /// Generate shell completion.
+    ///
+    /// The completion is output to standard output.
     Completion(Completion),
 }
 
