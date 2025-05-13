@@ -4,7 +4,7 @@
 
 = qrtool-completion(1)
 // Specify in UTC.
-:docdate: 2025-05-11
+:docdate: 2025-05-13
 :revnumber: 0.11.8
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -55,6 +55,17 @@ _SHELL_::
     *zsh*::::
 
       Zsh.
+
+== OPTIONS
+
+*-h*, *--help*::
+
+  Print help message. The short flag (*-h*) will print a condensed help message
+  while the long flag (*--help*) will print a detailed help message.
+
+*-V*, *--version*::
+
+  Print version number.
 
 ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]
