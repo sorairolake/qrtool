@@ -362,11 +362,11 @@ licensing information.
 [`oxipng`]: https://github.com/shssoichiro/oxipng
 [`svgcleaner`]: https://github.com/RazrFalcon/svgcleaner
 [ImageMagick]: https://imagemagick.org/
-[`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
-[`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
-[`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html
-[`qrtool-completion(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-completion.1.html
-[`qrtool-help(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-help.1.html
+[`qrtool(1)`]: docs/man/man1/qrtool.1.adoc
+[`qrtool-encode(1)`]: docs/man/man1/qrtool-encode.1.adoc
+[`qrtool-decode(1)`]: docs/man/man1/qrtool-decode.1.adoc
+[`qrtool-completion(1)`]: docs/man/man1/qrtool-completion.1.adoc
+[`qrtool-help(1)`]: docs/man/man1/qrtool-help.1.adoc
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [`qrencode`]: https://fukuchi.org/works/qrencode/
