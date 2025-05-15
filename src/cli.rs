@@ -150,13 +150,7 @@ pub struct Encode {
     /// The mode of the output.
     ///
     /// If this option is not specified, use the optimal encoding.
-    #[arg(
-        long,
-        value_enum,
-        requires("symbol_version"),
-        value_name("MODE"),
-        ignore_case(true)
-    )]
+    #[arg(long, value_enum, requires("symbol_version"), ignore_case(true))]
     pub mode: Option<Mode>,
 
     /// The type of QR code.
