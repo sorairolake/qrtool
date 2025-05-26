@@ -28,6 +28,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 * Make the message for `--version` the same as the message for `-V`
   ({pull-request-url}/761[#761])
 
+=== Removed
+
+* Remove `qrtool-help(1)`
+
 == {compare-url}/v0.11.7\...v0.11.8[0.11.8] - 2025-03-24
 
 === Changed
