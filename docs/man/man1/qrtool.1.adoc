@@ -4,7 +4,7 @@
 
 = qrtool(1)
 // Specify in UTC.
-:docdate: 2025-05-12
+:docdate: 2025-05-26
 :revnumber: 0.11.8
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -38,10 +38,6 @@ qrtool - an utility for encoding or decoding QR code
 *qrtool-completion*(1)::
 
   Generate shell completion.
-
-*qrtool-help*(1)::
-
-  Print the help for a command.
 
 == OPTIONS
 

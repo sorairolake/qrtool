@@ -288,7 +288,6 @@ Please see the following:
 - [`qrtool-encode(1)`]
 - [`qrtool-decode(1)`]
 - [`qrtool-completion(1)`]
-- [`qrtool-help(1)`]
 
 ## Source code
 
@@ -366,7 +365,6 @@ licensing information.
 [`qrtool-encode(1)`]: docs/man/man1/qrtool-encode.1.adoc
 [`qrtool-decode(1)`]: docs/man/man1/qrtool-decode.1.adoc
 [`qrtool-completion(1)`]: docs/man/man1/qrtool-completion.1.adoc
-[`qrtool-help(1)`]: docs/man/man1/qrtool-help.1.adoc
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [`qrencode`]: https://fukuchi.org/works/qrencode/

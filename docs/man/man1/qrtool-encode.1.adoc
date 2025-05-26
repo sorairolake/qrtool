@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2025-05-12
+:docdate: 2025-05-26
 :revnumber: 0.11.8
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -367,4 +367,4 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-copyright.adoc[
 == SEE ALSO
 
 *oxipng*(1), *qrencode*(1), *qrtool*(1), *qrtool-completion*(1),
-*qrtool-decode*(1), *qrtool-help*(1)
+*qrtool-decode*(1)

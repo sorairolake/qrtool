@@ -11,7 +11,6 @@
 * xref:man/man1/qrtool-encode.1.adoc[`qrtool-encode(1)`]
 * xref:man/man1/qrtool-decode.1.adoc[`qrtool-decode(1)`]
 * xref:man/man1/qrtool-completion.1.adoc[`qrtool-completion(1)`]
-* xref:man/man1/qrtool-help.1.adoc[`qrtool-help(1)`]
 
 .Resources
 * xref:repository.adoc[]
