@@ -47,6 +47,22 @@ fn completion() {
 }
 
 #[test]
+fn infer_subcommand_name_for_completion_command() {
+    utils::command::command()
+        .arg("comp")
+        .arg("-V")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("qrtool-completion"));
+    utils::command::command()
+        .arg("c")
+        .arg("-V")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("qrtool-completion"));
+}
+
+#[test]
 fn completion_with_invalid_shell() {
     utils::command::command()
         .arg("completion")
