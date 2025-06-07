@@ -4,7 +4,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2025-05-26
+:docdate: 2025-06-07
 :revnumber: 0.11.8
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -65,8 +65,6 @@ vector image. By default, the result will be output to standard output.
 
 Use *-t* option to specify the image format. If this option is not specified,
 the image format is determined based on the extension or the magic number.
-
-*qrtool dec* and *qrtool d* are aliases for this command.
 
 == POSITIONAL ARGUMENTS
 

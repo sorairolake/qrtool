@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2025-05-26
+:docdate: 2025-06-07
 :revnumber: 0.11.8
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -88,8 +88,6 @@ be specified as a value for these options.
 This command can also encode the input data in a Micro QR code. This can embed
 data in a smaller area than with QR code, but the storage capacity is strongly
 limited.
-
-*qrtool enc* and *qrtool e* are aliases for this command.
 
 == POSITIONAL ARGUMENTS
 

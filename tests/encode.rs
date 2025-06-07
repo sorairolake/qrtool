@@ -25,17 +25,19 @@ fn basic_encode() {
 }
 
 #[test]
-fn validate_aliases_for_encode_command() {
+fn infer_subcommand_name_for_encode_command() {
     utils::command::command()
         .arg("enc")
         .arg("-V")
         .assert()
-        .success();
+        .success()
+        .stdout(predicate::str::contains("qrtool-encode"));
     utils::command::command()
         .arg("e")
         .arg("-V")
         .assert()
-        .success();
+        .success()
+        .stdout(predicate::str::contains("qrtool-encode"));
 }
 
 #[test]

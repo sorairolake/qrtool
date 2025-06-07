@@ -27,6 +27,7 @@ project adheres to https://semver.org/[Semantic Versioning].
   ({pull-request-url}/761[#761])
 * Make the message for `--version` the same as the message for `-V`
   ({pull-request-url}/761[#761])
+* Allow partial matches of subcommand names ({pull-request-url}/771[#771])
 
 === Removed
 

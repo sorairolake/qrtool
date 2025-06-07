@@ -17,17 +17,19 @@ fn basic_decode() {
 }
 
 #[test]
-fn validate_aliases_for_decode_command() {
+fn infer_subcommand_name_for_decode_command() {
     utils::command::command()
         .arg("dec")
         .arg("-V")
         .assert()
-        .success();
+        .success()
+        .stdout(predicate::str::contains("qrtool-decode"));
     utils::command::command()
         .arg("d")
         .arg("-V")
         .assert()
-        .success();
+        .success()
+        .stdout(predicate::str::contains("qrtool-decode"));
 }
 
 #[test]
