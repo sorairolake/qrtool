@@ -79,7 +79,7 @@ pub fn to_svg(
 ) -> String {
     let c = code.to_colors();
     let mut renderer = &mut Renderer::<svg::Color<'_>>::new(&c, code.width(), margin);
-    let (foreground, background) = (colors.0.to_hex_string(), colors.1.to_hex_string());
+    let (foreground, background) = (colors.0.to_css_hex(), colors.1.to_css_hex());
     renderer = renderer
         .dark_color(svg::Color(&foreground))
         .light_color(svg::Color(&background));
