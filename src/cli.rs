@@ -15,73 +15,37 @@ use clap_complete::Generator;
 use csscolorparser::Color;
 use image::{ImageError, ImageFormat};
 
-const LONG_VERSION: &str = concat!(
-    env!("CARGO_PKG_VERSION"),
-    '\n',
-    "Copyright (C) 2022 Shun Sakai and other contributors\n",
-    '\n',
-    "This program is distributed under the terms of either the Apache License 2.0 or\n",
-    "the MIT License.\n",
-    '\n',
-    "This is free software: you are free to change and redistribute it. There is NO\n",
-    "WARRANTY, to the extent permitted by law.\n",
-    '\n',
-    "Report bugs to <https://github.com/sorairolake/qrtool/issues>."
-);
-
-const AFTER_LONG_HELP: &str = "See `qrtool(1)` for more details.";
-
-const ENCODE_AFTER_LONG_HELP: &str = concat!(
-    "By default, the result will be output to standard output.\n",
-    '\n',
-    "See `qrtool-encode(1)` for more details."
-);
-
-const DECODE_AFTER_LONG_HELP: &str = concat!(
-    "By default, the result will be output to standard output.\n",
-    '\n',
-    "See `qrtool-decode(1)` for more details."
-);
-
 #[derive(Debug, Parser)]
 #[command(
     version,
-    long_version(LONG_VERSION),
     about,
     max_term_width(100),
     propagate_version(true),
-    after_long_help(AFTER_LONG_HELP),
-    arg_required_else_help(true),
+    infer_subcommands(true),
+    arg_required_else_help(false),
     args_conflicts_with_subcommands(true)
 )]
 pub struct Opt {
-    /// Generate shell completion.
-    ///
-    /// The completion is output to standard output.
-    #[arg(long, value_enum, value_name("SHELL"))]
-    pub generate_completion: Option<Shell>,
-
     #[command(subcommand)]
-    pub command: Option<Command>,
+    pub command: Command,
 }
 
 #[derive(Debug, Subcommand)]
 pub enum Command {
     /// Encode input data in a QR code.
-    #[command(
-        after_long_help(ENCODE_AFTER_LONG_HELP),
-        visible_alias("enc"),
-        visible_alias("e")
-    )]
+    ///
+    /// By default, the result will be output to standard output.
     Encode(Encode),
 
     /// Detect and decode a QR code.
-    #[command(
-        after_long_help(DECODE_AFTER_LONG_HELP),
-        visible_alias("dec"),
-        visible_alias("d")
-    )]
+    ///
+    /// By default, the result will be output to standard output.
     Decode(Decode),
+
+    /// Generate shell completion.
+    ///
+    /// The completion is output to standard output.
+    Completion(Completion),
 }
 
 #[derive(Args, Debug)]
@@ -186,13 +150,7 @@ pub struct Encode {
     /// The mode of the output.
     ///
     /// If this option is not specified, use the optimal encoding.
-    #[arg(
-        long,
-        value_enum,
-        requires("symbol_version"),
-        value_name("MODE"),
-        ignore_case(true)
-    )]
+    #[arg(long, value_enum, requires("symbol_version"), ignore_case(true))]
     pub mode: Option<Mode>,
 
     /// The type of QR code.
@@ -279,10 +237,17 @@ pub struct Decode {
     pub input: Option<PathBuf>,
 }
 
+#[derive(Args, Debug)]
+pub struct Completion {
+    /// Shell to generate completion for.
+    #[arg(value_enum, ignore_case(true))]
+    pub shell: Shell,
+}
+
 impl Opt {
     /// Validates arguments.
     pub fn validate(self) -> anyhow::Result<Self> {
-        if let Some(Command::Encode(ref arg)) = self.command {
+        if let Command::Encode(ref arg) = self.command {
             #[cfg(feature = "optimize-output-png")]
             if arg.optimize_png.is_some() && (arg.output_format != OutputFormat::Png) {
                 return Err(anyhow!("output format is not PNG"));

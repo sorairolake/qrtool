@@ -1,6 +1,6 @@
 // SPDX-FileCopyrightText: 2022 Shun Sakai
 //
-// SPDX-License-Identifier: Apache-2.0 OR MIT
+// SPDX-License-Identifier: CC-BY-4.0
 
 = Changelog
 :toc: preamble
@@ -13,6 +13,25 @@ All notable changes to this project will be documented in this file.
 
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
+
+== {compare-url}/v0.11.8\...v0.12.0[0.12.0] - 2025-06-12
+
+=== Changed
+
+* Restore demo animation ({pull-request-url}/734[#734])
+* Change the license for documents and assets to CC BY 4.0
+  ({pull-request-url}/747[#747])
+* Replace `--generate-completion` with `completion` subcommand
+  ({pull-request-url}/755[#755])
+* Remove help text for after auto-generated `--help`
+  ({pull-request-url}/761[#761])
+* Make the message for `--version` the same as the message for `-V`
+  ({pull-request-url}/761[#761])
+* Allow partial matches of subcommand names ({pull-request-url}/771[#771])
+
+=== Removed
+
+* Remove `qrtool-help(1)`
 
 == {compare-url}/v0.11.7\...v0.11.8[0.11.8] - 2025-03-24
 

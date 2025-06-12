@@ -1,0 +1,9 @@
+// SPDX-FileCopyrightText: 2025 Shun Sakai
+//
+// SPDX-License-Identifier: CC-BY-4.0
+
+= Prerequisites
+
+* https://crates.io/crates/autocast[autocast]
+* https://docs.asciinema.org/manual/agg/[agg]
+* https://www.lcdf.org/gifsicle/[Gifsicle]

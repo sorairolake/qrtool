@@ -4,8 +4,8 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2025-03-10
-:revnumber: 0.11.8
+:docdate: 2025-06-07
+:revnumber: 0.12.0
 :doctype: manpage
 :mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
@@ -65,8 +65,6 @@ vector image. By default, the result will be output to standard output.
 
 Use *-t* option to specify the image format. If this option is not specified,
 the image format is determined based on the extension or the magic number.
-
-*qrtool dec* and *qrtool d* are aliases for this command.
 
 == POSITIONAL ARGUMENTS
 
@@ -185,8 +183,7 @@ _IMAGE_::
 
 *-V*, *--version*::
 
-  Print version number. The long flag (*--version*) will also print the
-  copyright notice, the license notice and where to report bugs.
+  Print version number.
 
 ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]
@@ -219,4 +216,4 @@ ifdef::site-gen-antora[include::partial$man/man1/include/section-copyright.adoc[
 
 == SEE ALSO
 
-*qrtool*(1), *qrtool-encode*(1), *qrtool-help*(1), *zbarimg*(1)
+*qrtool*(1), *qrtool-completion*(1), *qrtool-encode*(1), *zbarimg*(1)

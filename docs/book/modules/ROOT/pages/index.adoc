@@ -22,4 +22,4 @@ image:{reuse-badge}[REUSE status,link={reuse-url}]
 
 *qrtool* is a command-line utility for encoding or decoding QR code.
 
-image::screenshot.webp[Screenshot of qrtool]
+image::demo.gif[Demo animation]

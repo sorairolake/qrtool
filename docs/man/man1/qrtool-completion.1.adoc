@@ -1,11 +1,11 @@
-// SPDX-FileCopyrightText: 2023 Shun Sakai
+// SPDX-FileCopyrightText: 2025 Shun Sakai
 //
 // SPDX-License-Identifier: CC-BY-4.0
 
-= qrtool-help(1)
+= qrtool-completion(1)
 // Specify in UTC.
-:docdate: 2025-03-10
-:revnumber: 0.11.8
+:docdate: 2025-05-26
+:revnumber: 0.12.0
 :doctype: manpage
 :mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
@@ -13,25 +13,59 @@ ifndef::site-gen-antora[:includedir: ./include]
 
 == NAME
 
-qrtool-help - print the help for a command
+qrtool-completion - generate shell completion
 
 == SYNOPSIS
 
-*qrtool help* [_COMMAND_]
+*qrtool completion* _SHELL_
 
 == DESCRIPTION
 
-This command prints the help for a command.
-
-This command is identical to any of the following:{blank}::
-
-  $ *qrtool* [_COMMAND_] *-h*|*--help*
+This command generates shell completion. The completion is output to standard
+output.
 
 == POSITIONAL ARGUMENTS
 
-_COMMAND_::
+_SHELL_::
 
-  Subcommand to print the help.
+  Shell to generate completion for.
+
+  The possible values are:{blank}:::
+
+    *bash*::::
+
+      Bash.
+
+    *elvish*::::
+
+      Elvish.
+
+    *fish*::::
+
+      fish.
+
+    *nushell*::::
+
+      Nushell.
+
+    *powershell*::::
+
+      PowerShell.
+
+    *zsh*::::
+
+      Zsh.
+
+== OPTIONS
+
+*-h*, *--help*::
+
+  Print help message. The short flag (*-h*) will print a condensed help message
+  while the long flag (*--help*) will print a detailed help message.
+
+*-V*, *--version*::
+
+  Print version number.
 
 ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]

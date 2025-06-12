@@ -2,7 +2,7 @@
 SPDX-FileCopyrightText: 2022 Shun Sakai
 SPDX-FileCopyrightText: 2024 Orhun Parmaksız
 
-SPDX-License-Identifier: Apache-2.0 OR MIT
+SPDX-License-Identifier: CC-BY-4.0
 -->
 
 # qrtool
@@ -15,7 +15,7 @@ SPDX-License-Identifier: Apache-2.0 OR MIT
 
 **qrtool** is a command-line utility for encoding or decoding QR code.
 
-![Screenshot of qrtool](assets/screenshot.webp)
+![Demo animation](assets/demo.gif)
 
 ## Installation
 
@@ -197,7 +197,7 @@ QR code
 
 ### Generate shell completion
 
-`--generate-completion` option generates shell completions to standard output.
+`completion` subcommand generates shell completions to standard output.
 
 The following shells are supported:
 
@@ -211,7 +211,7 @@ The following shells are supported:
 Example:
 
 ```sh
-qrtool --generate-completion bash > qrtool.bash
+qrtool completion bash > qrtool.bash
 ```
 
 ### Integration with other programs
@@ -287,17 +287,12 @@ Please see the following:
 - [`qrtool(1)`]
 - [`qrtool-encode(1)`]
 - [`qrtool-decode(1)`]
-- [`qrtool-help(1)`]
+- [`qrtool-completion(1)`]
 
 ## Source code
 
 The upstream repository is available at
 <https://github.com/sorairolake/qrtool.git>.
-
-The source code is also available at:
-
-- <https://gitlab.com/sorairolake/qrtool.git>
-- <https://codeberg.org/sorairolake/qrtool.git>
 
 ## Changelog
 
@@ -366,10 +361,10 @@ licensing information.
 [`oxipng`]: https://github.com/shssoichiro/oxipng
 [`svgcleaner`]: https://github.com/RazrFalcon/svgcleaner
 [ImageMagick]: https://imagemagick.org/
-[`qrtool(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool.1.html
-[`qrtool-encode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-encode.1.html
-[`qrtool-decode(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-decode.1.html
-[`qrtool-help(1)`]: https://sorairolake.github.io/qrtool/book/man/man1/qrtool-help.1.html
+[`qrtool(1)`]: docs/man/man1/qrtool.1.adoc
+[`qrtool-encode(1)`]: docs/man/man1/qrtool-encode.1.adoc
+[`qrtool-decode(1)`]: docs/man/man1/qrtool-decode.1.adoc
+[`qrtool-completion(1)`]: docs/man/man1/qrtool-completion.1.adoc
 [CHANGELOG.adoc]: CHANGELOG.adoc
 [CONTRIBUTING.adoc]: CONTRIBUTING.adoc
 [`qrencode`]: https://fukuchi.org/works/qrencode/

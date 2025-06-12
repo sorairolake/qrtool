@@ -25,17 +25,19 @@ fn basic_encode() {
 }
 
 #[test]
-fn validate_aliases_for_encode_command() {
+fn infer_subcommand_name_for_encode_command() {
     utils::command::command()
         .arg("enc")
         .arg("-V")
         .assert()
-        .success();
+        .success()
+        .stdout(predicate::str::contains("qrtool-encode"));
     utils::command::command()
         .arg("e")
         .arg("-V")
         .assert()
-        .success();
+        .success()
+        .stdout(predicate::str::contains("qrtool-encode"));
 }
 
 #[test]
@@ -2204,7 +2206,7 @@ fn encode_from_invalid_rgb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgb(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid rgb format"));
+        .stderr(predicate::str::contains("invalid color function"));
     utils::command::command()
         .arg("encode")
         .arg("--foreground")
@@ -2216,7 +2218,7 @@ fn encode_from_invalid_rgb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgba(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid rgb format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2232,7 +2234,7 @@ fn encode_from_invalid_rgb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgb(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid rgb format"));
+        .stderr(predicate::str::contains("invalid color function"));
     utils::command::command()
         .arg("encode")
         .arg("--background")
@@ -2244,7 +2246,7 @@ fn encode_from_invalid_rgb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgba(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid rgb format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2374,7 +2376,7 @@ fn encode_from_invalid_hsl_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsl(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid hsl format"));
+        .stderr(predicate::str::contains("invalid color function"));
     utils::command::command()
         .arg("encode")
         .arg("--foreground")
@@ -2386,7 +2388,7 @@ fn encode_from_invalid_hsl_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsla(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid hsl format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2402,7 +2404,7 @@ fn encode_from_invalid_hsl_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsl(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid hsl format"));
+        .stderr(predicate::str::contains("invalid color function"));
     utils::command::command()
         .arg("encode")
         .arg("--background")
@@ -2414,7 +2416,7 @@ fn encode_from_invalid_hsl_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsla(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid hsl format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2469,7 +2471,7 @@ fn encode_from_invalid_hwb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hwb(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid hwb format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2485,7 +2487,7 @@ fn encode_from_invalid_hwb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hwb(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid hwb format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2540,7 +2542,7 @@ fn encode_from_invalid_oklab_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklab(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid oklab format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2556,7 +2558,7 @@ fn encode_from_invalid_oklab_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklab(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid oklab format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2611,7 +2613,7 @@ fn encode_from_invalid_oklch_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklch(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid oklch format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2627,7 +2629,7 @@ fn encode_from_invalid_oklch_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklch(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid oklch format"));
+        .stderr(predicate::str::contains("invalid color function"));
 }
 
 #[test]
@@ -2959,30 +2961,6 @@ fn encode_with_verbose() {
         .success()
         .stdout(predicate::ne(&[] as &[u8]))
         .stderr(predicate::eq("Version: 1\nLevel: M\n"));
-}
-
-#[test]
-fn long_version_for_encode_command() {
-    utils::command::command()
-        .arg("encode")
-        .arg("--version")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/long-version.md"
-        )));
-}
-
-#[test]
-fn after_long_help_for_encode_command() {
-    utils::command::command()
-        .arg("encode")
-        .arg("--help")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/encode-after-long-help.md"
-        )));
 }
 
 #[test]

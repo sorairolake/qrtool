@@ -17,17 +17,19 @@ fn basic_decode() {
 }
 
 #[test]
-fn validate_aliases_for_decode_command() {
+fn infer_subcommand_name_for_decode_command() {
     utils::command::command()
         .arg("dec")
         .arg("-V")
         .assert()
-        .success();
+        .success()
+        .stdout(predicate::str::contains("qrtool-decode"));
     utils::command::command()
         .arg("d")
         .arg("-V")
         .assert()
-        .success();
+        .success()
+        .stdout(predicate::str::contains("qrtool-decode"));
 }
 
 #[test]
@@ -974,28 +976,4 @@ fn validate_the_options_dependencies_for_decode_command() {
         .assert()
         .failure()
         .code(2);
-}
-
-#[test]
-fn long_version_for_decode_command() {
-    utils::command::command()
-        .arg("decode")
-        .arg("--version")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/long-version.md"
-        )));
-}
-
-#[test]
-fn after_long_help_for_decode_command() {
-    utils::command::command()
-        .arg("decode")
-        .arg("--help")
-        .assert()
-        .success()
-        .stdout(predicate::str::contains(include_str!(
-            "assets/decode-after-long-help.md"
-        )));
 }

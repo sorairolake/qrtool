@@ -15,3 +15,6 @@ node_modules/
 
 # Generated files by Antora
 build/
+
+# Files generated when generating demo animation
+assets/*.cast

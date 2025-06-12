@@ -11,15 +11,23 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  id-token: write
+  pages: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Deploy
+  build:
+    name: Build
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
@@ -37,9 +45,19 @@ jobs:
         uses: docker://tdewolff/minify:latest
         with:
           args: --exclude "build/site/_/**" -o build/ -r build/
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4.0.0
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build/site
+          path: build/site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

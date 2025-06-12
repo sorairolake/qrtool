@@ -170,7 +170,7 @@ QR code
 
 == Generate shell completion
 
-`--generate-completion` option generates shell completions to standard output.
+`completion` subcommand generates shell completions to standard output.
 
 .The following shells are supported
 * `bash`
@@ -183,7 +183,7 @@ QR code
 .Example
 [source,sh]
 ----
-qrtool --generate-completion bash > qrtool.bash
+qrtool completion bash > qrtool.bash
 ----
 
 == Integration with other programs

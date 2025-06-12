@@ -4,8 +4,8 @@
 
 = qrtool(1)
 // Specify in UTC.
-:docdate: 2025-03-10
-:revnumber: 0.11.8
+:docdate: 2025-05-26
+:revnumber: 0.12.0
 :doctype: manpage
 :mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
@@ -35,9 +35,9 @@ qrtool - an utility for encoding or decoding QR code
 
   Detect and decode a QR code.
 
-*qrtool-help*(1)::
+*qrtool-completion*(1)::
 
-  Print the help for a command.
+  Generate shell completion.
 
 == OPTIONS
 
@@ -48,38 +48,7 @@ qrtool - an utility for encoding or decoding QR code
 
 *-V*, *--version*::
 
-  Print version number. The long flag (*--version*) will also print the
-  copyright notice, the license notice and where to report bugs.
-
-*--generate-completion* _SHELL_::
-
-  Generate shell completion. The completion is output to standard output.
-
-  The possible values are:{blank}:::
-
-    *bash*::::
-
-      Bash.
-
-    *elvish*::::
-
-      Elvish.
-
-    *fish*::::
-
-      fish.
-
-    *nushell*::::
-
-      Nushell.
-
-    *powershell*::::
-
-      PowerShell.
-
-    *zsh*::::
-
-      Zsh.
+  Print version number.
 
 ifndef::site-gen-antora[include::{includedir}/section-exit-status.adoc[]]
 ifdef::site-gen-antora[include::partial$man/man1/include/section-exit-status.adoc[]]
