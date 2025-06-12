@@ -5,7 +5,7 @@
 = qrtool(1)
 // Specify in UTC.
 :docdate: 2025-05-26
-:revnumber: 0.11.8
+:revnumber: 0.12.0
 :doctype: manpage
 :mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
