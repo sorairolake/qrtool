@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.11.8"
+version = "0.12.0"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2024"
 rust-version = "1.85.0"
