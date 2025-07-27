@@ -90,6 +90,7 @@ jobs:
         if: ${{ matrix.use-cross }}
         run: cross build --release --target ${{ matrix.target }}
       - name: Build man pages
+        if: matrix.os != 'windows-2022'
         run: asciidoctor -b manpage docs/man/man1/*.1.adoc
       - name: Create a package
         shell: bash
