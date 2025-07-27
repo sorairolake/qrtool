@@ -13,6 +13,9 @@ target/
 # Node.js dependency directory
 node_modules/
 
+# Generated man pages
+*.1
+
 # Generated files by Antora
 build/
 

@@ -40,6 +40,10 @@ clippy:
 clippy-fix:
     cargo clippy --fix --allow-dirty --allow-staged -- -D warnings
 
+# Build man pages
+build-man:
+    asciidoctor -b manpage docs/man/man1/*.1.adoc
+
 # Run the linter for GitHub Actions workflow files
 lint-github-actions:
     actionlint -verbose

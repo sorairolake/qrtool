@@ -27,12 +27,6 @@ cd qrtool
 just build
 ----
 
-.To find the directory where man pages are generated
-[source,sh]
-----
-fd -t directory out ./target/*/build/qrtool-*
-----
-
 == Crate features
 
 `decode-from-bmp`::
