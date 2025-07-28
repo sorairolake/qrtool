@@ -4,7 +4,7 @@
 
 [package]
 name = "qrtool"
-version = "0.12.0"
+version = "0.12.1"
 authors = ["Shun Sakai <sorairolake@protonmail.ch>"]
 edition = "2024"
 rust-version = "1.85.0"
@@ -31,8 +31,8 @@ is-svg = { version = "0.2.0", optional = true }
 oxipng = { version = "9.1.5", default-features = false, features = ["parallel", "zopfli"], optional = true }
 qrcode = "0.14.1"
 resvg = { version = "0.45.1", default-features = false, optional = true }
-rqrr = "0.9.3"
-sysexits = "0.9.0"
+rqrr = "0.10.0"
+sysexits = "0.9.1"
 xbm = { version = "0.2.0", optional = true }
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
