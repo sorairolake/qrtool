@@ -46,7 +46,7 @@ jobs:
         with:
           args: --exclude "build/site/_/**" -o build/ -r build/
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: build/site
 
