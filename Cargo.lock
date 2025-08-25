@@ -1922,9 +1922,9 @@ dependencies = [
 
 [[package]]
 name = "xbm"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d2b7187d407751348c3f13cb0baf189a142562fca2eae93a9cdd29e5ea8746d"
+checksum = "55af25ef78d1aa157d174c957184cbc190858db59c6850be97845eb1de8348f8"
 dependencies = [
  "image",
  "unicode-ident",
