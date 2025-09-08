@@ -32,7 +32,7 @@ oxipng = { version = "9.1.5", default-features = false, features = ["parallel", 
 qrcode = "0.14.1"
 resvg = { version = "0.45.1", default-features = false, optional = true }
 rqrr = "0.10.0"
-sysexits = "0.9.1"
+sysexits = "0.10.0"
 xbm = { version = "0.2.1", optional = true }
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
