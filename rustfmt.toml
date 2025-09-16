@@ -2,10 +2,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
-edition = "2024"
 format_code_in_doc_comments = true
 format_macro_matchers = true
 group_imports = "StdExternalCrate"
 imports_granularity = "Crate"
-style_edition = "2024"
 wrap_comments = true
