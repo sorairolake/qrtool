@@ -27,13 +27,13 @@ cd qrtool
 just build
 ----
 
-.To build a man page
+.To build man pages
 [source,sh]
 ----
 just build-man
 ----
 
-The man page is generated in `docs/man/man1`.
+The man pages are generated in `docs/man/man1`.
 
 == Crate features
 
