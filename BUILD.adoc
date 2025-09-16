@@ -27,6 +27,14 @@ cd qrtool
 just build
 ----
 
+.To build a man page
+[source,sh]
+----
+just build-man
+----
+
+The man page is generated in `docs/man/man1`.
+
 == Crate features
 
 `decode-from-bmp`::
