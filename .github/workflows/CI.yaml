@@ -114,7 +114,7 @@ jobs:
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
           components: rustfmt
       - name: Cache build artifacts
         uses: Swatinem/rust-cache@v2.8.0
