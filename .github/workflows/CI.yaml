@@ -138,3 +138,16 @@ jobs:
         run: cargo clippy -- -D warnings
       - name: Check no lint warnings (no default features)
         run: cargo clippy --no-default-features -- -D warnings
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Check files formatted
+        run: npx prettier -c "**.{hbs,json,md,yaml,yml}"
