@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v5
       - name: Setup Tombi
         uses: tombi-toml/setup-tombi@v1.0.0
-      - name: Check TOML files formatted
+      - name: Run formatter in check mode
         run: tombi format --check
-      - name: Check no lint warnings
+      - name: Run linter
         run: tombi lint
