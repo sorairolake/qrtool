@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2025 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+name: Shell script
+
+on:
+  pull_request:
+    paths:
+      - "**.bash"
+  push:
+    paths:
+      - "**.bash"
+
+jobs:
+  shell-script:
+    name: Shell script
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Run the sh-checker
+        uses: luizm/action-sh-checker@v0.9.0
