@@ -119,7 +119,7 @@ jobs:
       - name: Cache build artifacts
         uses: Swatinem/rust-cache@v2.8.0
       - name: Run formatter in check mode
-        run: cargo fmt -- --check
+        run: cargo fmt --check
 
   clippy:
     name: Clippy
