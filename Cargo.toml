@@ -20,7 +20,7 @@ anstyle = { version = "1.0.11", default-features = false, optional = true }
 anstyle-lossy = { version = "1.1.4", optional = true }
 anstyle-yansi = { version = "2.0.3", optional = true }
 anyhow = "1.0.99"
-clap = { version = "4.5.47", features = ["derive", "wrap_help"] }
+clap = { version = "4.5.48", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.58"
 clap_complete_nushell = "4.5.8"
 csscolorparser = "0.7.2"
