@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.12.1\...HEAD[Unreleased]
+
+=== Changed
+
+* Change to use GoReleaser ({pull-request-url}/837[#837])
+
 == {compare-url}/v0.12.0\...v0.12.1[0.12.1] - 2025-07-28
 
 === Changed

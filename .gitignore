@@ -21,3 +21,7 @@ build/
 
 # Files generated when generating demo animation
 assets/*.cast
+
+# GoReleaser
+dist/
+.intentionally-empty-file.o
