@@ -95,7 +95,7 @@ jobs:
       - name: Create a package
         shell: bash
         env:
-           ZSTD_CLEVEL: 19
+          ZSTD_CLEVEL: 19
         run: |
           if [ "${{ matrix.os }}" != "windows-2022" ] ; then
             bin="target/${{ matrix.target }}/release/qrtool"
