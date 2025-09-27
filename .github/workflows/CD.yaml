@@ -94,6 +94,8 @@ jobs:
         run: asciidoctor -b manpage docs/man/man1/*.1.adoc
       - name: Create a package
         shell: bash
+        env:
+           ZSTD_CLEVEL: 19
         run: |
           if [ "${{ matrix.os }}" != "windows-2022" ] ; then
             bin="target/${{ matrix.target }}/release/qrtool"
@@ -112,8 +114,7 @@ jobs:
           fi
 
           if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-            tar -cv --format=pax -f "${package}.tar" "${package}"
-            zstd --rm -19 -v "${package}.tar"
+            tar -cav --format=pax -f "${package}.tar.zst" "${package}"
           else
             7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
           fi
