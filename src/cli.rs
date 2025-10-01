@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+#[cfg(feature = "optimize-output-png")]
+use std::num::NonZeroU8;
 use std::{
     io::{self, Write},
     num::NonZeroU32,
@@ -13,7 +15,10 @@ use anyhow::anyhow;
 use clap::{Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint, value_parser};
 use clap_complete::Generator;
 use csscolorparser::Color;
+#[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
+use image::error::ImageFormatHint;
 use image::{ImageError, ImageFormat};
+use qrcode::EcLevel;
 
 #[derive(Debug, Parser)]
 #[command(
@@ -145,7 +150,7 @@ pub struct Encode {
         value_name("ITERATION"),
         default_missing_value("15")
     )]
-    pub zopfli: Option<std::num::NonZeroU8>,
+    pub zopfli: Option<NonZeroU8>,
 
     /// The mode of the output.
     ///
@@ -355,7 +360,7 @@ pub enum Ecc {
     H,
 }
 
-impl From<Ecc> for qrcode::EcLevel {
+impl From<Ecc> for EcLevel {
     fn from(level: Ecc) -> Self {
         match level {
             Ecc::L => Self::L,
@@ -579,9 +584,7 @@ impl TryFrom<InputFormat> for ImageFormat {
             #[cfg(feature = "decode-from-qoi")]
             InputFormat::Qoi => Ok(Self::Qoi),
             #[cfg(feature = "decode-from-svg")]
-            InputFormat::Svg => Err(Self::Error::Unsupported(
-                image::error::ImageFormatHint::Unknown.into(),
-            )),
+            InputFormat::Svg => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
             #[cfg(feature = "decode-from-tga")]
             InputFormat::Tga => Ok(Self::Tga),
             #[cfg(feature = "decode-from-tiff")]
@@ -589,9 +592,7 @@ impl TryFrom<InputFormat> for ImageFormat {
             #[cfg(feature = "decode-from-webp")]
             InputFormat::WebP => Ok(Self::WebP),
             #[cfg(feature = "decode-from-xbm")]
-            InputFormat::Xbm => Err(Self::Error::Unsupported(
-                image::error::ImageFormatHint::Unknown.into(),
-            )),
+            InputFormat::Xbm => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
         }
     }
 }
@@ -622,10 +623,10 @@ mod tests {
 
     #[test]
     fn from_ecc_to_ec_level() {
-        assert_eq!(qrcode::EcLevel::from(Ecc::L), qrcode::EcLevel::L);
-        assert_eq!(qrcode::EcLevel::from(Ecc::M), qrcode::EcLevel::M);
-        assert_eq!(qrcode::EcLevel::from(Ecc::Q), qrcode::EcLevel::Q);
-        assert_eq!(qrcode::EcLevel::from(Ecc::H), qrcode::EcLevel::H);
+        assert_eq!(EcLevel::from(Ecc::L), EcLevel::L);
+        assert_eq!(EcLevel::from(Ecc::M), EcLevel::M);
+        assert_eq!(EcLevel::from(Ecc::Q), EcLevel::Q);
+        assert_eq!(EcLevel::from(Ecc::H), EcLevel::H);
     }
 
     #[test]

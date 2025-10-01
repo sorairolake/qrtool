@@ -6,9 +6,11 @@ mod utils;
 
 use predicates::prelude::predicate;
 
+use crate::utils::command;
+
 #[test]
 fn without_subcommand() {
-    utils::command::command()
+    command::command()
         .assert()
         .failure()
         .code(2)

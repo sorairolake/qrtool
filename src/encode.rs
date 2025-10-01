@@ -3,14 +3,20 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+#[cfg(feature = "output-as-ansi")]
+use anstyle::RgbColor;
+#[cfg(feature = "output-as-ansi")]
+use anstyle_lossy::palette::Palette;
 use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
 use qrcode::{
     EcLevel, QrCode, QrResult, Version,
     bits::Bits,
-    render::{Renderer, pic, svg, unicode},
+    render::{Renderer, pic, svg, unicode::Dense1x2},
     types::QrError,
 };
+#[cfg(feature = "output-as-ansi")]
+use yansi::Paint;
 
 use crate::{
     cli::{Ecc, Mode, Variant},
@@ -108,10 +114,6 @@ pub fn to_ansi(
     module_size: Option<u32>,
 ) -> String {
     fn convert(color: &Color) -> String {
-        use anstyle::RgbColor;
-        use anstyle_lossy::palette::Palette;
-        use yansi::Paint;
-
         let rgba = color.to_rgba8();
         let ansi =
             anstyle_lossy::rgb_to_ansi(RgbColor(rgba[0], rgba[1], rgba[2]), Palette::default());
@@ -142,9 +144,6 @@ pub fn to_ansi_256(
     module_size: Option<u32>,
 ) -> String {
     fn convert(color: &Color) -> String {
-        use anstyle::RgbColor;
-        use yansi::Paint;
-
         let rgba = color.to_rgba8();
         let ansi_256 = anstyle_lossy::rgb_to_xterm(RgbColor(rgba[0], rgba[1], rgba[2]));
         format!("{}", "  ".on_fixed(ansi_256.index()))
@@ -168,8 +167,6 @@ pub fn to_ansi_true_color(
     colors: &(Color, Color),
     module_size: Option<u32>,
 ) -> String {
-    use yansi::Paint;
-
     let c = code.to_colors();
     let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
     let (foreground, background) = (
@@ -207,11 +204,11 @@ pub fn to_ascii(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bo
 /// Renders the QR code into the terminal as UTF-8 string.
 pub fn to_unicode(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<unicode::Dense1x2>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<Dense1x2>::new(&c, code.width(), margin);
     if !invert {
         renderer = renderer
-            .dark_color(unicode::Dense1x2::Light)
-            .light_color(unicode::Dense1x2::Dark);
+            .dark_color(Dense1x2::Light)
+            .light_color(Dense1x2::Dark);
     }
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);

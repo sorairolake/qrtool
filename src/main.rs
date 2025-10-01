@@ -13,6 +13,8 @@ use std::{io, process::ExitCode};
 
 use image::ImageError;
 use qrcode::types::QrError;
+#[cfg(feature = "decode-from-svg")]
+use resvg::usvg;
 use rqrr::DeQRError;
 
 fn main() -> ExitCode {
@@ -42,14 +44,14 @@ fn main() -> ExitCode {
                 };
             }
             #[cfg(feature = "decode-from-svg")]
-            if let Some(e) = err.downcast_ref::<resvg::usvg::Error>() {
+            if let Some(e) = err.downcast_ref::<usvg::Error>() {
                 return match e {
-                    resvg::usvg::Error::NotAnUtf8Str | resvg::usvg::Error::ElementsLimitReached => {
+                    usvg::Error::NotAnUtf8Str | usvg::Error::ElementsLimitReached => {
                         sysexits::ExitCode::Unavailable.into()
                     }
-                    resvg::usvg::Error::MalformedGZip
-                    | resvg::usvg::Error::InvalidSize
-                    | resvg::usvg::Error::ParsingFailed(_) => sysexits::ExitCode::DataErr.into(),
+                    usvg::Error::MalformedGZip
+                    | usvg::Error::InvalidSize
+                    | usvg::Error::ParsingFailed(_) => sysexits::ExitCode::DataErr.into(),
                 };
             }
             ExitCode::FAILURE
