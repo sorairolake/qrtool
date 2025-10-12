@@ -49,13 +49,13 @@ jobs:
             os: ubuntu-24.04
             use-cross: true
           - target: aarch64-apple-darwin
-            os: macos-14
+            os: macos-15
           - target: x86_64-apple-darwin
-            os: macos-14
+            os: macos-15
           - target: aarch64-pc-windows-msvc
-            os: windows-2022
+            os: windows-2025
           - target: x86_64-pc-windows-msvc
-            os: windows-2022
+            os: windows-2025
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -74,12 +74,12 @@ jobs:
         with:
           key: ${{ matrix.target }}
       - name: Setup Ruby
-        if: matrix.os != 'windows-2022'
+        if: matrix.os != 'windows-2025'
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.4
       - name: Install Asciidoctor
-        if: matrix.os != 'windows-2022'
+        if: matrix.os != 'windows-2025'
         run: |
           gem install asciidoctor
           asciidoctor -V
@@ -90,14 +90,14 @@ jobs:
         if: ${{ matrix.use-cross }}
         run: cross build --release --target ${{ matrix.target }}
       - name: Build man pages
-        if: matrix.os != 'windows-2022'
+        if: matrix.os != 'windows-2025'
         run: asciidoctor -b manpage docs/man/man1/*.1.adoc
       - name: Create a package
         shell: bash
         env:
           ZSTD_CLEVEL: 19
         run: |
-          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+          if [ "${{ matrix.os }}" != "windows-2025" ] ; then
             bin="target/${{ matrix.target }}/release/qrtool"
           else
             bin="target/${{ matrix.target }}/release/qrtool.exe"
@@ -108,12 +108,12 @@ jobs:
           cp README.md "${bin}" "${package}"
           cp -r LICENSES "${package}"
           cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/docs
-          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+          if [ "${{ matrix.os }}" != "windows-2025" ] ; then
             mkdir -p "${package}"/man
             cp docs/man/man1/*.1 "${package}"/man
           fi
 
-          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+          if [ "${{ matrix.os }}" != "windows-2025" ] ; then
             tar -cav --format=pax -f "${package}.tar.zst" "${package}"
           else
             7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"

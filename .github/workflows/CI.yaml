@@ -31,10 +31,10 @@ jobs:
             os: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
           - os-alias: macos
-            os: macos-14
+            os: macos-15
             target: aarch64-apple-darwin
           - os-alias: windows
-            os: windows-2022
+            os: windows-2025
             target: x86_64-pc-windows-msvc
           - toolchain-alias: msrv
             toolchain: 1.85.0
@@ -74,10 +74,10 @@ jobs:
             os: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
           - os-alias: macos
-            os: macos-14
+            os: macos-15
             target: aarch64-apple-darwin
           - os-alias: windows
-            os: windows-2022
+            os: windows-2025
             target: x86_64-pc-windows-msvc
           - toolchain-alias: msrv
             toolchain: 1.85.0
@@ -85,7 +85,7 @@ jobs:
             toolchain: stable
     steps:
       - name: Set Git to use LF
-        if: matrix.os == 'windows-2022'
+        if: matrix.os == 'windows-2025'
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
