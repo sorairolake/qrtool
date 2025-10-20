@@ -17,7 +17,7 @@ use image::DynamicImage;
 use image::{ImageFormat, imageops};
 #[cfg(feature = "optimize-output-png")]
 use oxipng::{Deflaters, Options};
-use qrcode::{QrCode, bits::Bits};
+use qrcode2::{QrCode, bits::Bits};
 use rqrr::PreparedImage;
 #[cfg(feature = "decode-from-xbm")]
 use xbm::Decoder;

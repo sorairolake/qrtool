@@ -12,7 +12,7 @@ mod metadata;
 use std::{io, process::ExitCode};
 
 use image::ImageError;
-use qrcode::types::QrError;
+use qrcode2::types::QrError;
 #[cfg(feature = "decode-from-svg")]
 use resvg::usvg;
 use rqrr::DeQRError;

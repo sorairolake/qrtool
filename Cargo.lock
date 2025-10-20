@@ -1156,10 +1156,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "qrcode"
-version = "0.14.1"
+name = "qrcode2"
+version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d68782463e408eb1e668cf6152704bd856c78c5b6417adaee3203d8f4c1fc9ec"
+checksum = "2e38642efdeee326065b5a43b463d1768f9fe15914d30c66d96d4ba951ab78cd"
 dependencies = [
  "image",
 ]
@@ -1181,7 +1181,7 @@ dependencies = [
  "is-svg",
  "oxipng",
  "predicates",
- "qrcode",
+ "qrcode2",
  "resvg",
  "rqrr",
  "sysexits",

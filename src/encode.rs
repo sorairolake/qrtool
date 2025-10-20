@@ -9,7 +9,7 @@ use anstyle::RgbColor;
 use anstyle_lossy::palette::Palette;
 use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
-use qrcode::{
+use qrcode2::{
     EcLevel, QrCode, QrResult, Version,
     bits::Bits,
     render::{Renderer, pic, svg, unicode::Dense1x2},
@@ -66,7 +66,7 @@ pub fn to_image(
     module_size: Option<u32>,
 ) -> RgbaImage {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<Rgba<u8>>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<Rgba<u8>>::new(&c, code.width(), code.height(), margin);
     renderer = renderer
         .dark_color(Rgba::from(colors.0.to_rgba8()))
         .light_color(Rgba::from(colors.1.to_rgba8()));
@@ -84,7 +84,8 @@ pub fn to_svg(
     module_size: Option<u32>,
 ) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<svg::Color<'_>>::new(&c, code.width(), margin);
+    let mut renderer =
+        &mut Renderer::<svg::Color<'_>>::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (colors.0.to_css_hex(), colors.1.to_css_hex());
     renderer = renderer
         .dark_color(svg::Color(&foreground))
@@ -98,11 +99,11 @@ pub fn to_svg(
 /// Renders the QR code into a PIC image.
 pub fn to_pic(code: &QrCode, margin: u32, module_size: Option<u32>) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<pic::Color>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<pic::Color>::new(&c, code.width(), code.height(), margin);
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
-    renderer.build()
+    renderer.build() + "\n"
 }
 
 /// Renders the QR code into the terminal using 4-bit ANSI escape sequences.
@@ -126,7 +127,7 @@ pub fn to_ansi(
     }
 
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (convert(&colors.0), convert(&colors.1));
     renderer = renderer.dark_color(&foreground).light_color(&background);
     if let Some(size) = module_size {
@@ -150,7 +151,7 @@ pub fn to_ansi_256(
     }
 
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (convert(&colors.0), convert(&colors.1));
     renderer = renderer.dark_color(&foreground).light_color(&background);
     if let Some(size) = module_size {
@@ -168,7 +169,7 @@ pub fn to_ansi_true_color(
     module_size: Option<u32>,
 ) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (
         {
             let fg = colors.0.to_rgba8();
@@ -189,7 +190,7 @@ pub fn to_ansi_true_color(
 /// Renders the QR code into the terminal as ASCII string.
 pub fn to_ascii(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), code.height(), margin);
     renderer = if invert {
         renderer.dark_color("  ").light_color("##")
     } else {
@@ -204,7 +205,7 @@ pub fn to_ascii(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bo
 /// Renders the QR code into the terminal as UTF-8 string.
 pub fn to_unicode(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<Dense1x2>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<Dense1x2>::new(&c, code.width(), code.height(), margin);
     if !invert {
         renderer = renderer
             .dark_color(Dense1x2::Light)
@@ -222,6 +223,7 @@ impl Extractor for QrCode {
             Version::Normal(version) | Version::Micro(version) => {
                 usize::try_from(version).expect("invalid symbol version")
             }
+            Version::RectMicro(..) => unimplemented!(),
         };
         let error_correction_level = match self.error_correction_level() {
             EcLevel::L => Ecc::L,

@@ -18,7 +18,7 @@ use csscolorparser::Color;
 #[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
 use image::error::ImageFormatHint;
 use image::{ImageError, ImageFormat};
-use qrcode::EcLevel;
+use qrcode2::EcLevel;
 
 #[derive(Debug, Parser)]
 #[command(
