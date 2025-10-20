@@ -1660,9 +1660,9 @@ dependencies = [
 
 [[package]]
 name = "unicode-ident"
-version = "1.0.18"
+version = "1.0.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5a5f39404a5da50712a4c1eecf25e90dd62b613502b7e925fd4e4d19b5c96512"
+checksum = "f63a545481291138910575129486daeaf8ac54aee4387fe7906919f7830c7d9d"
 
 [[package]]
 name = "usvg"
@@ -1972,9 +1972,9 @@ dependencies = [
 
 [[package]]
 name = "xbm"
-version = "0.2.1"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "55af25ef78d1aa157d174c957184cbc190858db59c6850be97845eb1de8348f8"
+checksum = "745a032431cc4b94c351731277178ae15afb9182b5f53f446f3d9545aa882987"
 dependencies = [
  "image",
  "unicode-ident",
