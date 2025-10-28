@@ -107,18 +107,26 @@ Output to the terminal as UTF-8 string:
 qrtool encode -t unicode "QR code"
 ```
 
-### Micro QR code generation
+### Micro QR code or rMQR code generation
 
 Use `--variant` option to change the variant of the generated QR code. The
-variant is `normal` (default) or `micro` (Micro QR code).
+variant is `normal` (default), `micro` (Micro QR code), or `rmqr` (rMQR code).
 
 ```sh
-qrtool encode -v 3 --variant micro "QR code" > output.png
+qrtool encode --variant micro "QR code" > output.png
 ```
 
 Generate this image:
 
 ![Output](tests/data/variant/micro.png)
+
+```sh
+qrtool encode --variant rmqr "QR code" > output.png
+```
+
+Generate this image:
+
+![Output](tests/data/variant/rmqr.png)
 
 ### Colored output
 

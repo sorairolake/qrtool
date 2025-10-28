@@ -13,10 +13,7 @@ use resvg::{
 };
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
-use crate::{
-    cli::Ecc,
-    metadata::{Extractor, Metadata},
-};
+use crate::metadata::{self, Extractor, Metadata};
 
 type DecodedBytes = (MetaData, Vec<u8>);
 
@@ -58,14 +55,8 @@ pub fn grids_as_bytes<G: BitGrid>(
 
 impl Extractor for MetaData {
     fn metadata(&self) -> Metadata {
-        let symbol_version = self.version.0;
-        let error_correction_level = match self.ecc_level {
-            0 => Ecc::M,
-            1 => Ecc::L,
-            2 => Ecc::H,
-            3 => Ecc::Q,
-            _ => panic!("invalid error correction level"),
-        };
+        let symbol_version = metadata::Version::new((self.version.0, None));
+        let error_correction_level = self.ecc_level.into();
         Metadata::new(symbol_version, error_correction_level)
     }
 }
@@ -75,6 +66,7 @@ mod tests {
     use rqrr::Version;
 
     use super::*;
+    use crate::cli::Ecc;
 
     #[test]
     fn validate_metadata_extraction() {
@@ -85,7 +77,7 @@ mod tests {
                 mask: 4
             }
             .metadata(),
-            Metadata::new(1, Ecc::L)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::L)
         );
         assert_eq!(
             MetaData {
@@ -94,7 +86,7 @@ mod tests {
                 mask: 3
             }
             .metadata(),
-            Metadata::new(1, Ecc::M)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::M)
         );
         assert_eq!(
             MetaData {
@@ -103,7 +95,7 @@ mod tests {
                 mask: 7
             }
             .metadata(),
-            Metadata::new(1, Ecc::Q)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::Q)
         );
         assert_eq!(
             MetaData {
@@ -112,7 +104,7 @@ mod tests {
                 mask: 4
             }
             .metadata(),
-            Metadata::new(1, Ecc::H)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::H)
         );
     }
 }

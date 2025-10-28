@@ -12,7 +12,7 @@ use std::{
 };
 
 use anyhow::anyhow;
-use clap::{Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint, value_parser};
+use clap::{Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
 use clap_complete::Generator;
 use csscolorparser::Color;
 #[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
@@ -93,20 +93,23 @@ pub struct Encode {
     /// If this option is not specified, the minimum version required to store
     /// the data will be automatically chosen. For normal QR code, <NUMBER>
     /// should be between 1 and 40. For Micro QR code, <NUMBER> should be
-    /// between 1 and 4.
+    /// between 1 and 4. For rMQR code, the first <NUMBER> should be 7, 9, 11,
+    /// 13, 15, or 17. The second <NUMBER> should be 27, 43, 59, 77, 99, or 139.
+    /// 27 can only be used with 11, or 13. If The type of QR code is other than
+    /// rMQR code, the second <NUMBER> is ignored.
     #[arg(
-        value_parser(value_parser!(i16).range(1..=40)),
         short('v'),
         long,
         visible_alias("symversion"),
+        num_args(1..=2),
         value_name("NUMBER")
     )]
-    pub symbol_version: Option<i16>,
+    pub symbol_version: Option<Vec<i16>>,
 
     /// The width of margin.
     ///
     /// If this option is not specified, the margin will be 4 for normal QR code
-    /// and 2 for Micro QR code.
+    /// and 2 for others.
     #[arg(short, long, value_name("NUMBER"))]
     pub margin: Option<u32>,
 
@@ -163,7 +166,6 @@ pub struct Encode {
         long,
         value_enum,
         default_value_t,
-        requires("symbol_version"),
         value_name("TYPE"),
         ignore_case(true)
     )]
@@ -371,6 +373,29 @@ impl From<Ecc> for EcLevel {
     }
 }
 
+impl From<EcLevel> for Ecc {
+    fn from(level: EcLevel) -> Self {
+        match level {
+            EcLevel::L => Self::L,
+            EcLevel::M => Self::M,
+            EcLevel::Q => Self::Q,
+            EcLevel::H => Self::H,
+        }
+    }
+}
+
+impl From<u16> for Ecc {
+    fn from(level: u16) -> Self {
+        match level {
+            0 => Self::M,
+            1 => Self::L,
+            2 => Self::H,
+            3 => Self::Q,
+            _ => unreachable!(),
+        }
+    }
+}
+
 #[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum OutputFormat {
     /// Portable Network Graphics.
@@ -483,6 +508,9 @@ pub enum Variant {
 
     /// Micro QR code.
     Micro,
+
+    /// rMQR code.
+    Rmqr,
 }
 
 #[derive(Clone, Copy, Debug, ValueEnum)]
@@ -627,6 +655,22 @@ mod tests {
         assert_eq!(EcLevel::from(Ecc::M), EcLevel::M);
         assert_eq!(EcLevel::from(Ecc::Q), EcLevel::Q);
         assert_eq!(EcLevel::from(Ecc::H), EcLevel::H);
+    }
+
+    #[test]
+    fn from_ec_level_to_ecc() {
+        assert_eq!(Ecc::from(EcLevel::L), Ecc::L);
+        assert_eq!(Ecc::from(EcLevel::M), Ecc::M);
+        assert_eq!(Ecc::from(EcLevel::Q), Ecc::Q);
+        assert_eq!(Ecc::from(EcLevel::H), Ecc::H);
+    }
+
+    #[test]
+    fn from_u16_to_ecc() {
+        assert_eq!(Ecc::from(0), Ecc::M);
+        assert_eq!(Ecc::from(1), Ecc::L);
+        assert_eq!(Ecc::from(2), Ecc::H);
+        assert_eq!(Ecc::from(3), Ecc::Q);
     }
 
     #[test]

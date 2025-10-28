@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2025-06-07
+:docdate: 2025-10-28
 :revnumber: 0.12.1
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -85,9 +85,7 @@ be specified as a value for these options.
 |`oklch(59.41% 0.16 301.29)`, `oklch(61.9% 0.032 248.35 / 49.8%)`
 |===
 
-This command can also encode the input data in a Micro QR code. This can embed
-data in a smaller area than with QR code, but the storage capacity is strongly
-limited.
+This command can also encode the input data in a Micro QR code and a rMQR code.
 
 == POSITIONAL ARGUMENTS
 
@@ -139,21 +137,25 @@ _STRING_::
 
   Alias for *-l*, *--error-correction-level*.
 
-*-v*, *--symbol-version* _NUMBER_::
+*-v*, *--symbol-version* _NUMBER_...::
 
   The version of the symbol. If this option is not specified, the minimum
   version required to store the data will be automatically chosen. For normal
   QR code, _NUMBER_ should be between *1* and *40*. For Micro QR code, _NUMBER_
-  should be between *1* and *4*.
+  should be between *1* and *4*. For rMQR code, the first _NUMBER_ should be
+  *7*, *9*, *11*, *13*, *15*, or *17*. The second _NUMBER_ should be *27*,
+  *43*, *59*, *77*, *99*, or *139*. *27* can only be used with *11*, or *13*.
+  If The type of QR code is other than rMQR code, the second _NUMBER_ is
+  ignored.
 
-*--symversion* _NUMBER_::
+*--symversion* _NUMBER_...::
 
   Alias for *-v*, *--symbol-version*.
 
 *-m*, *--margin* _NUMBER_::
 
   The width of margin. If this option is not specified, the margin will be 4
-  for normal QR code and 2 for Micro QR code.
+  for normal QR code and 2 for others.
 
 *-t*, *--type* _FORMAT_::
 
@@ -284,7 +286,7 @@ _STRING_::
 
 *--variant* _TYPE_::
 
-  The type of QR code. This option requires *--symbol-version*.
+  The type of QR code.
 
   The possible values are:{blank}:::
 
@@ -295,6 +297,10 @@ _STRING_::
     *micro*::::
 
       Micro QR code.
+
+    *rmqr*::::
+
+      rMQR code.
 
 *--foreground* _COLOR_::
 
@@ -350,7 +356,7 @@ Encode to a SVG image:{blank}::
 
 Encode to a Micro QR code:{blank}::
 
-  $ *qrtool encode -v 3 --variant micro "QR code" > output.png*
+  $ *qrtool encode --variant micro "QR code" > output.png*
 
 Encode with the specified colors:{blank}::
 

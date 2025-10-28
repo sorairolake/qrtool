@@ -10,7 +10,7 @@ use anstyle_lossy::palette::Palette;
 use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
 use qrcode2::{
-    EcLevel, QrCode, QrResult, Version,
+    QrCode, QrResult, Version,
     bits::Bits,
     render::{Renderer, pic, svg, unicode::Dense1x2},
     types::QrError,
@@ -19,27 +19,25 @@ use qrcode2::{
 use yansi::Paint;
 
 use crate::{
-    cli::{Ecc, Mode, Variant},
-    metadata::{Extractor, Metadata},
+    cli::{Mode, Variant},
+    metadata::{self, Extractor, Metadata},
 };
 
 /// Sets the version.
-pub const fn set_version(version: i16, variant: &Variant) -> QrResult<Version> {
+pub fn set_version(version: &[i16], variant: &Variant) -> QrResult<Version> {
     match variant {
-        Variant::Normal => {
-            if let 1..=40 = version {
-                Ok(Version::Normal(version))
-            } else {
-                Err(QrError::InvalidVersion)
-            }
-        }
-        Variant::Micro => {
-            if let 1..=4 = version {
-                Ok(Version::Micro(version))
-            } else {
-                Err(QrError::InvalidVersion)
-            }
-        }
+        Variant::Normal => Some(Version::Normal(version[0]))
+            .filter(|v| v.is_normal())
+            .ok_or(QrError::InvalidVersion),
+        Variant::Micro => Some(Version::Micro(version[0]))
+            .filter(|v| v.is_micro())
+            .ok_or(QrError::InvalidVersion),
+        Variant::Rmqr => Some(Version::RectMicro(
+            version[0],
+            version.get(1).copied().unwrap_or_default(),
+        ))
+        .filter(|v| v.is_rect_micro())
+        .ok_or(QrError::InvalidVersion),
     }
 }
 
@@ -220,48 +218,75 @@ pub fn to_unicode(code: &QrCode, margin: u32, module_size: Option<u32>, invert: 
 impl Extractor for QrCode {
     fn metadata(&self) -> Metadata {
         let symbol_version = match self.version() {
-            Version::Normal(version) | Version::Micro(version) => {
-                usize::try_from(version).expect("invalid symbol version")
-            }
-            Version::RectMicro(..) => unimplemented!(),
+            Version::Normal(version) | Version::Micro(version) => (
+                usize::try_from(version).expect("invalid symbol version"),
+                None,
+            ),
+            Version::RectMicro(height, width) => (
+                usize::try_from(height).expect("invalid symbol version"),
+                Some(usize::try_from(width).expect("invalid symbol version")),
+            ),
         };
-        let error_correction_level = match self.error_correction_level() {
-            EcLevel::L => Ecc::L,
-            EcLevel::M => Ecc::M,
-            EcLevel::Q => Ecc::Q,
-            EcLevel::H => Ecc::H,
-        };
+        let symbol_version = metadata::Version::new(symbol_version);
+        let error_correction_level = self.error_correction_level().into();
         Metadata::new(symbol_version, error_correction_level)
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use qrcode2::EcLevel;
+
     use super::*;
+    use crate::cli::Ecc;
 
     #[test]
     fn validate_qr_code_version() {
         // Valid normal QR code version.
         assert_eq!(
-            set_version(1, &Variant::Normal).unwrap(),
+            set_version(&[1], &Variant::Normal).unwrap(),
             Version::Normal(1)
         );
         assert_eq!(
-            set_version(40, &Variant::Normal).unwrap(),
+            set_version(&[40], &Variant::Normal).unwrap(),
             Version::Normal(40)
         );
 
         // Valid Micro QR code version.
-        assert_eq!(set_version(1, &Variant::Micro).unwrap(), Version::Micro(1));
-        assert_eq!(set_version(4, &Variant::Micro).unwrap(), Version::Micro(4));
+        assert_eq!(
+            set_version(&[1], &Variant::Micro).unwrap(),
+            Version::Micro(1)
+        );
+        assert_eq!(
+            set_version(&[4], &Variant::Micro).unwrap(),
+            Version::Micro(4)
+        );
+
+        // Valid rMQR code version.
+        assert_eq!(
+            set_version(&[7, 43], &Variant::Rmqr).unwrap(),
+            Version::RectMicro(7, 43)
+        );
+        assert_eq!(
+            set_version(&[11, 27], &Variant::Rmqr).unwrap(),
+            Version::RectMicro(11, 27)
+        );
+        assert_eq!(
+            set_version(&[17, 139], &Variant::Rmqr).unwrap(),
+            Version::RectMicro(17, 139)
+        );
 
         // Invalid normal QR code version.
-        assert!(set_version(0, &Variant::Normal).is_err());
-        assert!(set_version(41, &Variant::Normal).is_err());
+        assert!(set_version(&[0], &Variant::Normal).is_err());
+        assert!(set_version(&[41], &Variant::Normal).is_err());
 
         // Invalid Micro QR code version.
-        assert!(set_version(0, &Variant::Micro).is_err());
-        assert!(set_version(5, &Variant::Micro).is_err());
+        assert!(set_version(&[0], &Variant::Micro).is_err());
+        assert!(set_version(&[5], &Variant::Micro).is_err());
+
+        // Invalid rMQR code version.
+        assert!(set_version(&[0, 0], &Variant::Rmqr).is_err());
+        assert!(set_version(&[7], &Variant::Rmqr).is_err());
     }
 
     #[test]
@@ -272,25 +297,57 @@ mod tests {
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::L)
                 .unwrap()
                 .metadata(),
-            Metadata::new(1, Ecc::L)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::L)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::M)
                 .unwrap()
                 .metadata(),
-            Metadata::new(1, Ecc::M)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::M)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::Q)
                 .unwrap()
                 .metadata(),
-            Metadata::new(1, Ecc::Q)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::Q)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::H)
                 .unwrap()
                 .metadata(),
-            Metadata::new(1, Ecc::H)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::H)
+        );
+
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Micro(4), EcLevel::L)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((4, None)), Ecc::L)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Micro(4), EcLevel::M)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((4, None)), Ecc::M)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Micro(4), EcLevel::Q)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((4, None)), Ecc::Q)
+        );
+
+        assert_eq!(
+            QrCode::with_version(DATA, Version::RectMicro(7, 43), EcLevel::M)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((7, Some(43))), Ecc::M)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::RectMicro(7, 43), EcLevel::H)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((7, Some(43))), Ecc::H)
         );
     }
 }

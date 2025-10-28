@@ -25,7 +25,7 @@ use xbm::Decoder;
 #[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
 use crate::cli::InputFormat;
 use crate::{
-    cli::{Command, Opt, OutputFormat},
+    cli::{Command, Opt, OutputFormat, Variant},
     decode, encode,
     input::Input,
     metadata::Extractor,
@@ -56,10 +56,11 @@ pub fn run() -> anyhow::Result<()> {
                 .read_to_end(&mut buf)
                 .context("could not read data")?;
 
+            let variant = arg.variant;
             let level = arg.error_correction_level.into();
             let code = if let Some(version) = arg.symbol_version {
-                let v = encode::set_version(version, &arg.variant)
-                    .context("could not set the version")?;
+                let v =
+                    encode::set_version(&version, &variant).context("could not set the version")?;
                 let mut bits = Bits::new(v);
                 if let Some(mode) = arg.mode {
                     encode::push_data_for_selected_mode(&mut bits, buf, &mode)
@@ -69,7 +70,11 @@ pub fn run() -> anyhow::Result<()> {
                 .and_then(|()| bits.push_terminator(level))
                 .and_then(|()| QrCode::with_bits(bits, level))
             } else {
-                QrCode::with_error_correction_level(&buf, level)
+                match variant {
+                    Variant::Normal => QrCode::with_error_correction_level(&buf, level),
+                    Variant::Micro => QrCode::micro_with_error_correction_level(&buf, level),
+                    Variant::Rmqr => QrCode::rect_micro_with_error_correction_level(&buf, level),
+                }
             }
             .context("could not construct a QR code")?;
 
@@ -81,7 +86,7 @@ pub fn run() -> anyhow::Result<()> {
 
             let margin = arg
                 .margin
-                .unwrap_or_else(|| if code.version().is_micro() { 2 } else { 4 });
+                .unwrap_or_else(|| if code.version().is_normal() { 4 } else { 2 });
             let module_size = arg.size.map(NonZeroU32::get);
             let is_invert = matches!(
                 arg.output_format,
