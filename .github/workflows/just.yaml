@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: 2025 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+name: just
+
+on:
+  pull_request:
+    paths:
+      - justfile
+  push:
+    paths:
+      - justfile
+
+jobs:
+  just:
+    name: just
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Setup just
+        uses: extractions/setup-just@v3
+      - name: Run formatter in check mode
+        run: just --fmt --check --unstable

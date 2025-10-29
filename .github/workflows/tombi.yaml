@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2025 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+name: Tombi
+
+on:
+  pull_request:
+    paths:
+      - "**.toml"
+  push:
+    paths:
+      - "**.toml"
+
+jobs:
+  tombi:
+    name: Tombi
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Setup Tombi
+        uses: tombi-toml/setup-tombi@v1.0.0
+      - name: Run formatter in check mode
+        run: tombi format --check
+      - name: Run linter
+        run: tombi lint

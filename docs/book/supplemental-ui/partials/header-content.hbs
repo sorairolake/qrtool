@@ -1,21 +1,33 @@
-{{!--
+{{!
 SPDX-FileCopyrightText: 2024 Shun Sakai
 
 SPDX-License-Identifier: CC-BY-4.0
---}}
+}}
 
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="{{{or site.url siteRootPath}}}">{{site.title}}</a>
+      <a
+        class="navbar-item"
+        href="{{{or site.url siteRootPath}}}"
+      >{{site.title}}</a>
       {{#if env.SITE_SEARCH_PROVIDER}}
-      <div class="navbar-item search hide-for-print">
-        <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Search the docs"{{#if page.home}} autofocus{{/if}}>
+        <div class="navbar-item search hide-for-print">
+          <div id="search-field" class="field">
+            <input
+              id="search-input"
+              type="text"
+              placeholder="Search the docs"
+            />
+          </div>
         </div>
-      </div>
       {{/if}}
-      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+      <button
+        class="navbar-burger"
+        aria-controls="topbar-nav"
+        aria-expanded="false"
+        aria-label="Toggle main menu"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -24,7 +36,11 @@ SPDX-License-Identifier: CC-BY-4.0
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
         <a class="navbar-item" href="{{{or site.url siteRootPath}}}">Home</a>
-        <a class="navbar-item" href="https://github.com/sorairolake/qrtool" target="_blank">Repository</a>
+        <a
+          class="navbar-item"
+          href="https://github.com/sorairolake/qrtool"
+          target="_blank"
+        >Repository</a>
       </div>
     </div>
   </nav>

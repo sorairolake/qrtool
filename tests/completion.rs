@@ -6,39 +6,41 @@ mod utils;
 
 use predicates::prelude::predicate;
 
+use crate::utils::command;
+
 #[test]
 fn completion() {
-    utils::command::command()
+    command::command()
         .arg("completion")
         .arg("bash")
         .assert()
         .success()
         .stdout(predicate::ne(""));
-    utils::command::command()
+    command::command()
         .arg("completion")
         .arg("elvish")
         .assert()
         .success()
         .stdout(predicate::ne(""));
-    utils::command::command()
+    command::command()
         .arg("completion")
         .arg("fish")
         .assert()
         .success()
         .stdout(predicate::ne(""));
-    utils::command::command()
+    command::command()
         .arg("completion")
         .arg("nushell")
         .assert()
         .success()
         .stdout(predicate::ne(""));
-    utils::command::command()
+    command::command()
         .arg("completion")
         .arg("powershell")
         .assert()
         .success()
         .stdout(predicate::ne(""));
-    utils::command::command()
+    command::command()
         .arg("completion")
         .arg("zsh")
         .assert()
@@ -48,13 +50,13 @@ fn completion() {
 
 #[test]
 fn infer_subcommand_name_for_completion_command() {
-    utils::command::command()
+    command::command()
         .arg("comp")
         .arg("-V")
         .assert()
         .success()
         .stdout(predicate::str::contains("qrtool-completion"));
-    utils::command::command()
+    command::command()
         .arg("c")
         .arg("-V")
         .assert()
@@ -64,7 +66,7 @@ fn infer_subcommand_name_for_completion_command() {
 
 #[test]
 fn completion_with_invalid_shell() {
-    utils::command::command()
+    command::command()
         .arg("completion")
         .arg("a")
         .assert()

@@ -49,16 +49,16 @@ jobs:
             os: ubuntu-24.04
             use-cross: true
           - target: aarch64-apple-darwin
-            os: macos-14
+            os: macos-15
           - target: x86_64-apple-darwin
-            os: macos-14
+            os: macos-15
           - target: aarch64-pc-windows-msvc
-            os: windows-2022
+            os: windows-2025
           - target: x86_64-pc-windows-msvc
-            os: windows-2022
+            os: windows-2025
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
@@ -66,20 +66,20 @@ jobs:
           targets: ${{ matrix.target }}
       - name: Install cross
         if: ${{ matrix.use-cross }}
-        uses: taiki-e/install-action@v2.56.23
+        uses: taiki-e/install-action@v2.62.39
         with:
           tool: cross
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.1
         with:
           key: ${{ matrix.target }}
       - name: Setup Ruby
-        if: matrix.os != 'windows-2022'
+        if: matrix.os != 'windows-2025'
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3
+          ruby-version: 3.4
       - name: Install Asciidoctor
-        if: matrix.os != 'windows-2022'
+        if: matrix.os != 'windows-2025'
         run: |
           gem install asciidoctor
           asciidoctor -V
@@ -90,12 +90,14 @@ jobs:
         if: ${{ matrix.use-cross }}
         run: cross build --release --target ${{ matrix.target }}
       - name: Build man pages
-        if: matrix.os != 'windows-2022'
+        if: matrix.os != 'windows-2025'
         run: asciidoctor -b manpage docs/man/man1/*.1.adoc
       - name: Create a package
         shell: bash
+        env:
+          ZSTD_CLEVEL: 19
         run: |
-          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+          if [ "${{ matrix.os }}" != "windows-2025" ] ; then
             bin="target/${{ matrix.target }}/release/qrtool"
           else
             bin="target/${{ matrix.target }}/release/qrtool.exe"
@@ -106,20 +108,19 @@ jobs:
           cp README.md "${bin}" "${package}"
           cp -r LICENSES "${package}"
           cp {AUTHORS,BUILD,CHANGELOG,CONTRIBUTING}.adoc "${package}"/docs
-          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
+          if [ "${{ matrix.os }}" != "windows-2025" ] ; then
             mkdir -p "${package}"/man
             cp docs/man/man1/*.1 "${package}"/man
           fi
 
-          if [ "${{ matrix.os }}" != "windows-2022" ] ; then
-            tar -cv --format=pax -f "${package}.tar" "${package}"
-            zstd --rm -19 -v "${package}.tar"
+          if [ "${{ matrix.os }}" != "windows-2025" ] ; then
+            tar -cav --format=pax -f "${package}.tar.zst" "${package}"
           else
             7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
           fi
           rm -rv qrtool-*/
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: "qrtool-${{ needs.get-version.outputs.version }}-${{ matrix.target }}"
           path: "qrtool-*-*"
@@ -132,7 +133,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
       - name: Calculate checksums
         run: |
           mv qrtool-*/* .
@@ -140,7 +141,7 @@ jobs:
           sha256sum qrtool-* | tee sha256sums.txt
           b2sum qrtool-* | tee b2sums.txt
       - name: Release
-        uses: softprops/action-gh-release@v2.3.2
+        uses: softprops/action-gh-release@v2.4.1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           draft: true

@@ -14,6 +14,18 @@ All notable changes to this project will be documented in this file.
 The format is based on https://keepachangelog.com/[Keep a Changelog], and this
 project adheres to https://semver.org/[Semantic Versioning].
 
+== {compare-url}/v0.12.1\...v0.13.0[0.13.0] - 2025-10-29
+
+=== Added
+
+* Add support for encoding rMQR code ({pull-request-url}/860[#860])
+* Add EPS rendering support ({pull-request-url}/861[#861])
+
+=== Changed
+
+* Remove `--symbol-version` from the required options of `--variant`
+  ({pull-request-url}/860[#860])
+
 == {compare-url}/v0.12.0\...v0.12.1[0.12.1] - 2025-07-28
 
 === Changed

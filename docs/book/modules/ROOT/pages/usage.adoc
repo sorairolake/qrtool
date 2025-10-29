@@ -7,6 +7,7 @@
 :enwp-url: https://en.wikipedia.org
 :enwp-article-url: {enwp-url}/wiki
 :github-url: https://github.com
+:eps-url: {enwp-article-url}/Encapsulated_PostScript
 :pic-url: {enwp-article-url}/PIC_(markup_language)
 :css-color-4-url: {w3-url}/TR/css-color-4/
 :bmp-url: {enwp-article-url}/BMP_file_format
@@ -54,6 +55,7 @@ Use `-t` option to change the format of the generated image.
 .The format is
 * `png` (default)
 * `svg`
+* `eps` ({eps-url}[Encapsulated PostScript])
 * `pic` ({pic-url}[PIC] markup language)
 * `ansi` (to the terminal using 4-bit ANSI escape sequences)
 * `ansi256` (to the terminal using 8-bit ANSI escape sequences)
@@ -87,18 +89,26 @@ qrtool encode -t pic "QR code" \
 qrtool encode -t unicode "QR code"
 ----
 
-== Micro QR code generation
+== Micro QR code or rMQR code generation
 
 Use `--variant` option to change the variant of the generated QR code. The
-variant is `normal` (default) or `micro` (Micro QR code).
+variant is `normal` (default), `micro` (Micro QR code), or `rmqr` (rMQR code).
 
 [source,sh]
 ----
-qrtool encode -v 3 --variant micro "QR code" > output.png
+qrtool encode --variant micro "QR code" > output.png
 ----
 
 .Generate this image
 image::micro.png[Output]
+
+[source,sh]
+----
+qrtool encode --variant rmqr "QR code" > output.png
+----
+
+.Generate this image
+image::rmqr.png[Output]
 
 == Colored output
 

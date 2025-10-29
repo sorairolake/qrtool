@@ -31,10 +31,10 @@ jobs:
             os: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
           - os-alias: macos
-            os: macos-14
+            os: macos-15
             target: aarch64-apple-darwin
           - os-alias: windows
-            os: windows-2022
+            os: windows-2025
             target: x86_64-pc-windows-msvc
           - toolchain-alias: msrv
             toolchain: 1.85.0
@@ -42,14 +42,14 @@ jobs:
             toolchain: stable
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
           targets: ${{ matrix.target }}
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.1
         with:
           key: ${{ matrix.target }}
       - name: Check a package
@@ -74,10 +74,10 @@ jobs:
             os: ubuntu-24.04
             target: x86_64-unknown-linux-gnu
           - os-alias: macos
-            os: macos-14
+            os: macos-15
             target: aarch64-apple-darwin
           - os-alias: windows
-            os: windows-2022
+            os: windows-2025
             target: x86_64-pc-windows-msvc
           - toolchain-alias: msrv
             toolchain: 1.85.0
@@ -85,19 +85,19 @@ jobs:
             toolchain: stable
     steps:
       - name: Set Git to use LF
-        if: matrix.os == 'windows-2022'
+        if: matrix.os == 'windows-2025'
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
           targets: ${{ matrix.target }}
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.0
+        uses: Swatinem/rust-cache@v2.8.1
         with:
           key: ${{ matrix.target }}
       - name: Run tests
@@ -110,31 +110,44 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
           components: rustfmt
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.0
-      - name: Check code formatted
-        run: cargo fmt -- --check
+        uses: Swatinem/rust-cache@v2.8.1
+      - name: Run formatter in check mode
+        run: cargo fmt --check
 
   clippy:
     name: Clippy
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: stable
           components: clippy
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.0
-      - name: Check no lint warnings
+        uses: Swatinem/rust-cache@v2.8.1
+      - name: Run linter
         run: cargo clippy -- -D warnings
-      - name: Check no lint warnings (no default features)
+      - name: Run linter (no default features)
         run: cargo clippy --no-default-features -- -D warnings
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Run formatter in check mode
+        run: npx prettier -c "**.{hbs,json,md,yaml,yml}"

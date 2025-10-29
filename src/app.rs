@@ -12,12 +12,20 @@ use std::{
 
 use anyhow::Context;
 use clap::Parser;
+#[cfg(feature = "decode-from-xbm")]
+use image::DynamicImage;
 use image::{ImageFormat, imageops};
-use qrcode::{QrCode, bits::Bits};
+#[cfg(feature = "optimize-output-png")]
+use oxipng::{Deflaters, Options};
+use qrcode2::{QrCode, bits::Bits};
 use rqrr::PreparedImage;
+#[cfg(feature = "decode-from-xbm")]
+use xbm::Decoder;
 
+#[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
+use crate::cli::InputFormat;
 use crate::{
-    cli::{Command, Opt, OutputFormat},
+    cli::{Command, Opt, OutputFormat, Variant},
     decode, encode,
     input::Input,
     metadata::Extractor,
@@ -48,10 +56,11 @@ pub fn run() -> anyhow::Result<()> {
                 .read_to_end(&mut buf)
                 .context("could not read data")?;
 
+            let variant = arg.variant;
             let level = arg.error_correction_level.into();
             let code = if let Some(version) = arg.symbol_version {
-                let v = encode::set_version(version, &arg.variant)
-                    .context("could not set the version")?;
+                let v =
+                    encode::set_version(&version, &variant).context("could not set the version")?;
                 let mut bits = Bits::new(v);
                 if let Some(mode) = arg.mode {
                     encode::push_data_for_selected_mode(&mut bits, buf, &mode)
@@ -61,7 +70,11 @@ pub fn run() -> anyhow::Result<()> {
                 .and_then(|()| bits.push_terminator(level))
                 .and_then(|()| QrCode::with_bits(bits, level))
             } else {
-                QrCode::with_error_correction_level(&buf, level)
+                match variant {
+                    Variant::Normal => QrCode::with_error_correction_level(&buf, level),
+                    Variant::Micro => QrCode::micro_with_error_correction_level(&buf, level),
+                    Variant::Rmqr => QrCode::rect_micro_with_error_correction_level(&buf, level),
+                }
             }
             .context("could not construct a QR code")?;
 
@@ -73,7 +86,7 @@ pub fn run() -> anyhow::Result<()> {
 
             let margin = arg
                 .margin
-                .unwrap_or_else(|| if code.version().is_micro() { 2 } else { 4 });
+                .unwrap_or_else(|| if code.version().is_normal() { 4 } else { 2 });
             let module_size = arg.size.map(NonZeroU32::get);
             let is_invert = matches!(
                 arg.output_format,
@@ -94,9 +107,9 @@ pub fn run() -> anyhow::Result<()> {
 
                     #[cfg(feature = "optimize-output-png")]
                     if let Some(level) = arg.optimize_png {
-                        let mut optimize_opt = oxipng::Options::from_preset(level.into());
+                        let mut optimize_opt = Options::from_preset(level.into());
                         if let Some(iterations) = arg.zopfli {
-                            optimize_opt.deflate = oxipng::Deflaters::Zopfli { iterations };
+                            optimize_opt.deflate = Deflaters::Zopfli { iterations };
                         }
                         buf = oxipng::optimize_from_memory(&buf, &optimize_opt)
                             .context("could not optimize the image")?;
@@ -104,6 +117,13 @@ pub fn run() -> anyhow::Result<()> {
                     buf
                 }
                 OutputFormat::Svg => encode::to_svg(
+                    &code,
+                    margin,
+                    &(arg.foreground, arg.background),
+                    module_size,
+                )
+                .into(),
+                OutputFormat::Eps => encode::to_eps(
                     &code,
                     margin,
                     &(arg.foreground, arg.background),
@@ -166,23 +186,20 @@ pub fn run() -> anyhow::Result<()> {
             };
             let input_format = arg.input_format;
             #[cfg(feature = "decode-from-svg")]
-            let input_format = input_format
-                .or_else(|| is_svg::is_svg(&input).then_some(crate::cli::InputFormat::Svg));
+            let input_format =
+                input_format.or_else(|| is_svg::is_svg(&input).then_some(InputFormat::Svg));
             #[cfg(feature = "decode-from-xbm")]
-            let input_format = input_format.or_else(|| {
-                input
-                    .starts_with(b"#define")
-                    .then_some(crate::cli::InputFormat::Xbm)
-            });
+            let input_format =
+                input_format.or_else(|| input.starts_with(b"#define").then_some(InputFormat::Xbm));
             #[allow(clippy::option_if_let_else)]
             let image = match input_format {
                 #[cfg(feature = "decode-from-svg")]
-                Some(crate::cli::InputFormat::Svg) => decode::from_svg(&input),
+                Some(InputFormat::Svg) => decode::from_svg(&input),
                 #[cfg(feature = "decode-from-xbm")]
-                Some(crate::cli::InputFormat::Xbm) => {
-                    let decoder = xbm::Decoder::new(Cursor::new(input))
+                Some(InputFormat::Xbm) => {
+                    let decoder = Decoder::new(Cursor::new(input))
                         .context("could not create new XBM decoder")?;
-                    image::DynamicImage::from_decoder(decoder).map_err(anyhow::Error::from)
+                    DynamicImage::from_decoder(decoder).map_err(anyhow::Error::from)
                 }
                 format => {
                     let format = if let Some(f) = format {

@@ -6,9 +6,11 @@ mod utils;
 
 use predicates::prelude::predicate;
 
+use crate::utils::command;
+
 #[test]
 fn basic_decode() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/basic/basic.png")
         .assert()
@@ -18,13 +20,13 @@ fn basic_decode() {
 
 #[test]
 fn infer_subcommand_name_for_decode_command() {
-    utils::command::command()
+    command::command()
         .arg("dec")
         .arg("-V")
         .assert()
         .success()
         .stdout(predicate::str::contains("qrtool-decode"));
-    utils::command::command()
+    command::command()
         .arg("d")
         .arg("-V")
         .assert()
@@ -34,7 +36,7 @@ fn infer_subcommand_name_for_decode_command() {
 
 #[test]
 fn decode_from_non_existent_image_file() {
-    let command = utils::command::command()
+    let command = command::command()
         .arg("decode")
         .arg("non_existent.png")
         .assert()
@@ -56,7 +58,7 @@ fn decode_from_non_existent_image_file() {
 
 #[test]
 fn decode_from_non_image_file() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.txt")
         .assert()
@@ -70,19 +72,19 @@ fn decode_from_non_image_file() {
 #[cfg(feature = "decode-from-bmp")]
 #[test]
 fn decode_from_bmp() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.bmp")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.bmp"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("bmp")
@@ -91,7 +93,7 @@ fn decode_from_bmp() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("bmp")
@@ -105,19 +107,19 @@ fn decode_from_bmp() {
 #[cfg(feature = "decode-from-dds")]
 #[test]
 fn decode_from_dds() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.dds")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.dds"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("dds")
@@ -126,7 +128,7 @@ fn decode_from_dds() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("dds")
@@ -140,19 +142,19 @@ fn decode_from_dds() {
 #[cfg(feature = "decode-from-ff")]
 #[test]
 fn decode_from_farbfeld() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.ff")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.ff"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("farbfeld")
@@ -161,7 +163,7 @@ fn decode_from_farbfeld() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("farbfeld")
@@ -175,19 +177,19 @@ fn decode_from_farbfeld() {
 #[cfg(feature = "decode-from-gif")]
 #[test]
 fn decode_from_gif() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.gif")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.gif"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("gif")
@@ -196,7 +198,7 @@ fn decode_from_gif() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("gif")
@@ -210,19 +212,19 @@ fn decode_from_gif() {
 #[cfg(feature = "decode-from-hdr")]
 #[test]
 fn decode_from_hdr() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.hdr")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.hdr"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("hdr")
@@ -231,7 +233,7 @@ fn decode_from_hdr() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("hdr")
@@ -245,7 +247,7 @@ fn decode_from_hdr() {
 #[cfg(feature = "decode-from-ico")]
 #[test]
 fn decode_from_bmp_cur() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/bmp.cur")
         .assert()
@@ -254,7 +256,7 @@ fn decode_from_bmp_cur() {
         .stderr(predicate::str::contains(
             "could not determine the image format",
         ));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/bmp.cur"))
         .assert()
@@ -263,7 +265,7 @@ fn decode_from_bmp_cur() {
         .stderr(predicate::str::contains(
             "could not determine the image format",
         ));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("ico")
@@ -276,7 +278,7 @@ fn decode_from_bmp_cur() {
 #[cfg(feature = "decode-from-ico")]
 #[test]
 fn decode_from_png_cur() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/png.cur")
         .assert()
@@ -285,7 +287,7 @@ fn decode_from_png_cur() {
         .stderr(predicate::str::contains(
             "could not determine the image format",
         ));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/png.cur"))
         .assert()
@@ -294,7 +296,7 @@ fn decode_from_png_cur() {
         .stderr(predicate::str::contains(
             "could not determine the image format",
         ));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("ico")
@@ -307,19 +309,19 @@ fn decode_from_png_cur() {
 #[cfg(feature = "decode-from-ico")]
 #[test]
 fn decode_from_bmp_ico() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/bmp.ico")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/bmp.ico"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("ico")
@@ -332,19 +334,19 @@ fn decode_from_bmp_ico() {
 #[cfg(feature = "decode-from-ico")]
 #[test]
 fn decode_from_png_ico() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/png.ico")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/png.ico"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("ico")
@@ -357,7 +359,7 @@ fn decode_from_png_ico() {
 #[cfg(feature = "decode-from-ico")]
 #[test]
 fn decode_from_ico_with_wrong_format() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("ico")
@@ -371,19 +373,19 @@ fn decode_from_ico_with_wrong_format() {
 #[cfg(feature = "decode-from-jpeg")]
 #[test]
 fn decode_from_jpeg() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.jpeg")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.jpeg"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("jpeg")
@@ -392,7 +394,7 @@ fn decode_from_jpeg() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("jpeg")
@@ -406,19 +408,19 @@ fn decode_from_jpeg() {
 #[cfg(feature = "decode-from-exr")]
 #[test]
 fn decode_from_open_exr() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.exr")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.exr"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("openexr")
@@ -427,7 +429,7 @@ fn decode_from_open_exr() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("openexr")
@@ -440,19 +442,19 @@ fn decode_from_open_exr() {
 
 #[test]
 fn decode_from_png() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.png")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.png"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("png")
@@ -461,7 +463,7 @@ fn decode_from_png() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("png")
@@ -475,19 +477,19 @@ fn decode_from_png() {
 #[cfg(feature = "decode-from-pnm")]
 #[test]
 fn decode_from_ascii_pbm() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/ascii.pbm")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/ascii.pbm"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("pnm")
@@ -500,19 +502,19 @@ fn decode_from_ascii_pbm() {
 #[cfg(feature = "decode-from-pnm")]
 #[test]
 fn decode_from_ascii_pgm() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/ascii.pgm")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/ascii.pgm"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("pnm")
@@ -525,19 +527,19 @@ fn decode_from_ascii_pgm() {
 #[cfg(feature = "decode-from-pnm")]
 #[test]
 fn decode_from_ascii_ppm() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/ascii.ppm")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/ascii.ppm"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("pnm")
@@ -550,19 +552,19 @@ fn decode_from_ascii_ppm() {
 #[cfg(feature = "decode-from-pnm")]
 #[test]
 fn decode_from_binary_pbm() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/binary.pbm")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/binary.pbm"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("pnm")
@@ -575,19 +577,19 @@ fn decode_from_binary_pbm() {
 #[cfg(feature = "decode-from-pnm")]
 #[test]
 fn decode_from_binary_pgm() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/binary.pgm")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/binary.pgm"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("pnm")
@@ -600,19 +602,19 @@ fn decode_from_binary_pgm() {
 #[cfg(feature = "decode-from-pnm")]
 #[test]
 fn decode_from_binary_ppm() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/binary.ppm")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/binary.ppm"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("pnm")
@@ -625,7 +627,7 @@ fn decode_from_binary_ppm() {
 #[cfg(feature = "decode-from-pnm")]
 #[test]
 fn decode_from_pnm_with_wrong_format() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("pnm")
@@ -639,19 +641,19 @@ fn decode_from_pnm_with_wrong_format() {
 #[cfg(feature = "decode-from-qoi")]
 #[test]
 fn decode_from_qoi() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.qoi")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.qoi"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("qoi")
@@ -660,7 +662,7 @@ fn decode_from_qoi() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("qoi")
@@ -674,19 +676,19 @@ fn decode_from_qoi() {
 #[cfg(feature = "decode-from-svg")]
 #[test]
 fn decode_from_svg() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.svg")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.svg"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("svg")
@@ -699,19 +701,19 @@ fn decode_from_svg() {
 #[cfg(feature = "decode-from-svg")]
 #[test]
 fn decode_from_svgz() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.svgz")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.svgz"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("svg")
@@ -724,7 +726,7 @@ fn decode_from_svgz() {
 #[cfg(feature = "decode-from-svg")]
 #[test]
 fn decode_from_svg_with_wrong_format() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("svg")
@@ -738,13 +740,13 @@ fn decode_from_svg_with_wrong_format() {
 #[cfg(feature = "decode-from-tga")]
 #[test]
 fn decode_from_tga() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.tga")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.tga"))
         .assert()
@@ -753,7 +755,7 @@ fn decode_from_tga() {
         .stderr(predicate::str::contains(
             "could not determine the image format",
         ));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("tga")
@@ -762,7 +764,7 @@ fn decode_from_tga() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("tga")
@@ -776,19 +778,19 @@ fn decode_from_tga() {
 #[cfg(feature = "decode-from-tiff")]
 #[test]
 fn decode_from_tiff() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.tiff")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.tiff"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("tiff")
@@ -797,7 +799,7 @@ fn decode_from_tiff() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("tiff")
@@ -811,19 +813,19 @@ fn decode_from_tiff() {
 #[cfg(feature = "decode-from-webp")]
 #[test]
 fn decode_from_lossy_web_p() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/lossy.webp")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/lossy.webp"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("webp")
@@ -836,19 +838,19 @@ fn decode_from_lossy_web_p() {
 #[cfg(feature = "decode-from-webp")]
 #[test]
 fn decode_from_lossless_web_p() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/lossless.webp")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/lossless.webp"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("webp")
@@ -861,7 +863,7 @@ fn decode_from_lossless_web_p() {
 #[cfg(feature = "decode-from-webp")]
 #[test]
 fn decode_from_web_p_with_wrong_format() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("webp")
@@ -875,19 +877,19 @@ fn decode_from_web_p_with_wrong_format() {
 #[cfg(feature = "decode-from-xbm")]
 #[test]
 fn decode_from_xbm() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/decode/decode.xbm")
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .write_stdin(include_bytes!("data/decode/decode.xbm"))
         .assert()
         .success()
         .stdout(predicate::eq("QR code"));
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("xbm")
@@ -896,7 +898,7 @@ fn decode_from_xbm() {
         .success()
         .stdout(predicate::eq("QR code"));
 
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("xbm")
@@ -909,7 +911,7 @@ fn decode_from_xbm() {
 
 #[test]
 fn decode_from_invalid_input_format() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("-t")
         .arg("a")
@@ -924,7 +926,7 @@ fn decode_from_invalid_input_format() {
 
 #[test]
 fn decode_with_invert() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/invert/basic.png")
         .assert()
@@ -935,7 +937,7 @@ fn decode_with_invert() {
 #[cfg(feature = "decode-from-svg")]
 #[test]
 fn decode_from_svg_with_invert() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("data/invert/basic.svg")
         .assert()
@@ -945,7 +947,7 @@ fn decode_from_svg_with_invert() {
 
 #[test]
 fn decode_with_verbose() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("--verbose")
         .arg("data/basic/basic.png")
@@ -957,7 +959,7 @@ fn decode_with_verbose() {
 
 #[test]
 fn decode_with_metadata() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("--metadata")
         .arg("data/basic/basic.png")
@@ -969,7 +971,7 @@ fn decode_with_metadata() {
 
 #[test]
 fn validate_the_options_dependencies_for_decode_command() {
-    utils::command::command()
+    command::command()
         .arg("decode")
         .arg("--verbose")
         .arg("--metadata")

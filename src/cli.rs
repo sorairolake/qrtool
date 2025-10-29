@@ -3,6 +3,8 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+#[cfg(feature = "optimize-output-png")]
+use std::num::NonZeroU8;
 use std::{
     io::{self, Write},
     num::NonZeroU32,
@@ -10,10 +12,13 @@ use std::{
 };
 
 use anyhow::anyhow;
-use clap::{Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint, value_parser};
+use clap::{Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
 use clap_complete::Generator;
 use csscolorparser::Color;
+#[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
+use image::error::ImageFormatHint;
 use image::{ImageError, ImageFormat};
+use qrcode2::EcLevel;
 
 #[derive(Debug, Parser)]
 #[command(
@@ -67,7 +72,7 @@ pub struct Encode {
     /// The module size in pixels.
     ///
     /// If this option is not specified, the module size is 8 when the output
-    /// format is PNG or SVG, and 1 otherwise.
+    /// format is PNG, SVG, EPS, or PIC, and 1 otherwise.
     #[arg(short, long, value_name("NUMBER"))]
     pub size: Option<NonZeroU32>,
 
@@ -88,20 +93,23 @@ pub struct Encode {
     /// If this option is not specified, the minimum version required to store
     /// the data will be automatically chosen. For normal QR code, <NUMBER>
     /// should be between 1 and 40. For Micro QR code, <NUMBER> should be
-    /// between 1 and 4.
+    /// between 1 and 4. For rMQR code, the first <NUMBER> should be 7, 9, 11,
+    /// 13, 15, or 17. The second <NUMBER> should be 27, 43, 59, 77, 99, or 139.
+    /// 27 can only be used with 11, or 13. If The type of QR code is other than
+    /// rMQR code, the second <NUMBER> is ignored.
     #[arg(
-        value_parser(value_parser!(i16).range(1..=40)),
         short('v'),
         long,
         visible_alias("symversion"),
+        num_args(1..=2),
         value_name("NUMBER")
     )]
-    pub symbol_version: Option<i16>,
+    pub symbol_version: Option<Vec<i16>>,
 
     /// The width of margin.
     ///
     /// If this option is not specified, the margin will be 4 for normal QR code
-    /// and 2 for Micro QR code.
+    /// and 2 for others.
     #[arg(short, long, value_name("NUMBER"))]
     pub margin: Option<u32>,
 
@@ -145,7 +153,7 @@ pub struct Encode {
         value_name("ITERATION"),
         default_missing_value("15")
     )]
-    pub zopfli: Option<std::num::NonZeroU8>,
+    pub zopfli: Option<NonZeroU8>,
 
     /// The mode of the output.
     ///
@@ -158,7 +166,6 @@ pub struct Encode {
         long,
         value_enum,
         default_value_t,
-        requires("symbol_version"),
         value_name("TYPE"),
         ignore_case(true)
     )]
@@ -355,13 +362,36 @@ pub enum Ecc {
     H,
 }
 
-impl From<Ecc> for qrcode::EcLevel {
+impl From<Ecc> for EcLevel {
     fn from(level: Ecc) -> Self {
         match level {
             Ecc::L => Self::L,
             Ecc::M => Self::M,
             Ecc::Q => Self::Q,
             Ecc::H => Self::H,
+        }
+    }
+}
+
+impl From<EcLevel> for Ecc {
+    fn from(level: EcLevel) -> Self {
+        match level {
+            EcLevel::L => Self::L,
+            EcLevel::M => Self::M,
+            EcLevel::Q => Self::Q,
+            EcLevel::H => Self::H,
+        }
+    }
+}
+
+impl From<u16> for Ecc {
+    fn from(level: u16) -> Self {
+        match level {
+            0 => Self::M,
+            1 => Self::L,
+            2 => Self::H,
+            3 => Self::Q,
+            _ => unreachable!(),
         }
     }
 }
@@ -376,6 +406,9 @@ pub enum OutputFormat {
 
     /// Scalable Vector Graphics.
     Svg,
+
+    /// Encapsulated PostScript.
+    Eps,
 
     /// PIC markup language.
     Pic,
@@ -478,6 +511,9 @@ pub enum Variant {
 
     /// Micro QR code.
     Micro,
+
+    /// rMQR code.
+    Rmqr,
 }
 
 #[derive(Clone, Copy, Debug, ValueEnum)]
@@ -579,9 +615,7 @@ impl TryFrom<InputFormat> for ImageFormat {
             #[cfg(feature = "decode-from-qoi")]
             InputFormat::Qoi => Ok(Self::Qoi),
             #[cfg(feature = "decode-from-svg")]
-            InputFormat::Svg => Err(Self::Error::Unsupported(
-                image::error::ImageFormatHint::Unknown.into(),
-            )),
+            InputFormat::Svg => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
             #[cfg(feature = "decode-from-tga")]
             InputFormat::Tga => Ok(Self::Tga),
             #[cfg(feature = "decode-from-tiff")]
@@ -589,9 +623,7 @@ impl TryFrom<InputFormat> for ImageFormat {
             #[cfg(feature = "decode-from-webp")]
             InputFormat::WebP => Ok(Self::WebP),
             #[cfg(feature = "decode-from-xbm")]
-            InputFormat::Xbm => Err(Self::Error::Unsupported(
-                image::error::ImageFormatHint::Unknown.into(),
-            )),
+            InputFormat::Xbm => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
         }
     }
 }
@@ -622,10 +654,26 @@ mod tests {
 
     #[test]
     fn from_ecc_to_ec_level() {
-        assert_eq!(qrcode::EcLevel::from(Ecc::L), qrcode::EcLevel::L);
-        assert_eq!(qrcode::EcLevel::from(Ecc::M), qrcode::EcLevel::M);
-        assert_eq!(qrcode::EcLevel::from(Ecc::Q), qrcode::EcLevel::Q);
-        assert_eq!(qrcode::EcLevel::from(Ecc::H), qrcode::EcLevel::H);
+        assert_eq!(EcLevel::from(Ecc::L), EcLevel::L);
+        assert_eq!(EcLevel::from(Ecc::M), EcLevel::M);
+        assert_eq!(EcLevel::from(Ecc::Q), EcLevel::Q);
+        assert_eq!(EcLevel::from(Ecc::H), EcLevel::H);
+    }
+
+    #[test]
+    fn from_ec_level_to_ecc() {
+        assert_eq!(Ecc::from(EcLevel::L), Ecc::L);
+        assert_eq!(Ecc::from(EcLevel::M), Ecc::M);
+        assert_eq!(Ecc::from(EcLevel::Q), Ecc::Q);
+        assert_eq!(Ecc::from(EcLevel::H), Ecc::H);
+    }
+
+    #[test]
+    fn from_u16_to_ecc() {
+        assert_eq!(Ecc::from(0), Ecc::M);
+        assert_eq!(Ecc::from(1), Ecc::L);
+        assert_eq!(Ecc::from(2), Ecc::H);
+        assert_eq!(Ecc::from(3), Ecc::Q);
     }
 
     #[test]

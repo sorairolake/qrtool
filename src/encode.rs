@@ -3,37 +3,41 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+#[cfg(feature = "output-as-ansi")]
+use anstyle::RgbColor;
+#[cfg(feature = "output-as-ansi")]
+use anstyle_lossy::palette::Palette;
 use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
-use qrcode::{
-    EcLevel, QrCode, QrResult, Version,
+use qrcode2::{
+    QrCode, QrResult, Version,
     bits::Bits,
-    render::{Renderer, pic, svg, unicode},
+    render::{Renderer, eps, pic, svg, unicode::Dense1x2},
     types::QrError,
 };
+#[cfg(feature = "output-as-ansi")]
+use yansi::Paint;
 
 use crate::{
-    cli::{Ecc, Mode, Variant},
-    metadata::{Extractor, Metadata},
+    cli::{Mode, Variant},
+    metadata::{self, Extractor, Metadata},
 };
 
 /// Sets the version.
-pub const fn set_version(version: i16, variant: &Variant) -> QrResult<Version> {
+pub fn set_version(version: &[i16], variant: &Variant) -> QrResult<Version> {
     match variant {
-        Variant::Normal => {
-            if let 1..=40 = version {
-                Ok(Version::Normal(version))
-            } else {
-                Err(QrError::InvalidVersion)
-            }
-        }
-        Variant::Micro => {
-            if let 1..=4 = version {
-                Ok(Version::Micro(version))
-            } else {
-                Err(QrError::InvalidVersion)
-            }
-        }
+        Variant::Normal => Some(Version::Normal(version[0]))
+            .filter(|v| v.is_normal())
+            .ok_or(QrError::InvalidVersion),
+        Variant::Micro => Some(Version::Micro(version[0]))
+            .filter(|v| v.is_micro())
+            .ok_or(QrError::InvalidVersion),
+        Variant::Rmqr => Some(Version::RectMicro(
+            version[0],
+            version.get(1).copied().unwrap_or_default(),
+        ))
+        .filter(|v| v.is_rect_micro())
+        .ok_or(QrError::InvalidVersion),
     }
 }
 
@@ -60,17 +64,16 @@ pub fn to_image(
     module_size: Option<u32>,
 ) -> RgbaImage {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<Rgba<u8>>::new(&c, code.width(), margin);
-    renderer = renderer
-        .dark_color(Rgba::from(colors.0.to_rgba8()))
-        .light_color(Rgba::from(colors.1.to_rgba8()));
+    let mut renderer = &mut Renderer::<Rgba<u8>>::new(&c, code.width(), code.height(), margin);
+    let (foreground, background) = (colors.0.to_rgba8().into(), colors.1.to_rgba8().into());
+    renderer = renderer.dark_color(foreground).light_color(background);
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
     renderer.build()
 }
 
-/// Renders the QR code into an image.
+/// Renders the QR code into a SVG image.
 pub fn to_svg(
     code: &QrCode,
     margin: u32,
@@ -78,11 +81,38 @@ pub fn to_svg(
     module_size: Option<u32>,
 ) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<svg::Color<'_>>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (colors.0.to_css_hex(), colors.1.to_css_hex());
-    renderer = renderer
-        .dark_color(svg::Color(&foreground))
-        .light_color(svg::Color(&background));
+    let (foreground, background) = (svg::Color(&foreground), svg::Color(&background));
+    renderer = renderer.dark_color(foreground).light_color(background);
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
+    renderer.build() + "\n"
+}
+
+/// Renders the QR code into an EPS image.
+pub fn to_eps(
+    code: &QrCode,
+    margin: u32,
+    colors: &(Color, Color),
+    module_size: Option<u32>,
+) -> String {
+    let c = code.to_colors();
+    let mut renderer = &mut Renderer::new(&c, code.width(), code.height(), margin);
+    let (foreground, background) = (
+        eps::Color(
+            colors.0.to_array().map(f64::from)[..3]
+                .try_into()
+                .expect("invalid color"),
+        ),
+        eps::Color(
+            colors.1.to_array().map(f64::from)[..3]
+                .try_into()
+                .expect("invalid color"),
+        ),
+    );
+    renderer = renderer.dark_color(foreground).light_color(background);
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
@@ -92,11 +122,11 @@ pub fn to_svg(
 /// Renders the QR code into a PIC image.
 pub fn to_pic(code: &QrCode, margin: u32, module_size: Option<u32>) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<pic::Color>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<pic::Color>::new(&c, code.width(), code.height(), margin);
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
-    renderer.build()
+    renderer.build() + "\n"
 }
 
 /// Renders the QR code into the terminal using 4-bit ANSI escape sequences.
@@ -108,10 +138,6 @@ pub fn to_ansi(
     module_size: Option<u32>,
 ) -> String {
     fn convert(color: &Color) -> String {
-        use anstyle::RgbColor;
-        use anstyle_lossy::palette::Palette;
-        use yansi::Paint;
-
         let rgba = color.to_rgba8();
         let ansi =
             anstyle_lossy::rgb_to_ansi(RgbColor(rgba[0], rgba[1], rgba[2]), Palette::default());
@@ -124,7 +150,7 @@ pub fn to_ansi(
     }
 
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (convert(&colors.0), convert(&colors.1));
     renderer = renderer.dark_color(&foreground).light_color(&background);
     if let Some(size) = module_size {
@@ -142,16 +168,13 @@ pub fn to_ansi_256(
     module_size: Option<u32>,
 ) -> String {
     fn convert(color: &Color) -> String {
-        use anstyle::RgbColor;
-        use yansi::Paint;
-
         let rgba = color.to_rgba8();
         let ansi_256 = anstyle_lossy::rgb_to_xterm(RgbColor(rgba[0], rgba[1], rgba[2]));
         format!("{}", "  ".on_fixed(ansi_256.index()))
     }
 
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (convert(&colors.0), convert(&colors.1));
     renderer = renderer.dark_color(&foreground).light_color(&background);
     if let Some(size) = module_size {
@@ -168,10 +191,8 @@ pub fn to_ansi_true_color(
     colors: &(Color, Color),
     module_size: Option<u32>,
 ) -> String {
-    use yansi::Paint;
-
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (
         {
             let fg = colors.0.to_rgba8();
@@ -192,7 +213,7 @@ pub fn to_ansi_true_color(
 /// Renders the QR code into the terminal as ASCII string.
 pub fn to_ascii(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::<&str>::new(&c, code.width(), code.height(), margin);
     renderer = if invert {
         renderer.dark_color("  ").light_color("##")
     } else {
@@ -207,11 +228,11 @@ pub fn to_ascii(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bo
 /// Renders the QR code into the terminal as UTF-8 string.
 pub fn to_unicode(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<unicode::Dense1x2>::new(&c, code.width(), margin);
+    let mut renderer = &mut Renderer::new(&c, code.width(), code.height(), margin);
     if !invert {
         renderer = renderer
-            .dark_color(unicode::Dense1x2::Light)
-            .light_color(unicode::Dense1x2::Dark);
+            .dark_color(Dense1x2::Light)
+            .light_color(Dense1x2::Dark);
     }
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
@@ -222,47 +243,75 @@ pub fn to_unicode(code: &QrCode, margin: u32, module_size: Option<u32>, invert: 
 impl Extractor for QrCode {
     fn metadata(&self) -> Metadata {
         let symbol_version = match self.version() {
-            Version::Normal(version) | Version::Micro(version) => {
-                usize::try_from(version).expect("invalid symbol version")
-            }
+            Version::Normal(version) | Version::Micro(version) => (
+                usize::try_from(version).expect("invalid symbol version"),
+                None,
+            ),
+            Version::RectMicro(height, width) => (
+                usize::try_from(height).expect("invalid symbol version"),
+                Some(usize::try_from(width).expect("invalid symbol version")),
+            ),
         };
-        let error_correction_level = match self.error_correction_level() {
-            EcLevel::L => Ecc::L,
-            EcLevel::M => Ecc::M,
-            EcLevel::Q => Ecc::Q,
-            EcLevel::H => Ecc::H,
-        };
+        let symbol_version = metadata::Version::new(symbol_version);
+        let error_correction_level = self.error_correction_level().into();
         Metadata::new(symbol_version, error_correction_level)
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use qrcode2::EcLevel;
+
     use super::*;
+    use crate::cli::Ecc;
 
     #[test]
     fn validate_qr_code_version() {
         // Valid normal QR code version.
         assert_eq!(
-            set_version(1, &Variant::Normal).unwrap(),
+            set_version(&[1], &Variant::Normal).unwrap(),
             Version::Normal(1)
         );
         assert_eq!(
-            set_version(40, &Variant::Normal).unwrap(),
+            set_version(&[40], &Variant::Normal).unwrap(),
             Version::Normal(40)
         );
 
         // Valid Micro QR code version.
-        assert_eq!(set_version(1, &Variant::Micro).unwrap(), Version::Micro(1));
-        assert_eq!(set_version(4, &Variant::Micro).unwrap(), Version::Micro(4));
+        assert_eq!(
+            set_version(&[1], &Variant::Micro).unwrap(),
+            Version::Micro(1)
+        );
+        assert_eq!(
+            set_version(&[4], &Variant::Micro).unwrap(),
+            Version::Micro(4)
+        );
+
+        // Valid rMQR code version.
+        assert_eq!(
+            set_version(&[7, 43], &Variant::Rmqr).unwrap(),
+            Version::RectMicro(7, 43)
+        );
+        assert_eq!(
+            set_version(&[11, 27], &Variant::Rmqr).unwrap(),
+            Version::RectMicro(11, 27)
+        );
+        assert_eq!(
+            set_version(&[17, 139], &Variant::Rmqr).unwrap(),
+            Version::RectMicro(17, 139)
+        );
 
         // Invalid normal QR code version.
-        assert!(set_version(0, &Variant::Normal).is_err());
-        assert!(set_version(41, &Variant::Normal).is_err());
+        assert!(set_version(&[0], &Variant::Normal).is_err());
+        assert!(set_version(&[41], &Variant::Normal).is_err());
 
         // Invalid Micro QR code version.
-        assert!(set_version(0, &Variant::Micro).is_err());
-        assert!(set_version(5, &Variant::Micro).is_err());
+        assert!(set_version(&[0], &Variant::Micro).is_err());
+        assert!(set_version(&[5], &Variant::Micro).is_err());
+
+        // Invalid rMQR code version.
+        assert!(set_version(&[0, 0], &Variant::Rmqr).is_err());
+        assert!(set_version(&[7], &Variant::Rmqr).is_err());
     }
 
     #[test]
@@ -273,25 +322,57 @@ mod tests {
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::L)
                 .unwrap()
                 .metadata(),
-            Metadata::new(1, Ecc::L)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::L)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::M)
                 .unwrap()
                 .metadata(),
-            Metadata::new(1, Ecc::M)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::M)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::Q)
                 .unwrap()
                 .metadata(),
-            Metadata::new(1, Ecc::Q)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::Q)
         );
         assert_eq!(
             QrCode::with_version(DATA, Version::Normal(1), EcLevel::H)
                 .unwrap()
                 .metadata(),
-            Metadata::new(1, Ecc::H)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::H)
+        );
+
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Micro(4), EcLevel::L)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((4, None)), Ecc::L)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Micro(4), EcLevel::M)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((4, None)), Ecc::M)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::Micro(4), EcLevel::Q)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((4, None)), Ecc::Q)
+        );
+
+        assert_eq!(
+            QrCode::with_version(DATA, Version::RectMicro(7, 43), EcLevel::M)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((7, Some(43))), Ecc::M)
+        );
+        assert_eq!(
+            QrCode::with_version(DATA, Version::RectMicro(7, 43), EcLevel::H)
+                .unwrap()
+                .metadata(),
+            Metadata::new(metadata::Version::new((7, Some(43))), Ecc::H)
         );
     }
 }

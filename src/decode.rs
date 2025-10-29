@@ -2,26 +2,26 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
+#[cfg(feature = "decode-from-svg")]
+use anyhow::Context;
+#[cfg(feature = "decode-from-svg")]
+use image::{DynamicImage, ImageFormat};
+#[cfg(feature = "decode-from-svg")]
+use resvg::{
+    tiny_skia::{Pixmap, Transform},
+    usvg::{Options, Tree},
+};
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
-use crate::{
-    cli::Ecc,
-    metadata::{Extractor, Metadata},
-};
+use crate::metadata::{self, Extractor, Metadata};
 
 type DecodedBytes = (MetaData, Vec<u8>);
 
 #[cfg(feature = "decode-from-svg")]
 fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
-    use anyhow::Context;
-    use resvg::{
-        tiny_skia::{Pixmap, Transform},
-        usvg,
-    };
+    let opt = Options::default();
 
-    let opt = usvg::Options::default();
-
-    let tree = usvg::Tree::from_data(data, &opt)?;
+    let tree = Tree::from_data(data, &opt)?;
 
     let pixmap_size = tree.size().to_int_size();
     let mut pixmap = Pixmap::new(pixmap_size.width(), pixmap_size.height())
@@ -32,10 +32,9 @@ fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
 
 /// Reads the image from SVG.
 #[cfg(feature = "decode-from-svg")]
-pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<image::DynamicImage> {
+pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<DynamicImage> {
     let image = svg_to_png(data.as_ref())?;
-    image::load_from_memory_with_format(&image, image::ImageFormat::Png)
-        .map_err(anyhow::Error::from)
+    image::load_from_memory_with_format(&image, ImageFormat::Png).map_err(anyhow::Error::from)
 }
 
 fn grid_as_bytes<G: BitGrid>(grid: &Grid<G>) -> Result<DecodedBytes, DeQRError> {
@@ -56,26 +55,21 @@ pub fn grids_as_bytes<G: BitGrid>(
 
 impl Extractor for MetaData {
     fn metadata(&self) -> Metadata {
-        let symbol_version = self.version.0;
-        let error_correction_level = match self.ecc_level {
-            0 => Ecc::M,
-            1 => Ecc::L,
-            2 => Ecc::H,
-            3 => Ecc::Q,
-            _ => panic!("invalid error correction level"),
-        };
+        let symbol_version = metadata::Version::new((self.version.0, None));
+        let error_correction_level = self.ecc_level.into();
         Metadata::new(symbol_version, error_correction_level)
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use rqrr::Version;
+
     use super::*;
+    use crate::cli::Ecc;
 
     #[test]
     fn validate_metadata_extraction() {
-        use rqrr::Version;
-
         assert_eq!(
             MetaData {
                 version: Version(1),
@@ -83,7 +77,7 @@ mod tests {
                 mask: 4
             }
             .metadata(),
-            Metadata::new(1, Ecc::L)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::L)
         );
         assert_eq!(
             MetaData {
@@ -92,7 +86,7 @@ mod tests {
                 mask: 3
             }
             .metadata(),
-            Metadata::new(1, Ecc::M)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::M)
         );
         assert_eq!(
             MetaData {
@@ -101,7 +95,7 @@ mod tests {
                 mask: 7
             }
             .metadata(),
-            Metadata::new(1, Ecc::Q)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::Q)
         );
         assert_eq!(
             MetaData {
@@ -110,7 +104,7 @@ mod tests {
                 mask: 4
             }
             .metadata(),
-            Metadata::new(1, Ecc::H)
+            Metadata::new(metadata::Version::new((1, None)), Ecc::H)
         );
     }
 }
