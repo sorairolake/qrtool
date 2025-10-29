@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
 [tool.bumpversion]
-current_version = "0.13.0"
+current_version = "0.13.1"
 
 [[tool.bumpversion.files]]
 glob = "docs/man/man1/*.1.adoc"

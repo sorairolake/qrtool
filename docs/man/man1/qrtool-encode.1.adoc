@@ -5,7 +5,7 @@
 = qrtool-encode(1)
 // Specify in UTC.
 :docdate: 2025-10-29
-:revnumber: 0.13.0
+:revnumber: 0.13.1
 :doctype: manpage
 :mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
@@ -28,8 +28,8 @@ qrtool-encode - encode input data in a QR code
 == DESCRIPTION
 
 This command encodes input data in a {qrcode-url}[QR code] and outputs it as a
-PNG image, SVG image, string, or other formats. By default, the result will be
-output to standard output.
+PNG image, a SVG image, a string, or other formats. By default, the result will
+be output to standard output.
 
 This command will read up to the first 7,090 bytes of the input data. The
 amount of data that can be represented by a QR code depends on the mode,

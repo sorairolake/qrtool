@@ -1166,7 +1166,7 @@ dependencies = [
 
 [[package]]
 name = "qrtool"
-version = "0.13.0"
+version = "0.13.1"
 dependencies = [
  "anstyle",
  "anstyle-lossy",

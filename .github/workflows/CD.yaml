@@ -95,6 +95,8 @@ jobs:
       - name: Create a package
         shell: bash
         env:
+          GZIP: "-9"
+          XZ_OPT: "-9"
           ZSTD_CLEVEL: 19
         run: |
           if [ "${{ matrix.os }}" != "windows-2025" ] ; then
@@ -114,8 +116,11 @@ jobs:
           fi
 
           if [ "${{ matrix.os }}" != "windows-2025" ] ; then
+            tar -cav --format=pax -f "${package}.tar.gz" "${package}"
+            tar -cav --format=pax -f "${package}.tar.xz" "${package}"
             tar -cav --format=pax -f "${package}.tar.zst" "${package}"
           else
+            7z a -bb -mx=9 "${package}.zip" "${package}"
             7z a -bb -mx=9 -m0=LZMA "${package}.7z" "${package}"
           fi
           rm -rv qrtool-*/
