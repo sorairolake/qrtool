@@ -72,7 +72,7 @@ pub struct Encode {
     /// The module size in pixels.
     ///
     /// If this option is not specified, the module size is 8 when the output
-    /// format is PNG or SVG, and 1 otherwise.
+    /// format is PNG, SVG, EPS, or PIC, and 1 otherwise.
     #[arg(short, long, value_name("NUMBER"))]
     pub size: Option<NonZeroU32>,
 
@@ -406,6 +406,9 @@ pub enum OutputFormat {
 
     /// Scalable Vector Graphics.
     Svg,
+
+    /// Encapsulated PostScript.
+    Eps,
 
     /// PIC markup language.
     Pic,

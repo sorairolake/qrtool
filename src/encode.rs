@@ -12,7 +12,7 @@ use image::{Rgba, RgbaImage};
 use qrcode2::{
     QrCode, QrResult, Version,
     bits::Bits,
-    render::{Renderer, pic, svg, unicode::Dense1x2},
+    render::{Renderer, eps, pic, svg, unicode::Dense1x2},
     types::QrError,
 };
 #[cfg(feature = "output-as-ansi")]
@@ -65,16 +65,15 @@ pub fn to_image(
 ) -> RgbaImage {
     let c = code.to_colors();
     let mut renderer = &mut Renderer::<Rgba<u8>>::new(&c, code.width(), code.height(), margin);
-    renderer = renderer
-        .dark_color(Rgba::from(colors.0.to_rgba8()))
-        .light_color(Rgba::from(colors.1.to_rgba8()));
+    let (foreground, background) = (colors.0.to_rgba8().into(), colors.1.to_rgba8().into());
+    renderer = renderer.dark_color(foreground).light_color(background);
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
     renderer.build()
 }
 
-/// Renders the QR code into an image.
+/// Renders the QR code into a SVG image.
 pub fn to_svg(
     code: &QrCode,
     margin: u32,
@@ -82,12 +81,38 @@ pub fn to_svg(
     module_size: Option<u32>,
 ) -> String {
     let c = code.to_colors();
-    let mut renderer =
-        &mut Renderer::<svg::Color<'_>>::new(&c, code.width(), code.height(), margin);
+    let mut renderer = &mut Renderer::new(&c, code.width(), code.height(), margin);
     let (foreground, background) = (colors.0.to_css_hex(), colors.1.to_css_hex());
-    renderer = renderer
-        .dark_color(svg::Color(&foreground))
-        .light_color(svg::Color(&background));
+    let (foreground, background) = (svg::Color(&foreground), svg::Color(&background));
+    renderer = renderer.dark_color(foreground).light_color(background);
+    if let Some(size) = module_size {
+        renderer = renderer.module_dimensions(size, size);
+    }
+    renderer.build() + "\n"
+}
+
+/// Renders the QR code into an EPS image.
+pub fn to_eps(
+    code: &QrCode,
+    margin: u32,
+    colors: &(Color, Color),
+    module_size: Option<u32>,
+) -> String {
+    let c = code.to_colors();
+    let mut renderer = &mut Renderer::new(&c, code.width(), code.height(), margin);
+    let (foreground, background) = (
+        eps::Color(
+            colors.0.to_array().map(f64::from)[..3]
+                .try_into()
+                .expect("invalid color"),
+        ),
+        eps::Color(
+            colors.1.to_array().map(f64::from)[..3]
+                .try_into()
+                .expect("invalid color"),
+        ),
+    );
+    renderer = renderer.dark_color(foreground).light_color(background);
     if let Some(size) = module_size {
         renderer = renderer.module_dimensions(size, size);
     }
@@ -203,7 +228,7 @@ pub fn to_ascii(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bo
 /// Renders the QR code into the terminal as UTF-8 string.
 pub fn to_unicode(code: &QrCode, margin: u32, module_size: Option<u32>, invert: bool) -> String {
     let c = code.to_colors();
-    let mut renderer = &mut Renderer::<Dense1x2>::new(&c, code.width(), code.height(), margin);
+    let mut renderer = &mut Renderer::new(&c, code.width(), code.height(), margin);
     if !invert {
         renderer = renderer
             .dark_color(Dense1x2::Light)

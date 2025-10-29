@@ -155,6 +155,20 @@ fn encode_to_svg_with_module_size() {
 }
 
 #[test]
+fn encode_to_eps_with_module_size() {
+    command::command()
+        .arg("encode")
+        .arg("-s")
+        .arg("3")
+        .arg("-t")
+        .arg("eps")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/module_size/3.eps")));
+}
+
+#[test]
 fn encode_to_pic_with_module_size() {
     command::command()
         .arg("encode")
@@ -532,6 +546,20 @@ fn encode_to_svg_with_margin() {
 }
 
 #[test]
+fn encode_to_eps_with_margin() {
+    command::command()
+        .arg("encode")
+        .arg("-m")
+        .arg("8")
+        .arg("-t")
+        .arg("eps")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/margin/8.eps")));
+}
+
+#[test]
 fn encode_to_pic_with_margin() {
     command::command()
         .arg("encode")
@@ -708,6 +736,18 @@ fn encode_to_svg() {
         .assert()
         .success()
         .stdout(predicate::eq(include_str!("data/encode/encode.svg")));
+}
+
+#[test]
+fn encode_to_eps() {
+    command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("eps")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/encode/encode.eps")));
 }
 
 #[test]
@@ -1792,6 +1832,22 @@ fn encode_to_svg_from_named_color() {
         .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
 }
 
+#[test]
+fn encode_to_eps_from_named_color() {
+    command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("eps")
+        .arg("--foreground")
+        .arg("brown")
+        .arg("--background")
+        .arg("lightslategray")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.eps")));
+}
+
 #[cfg(feature = "output-as-ansi")]
 #[test]
 fn encode_to_ansi_from_named_color() {
@@ -1993,6 +2049,34 @@ fn encode_to_svg_from_hex_color() {
         .assert()
         .success()
         .stdout(predicate::eq(include_str!("data/colored/rgb.svg")));
+}
+
+#[test]
+fn encode_to_eps_from_hex_color() {
+    command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("eps")
+        .arg("--foreground")
+        .arg("#a52a2a")
+        .arg("--background")
+        .arg("#778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.eps")));
+    command::command()
+        .arg("encode")
+        .arg("-t")
+        .arg("eps")
+        .arg("--foreground")
+        .arg("a52a2a")
+        .arg("--background")
+        .arg("778899")
+        .arg("QR code")
+        .assert()
+        .success()
+        .stdout(predicate::eq(include_str!("data/colored/rgb.eps")));
 }
 
 #[cfg(feature = "output-as-ansi")]

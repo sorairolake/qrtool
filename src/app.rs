@@ -123,6 +123,13 @@ pub fn run() -> anyhow::Result<()> {
                     module_size,
                 )
                 .into(),
+                OutputFormat::Eps => encode::to_eps(
+                    &code,
+                    margin,
+                    &(arg.foreground, arg.background),
+                    module_size,
+                )
+                .into(),
                 OutputFormat::Pic => encode::to_pic(&code, margin, module_size).into(),
                 #[cfg(feature = "output-as-ansi")]
                 OutputFormat::Ansi => encode::to_ansi(

@@ -73,6 +73,7 @@ The format is:
 
 - `png` (default)
 - `svg`
+- `eps` ([Encapsulated PostScript])
 - `pic` ([PIC] markup language)
 - `ansi` (to the terminal using 4-bit ANSI escape sequences)
 - `ansi256` (to the terminal using 8-bit ANSI escape sequences)
@@ -348,6 +349,7 @@ licensing information.
 [_openSUSE_]: https://www.opensuse.org/
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
+[Encapsulated PostScript]: https://en.wikipedia.org/wiki/Encapsulated_PostScript
 [PIC]: https://en.wikipedia.org/wiki/PIC_(markup_language)
 [CSS color string]: https://www.w3.org/TR/css-color-4/
 [BMP]: https://en.wikipedia.org/wiki/BMP_file_format

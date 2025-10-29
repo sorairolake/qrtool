@@ -19,6 +19,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 === Added
 
 * Add support for encoding rMQR code ({pull-request-url}/860[#860])
+* Add EPS rendering support ({pull-request-url}/861[#861])
 
 === Changed
 

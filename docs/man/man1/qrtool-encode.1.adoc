@@ -4,14 +4,18 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2025-10-28
+:docdate: 2025-10-29
 :revnumber: 0.12.1
 :doctype: manpage
 :mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
-:qrcode-url: https://www.qrcode.com/
+:qrcode-url: https://www.qrcode.com
 :css-color-url: https://www.w3.org/TR/css-color-4/
+:qrcode-codes: {qrcode-url}/codes
+:normal-qr-code-url: {qrcode-codes}/model12.html
+:micro-qr-code-url: {qrcode-codes}/microqr.html
+:rmqr-code-url: {qrcode-codes}/rmqr.html
 
 == NAME
 
@@ -24,8 +28,8 @@ qrtool-encode - encode input data in a QR code
 == DESCRIPTION
 
 This command encodes input data in a {qrcode-url}[QR code] and outputs it as a
-PNG image, SVG image or string. By default, the result will be output to
-standard output.
+PNG image, SVG image, string, or other formats. By default, the result will be
+output to standard output.
 
 This command will read up to the first 7,090 bytes of the input data. The
 amount of data that can be represented by a QR code depends on the mode,
@@ -85,7 +89,9 @@ be specified as a value for these options.
 |`oklch(59.41% 0.16 301.29)`, `oklch(61.9% 0.032 248.35 / 49.8%)`
 |===
 
-This command can also encode the input data in a Micro QR code and a rMQR code.
+In addition to a {normal-qr-code-url}[normal QR code], this command can also
+encode the input data in a {micro-qr-code-url}[Micro QR code] and a
+{rmqr-code-url}[rMQR code].
 
 == POSITIONAL ARGUMENTS
 
@@ -109,7 +115,7 @@ _STRING_::
 *-s*, *--size* _NUMBER_::
 
   The module size in pixels. If this option is not specified, the module size
-  is 8 when the output format is PNG or SVG, and 1 otherwise.
+  is 8 when the output format is PNG, SVG, EPS, or PIC, and 1 otherwise.
 
 *-l*, *--error-correction-level* _LEVEL_::
 
@@ -137,7 +143,7 @@ _STRING_::
 
   Alias for *-l*, *--error-correction-level*.
 
-*-v*, *--symbol-version* _NUMBER_...::
+*-v*, *--symbol-version* _NUMBER_ [_NUMBER_]::
 
   The version of the symbol. If this option is not specified, the minimum
   version required to store the data will be automatically chosen. For normal
@@ -148,7 +154,7 @@ _STRING_::
   If The type of QR code is other than rMQR code, the second _NUMBER_ is
   ignored.
 
-*--symversion* _NUMBER_...::
+*--symversion* _NUMBER_ [_NUMBER_]::
 
   Alias for *-v*, *--symbol-version*.
 
@@ -171,6 +177,10 @@ _STRING_::
     *svg*::::
 
       Scalable Vector Graphics.
+
+    *eps*::::
+
+      Encapsulated PostScript.
 
     *pic*::::
 
