@@ -20,9 +20,9 @@ anstyle = { version = "1.0.13", default-features = false, optional = true }
 anstyle-lossy = { version = "1.1.4", optional = true }
 anstyle-yansi = { version = "2.0.3", optional = true }
 anyhow = "1.0.100"
-clap = { version = "4.5.50", features = ["derive", "wrap_help"] }
-clap_complete = "4.5.59"
-clap_complete_nushell = "4.5.9"
+clap = { version = "4.5.51", features = ["derive", "wrap_help"] }
+clap_complete = "4.5.60"
+clap_complete_nushell = "4.5.10"
 csscolorparser = "0.7.2"
 image = { version = "0.25.8", default-features = false, features = [
   "png",
@@ -33,7 +33,7 @@ oxipng = { version = "9.1.5", default-features = false, features = [
   "parallel",
   "zopfli",
 ], optional = true }
-qrcode2 = "0.16.1"
+qrcode2 = "0.17.0"
 resvg = { version = "0.45.1", default-features = false, optional = true }
 rqrr = "0.10.0"
 sysexits = "0.10.0"
@@ -41,7 +41,7 @@ xbm = { version = "0.3.0", optional = true }
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
-assert_cmd = "2.1.0"
+assert_cmd = "2.1.1"
 predicates = "3.1.3"
 
 [features]

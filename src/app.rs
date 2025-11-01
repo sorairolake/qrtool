@@ -84,9 +84,7 @@ pub fn run() -> anyhow::Result<()> {
                 eprintln!("Level: {:?}", metadata.error_correction_level());
             }
 
-            let margin = arg
-                .margin
-                .unwrap_or_else(|| if code.version().is_normal() { 4 } else { 2 });
+            let margin = arg.margin;
             let module_size = arg.size.map(NonZeroU32::get);
             let is_invert = matches!(
                 arg.output_format,
