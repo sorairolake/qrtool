@@ -20,7 +20,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
       - name: Setup Tombi
-        uses: tombi-toml/setup-tombi@v1.0.0
+        uses: tombi-toml/setup-tombi@v1.0.1
       - name: Run formatter in check mode
         run: tombi format --check
       - name: Run linter
