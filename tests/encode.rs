@@ -433,22 +433,87 @@ fn encode_with_invalid_error_correction_level() {
 
 #[test]
 fn encode_with_symbol_version() {
-    let output = command::command()
-        .arg("encode")
-        .arg("-v")
-        .arg("40")
-        .arg("--")
-        .arg("QR code")
-        .output()
-        .unwrap();
-    assert_eq!(
-        image::load_from_memory(&output.stdout)
-            .map(DynamicImage::into_luma8)
-            .map(DynamicImage::from)
-            .unwrap(),
-        image::open("tests/data/symbol_version/40.png").unwrap()
-    );
-    assert!(output.status.success());
+    {
+        let output = command::command()
+            .arg("encode")
+            .arg("-v")
+            .arg("40")
+            .arg("--")
+            .arg("QR code")
+            .output()
+            .unwrap();
+        assert_eq!(
+            image::load_from_memory(&output.stdout)
+                .map(DynamicImage::into_luma8)
+                .map(DynamicImage::from)
+                .unwrap(),
+            image::open("tests/data/symbol_version/40.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+    {
+        let output = command::command()
+            .arg("encode")
+            .arg("-v")
+            .arg("17")
+            .arg("139")
+            .arg("--variant")
+            .arg("rmqr")
+            .arg("QR code")
+            .output()
+            .unwrap();
+        assert_eq!(
+            image::load_from_memory(&output.stdout)
+                .map(DynamicImage::into_luma8)
+                .map(DynamicImage::from)
+                .unwrap(),
+            image::open("tests/data/symbol_version/r17x139.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+}
+
+#[test]
+fn encode_with_symbol_version_from_file() {
+    {
+        let output = command::command()
+            .arg("encode")
+            .arg("-r")
+            .arg("data/symbol_version/40_from_file.txt")
+            .arg("-v")
+            .arg("40")
+            .output()
+            .unwrap();
+        assert_eq!(
+            image::load_from_memory(&output.stdout)
+                .map(DynamicImage::into_luma8)
+                .map(DynamicImage::from)
+                .unwrap(),
+            image::open("tests/data/symbol_version/40_from_file.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+    {
+        let output = command::command()
+            .arg("encode")
+            .arg("-r")
+            .arg("data/symbol_version/r17x139_from_file.txt")
+            .arg("-v")
+            .arg("17")
+            .arg("139")
+            .arg("--variant")
+            .arg("rmqr")
+            .output()
+            .unwrap();
+        assert_eq!(
+            image::load_from_memory(&output.stdout)
+                .map(DynamicImage::into_luma8)
+                .map(DynamicImage::from)
+                .unwrap(),
+            image::open("tests/data/symbol_version/r17x139_from_file.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
 }
 
 #[test]
