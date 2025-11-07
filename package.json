@@ -2,7 +2,7 @@
   "private": true,
   "name": "qrtool",
   "version": "1.0.0",
-  "description": "An utility for encoding or decoding QR code",
+  "description": "A command-line utility for encoding and decoding QR code",
   "license": "CC-BY-4.0",
   "author": "Shun Sakai <sorairolake@protonmail.ch>",
   "homepage": "https://github.com/sorairolake/qrtool#readme",
