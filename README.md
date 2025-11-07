@@ -29,12 +29,13 @@ cargo install qrtool
 
 [![Packaging status][repology-badge]][repology-versions]
 
-| OS             | Package manager | Command                      |
-| -------------- | --------------- | ---------------------------- |
-| _Any_          | [Homebrew]      | `brew install qrtool`        |
-| _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool` |
-| [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`           |
-| [_openSUSE_]   | Zypper          | `zypper install qrtool`      |
+| OS             | Package manager | Command                                     |
+| -------------- | --------------- | ------------------------------------------- |
+| _Any_          | [Homebrew]      | `brew install qrtool`                       |
+| _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool`                |
+| [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`                          |
+| [_openSUSE_]   | Zypper          | `zypper install qrtool`                     |
+| _Windows_      | [WinGet]        | `winget install --id sorairolake.qrtool -e` |
 
 ### From binaries
 
@@ -347,6 +348,7 @@ licensing information.
 [_Arch Linux_]: https://archlinux.org/
 [Pacman]: https://wiki.archlinux.org/title/pacman
 [_openSUSE_]: https://www.opensuse.org/
+[WinGet]: https://learn.microsoft.com/en-us/windows/package-manager/winget/
 [release page]: https://github.com/sorairolake/qrtool/releases
 [BUILD.adoc]: BUILD.adoc
 [Encapsulated PostScript]: https://en.wikipedia.org/wiki/Encapsulated_PostScript
