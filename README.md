@@ -13,7 +13,7 @@ SPDX-License-Identifier: CC-BY-4.0
 ![License][license-badge]
 [![REUSE status][reuse-badge]][reuse-url]
 
-**qrtool** is a command-line utility for encoding or decoding QR code.
+**qrtool** is a command-line utility for encoding and decoding QR code.
 
 ![Demo animation](assets/demo.gif)
 

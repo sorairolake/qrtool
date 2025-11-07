@@ -4,7 +4,7 @@
 
 = qrtool(1)
 // Specify in UTC.
-:docdate: 2025-05-26
+:docdate: 2025-11-07
 :revnumber: 0.13.1
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -14,7 +14,7 @@ ifndef::site-gen-antora[:includedir: ./include]
 
 == NAME
 
-qrtool - an utility for encoding or decoding QR code
+qrtool - a command-line utility for encoding and decoding QR code
 
 == SYNOPSIS
 
@@ -22,7 +22,7 @@ qrtool - an utility for encoding or decoding QR code
 
 == DESCRIPTION
 
-*{manname}* is a command-line utility for encoding or decoding
+*{manname}* is a command-line utility for encoding and decoding
 {qrcode-url}[QR code].
 
 == COMMANDS
