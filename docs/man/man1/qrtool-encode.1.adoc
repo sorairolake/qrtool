@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2025-10-29
+:docdate: 2025-11-08
 :revnumber: 0.13.1
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -360,15 +360,15 @@ Encode the given file and output to the specified image:{blank}::
 
   $ *qrtool encode -o output.png -r go.mod*
 
-Encode to a SVG image:{blank}::
+Encode in a QR code and output as a SVG image:{blank}::
 
   $ *qrtool encode -t svg "QR code" > output.svg*
 
-Encode to a Micro QR code:{blank}::
+Encode in a Micro QR code:{blank}::
 
   $ *qrtool encode --variant micro "QR code" > output.png*
 
-Encode with the specified colors:{blank}::
+Encode in a QR code with the specified colors:{blank}::
 
   $ *qrtool encode -o output.png --foreground brown --background lightslategray "QR code"*
 

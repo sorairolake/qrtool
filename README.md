@@ -70,7 +70,7 @@ QR code
 
 Use `-t` option to change the format of the generated image.
 
-The format is:
+List of supported formats:
 
 - `png` (default)
 - `svg`
@@ -84,7 +84,7 @@ The format is:
 - `unicode` (to the terminal as UTF-8 string)
 - `unicode-invert`
 
-Encode to a SVG image:
+Encode in a QR code and output as a SVG image:
 
 ```sh
 qrtool encode -o output.svg -t svg "QR code"
@@ -94,25 +94,18 @@ Generate this image:
 
 ![Output](tests/data/decode/decode.svg)
 
-Generate a PDF file from the PIC code:
-
-```sh
-qrtool encode -t pic "QR code" \
-    | awk 'BEGIN { print ".vs 0\n.po 0\n.PS" } END { print "scale = 25.4 * 3\n.PE" } { print }' \
-    | groff -Tpdf -p -P-p3i,3i \
-    > output.pdf
-```
-
 Output to the terminal as UTF-8 string:
 
 ```sh
 qrtool encode -t unicode "QR code"
 ```
 
-### Micro QR code or rMQR code generation
+### Types of QR code
 
 Use `--variant` option to change the variant of the generated QR code. The
 variant is `normal` (default), `micro` (Micro QR code), or `rmqr` (rMQR code).
+
+Encode a string in a Micro QR code:
 
 ```sh
 qrtool encode --variant micro "QR code" > output.png
@@ -121,6 +114,8 @@ qrtool encode --variant micro "QR code" > output.png
 Generate this image:
 
 ![Output](tests/data/variant/micro.png)
+
+Encode a string in a rMQR code:
 
 ```sh
 qrtool encode --variant rmqr "QR code" > output.png
@@ -138,6 +133,8 @@ background colors of the generated image. These options takes a
 foreground color is black and the background color is white of CSS's named
 colors.
 
+Encode in a QR code with the specified colors:
+
 ```sh
 qrtool encode --foreground brown --background lightslategray "QR code" > output.png
 ```
@@ -146,20 +143,16 @@ Generate this image:
 
 ![Output](tests/data/colored/rgb.png)
 
-Colored output is also available when the output format is any ANSI escape
-sequences:
-
-```sh
-qrtool encode -t ansi-true-color --foreground brown --background lightslategray "QR code"
-```
-
-Note that lossy conversion may be performed depending on the color space
-supported by the method to specify a color, the color depth supported by the
-output format, etc.
+> [!CAUTION]
+> Note that lossy conversion may be performed depending on the color space
+> supported by the method to specify a color, the color depth supported by the
+> output format, etc.
 
 ### Supported input image formats
 
-`qrtool decode` supports decoding a QR code from the following image formats:
+`qrtool decode` supports decoding a QR code from various image formats.
+
+List of supported image formats:
 
 - [BMP]
 - [DDS]
@@ -248,46 +241,47 @@ Optimize the output SVG image:
 qrtool encode -t svg "QR code" | svgcleaner -c - > output.svg
 ```
 
-If the `optimize-output-png` feature is enabled, you can also use
-`--optimize-png` option and `--zopfli` option of this command to optimize
-output PNG image.
+> [!TIP]
+> If the `optimize-output-png` feature is enabled, you can also use
+> `--optimize-png` option and `--zopfli` option of this command to optimize
+> output PNG image.
 
 #### Reading and writing unsupported image formats
 
 If you want to save the encoded image in an image format other than PNG or SVG,
 or decode an image in an unsupported image format, convert it using a converter
-such as [ImageMagick].
+such as [ImageMagick] or [Inkscape].
 
 ##### Raster formats
 
-Read `Cargo.toml` from standard input and save the encoded result as a XPM
-image:
+Encode in a QR code and output as a JPEG 2000 image:
 
 ```sh
-cat Cargo.toml | qrtool encode | magick png:- output.xpm
+echo 'print("Hello, world!")' > main.py
+cat main.py | qrtool encode | magick png:- output.jp2
 ```
 
-Decode this image and print the result using `bat`:
+Decode a QR code from this image:
 
 ```sh
-magick output.xpm png:- | qrtool decode | bat -l toml
+$ magick output.jp2 png:- | qrtool decode | bat -pp -l py
+print("Hello, world!")
 ```
 
 ##### Vector formats
 
-Read a string from standard input and save the encoded result as an EPS image:
+Encode in a QR code and output as a PDF file:
 
 ```sh
-echo "The quick brown fox jumps over the lazy dog." \
-    | qrtool encode -t svg \
-    | inkscape -p -o output.eps
+echo 'puts "Hello, world!"' > main.rb
+cat main.rb | qrtool encode -t svg | inkscape -p -o output.pdf
 ```
 
-Decode this image and print the result to standard output:
+Decode a QR code from this file:
 
 ```sh
-$ inkscape -o - --export-type svg output.eps | qrtool decode
-The quick brown fox jumps over the lazy dog.
+$ inkscape -o - --export-type svg output.pdf | qrtool decode
+puts "Hello, world!"
 ```
 
 ## Command-line options
@@ -373,6 +367,7 @@ licensing information.
 [`oxipng`]: https://github.com/shssoichiro/oxipng
 [`svgcleaner`]: https://github.com/RazrFalcon/svgcleaner
 [ImageMagick]: https://imagemagick.org/
+[Inkscape]: https://inkscape.org/
 [`qrtool(1)`]: docs/man/man1/qrtool.1.adoc
 [`qrtool-encode(1)`]: docs/man/man1/qrtool-encode.1.adoc
 [`qrtool-decode(1)`]: docs/man/man1/qrtool-decode.1.adoc
