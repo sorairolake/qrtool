@@ -23,7 +23,7 @@ anyhow = "1.0.100"
 clap = { version = "4.5.51", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.60"
 clap_complete_nushell = "4.5.10"
-csscolorparser = "0.7.2"
+csscolorparser = "0.8.0"
 image = { version = "0.25.8", default-features = false, features = [
   "png",
   "rayon",
@@ -33,7 +33,7 @@ oxipng = { version = "9.1.5", default-features = false, features = [
   "parallel",
   "zopfli",
 ], optional = true }
-qrcode2 = "0.17.0"
+qrcode2 = "0.17.1"
 resvg = { version = "0.45.1", default-features = false, optional = true }
 rqrr = "0.10.0"
 sysexits = "0.10.0"

@@ -2516,7 +2516,7 @@ fn encode_from_invalid_rgb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgb(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid rgb format"));
     command::command()
         .arg("encode")
         .arg("--foreground")
@@ -2528,7 +2528,7 @@ fn encode_from_invalid_rgb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgba(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid rgb format"));
 }
 
 #[test]
@@ -2544,7 +2544,7 @@ fn encode_from_invalid_rgb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgb(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid rgb format"));
     command::command()
         .arg("encode")
         .arg("--background")
@@ -2556,7 +2556,7 @@ fn encode_from_invalid_rgb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgba(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid rgb format"));
 }
 
 #[test]
@@ -2686,7 +2686,7 @@ fn encode_from_invalid_hsl_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsl(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hsl format"));
     command::command()
         .arg("encode")
         .arg("--foreground")
@@ -2698,7 +2698,7 @@ fn encode_from_invalid_hsl_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsla(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hsl format"));
 }
 
 #[test]
@@ -2714,7 +2714,7 @@ fn encode_from_invalid_hsl_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsl(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hsl format"));
     command::command()
         .arg("encode")
         .arg("--background")
@@ -2726,7 +2726,7 @@ fn encode_from_invalid_hsl_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsla(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hsl format"));
 }
 
 #[test]
@@ -2781,7 +2781,7 @@ fn encode_from_invalid_hwb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hwb(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hwb format"));
 }
 
 #[test]
@@ -2797,7 +2797,7 @@ fn encode_from_invalid_hwb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hwb(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hwb format"));
 }
 
 #[test]
@@ -2852,7 +2852,7 @@ fn encode_from_invalid_oklab_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklab(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid oklab format"));
 }
 
 #[test]
@@ -2868,7 +2868,7 @@ fn encode_from_invalid_oklab_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklab(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid oklab format"));
 }
 
 #[test]
@@ -2923,7 +2923,7 @@ fn encode_from_invalid_oklch_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklch(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid oklch format"));
 }
 
 #[test]
@@ -2939,7 +2939,7 @@ fn encode_from_invalid_oklch_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklch(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid oklch format"));
 }
 
 #[test]
