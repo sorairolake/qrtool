@@ -20,6 +20,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 * Add WinGet as an installation method ({pull-request-url}/869[#869])
 
+=== Changed
+
+* Bump MSRV to 1.88.0 ({pull-request-url}/883[#883])
+
 == {compare-url}/v0.13.0\...v0.13.1[0.13.1] - 2025-10-29
 
 === Added

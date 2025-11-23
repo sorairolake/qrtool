@@ -6,7 +6,7 @@
 name = "qrtool"
 version = "0.13.1"
 edition = "2024"
-rust-version = "1.85.0"
+rust-version = "1.88.0"
 description = "A command-line utility for encoding and decoding QR code"
 homepage = "https://sorairolake.github.io/qrtool/"
 repository = "https://github.com/sorairolake/qrtool"

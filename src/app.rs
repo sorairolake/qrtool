@@ -171,16 +171,17 @@ pub fn run() -> anyhow::Result<()> {
             }
         }
         Command::Decode(arg) => {
-            let input = match arg.input {
-                Some(ref path) if path.as_os_str() != "-" => fs::read(path)
-                    .with_context(|| format!("could not read data from {}", path.display()))?,
-                _ => {
-                    let mut buf = Vec::new();
-                    io::stdin()
-                        .read_to_end(&mut buf)
-                        .context("could not read data from standard input")?;
-                    buf
-                }
+            let input = if let Some(ref path) = arg.input
+                && path.as_os_str() != "-"
+            {
+                fs::read(path)
+                    .with_context(|| format!("could not read data from {}", path.display()))?
+            } else {
+                let mut buf = Vec::new();
+                io::stdin()
+                    .read_to_end(&mut buf)
+                    .context("could not read data from standard input")?;
+                buf
             };
             let input_format = arg.input_format;
             #[cfg(feature = "decode-from-svg")]
