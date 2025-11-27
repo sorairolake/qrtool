@@ -27,7 +27,7 @@ Please see the {commit-messages-guide-url}[Commit messages guide] and the
 == Submitting a pull request
 
 . Create a working branch from the `develop` branch. The branch name should be
-  something other than `develop` or `master`.
+  something other than `develop` or `main`.
 . Create your patch. If your change is a feature or a bugfix, please add a test
   case if possible. Note that the change must pass the CI.
 . Please update the copyright information if possible. This project is

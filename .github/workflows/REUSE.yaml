@@ -9,7 +9,7 @@ on:
   push:
     branches:
       - "develop"
-      - "master"
+      - "main"
 
 jobs:
   reuse:
