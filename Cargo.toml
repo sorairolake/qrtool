@@ -23,7 +23,7 @@ anyhow = "1.0.100"
 clap = { version = "4.5.53", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.61"
 clap_complete_nushell = "4.5.10"
-csscolorparser = "0.8.0"
+csscolorparser = "0.8.1"
 image = { version = "0.25.9", default-features = false, features = [
   "png",
   "rayon",
