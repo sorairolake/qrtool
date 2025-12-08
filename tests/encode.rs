@@ -1330,13 +1330,13 @@ fn encode_to_optimized_png_using_zopfli_with_invalid_value() {
             .arg("png")
             .arg("--optimize-png")
             .arg("--zopfli")
-            .arg("256")
+            .arg("18446744073709551616")
             .arg("QR code")
             .assert()
             .failure()
             .code(2)
             .stderr(predicate::str::contains(
-                "invalid value '256' for '--zopfli [<ITERATION>]'",
+                "invalid value '18446744073709551616' for '--zopfli [<ITERATION>]'",
             ))
             .stderr(predicate::str::contains(
                 "number too large to fit in target type",

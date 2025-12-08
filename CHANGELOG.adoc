@@ -23,6 +23,7 @@ project adheres to https://semver.org/[Semantic Versioning].
 === Changed
 
 * Bump MSRV to 1.88.0 ({pull-request-url}/883[#883])
+* Allow iterations higher than 255 in `--zopfli` ({pull-request-url}/894[#894])
 
 == {compare-url}/v0.13.0\...v0.13.1[0.13.1] - 2025-10-29
 

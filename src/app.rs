@@ -16,7 +16,7 @@ use clap::Parser;
 use image::DynamicImage;
 use image::{ImageFormat, imageops};
 #[cfg(feature = "optimize-output-png")]
-use oxipng::{Deflaters, Options};
+use oxipng::{Deflater, Options, ZopfliOptions};
 use qrcode2::{QrCode, bits::Bits};
 use rqrr::PreparedImage;
 #[cfg(feature = "decode-from-xbm")]
@@ -106,8 +106,12 @@ pub fn run() -> anyhow::Result<()> {
                     #[cfg(feature = "optimize-output-png")]
                     if let Some(level) = arg.optimize_png {
                         let mut optimize_opt = Options::from_preset(level.into());
-                        if let Some(iterations) = arg.zopfli {
-                            optimize_opt.deflate = Deflaters::Zopfli { iterations };
+                        if let Some(iteration_count) = arg.zopfli {
+                            let zopfli_options = ZopfliOptions {
+                                iteration_count,
+                                ..Default::default()
+                            };
+                            optimize_opt.deflater = Deflater::Zopfli(zopfli_options);
                         }
                         buf = oxipng::optimize_from_memory(&buf, &optimize_opt)
                             .context("could not optimize the image")?;
