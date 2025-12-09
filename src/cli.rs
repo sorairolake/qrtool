@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
 #[cfg(feature = "optimize-output-png")]
-use std::num::NonZeroU8;
+use std::num::NonZeroU64;
 use std::{
     io::{self, Write},
     num::NonZeroU32,
@@ -153,7 +153,7 @@ pub struct Encode {
         value_name("ITERATION"),
         default_missing_value("15")
     )]
-    pub zopfli: Option<NonZeroU8>,
+    pub zopfli: Option<NonZeroU64>,
 
     /// The mode of the output.
     ///
