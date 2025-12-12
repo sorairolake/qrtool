@@ -12,6 +12,7 @@ on:
   push:
     paths:
       - .github/workflows/*.yaml
+  workflow_dispatch:
 
 permissions:
   contents: read
