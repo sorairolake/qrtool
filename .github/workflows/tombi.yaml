@@ -11,6 +11,7 @@ on:
   push:
     paths:
       - "**.toml"
+  workflow_dispatch:
 
 jobs:
   tombi:
