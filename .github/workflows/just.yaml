@@ -11,6 +11,7 @@ on:
   push:
     paths:
       - justfile
+  workflow_dispatch:
 
 jobs:
   just:
