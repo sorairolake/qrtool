@@ -138,7 +138,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
       - name: Calculate checksums
         run: |
           mv qrtool-*/* .
