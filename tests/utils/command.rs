@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
-use assert_cmd::Command;
+use assert_cmd::{Command, cargo::cargo_bin_cmd};
 
 pub fn command() -> Command {
-    let mut command = Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
+    let mut command = cargo_bin_cmd!();
     command.current_dir("tests");
     command
 }

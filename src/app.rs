@@ -16,7 +16,7 @@ use clap::Parser;
 use image::DynamicImage;
 use image::{ImageFormat, imageops};
 #[cfg(feature = "optimize-output-png")]
-use oxipng::{Deflaters, Options};
+use oxipng::{Deflater, Options, ZopfliOptions};
 use qrcode2::{QrCode, bits::Bits};
 use rqrr::PreparedImage;
 #[cfg(feature = "decode-from-xbm")]
@@ -84,9 +84,7 @@ pub fn run() -> anyhow::Result<()> {
                 eprintln!("Level: {:?}", metadata.error_correction_level());
             }
 
-            let margin = arg
-                .margin
-                .unwrap_or_else(|| if code.version().is_normal() { 4 } else { 2 });
+            let margin = arg.margin;
             let module_size = arg.size.map(NonZeroU32::get);
             let is_invert = matches!(
                 arg.output_format,
@@ -108,8 +106,12 @@ pub fn run() -> anyhow::Result<()> {
                     #[cfg(feature = "optimize-output-png")]
                     if let Some(level) = arg.optimize_png {
                         let mut optimize_opt = Options::from_preset(level.into());
-                        if let Some(iterations) = arg.zopfli {
-                            optimize_opt.deflate = Deflaters::Zopfli { iterations };
+                        if let Some(iteration_count) = arg.zopfli {
+                            let zopfli_options = ZopfliOptions {
+                                iteration_count,
+                                ..Default::default()
+                            };
+                            optimize_opt.deflater = Deflater::Zopfli(zopfli_options);
                         }
                         buf = oxipng::optimize_from_memory(&buf, &optimize_opt)
                             .context("could not optimize the image")?;
@@ -173,16 +175,17 @@ pub fn run() -> anyhow::Result<()> {
             }
         }
         Command::Decode(arg) => {
-            let input = match arg.input {
-                Some(ref path) if path.as_os_str() != "-" => fs::read(path)
-                    .with_context(|| format!("could not read data from {}", path.display()))?,
-                _ => {
-                    let mut buf = Vec::new();
-                    io::stdin()
-                        .read_to_end(&mut buf)
-                        .context("could not read data from standard input")?;
-                    buf
-                }
+            let input = if let Some(ref path) = arg.input
+                && path.as_os_str() != "-"
+            {
+                fs::read(path)
+                    .with_context(|| format!("could not read data from {}", path.display()))?
+            } else {
+                let mut buf = Vec::new();
+                io::stdin()
+                    .read_to_end(&mut buf)
+                    .context("could not read data from standard input")?;
+                buf
             };
             let input_format = arg.input_format;
             #[cfg(feature = "decode-from-svg")]

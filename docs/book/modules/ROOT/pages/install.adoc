@@ -12,6 +12,7 @@
 :archlinux-url: https://archlinux.org/
 :pacman-url: https://wiki.archlinux.org/title/pacman
 :opensuse-url: https://www.opensuse.org/
+:winget-url: https://learn.microsoft.com/en-us/windows/package-manager/winget/
 :release-page-url: {github-url}/sorairolake/qrtool/releases
 
 == From source
@@ -43,6 +44,10 @@ image::{repology-badge}[Packaging status,link={repology-versions}]
 |{opensuse-url}[_openSUSE_]
 |Zypper
 |`zypper install qrtool`
+
+|_Windows_
+|{winget-url}[WinGet]
+|`winget install --id sorairolake.qrtool -e`
 |===
 
 == From binaries

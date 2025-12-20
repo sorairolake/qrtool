@@ -23,7 +23,6 @@ impl Version {
 }
 
 impl fmt::Display for Version {
-    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let version = self.to_raw();
         if let Some(width) = version.1 {

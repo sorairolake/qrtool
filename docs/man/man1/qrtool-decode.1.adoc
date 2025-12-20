@@ -4,13 +4,13 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2025-06-07
-:revnumber: 0.13.1
+:docdate: 2025-11-28
+:revnumber: 0.13.2
 :doctype: manpage
 :mansource: qrtool {revnumber}
 :manmanual: General Commands Manual
 ifndef::site-gen-antora[:includedir: ./include]
-:qrcode-url: https://www.qrcode.com/
+:qrcode-url: https://www.qrcode.com
 :enwp-url: https://en.wikipedia.org
 :enwp-article-url: {enwp-url}/wiki
 :w3-url: https://www.w3.org
@@ -30,6 +30,10 @@ ifndef::site-gen-antora[:includedir: ./include]
 :tiff-url: {enwp-article-url}/TIFF
 :webp-url: https://developers.google.com/speed/webp/
 :xbm-url: {enwp-article-url}/X_BitMap
+:qrcode-codes: {qrcode-url}/codes
+:normal-qr-code-url: {qrcode-codes}/model12.html
+:micro-qr-code-url: {qrcode-codes}/microqr.html
+:rmqr-code-url: {qrcode-codes}/rmqr.html
 :image-crates-url: https://crates.io/crates/image
 
 == NAME
@@ -65,6 +69,10 @@ vector image. By default, the result will be output to standard output.
 
 Use *-t* option to specify the image format. If this option is not specified,
 the image format is determined based on the extension or the magic number.
+
+CAUTION: This command only supports decoding a
+{normal-qr-code-url}[normal QR code], and does not support decoding a
+{micro-qr-code-url}[Micro QR code] and a {rmqr-code-url}[rMQR code].
 
 == POSITIONAL ARGUMENTS
 

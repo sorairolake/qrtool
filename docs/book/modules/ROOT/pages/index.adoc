@@ -20,6 +20,6 @@ image:{msrv-badge}[MSRV]
 image:{license-badge}[License]
 image:{reuse-badge}[REUSE status,link={reuse-url}]
 
-*qrtool* is a command-line utility for encoding or decoding QR code.
+*qrtool* is a command-line utility for encoding and decoding QR code.
 
 image::demo.gif[Demo animation]

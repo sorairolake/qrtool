@@ -9,9 +9,10 @@ on:
   push:
     branches:
       - "develop"
-      - "master"
+      - "main"
   schedule:
     - cron: "0 0 * * 0"
+  workflow_dispatch:
 
 jobs:
   check:
@@ -37,19 +38,19 @@ jobs:
             os: windows-2025
             target: x86_64-pc-windows-msvc
           - toolchain-alias: msrv
-            toolchain: 1.85.0
+            toolchain: 1.88.0
           - toolchain-alias: stable
             toolchain: stable
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
           targets: ${{ matrix.target }}
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.1
+        uses: Swatinem/rust-cache@v2.8.2
         with:
           key: ${{ matrix.target }}
       - name: Check a package
@@ -80,7 +81,7 @@ jobs:
             os: windows-2025
             target: x86_64-pc-windows-msvc
           - toolchain-alias: msrv
-            toolchain: 1.85.0
+            toolchain: 1.88.0
           - toolchain-alias: stable
             toolchain: stable
     steps:
@@ -90,14 +91,14 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}
           targets: ${{ matrix.target }}
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.1
+        uses: Swatinem/rust-cache@v2.8.2
         with:
           key: ${{ matrix.target }}
       - name: Run tests
@@ -110,14 +111,14 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: nightly
           components: rustfmt
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.1
+        uses: Swatinem/rust-cache@v2.8.2
       - name: Run formatter in check mode
         run: cargo fmt --check
 
@@ -126,14 +127,14 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: stable
           components: clippy
       - name: Cache build artifacts
-        uses: Swatinem/rust-cache@v2.8.1
+        uses: Swatinem/rust-cache@v2.8.2
       - name: Run linter
         run: cargo clippy -- -D warnings
       - name: Run linter (no default features)
@@ -144,7 +145,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Setup Node.js environment
         uses: actions/setup-node@v6
         with:

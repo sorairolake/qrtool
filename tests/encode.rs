@@ -433,22 +433,87 @@ fn encode_with_invalid_error_correction_level() {
 
 #[test]
 fn encode_with_symbol_version() {
-    let output = command::command()
-        .arg("encode")
-        .arg("-v")
-        .arg("40")
-        .arg("--")
-        .arg("QR code")
-        .output()
-        .unwrap();
-    assert_eq!(
-        image::load_from_memory(&output.stdout)
-            .map(DynamicImage::into_luma8)
-            .map(DynamicImage::from)
-            .unwrap(),
-        image::open("tests/data/symbol_version/40.png").unwrap()
-    );
-    assert!(output.status.success());
+    {
+        let output = command::command()
+            .arg("encode")
+            .arg("-v")
+            .arg("40")
+            .arg("--")
+            .arg("QR code")
+            .output()
+            .unwrap();
+        assert_eq!(
+            image::load_from_memory(&output.stdout)
+                .map(DynamicImage::into_luma8)
+                .map(DynamicImage::from)
+                .unwrap(),
+            image::open("tests/data/symbol_version/40.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+    {
+        let output = command::command()
+            .arg("encode")
+            .arg("-v")
+            .arg("17")
+            .arg("139")
+            .arg("--variant")
+            .arg("rmqr")
+            .arg("QR code")
+            .output()
+            .unwrap();
+        assert_eq!(
+            image::load_from_memory(&output.stdout)
+                .map(DynamicImage::into_luma8)
+                .map(DynamicImage::from)
+                .unwrap(),
+            image::open("tests/data/symbol_version/r17x139.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+}
+
+#[test]
+fn encode_with_symbol_version_from_file() {
+    {
+        let output = command::command()
+            .arg("encode")
+            .arg("-r")
+            .arg("data/symbol_version/40_from_file.txt")
+            .arg("-v")
+            .arg("40")
+            .output()
+            .unwrap();
+        assert_eq!(
+            image::load_from_memory(&output.stdout)
+                .map(DynamicImage::into_luma8)
+                .map(DynamicImage::from)
+                .unwrap(),
+            image::open("tests/data/symbol_version/40_from_file.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
+    {
+        let output = command::command()
+            .arg("encode")
+            .arg("-r")
+            .arg("data/symbol_version/r17x139_from_file.txt")
+            .arg("-v")
+            .arg("17")
+            .arg("139")
+            .arg("--variant")
+            .arg("rmqr")
+            .output()
+            .unwrap();
+        assert_eq!(
+            image::load_from_memory(&output.stdout)
+                .map(DynamicImage::into_luma8)
+                .map(DynamicImage::from)
+                .unwrap(),
+            image::open("tests/data/symbol_version/r17x139_from_file.png").unwrap()
+        );
+        assert!(output.status.success());
+    }
 }
 
 #[test]
@@ -1265,13 +1330,13 @@ fn encode_to_optimized_png_using_zopfli_with_invalid_value() {
             .arg("png")
             .arg("--optimize-png")
             .arg("--zopfli")
-            .arg("256")
+            .arg("18446744073709551616")
             .arg("QR code")
             .assert()
             .failure()
             .code(2)
             .stderr(predicate::str::contains(
-                "invalid value '256' for '--zopfli [<ITERATION>]'",
+                "invalid value '18446744073709551616' for '--zopfli [<ITERATION>]'",
             ))
             .stderr(predicate::str::contains(
                 "number too large to fit in target type",
@@ -2451,7 +2516,7 @@ fn encode_from_invalid_rgb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgb(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid rgb format"));
     command::command()
         .arg("encode")
         .arg("--foreground")
@@ -2463,7 +2528,7 @@ fn encode_from_invalid_rgb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgba(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid rgb format"));
 }
 
 #[test]
@@ -2479,7 +2544,7 @@ fn encode_from_invalid_rgb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgb(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid rgb format"));
     command::command()
         .arg("encode")
         .arg("--background")
@@ -2491,7 +2556,7 @@ fn encode_from_invalid_rgb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'rgba(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid rgb format"));
 }
 
 #[test]
@@ -2621,7 +2686,7 @@ fn encode_from_invalid_hsl_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsl(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hsl format"));
     command::command()
         .arg("encode")
         .arg("--foreground")
@@ -2633,7 +2698,7 @@ fn encode_from_invalid_hsl_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsla(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hsl format"));
 }
 
 #[test]
@@ -2649,7 +2714,7 @@ fn encode_from_invalid_hsl_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsl(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hsl format"));
     command::command()
         .arg("encode")
         .arg("--background")
@@ -2661,7 +2726,7 @@ fn encode_from_invalid_hsl_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hsla(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hsl format"));
 }
 
 #[test]
@@ -2716,7 +2781,7 @@ fn encode_from_invalid_hwb_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hwb(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hwb format"));
 }
 
 #[test]
@@ -2732,7 +2797,7 @@ fn encode_from_invalid_hwb_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'hwb(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid hwb format"));
 }
 
 #[test]
@@ -2787,7 +2852,7 @@ fn encode_from_invalid_oklab_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklab(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid oklab format"));
 }
 
 #[test]
@@ -2803,7 +2868,7 @@ fn encode_from_invalid_oklab_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklab(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid oklab format"));
 }
 
 #[test]
@@ -2858,7 +2923,7 @@ fn encode_from_invalid_oklch_fg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklch(0)' for '--foreground <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid oklch format"));
 }
 
 #[test]
@@ -2874,7 +2939,7 @@ fn encode_from_invalid_oklch_bg_color() {
         .stderr(predicate::str::contains(
             "invalid value 'oklch(0)' for '--background <COLOR>'",
         ))
-        .stderr(predicate::str::contains("invalid color function"));
+        .stderr(predicate::str::contains("invalid oklch format"));
 }
 
 #[test]
