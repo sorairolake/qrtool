@@ -21,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Setup Tombi
-        uses: tombi-toml/setup-tombi@v1.0.6
+        uses: tombi-toml/setup-tombi@v1.0.7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run formatter in check mode
