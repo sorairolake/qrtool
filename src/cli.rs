@@ -65,7 +65,7 @@ pub struct Encode {
         long,
         value_name("FILE"),
         value_hint(ValueHint::FilePath),
-        conflicts_with("input")
+        conflicts_with("string")
     )]
     pub read_from: Option<PathBuf>,
 
@@ -201,8 +201,7 @@ pub struct Encode {
     ///
     /// If [STRING] is not specified, data will be read from standard input.
     /// [STRING] must be a valid UTF-8 string.
-    #[arg(value_name("STRING"))]
-    pub input: Option<String>,
+    pub string: Option<String>,
 }
 
 #[derive(Args, Debug)]
@@ -240,8 +239,8 @@ pub struct Decode {
     /// determined based on the extension or the magic number if possible. If
     /// the format cannot be determined, use '--type'. Note that the SVG image
     /// is rasterized before scanning.
-    #[arg(value_name("IMAGE"), value_hint(ValueHint::FilePath))]
-    pub input: Option<PathBuf>,
+    #[arg(value_hint(ValueHint::FilePath))]
+    pub image: Option<PathBuf>,
 }
 
 #[derive(Args, Debug)]

@@ -40,7 +40,7 @@ pub fn run() -> anyhow::Result<()> {
 
     match opt.command {
         Command::Encode(arg) => {
-            let input = if let Some(string) = arg.input {
+            let input = if let Some(string) = arg.string {
                 Input::String(Cursor::new(string))
             } else if let Some(ref path) = arg.read_from {
                 let f = File::open(path)
@@ -175,7 +175,7 @@ pub fn run() -> anyhow::Result<()> {
             }
         }
         Command::Decode(arg) => {
-            let input = if let Some(ref path) = arg.input
+            let input = if let Some(ref path) = arg.image
                 && path.as_os_str() != "-"
             {
                 fs::read(path)
@@ -209,7 +209,7 @@ pub fn run() -> anyhow::Result<()> {
                         f.try_into()
                     } else {
                         image::guess_format(&input).or_else(|err| {
-                            arg.input.map_or_else(|| Err(err), ImageFormat::from_path)
+                            arg.image.map_or_else(|| Err(err), ImageFormat::from_path)
                         })
                     }
                     .context("could not determine the image format")?;
