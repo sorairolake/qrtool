@@ -7,4 +7,5 @@ format_macro_matchers = true
 group_imports = "StdExternalCrate"
 hex_literal_case = "Upper"
 imports_granularity = "Crate"
+newline_style = "Unix"
 wrap_comments = true
