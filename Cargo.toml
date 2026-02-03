@@ -33,7 +33,7 @@ oxipng = { version = "10.1.0", default-features = false, features = [
   "parallel",
   "zopfli",
 ], optional = true }
-qrcode2 = "0.17.1"
+qrcode2 = "0.17.2"
 resvg = { version = "0.46.0", default-features = false, optional = true }
 rqrr = "0.10.1"
 sysexits = "0.11.0"
