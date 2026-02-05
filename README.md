@@ -34,6 +34,7 @@ cargo install qrtool
 | _Any_          | [Homebrew]      | `brew install qrtool`                       |
 | _Any_          | [Nix]           | `nix-env -iA nixpkgs.qrtool`                |
 | [_Arch Linux_] | [Pacman]        | `pacman -S qrtool`                          |
+| _macOS_        | [MacPorts]      | `sudo port install qrtool`                  |
 | [_openSUSE_]   | Zypper          | `zypper install qrtool`                     |
 | _Windows_      | [WinGet]        | `winget install --id sorairolake.qrtool -e` |
 
@@ -341,6 +342,7 @@ licensing information.
 [Nix]: https://nixos.org/
 [_Arch Linux_]: https://archlinux.org/
 [Pacman]: https://wiki.archlinux.org/title/pacman
+[MacPorts]: https://www.macports.org/
 [_openSUSE_]: https://www.opensuse.org/
 [WinGet]: https://learn.microsoft.com/en-us/windows/package-manager/winget/
 [release page]: https://github.com/sorairolake/qrtool/releases

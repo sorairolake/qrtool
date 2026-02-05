@@ -11,6 +11,7 @@
 :nix-package-url: https://nixos.org/
 :archlinux-url: https://archlinux.org/
 :pacman-url: https://wiki.archlinux.org/title/pacman
+:macports-url: https://www.macports.org/
 :opensuse-url: https://www.opensuse.org/
 :winget-url: https://learn.microsoft.com/en-us/windows/package-manager/winget/
 :release-page-url: {github-url}/sorairolake/qrtool/releases
@@ -40,6 +41,10 @@ image::{repology-badge}[Packaging status,link={repology-versions}]
 |{archlinux-url}[_Arch Linux_]
 |{pacman-url}[Pacman]
 |`pacman -S qrtool`
+
+|_macOS_
+|{macports-url}[MacPorts]
+|`sudo port install qrtool`
 
 |{opensuse-url}[_openSUSE_]
 |Zypper
