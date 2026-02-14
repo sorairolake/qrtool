@@ -34,7 +34,7 @@ use crate::{
 const MAX_DATA_SIZE: u64 = 7089;
 
 /// Runs the program and returns the result.
-#[allow(clippy::too_many_lines)]
+#[expect(clippy::too_many_lines)]
 pub fn run() -> anyhow::Result<()> {
     let opt = Opt::parse().validate()?;
 
@@ -194,7 +194,7 @@ pub fn run() -> anyhow::Result<()> {
             #[cfg(feature = "decode-from-xbm")]
             let input_format =
                 input_format.or_else(|| input.starts_with(b"#define").then_some(InputFormat::Xbm));
-            #[allow(clippy::option_if_let_else)]
+            #[expect(clippy::option_if_let_else)]
             let image = match input_format {
                 #[cfg(feature = "decode-from-svg")]
                 Some(InputFormat::Svg) => decode::from_svg(&input),

@@ -305,7 +305,7 @@ pub enum Shell {
     /// Nushell.
     Nushell,
 
-    #[allow(clippy::enum_variant_names)]
+    #[expect(clippy::enum_variant_names)]
     /// PowerShell.
     PowerShell,
 
