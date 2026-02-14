@@ -30,11 +30,11 @@ fmt:
 
 # Run the linter
 clippy:
-    cargo clippy -- -D warnings
+    cargo +nightly clippy -- -D warnings
 
 # Apply lint suggestions
 clippy-fix:
-    cargo clippy --fix --allow-dirty --allow-staged -- -D warnings
+    cargo +nightly clippy --fix --allow-dirty --allow-staged -- -D warnings
 
 # Build man pages
 build-man:
