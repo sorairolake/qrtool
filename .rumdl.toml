@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+[global]
+exclude = [".github/"]
+
+[MD030]
+ol-multi = 2
+ol-single = 2

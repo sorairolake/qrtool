@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: 2026 Shun Sakai
+#
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+
+name: rumdl
+
+on:
+  pull_request:
+    paths:
+      - "**.md"
+      - ".rumdl.toml"
+  push:
+    paths:
+      - "**.md"
+      - ".rumdl.toml"
+  workflow_dispatch:
+
+jobs:
+  rumdl:
+    name: rumdl
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Run rumdl
+        uses: rvben/rumdl@v0.1.22
