@@ -4,7 +4,3 @@
 
 [global]
 exclude = [".github/"]
-
-[MD030]
-ol-multi = 2
-ol-single = 2
