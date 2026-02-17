@@ -21,7 +21,7 @@ anstyle-lossy = { version = "1.1.4", optional = true }
 anstyle-yansi = { version = "2.0.3", optional = true }
 anyhow = "1.0.101"
 clap = { version = "4.5.57", features = ["derive", "wrap_help"] }
-clap_complete = "4.5.65"
+clap_complete = "4.5.66"
 clap_complete_nushell = "4.5.10"
 csscolorparser = "0.8.2"
 image = { version = "0.25.9", default-features = false, features = [
