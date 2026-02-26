@@ -23,4 +23,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Run rumdl
-        uses: rvben/rumdl@v0.1.28
+        uses: rvben/rumdl@v0.1.29
