@@ -905,7 +905,7 @@ fn decode_from_xbm() {
         .arg("data/decode/decode.svg")
         .assert()
         .failure()
-        .code(1)
+        .code(65)
         .stderr(predicate::str::contains("could not create new XBM decoder"));
 }
 

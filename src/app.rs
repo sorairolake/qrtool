@@ -15,12 +15,12 @@ use clap::Parser;
 #[cfg(feature = "decode-from-xbm")]
 use image::DynamicImage;
 use image::{ImageFormat, imageops};
+#[cfg(feature = "decode-from-xbm")]
+use image_extras::xbm::XbmDecoder;
 #[cfg(feature = "optimize-output-png")]
 use oxipng::{Deflater, Options, ZopfliOptions};
 use qrcode2::{QrCode, bits::Bits};
 use rqrr::PreparedImage;
-#[cfg(feature = "decode-from-xbm")]
-use xbm::Decoder;
 
 #[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
 use crate::cli::InputFormat;
@@ -200,7 +200,7 @@ pub fn run() -> anyhow::Result<()> {
                 Some(InputFormat::Svg) => decode::from_svg(&input),
                 #[cfg(feature = "decode-from-xbm")]
                 Some(InputFormat::Xbm) => {
-                    let decoder = Decoder::new(Cursor::new(input))
+                    let decoder = XbmDecoder::new(Cursor::new(input))
                         .context("could not create new XBM decoder")?;
                     DynamicImage::from_decoder(decoder).map_err(anyhow::Error::from)
                 }

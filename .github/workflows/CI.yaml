@@ -38,7 +38,7 @@ jobs:
             os: windows-2025
             target: x86_64-pc-windows-msvc
           - toolchain-alias: msrv
-            toolchain: 1.88.0
+            toolchain: 1.89.0
           - toolchain-alias: stable
             toolchain: stable
     steps:
@@ -81,7 +81,7 @@ jobs:
             os: windows-2025
             target: x86_64-pc-windows-msvc
           - toolchain-alias: msrv
-            toolchain: 1.88.0
+            toolchain: 1.89.0
           - toolchain-alias: stable
             toolchain: stable
     steps:

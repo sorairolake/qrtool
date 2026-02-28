@@ -6,7 +6,7 @@
 name = "qrtool"
 version = "0.13.2"
 edition = "2024"
-rust-version = "1.88.0"
+rust-version = "1.89.0"
 description = "A command-line utility for encoding and decoding QR code"
 homepage = "https://sorairolake.github.io/qrtool/"
 repository = "https://github.com/sorairolake/qrtool"
@@ -28,6 +28,7 @@ image = { version = "0.25.9", default-features = false, features = [
   "png",
   "rayon",
 ] }
+image-extras = { version = "0.1.0", default-features = false, optional = true }
 is-svg = { version = "0.2.2", optional = true }
 oxipng = { version = "10.1.0", default-features = false, features = [
   "parallel",
@@ -37,7 +38,6 @@ qrcode2 = "0.17.2"
 resvg = { version = "0.47.0", default-features = false, optional = true }
 rqrr = "0.10.1"
 sysexits = "0.12.0"
-xbm = { version = "0.3.0", optional = true }
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
@@ -78,7 +78,7 @@ decode-from-svg = ["dep:is-svg", "dep:resvg"]
 decode-from-tga = ["image/tga"]
 decode-from-tiff = ["image/tiff"]
 decode-from-webp = ["image/webp"]
-decode-from-xbm = ["dep:xbm"]
+decode-from-xbm = ["dep:image-extras", "image-extras/xbm"]
 optimize-output-png = ["dep:oxipng"]
 output-as-ansi = [
   "dep:anstyle",

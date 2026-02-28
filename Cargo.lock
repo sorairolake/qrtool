@@ -710,6 +710,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "image-extras"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "86d29ba92ef6970a2685cc758b455d190842b8b9e96c865ffd31cdb9954b7548"
+dependencies = [
+ "image",
+]
+
+[[package]]
 name = "image-webp"
 version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1201,6 +1210,7 @@ dependencies = [
  "clap_complete_nushell",
  "csscolorparser",
  "image",
+ "image-extras",
  "is-svg",
  "oxipng",
  "predicates",
@@ -1208,7 +1218,6 @@ dependencies = [
  "resvg",
  "rqrr",
  "sysexits",
- "xbm",
  "yansi",
 ]
 
@@ -1901,16 +1910,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "05f360fc0b24296329c78fda852a1e9ae82de9cf7b27dae4b7f62f118f77b9ed"
 dependencies = [
  "tap",
-]
-
-[[package]]
-name = "xbm"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "745a032431cc4b94c351731277178ae15afb9182b5f53f446f3d9545aa882987"
-dependencies = [
- "image",
- "unicode-ident",
 ]
 
 [[package]]
