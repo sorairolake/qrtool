@@ -37,7 +37,7 @@ oxipng = { version = "10.1.0", default-features = false, features = [
 qrcode2 = "0.17.2"
 resvg = { version = "0.47.0", default-features = false, optional = true }
 rqrr = "0.10.1"
-sysexits = "0.12.0"
+sysexits = "0.13.0"
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
