@@ -104,16 +104,8 @@ pub fn to_eps(
 ) -> String {
     let mut renderer = &mut code.render();
     let (foreground, background) = (
-        eps::Color(
-            colors.0.to_array().map(f64::from)[..3]
-                .try_into()
-                .expect("invalid color"),
-        ),
-        eps::Color(
-            colors.1.to_array().map(f64::from)[..3]
-                .try_into()
-                .expect("invalid color"),
-        ),
+        eps::Color(colors.0.to_array().map(f64::from)[..3].try_into().unwrap()),
+        eps::Color(colors.1.to_array().map(f64::from)[..3].try_into().unwrap()),
     );
     renderer = renderer.dark_color(foreground).light_color(background);
     if let Some(margin) = margin {
@@ -271,13 +263,12 @@ pub fn to_unicode(
 impl Extractor for QrCode {
     fn metadata(&self) -> Metadata {
         let symbol_version = match self.version() {
-            Version::Normal(version) | Version::Micro(version) => (
-                usize::try_from(version).expect("invalid symbol version"),
-                None,
-            ),
+            Version::Normal(version) | Version::Micro(version) => {
+                (usize::try_from(version).unwrap(), None)
+            }
             Version::RectMicro(height, width) => (
-                usize::try_from(height).expect("invalid symbol version"),
-                Some(usize::try_from(width).expect("invalid symbol version")),
+                usize::try_from(height).unwrap(),
+                Some(usize::try_from(width).unwrap()),
             ),
         };
         let symbol_version = metadata::Version::new(symbol_version);
