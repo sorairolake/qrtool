@@ -18,9 +18,6 @@ use resvg::usvg;
 use rqrr::DeQRError;
 
 fn main() -> ExitCode {
-    #[cfg(feature = "decode-from-xbm")]
-    image_extras::register();
-
     match app::run() {
         Ok(()) => ExitCode::SUCCESS,
         Err(err) => {
