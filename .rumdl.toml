@@ -4,3 +4,4 @@
 
 [global]
 exclude = [".github/"]
+include = ["**/*.md", "**/*.rs"]

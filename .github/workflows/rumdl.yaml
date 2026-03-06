@@ -8,10 +8,12 @@ on:
   pull_request:
     paths:
       - "**.md"
+      - "**.rs"
       - ".rumdl.toml"
   push:
     paths:
       - "**.md"
+      - "**.rs"
       - ".rumdl.toml"
   workflow_dispatch:
 
