@@ -24,7 +24,7 @@ clap = { version = "4.5.60", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.66"
 clap_complete_nushell = "4.5.10"
 csscolorparser = "0.8.2"
-image = { version = "0.25.9", default-features = false, features = [
+image = { version = "0.25.10", default-features = false, features = [
   "png",
   "rayon",
 ] }
