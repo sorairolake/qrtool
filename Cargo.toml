@@ -22,7 +22,7 @@ anstyle-yansi = { version = "2.0.3", optional = true }
 anyhow = "1.0.102"
 clap = { version = "4.5.60", features = ["derive", "wrap_help"] }
 clap_complete = "4.5.66"
-clap_complete_nushell = "4.5.10"
+clap_complete_nushell = "4.6.0"
 csscolorparser = "0.8.2"
 image = { version = "0.25.9", default-features = false, features = [
   "png",
