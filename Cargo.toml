@@ -41,7 +41,7 @@ sysexits = "0.13.0"
 yansi = { version = "1.0.1", default-features = false, optional = true }
 
 [dev-dependencies]
-assert_cmd = "2.1.2"
+assert_cmd = "2.2.0"
 predicates = "3.1.4"
 
 [features]
