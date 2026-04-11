@@ -21,6 +21,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
       - name: Setup just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4.0.0
       - name: Run formatter in check mode
         run: just --fmt --check --unstable
