@@ -38,7 +38,7 @@ jobs:
           npm ci
           npx antora -v
       - name: Setup just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
       - name: Build a book
         run: just build-book
       - name: Minify a book
