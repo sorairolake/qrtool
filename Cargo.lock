@@ -102,9 +102,9 @@ dependencies = [
 
 [[package]]
 name = "anstyle-yansi"
-version = "2.0.3"
+version = "2.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f4acb1a62104c1b155ca5066ec3db53aa0cbafb932ae3dc6120e4b6a3f383049"
+checksum = "2c0760606cbc1036330ba026bfcb843a7228a711a5fb516d327fea49b5927cea"
 dependencies = [
  "anstyle",
  "yansi",
