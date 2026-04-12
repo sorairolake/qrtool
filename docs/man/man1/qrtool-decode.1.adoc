@@ -4,7 +4,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2025-11-28
+:docdate: 2026-04-12
 :revnumber: 0.13.2
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -29,7 +29,6 @@ ifndef::site-gen-antora[:includedir: ./include]
 :tga-url: {enwp-article-url}/Truevision_TGA
 :tiff-url: {enwp-article-url}/TIFF
 :webp-url: https://developers.google.com/speed/webp/
-:xbm-url: {enwp-article-url}/X_BitMap
 :qrcode-codes: {qrcode-url}/codes
 :normal-qr-code-url: {qrcode-codes}/model12.html
 :micro-qr-code-url: {qrcode-codes}/microqr.html
@@ -65,7 +64,6 @@ vector image. By default, the result will be output to standard output.
 * {tga-url}[TGA] (if enabled at compile time)
 * {tiff-url}[TIFF] (if enabled at compile time)
 * {webp-url}[WebP] (if enabled at compile time)
-* {xbm-url}[XBM] (if enabled at compile time)
 
 Use *-t* option to specify the image format. If this option is not specified,
 the image format is determined based on the extension or the magic number.
@@ -167,11 +165,6 @@ _IMAGE_::
     *webp*::::
 
       WebP. This value is available if the `decode-from-webp` feature is
-      enabled at compile time.
-
-    *xbm*::::
-
-      X BitMap. This value is available if the `decode-from-xbm` feature is
       enabled at compile time.
 
 *--verbose*::

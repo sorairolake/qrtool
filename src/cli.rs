@@ -15,7 +15,7 @@ use anyhow::anyhow;
 use clap::{Args, CommandFactory, Parser, Subcommand, ValueEnum, ValueHint};
 use clap_complete::Generator;
 use csscolorparser::Color;
-#[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
+#[cfg(feature = "decode-from-svg")]
 use image::error::ImageFormatHint;
 use image::{ImageError, ImageFormat};
 use qrcode2::EcLevel;
@@ -580,10 +580,6 @@ pub enum InputFormat {
     /// WebP.
     #[cfg(feature = "decode-from-webp")]
     WebP,
-
-    /// X BitMap.
-    #[cfg(feature = "decode-from-xbm")]
-    Xbm,
 }
 
 impl TryFrom<InputFormat> for ImageFormat {
@@ -620,8 +616,6 @@ impl TryFrom<InputFormat> for ImageFormat {
             InputFormat::Tiff => Ok(Self::Tiff),
             #[cfg(feature = "decode-from-webp")]
             InputFormat::WebP => Ok(Self::WebP),
-            #[cfg(feature = "decode-from-xbm")]
-            InputFormat::Xbm => Err(Self::Error::Unsupported(ImageFormatHint::Unknown.into())),
         }
     }
 }
@@ -769,7 +763,5 @@ mod tests {
             ImageFormat::try_from(InputFormat::WebP).unwrap(),
             ImageFormat::WebP
         );
-        #[cfg(feature = "decode-from-xbm")]
-        assert!(ImageFormat::try_from(InputFormat::Xbm).is_err());
     }
 }

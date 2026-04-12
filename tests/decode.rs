@@ -874,41 +874,6 @@ fn decode_from_web_p_with_wrong_format() {
         .stderr(predicate::str::contains("could not read the image"));
 }
 
-#[cfg(feature = "decode-from-xbm")]
-#[test]
-fn decode_from_xbm() {
-    command::command()
-        .arg("decode")
-        .arg("data/decode/decode.xbm")
-        .assert()
-        .success()
-        .stdout(predicate::eq("QR code"));
-    command::command()
-        .arg("decode")
-        .write_stdin(include_bytes!("data/decode/decode.xbm"))
-        .assert()
-        .success()
-        .stdout(predicate::eq("QR code"));
-    command::command()
-        .arg("decode")
-        .arg("-t")
-        .arg("xbm")
-        .arg("data/decode/decode.xbm")
-        .assert()
-        .success()
-        .stdout(predicate::eq("QR code"));
-
-    command::command()
-        .arg("decode")
-        .arg("-t")
-        .arg("xbm")
-        .arg("data/decode/decode.svg")
-        .assert()
-        .failure()
-        .code(65)
-        .stderr(predicate::str::contains("could not create new XBM decoder"));
-}
-
 #[test]
 fn decode_from_invalid_input_format() {
     command::command()

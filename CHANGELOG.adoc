@@ -20,6 +20,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 * Bump MSRV to 1.89.0 ({pull-request-url}/954[#954])
 
+=== Removed
+
+* Remove XBM support ({pull-request-url}/984[#984])
+
 == {compare-url}/v0.13.1\...v0.13.2[0.13.2] - 2025-12-20
 
 === Added

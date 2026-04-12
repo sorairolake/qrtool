@@ -16,19 +16,18 @@ categories = ["command-line-utilities"]
 include = ["/LICENSES", "/README.md", "/src"]
 
 [dependencies]
-anstyle = { version = "1.0.13", default-features = false, optional = true }
+anstyle = { version = "1.0.14", default-features = false, optional = true }
 anstyle-lossy = { version = "1.1.5", optional = true }
 anstyle-yansi = { version = "2.0.4", optional = true }
 anyhow = "1.0.102"
 clap = { version = "4.6.0", features = ["derive", "wrap_help"] }
-clap_complete = "4.6.0"
+clap_complete = "4.6.1"
 clap_complete_nushell = "4.6.0"
 csscolorparser = "0.8.3"
 image = { version = "0.25.10", default-features = false, features = [
   "png",
   "rayon",
 ] }
-image-extras = { version = "0.1.0", default-features = false, optional = true }
 is-svg = { version = "0.2.2", optional = true }
 oxipng = { version = "10.1.0", default-features = false, features = [
   "parallel",
@@ -60,7 +59,6 @@ default = [
   "decode-from-tga",
   "decode-from-tiff",
   "decode-from-webp",
-  "decode-from-xbm",
   "optimize-output-png",
   "output-as-ansi",
 ]
@@ -78,7 +76,6 @@ decode-from-svg = ["dep:is-svg", "dep:resvg"]
 decode-from-tga = ["image/tga"]
 decode-from-tiff = ["image/tiff"]
 decode-from-webp = ["image/webp"]
-decode-from-xbm = ["dep:image-extras", "image-extras/xbm"]
 optimize-output-png = ["dep:oxipng"]
 output-as-ansi = [
   "dep:anstyle",

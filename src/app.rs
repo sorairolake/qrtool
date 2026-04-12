@@ -12,17 +12,13 @@ use std::{
 
 use anyhow::Context;
 use clap::Parser;
-#[cfg(feature = "decode-from-xbm")]
-use image::DynamicImage;
 use image::{ImageFormat, imageops};
-#[cfg(feature = "decode-from-xbm")]
-use image_extras::xbm::XbmDecoder;
 #[cfg(feature = "optimize-output-png")]
 use oxipng::{Deflater, Options, ZopfliOptions};
 use qrcode2::{QrCode, bits::Bits};
 use rqrr::PreparedImage;
 
-#[cfg(any(feature = "decode-from-svg", feature = "decode-from-xbm"))]
+#[cfg(feature = "decode-from-svg")]
 use crate::cli::InputFormat;
 use crate::{
     cli::{Command, Opt, OutputFormat, Variant},
@@ -191,19 +187,10 @@ pub fn run() -> anyhow::Result<()> {
             #[cfg(feature = "decode-from-svg")]
             let input_format =
                 input_format.or_else(|| is_svg::is_svg(&input).then_some(InputFormat::Svg));
-            #[cfg(feature = "decode-from-xbm")]
-            let input_format =
-                input_format.or_else(|| input.starts_with(b"#define").then_some(InputFormat::Xbm));
             #[expect(clippy::option_if_let_else)]
             let image = match input_format {
                 #[cfg(feature = "decode-from-svg")]
                 Some(InputFormat::Svg) => decode::from_svg(&input),
-                #[cfg(feature = "decode-from-xbm")]
-                Some(InputFormat::Xbm) => {
-                    let decoder = XbmDecoder::new(Cursor::new(input))
-                        .context("could not create new XBM decoder")?;
-                    DynamicImage::from_decoder(decoder).map_err(anyhow::Error::from)
-                }
                 format => {
                     let format = if let Some(f) = format {
                         f.try_into()

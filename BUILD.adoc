@@ -93,10 +93,6 @@ The man pages are generated in `docs/man/man1`.
 
   Enable decoding from the WebP image. This is enabled by default.
 
-`decode-from-xbm`::
-
-  Enable decoding from the XBM image. This is enabled by default.
-
 `optimize-output-png`::
 
   Enable options to optimize output PNG image. This is enabled by default.

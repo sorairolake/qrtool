@@ -170,7 +170,6 @@ List of supported image formats:
 - [TGA]
 - [TIFF]
 - [WebP]
-- [XBM]
 
 To support decoding from SVG image, the `decode-from-svg` feature must be
 enabled at compile time. Note that the SVG image is rasterized before scanning.
@@ -365,7 +364,6 @@ licensing information.
 [TGA]: https://en.wikipedia.org/wiki/Truevision_TGA
 [TIFF]: https://en.wikipedia.org/wiki/TIFF
 [WebP]: https://developers.google.com/speed/webp/
-[XBM]: https://en.wikipedia.org/wiki/X_BitMap
 [`oxipng`]: https://github.com/shssoichiro/oxipng
 [`svgcleaner`]: https://github.com/RazrFalcon/svgcleaner
 [ImageMagick]: https://imagemagick.org/
