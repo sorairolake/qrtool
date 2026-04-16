@@ -4,7 +4,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2026-04-12
+:docdate: 2026-04-16
 :revnumber: 0.13.2
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -46,7 +46,7 @@ qrtool-decode - detect and decode a QR code
 == DESCRIPTION
 
 This command detects and decodes a {qrcode-url}[QR code] from a raster or
-vector image. By default, the result will be output to standard output.
+vector image. The result will be output to standard output.
 
 .Supported image file formats
 * {bmp-url}[BMP] (if enabled at compile time)

@@ -44,7 +44,7 @@ pub enum Command {
 
     /// Detect and decode a QR code.
     ///
-    /// By default, the result will be output to standard output.
+    /// The result will be output to standard output.
     Decode(Decode),
 
     /// Generate shell completion.
