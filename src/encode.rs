@@ -10,10 +10,9 @@ use anstyle_lossy::palette::Palette;
 use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
 use qrcode2::{
-    QrCode, QrResult, Version,
+    QrCode, Version,
     bits::Bits,
     render::{eps, pic, svg, unicode::Dense1x2},
-    types::QrError,
 };
 #[cfg(feature = "output-as-ansi")]
 use yansi::Paint;
@@ -24,20 +23,20 @@ use crate::{
 };
 
 /// Sets the version.
-pub fn set_version(version: &[i16], variant: &Variant) -> QrResult<Version> {
+pub fn set_version(version: &[i16], variant: &Variant) -> qrcode2::Result<Version> {
     match variant {
         Variant::Normal => Some(Version::Normal(version[0]))
             .filter(|v| v.is_normal())
-            .ok_or(QrError::InvalidVersion),
+            .ok_or(qrcode2::Error::InvalidVersion),
         Variant::Micro => Some(Version::Micro(version[0]))
             .filter(|v| v.is_micro())
-            .ok_or(QrError::InvalidVersion),
+            .ok_or(qrcode2::Error::InvalidVersion),
         Variant::Rmqr => Some(Version::RectMicro(
             version[0],
             version.get(1).copied().unwrap_or_default(),
         ))
         .filter(|v| v.is_rect_micro())
-        .ok_or(QrError::InvalidVersion),
+        .ok_or(qrcode2::Error::InvalidVersion),
     }
 }
 
@@ -46,7 +45,7 @@ pub fn push_data_for_selected_mode(
     bits: &mut Bits,
     data: impl AsRef<[u8]>,
     mode: &Mode,
-) -> QrResult<()> {
+) -> qrcode2::Result<()> {
     let data = data.as_ref();
     match mode {
         Mode::Numeric => bits.push_numeric_data(data),
@@ -83,8 +82,12 @@ pub fn to_svg(
     module_size: Option<u32>,
 ) -> String {
     let mut renderer = &mut code.render();
-    let (foreground, background) = (colors.0.to_css_hex(), colors.1.to_css_hex());
-    let (foreground, background) = (svg::Color(&foreground), svg::Color(&background));
+    let colors = [&colors.0, &colors.1].map(Color::to_css_hex);
+    let [foreground, background] = colors
+        .each_ref()
+        .map(String::as_str)
+        .map(svg::Color::new)
+        .map(Result::unwrap);
     renderer = renderer.dark_color(foreground).light_color(background);
     if let Some(margin) = margin {
         renderer = renderer.quiet_zone(margin);
@@ -103,10 +106,10 @@ pub fn to_eps(
     module_size: Option<u32>,
 ) -> String {
     let mut renderer = &mut code.render();
-    let (foreground, background) = (
-        eps::Color(colors.0.to_array().map(f64::from)[..3].try_into().unwrap()),
-        eps::Color(colors.1.to_array().map(f64::from)[..3].try_into().unwrap()),
-    );
+    let [foreground, background] = [&colors.0, &colors.1]
+        .map(Color::to_array)
+        .map(|[r, g, b, _]| eps::Color::new(r, g, b))
+        .map(Option::unwrap);
     renderer = renderer.dark_color(foreground).light_color(background);
     if let Some(margin) = margin {
         renderer = renderer.quiet_zone(margin);

@@ -20,8 +20,8 @@ anstyle = { version = "1.0.14", default-features = false, optional = true }
 anstyle-lossy = { version = "1.1.5", optional = true }
 anstyle-yansi = { version = "2.0.4", optional = true }
 anyhow = "1.0.102"
-clap = { version = "4.6.0", features = ["derive", "wrap_help"] }
-clap_complete = "4.6.1"
+clap = { version = "4.6.1", features = ["derive", "wrap_help"] }
+clap_complete = "4.6.2"
 clap_complete_nushell = "4.6.0"
 csscolorparser = "0.8.3"
 image = { version = "0.25.10", default-features = false, features = [
@@ -33,7 +33,7 @@ oxipng = { version = "10.1.0", default-features = false, features = [
   "parallel",
   "zopfli",
 ], optional = true }
-qrcode2 = "0.17.2"
+qrcode2 = "0.18.0"
 resvg = { version = "0.47.0", default-features = false, optional = true }
 rqrr = "0.10.1"
 sysexits = "0.13.0"

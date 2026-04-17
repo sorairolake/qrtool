@@ -12,7 +12,6 @@ mod metadata;
 use std::{io, process::ExitCode};
 
 use image::ImageError;
-use qrcode2::types::QrError;
 #[cfg(feature = "decode-from-svg")]
 use resvg::usvg;
 use rqrr::DeQRError;
@@ -25,7 +24,7 @@ fn main() -> ExitCode {
             if let Some(e) = err.downcast_ref::<io::Error>() {
                 return sysexits::ExitCode::from(e.kind()).into();
             }
-            if err.is::<QrError>() {
+            if err.is::<qrcode2::Error>() {
                 return sysexits::ExitCode::DataErr.into();
             }
             if let Some(e) = err.downcast_ref::<DeQRError>() {

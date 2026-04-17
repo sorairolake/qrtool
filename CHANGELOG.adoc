@@ -24,6 +24,10 @@ project adheres to https://semver.org/[Semantic Versioning].
 
 * Remove XBM support ({pull-request-url}/984[#984])
 
+=== Fixed
+
+* Fix vertical coordinate offset in EPS rendering ({pull-request-url}/989[#989])
+
 == {compare-url}/v0.13.1\...v0.13.2[0.13.2] - 2025-12-20
 
 === Added
