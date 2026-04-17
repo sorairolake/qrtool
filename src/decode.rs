@@ -5,7 +5,7 @@
 #[cfg(feature = "decode-from-svg")]
 use anyhow::Context;
 #[cfg(feature = "decode-from-svg")]
-use image::{DynamicImage, ImageFormat};
+use image::{DynamicImage, RgbaImage};
 #[cfg(feature = "decode-from-svg")]
 use resvg::{
     tiny_skia::{Pixmap, Transform},
@@ -17,24 +17,25 @@ use crate::metadata::{self, Extractor, Metadata};
 
 type DecodedBytes = (MetaData, Vec<u8>);
 
+/// Reads the image from SVG.
 #[cfg(feature = "decode-from-svg")]
-fn svg_to_png(data: &[u8]) -> anyhow::Result<Vec<u8>> {
+pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<DynamicImage> {
     let opt = Options::default();
-
-    let tree = Tree::from_data(data, &opt)?;
+    let tree = Tree::from_data(data.as_ref(), &opt)?;
 
     let pixmap_size = tree.size().to_int_size();
     let mut pixmap = Pixmap::new(pixmap_size.width(), pixmap_size.height())
         .context("could not allocate a new pixmap")?;
-    resvg::render(&tree, Transform::default(), &mut pixmap.as_mut());
-    pixmap.encode_png().map_err(anyhow::Error::from)
-}
 
-/// Reads the image from SVG.
-#[cfg(feature = "decode-from-svg")]
-pub fn from_svg(data: impl AsRef<[u8]>) -> anyhow::Result<DynamicImage> {
-    let image = svg_to_png(data.as_ref())?;
-    image::load_from_memory_with_format(&image, ImageFormat::Png).map_err(anyhow::Error::from)
+    resvg::render(&tree, Transform::default(), &mut pixmap.as_mut());
+
+    let width = pixmap.width();
+    let height = pixmap.height();
+    let pixels = pixmap.take_demultiplied();
+
+    RgbaImage::from_raw(width, height, pixels)
+        .context("could not construct image buffer")
+        .map(DynamicImage::from)
 }
 
 fn grid_as_bytes<G: BitGrid>(grid: &Grid<G>) -> Result<DecodedBytes, DeQRError> {
