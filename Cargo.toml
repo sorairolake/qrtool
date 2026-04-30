@@ -37,7 +37,7 @@ default-features = false
 features = ["png", "rayon"]
 
 [dependencies.oxipng]
-version = "10.1.0"
+version = "10.1.1"
 default-features = false
 features = ["parallel", "zopfli"]
 optional = true
