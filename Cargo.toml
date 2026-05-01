@@ -43,7 +43,7 @@ features = ["parallel", "zopfli"]
 optional = true
 
 [dev-dependencies]
-assert_cmd = "2.2.0"
+assert_cmd = "2.2.1"
 predicates = "3.1.4"
 
 [features]
