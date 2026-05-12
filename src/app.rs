@@ -1,7 +1,6 @@
 // SPDX-FileCopyrightText: 2023 Shun Sakai
 // SPDX-FileCopyrightText: 2024 Alexis Hildebrandt
 // SPDX-FileCopyrightText: 2024 Mohammad AlSaleh
-// SPDX-FileCopyrightText: 2026 June Kim
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
@@ -23,8 +22,7 @@ use rqrr::PreparedImage;
 use crate::cli::InputFormat;
 use crate::{
     cli::{Command, Opt, OutputFormat, Variant},
-    decode::{self, DecodeError},
-    encode,
+    decode, encode,
     input::Input,
     metadata::Extractor,
 };
@@ -228,10 +226,6 @@ pub fn run() -> anyhow::Result<()> {
                 }
                 Ok(contents) => contents,
             };
-
-            if contents.is_empty() {
-                return Err(DecodeError::NoQrCode.into());
-            }
 
             for content in contents {
                 if arg.verbose || arg.metadata {

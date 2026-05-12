@@ -1,5 +1,4 @@
 // SPDX-FileCopyrightText: 2022 Shun Sakai
-// SPDX-FileCopyrightText: 2026 June Kim
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
@@ -16,8 +15,6 @@ use image::ImageError;
 #[cfg(feature = "decode-from-svg")]
 use resvg::usvg;
 use rqrr::DeQRError;
-
-use crate::decode::DecodeError;
 
 fn main() -> ExitCode {
     match app::run() {
@@ -55,9 +52,6 @@ fn main() -> ExitCode {
                     | usvg::Error::InvalidSize
                     | usvg::Error::ParsingFailed(_) => sysexits::ExitCode::DataErr.into(),
                 };
-            }
-            if err.is::<DecodeError>() {
-                return sysexits::ExitCode::DataErr.into();
             }
             ExitCode::FAILURE
         }
