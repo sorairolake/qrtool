@@ -1,6 +1,9 @@
 // SPDX-FileCopyrightText: 2022 Shun Sakai
+// SPDX-FileCopyrightText: 2026 June Kim
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
+
+use std::{error::Error, fmt};
 
 #[cfg(feature = "decode-from-svg")]
 use anyhow::Context;
@@ -22,15 +25,15 @@ pub enum DecodeError {
     NoQrCode,
 }
 
-impl std::fmt::Display for DecodeError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl fmt::Display for DecodeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::NoQrCode => write!(f, "no QR code found in the image"),
         }
     }
 }
 
-impl std::error::Error for DecodeError {}
+impl Error for DecodeError {}
 
 type DecodedBytes = (MetaData, Vec<u8>);
 
