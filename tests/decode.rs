@@ -1,4 +1,5 @@
 // SPDX-FileCopyrightText: 2022 Shun Sakai
+// SPDX-FileCopyrightText: 2026 June Kim
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
 
@@ -872,6 +873,17 @@ fn decode_from_web_p_with_wrong_format() {
         .failure()
         .code(65)
         .stderr(predicate::str::contains("could not read the image"));
+}
+
+#[test]
+fn decode_from_image_without_qr_code() {
+    command::command()
+        .arg("decode")
+        .arg("data/decode/no_qr.png")
+        .assert()
+        .failure()
+        .code(65)
+        .stderr(predicate::str::contains("no QR code found"));
 }
 
 #[test]

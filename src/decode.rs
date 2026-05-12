@@ -1,6 +1,9 @@
 // SPDX-FileCopyrightText: 2022 Shun Sakai
+// SPDX-FileCopyrightText: 2026 June Kim
 //
 // SPDX-License-Identifier: Apache-2.0 OR MIT
+
+use std::{error::Error, fmt};
 
 #[cfg(feature = "decode-from-svg")]
 use anyhow::Context;
@@ -14,6 +17,23 @@ use resvg::{
 use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
 use crate::metadata::{self, Extractor, Metadata};
+
+/// Errors specific to the decode command.
+#[derive(Debug)]
+pub enum DecodeError {
+    /// The image was read successfully but no QR code was found.
+    NoQrCode,
+}
+
+impl fmt::Display for DecodeError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::NoQrCode => write!(f, "no QR code found in the image"),
+        }
+    }
+}
+
+impl Error for DecodeError {}
 
 type DecodedBytes = (MetaData, Vec<u8>);
 
