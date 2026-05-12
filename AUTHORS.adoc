@@ -11,6 +11,5 @@
 == Contributors
 
 * https://github.com/afh[Alexis Hildebrandt]
-* https://github.com/kimjune01[June Kim]
 * https://github.com/MoSal[Mohammad AlSaleh]
 * https://github.com/orhun[Orhun Parmaksız]

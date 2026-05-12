@@ -27,8 +27,6 @@ project adheres to https://semver.org/[Semantic Versioning].
 === Fixed
 
 * Fix vertical coordinate offset in EPS rendering ({pull-request-url}/989[#989])
-* Return non-zero exit code when no QR code is found
-  ({pull-request-url}/1002[#1002])
 
 == {compare-url}/v0.13.1\...v0.13.2[0.13.2] - 2025-12-20
 
