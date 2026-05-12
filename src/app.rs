@@ -227,7 +227,9 @@ pub fn run() -> anyhow::Result<()> {
                 Ok(contents) => contents,
             };
 
-            anyhow::ensure!(!contents.is_empty(), "no QR code found in the image");
+            if contents.is_empty() {
+                return Err(decode::DecodeError::NoQrCode.into());
+            }
 
             for content in contents {
                 if arg.verbose || arg.metadata {

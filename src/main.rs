@@ -16,6 +16,8 @@ use image::ImageError;
 use resvg::usvg;
 use rqrr::DeQRError;
 
+use crate::decode::DecodeError;
+
 fn main() -> ExitCode {
     match app::run() {
         Ok(()) => ExitCode::SUCCESS,
@@ -52,6 +54,9 @@ fn main() -> ExitCode {
                     | usvg::Error::InvalidSize
                     | usvg::Error::ParsingFailed(_) => sysexits::ExitCode::DataErr.into(),
                 };
+            }
+            if err.is::<DecodeError>() {
+                return sysexits::ExitCode::DataErr.into();
             }
             ExitCode::FAILURE
         }

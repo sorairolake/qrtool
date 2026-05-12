@@ -15,6 +15,23 @@ use rqrr::{BitGrid, DeQRError, Grid, MetaData};
 
 use crate::metadata::{self, Extractor, Metadata};
 
+/// Errors specific to the decode command.
+#[derive(Debug)]
+pub enum DecodeError {
+    /// The image was read successfully but no QR code was found.
+    NoQrCode,
+}
+
+impl std::fmt::Display for DecodeError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::NoQrCode => write!(f, "no QR code found in the image"),
+        }
+    }
+}
+
+impl std::error::Error for DecodeError {}
+
 type DecodedBytes = (MetaData, Vec<u8>);
 
 /// Reads the image from SVG.

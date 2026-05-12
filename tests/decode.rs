@@ -881,6 +881,7 @@ fn decode_from_image_without_qr_code() {
         .arg("data/decode/no_qr.png")
         .assert()
         .failure()
+        .code(65)
         .stderr(predicate::str::contains("no QR code found"));
 }
 
