@@ -48,6 +48,7 @@ fn main() -> ExitCode {
                     usvg::Error::NotAnUtf8Str | usvg::Error::ElementsLimitReached => {
                         sysexits::ExitCode::Unavailable.into()
                     }
+                    usvg::Error::SvgzFeatureNotEnabled => unreachable!(),
                     usvg::Error::MalformedGZip
                     | usvg::Error::InvalidSize
                     | usvg::Error::ParsingFailed(_) => sysexits::ExitCode::DataErr.into(),
