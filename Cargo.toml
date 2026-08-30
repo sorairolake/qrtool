@@ -26,7 +26,7 @@ clap_complete_nushell = "4.6.0"
 csscolorparser = "0.8.3"
 is-svg = { version = "0.2.2", optional = true }
 qrcode2 = "0.18.0"
-resvg = { version = "0.48.1", default-features = false, optional = true }
+resvg = { version = "0.48.1", default-features = false, features = ["svgz"], optional = true }
 rqrr = "0.10.1"
 sysexits = "0.13.0"
 yansi = { version = "1.0.1", default-features = false, optional = true }
