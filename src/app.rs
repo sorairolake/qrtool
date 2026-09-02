@@ -212,9 +212,9 @@ pub fn run() -> anyhow::Result<()> {
                 decode::grids_as_bytes(grids).context("could not decode the grid")
             };
 
-            // NOTE: rqrr doesn't appear to work if the background is darker than the
-            // foreground. So we try with an inverted image if decoding fails or no content
-            // is returned.
+            // NOTE: rqrr doesn't appear to work if the background is darker
+            // than the foreground. So we try with an inverted image
+            // if decoding fails or no content is returned.
             let contents = match get_contents(image.clone()) {
                 Err(e) => {
                     imageops::invert(&mut image);
