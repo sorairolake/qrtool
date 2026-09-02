@@ -13,7 +13,7 @@ ifndef::site-gen-antora[:includedir: ./include]
 :qrcode-url: https://www.qrcode.com
 :css-color-url: https://www.w3.org/TR/css-color-4/
 :qrcode-codes: {qrcode-url}/codes
-:normal-qr-code-url: {qrcode-codes}/model12.html
+:qr-code-model-2-url: {qrcode-codes}/model12.html
 :micro-qr-code-url: {qrcode-codes}/microqr.html
 :rmqr-code-url: {qrcode-codes}/rmqr.html
 
@@ -89,7 +89,7 @@ be specified as a value for these options.
 |`oklch(59.41% 0.16 301.29)`, `oklch(61.9% 0.032 248.35 / 49.8%)`
 |===
 
-In addition to a {normal-qr-code-url}[normal QR code], this command can also
+In addition to a {qr-code-model-2-url}[QR code model 2], this command can also
 encode the input data in a {micro-qr-code-url}[Micro QR code] and a
 {rmqr-code-url}[rMQR code].
 
@@ -146,7 +146,7 @@ _STRING_::
 *-v*, *--symbol-version* _NUMBER_ [_NUMBER_]::
 
   The version of the symbol. If this option is not specified, the minimum
-  version required to store the data will be automatically chosen. For normal
+  version required to store the data will be automatically chosen. For QR code model 2
   QR code, _NUMBER_ should be between *1* and *40*. For Micro QR code, _NUMBER_
   should be between *1* and *4*. For rMQR code, the first _NUMBER_ should be
   *7*, *9*, *11*, *13*, *15*, or *17*. The second _NUMBER_ should be *27*,
@@ -161,7 +161,7 @@ _STRING_::
 *-m*, *--margin* _NUMBER_::
 
   The width of margin. If this option is not specified, the margin will be 4
-  for normal QR code and 2 for others.
+  for QR code model 2 and 2 for others.
 
 *-t*, *--type* _FORMAT_::
 
@@ -302,7 +302,7 @@ _STRING_::
 
     *normal*::::
 
-      Normal QR code. This is the default value.
+      QR code model 2. This is the default value.
 
     *micro*::::
 

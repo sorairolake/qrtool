@@ -30,7 +30,7 @@ ifndef::site-gen-antora[:includedir: ./include]
 :tiff-url: {enwp-article-url}/TIFF
 :webp-url: https://developers.google.com/speed/webp/
 :qrcode-codes: {qrcode-url}/codes
-:normal-qr-code-url: {qrcode-codes}/model12.html
+:qr-code-model-2-url: {qrcode-codes}/model12.html
 :micro-qr-code-url: {qrcode-codes}/microqr.html
 :rmqr-code-url: {qrcode-codes}/rmqr.html
 :image-crates-url: https://crates.io/crates/image
@@ -69,7 +69,7 @@ Use *-t* option to specify the image format. If this option is not specified,
 the image format is determined based on the extension or the magic number.
 
 CAUTION: This command only supports decoding a
-{normal-qr-code-url}[normal QR code], and does not support decoding a
+{qr-code-model-2-url}[QR code model 2], and does not support decoding a
 {micro-qr-code-url}[Micro QR code] and a {rmqr-code-url}[rMQR code].
 
 == POSITIONAL ARGUMENTS

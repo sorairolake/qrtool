@@ -289,7 +289,7 @@ mod tests {
 
     #[test]
     fn validate_qr_code_version() {
-        // Valid normal QR code version.
+        // Valid QR code model 2 version.
         assert_eq!(
             set_version(&[1], &Variant::Normal).unwrap(),
             Version::Normal(1)
@@ -323,7 +323,7 @@ mod tests {
             Version::RectMicro(17, 139)
         );
 
-        // Invalid normal QR code version.
+        // Invalid QR code model 2 version.
         assert!(set_version(&[0], &Variant::Normal).is_err());
         assert!(set_version(&[41], &Variant::Normal).is_err());
 
