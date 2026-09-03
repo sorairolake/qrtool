@@ -108,8 +108,8 @@ pub struct Encode {
 
     /// The width of margin.
     ///
-    /// If this option is not specified, the margin will be 4 for QR code model 2
-    /// and 2 for others.
+    /// If this option is not specified, the margin will be 4 for QR code model
+    /// 2 and 2 for others.
     #[arg(short, long, value_name("NUMBER"))]
     pub margin: Option<u32>,
 
