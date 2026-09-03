@@ -4,7 +4,7 @@
 
 = qrtool-encode(1)
 // Specify in UTC.
-:docdate: 2025-11-08
+:docdate: 2026-09-03
 :revnumber: 0.13.2
 :doctype: manpage
 :mansource: qrtool {revnumber}
@@ -146,8 +146,8 @@ _STRING_::
 *-v*, *--symbol-version* _NUMBER_ [_NUMBER_]::
 
   The version of the symbol. If this option is not specified, the minimum
-  version required to store the data will be automatically chosen. For QR code model 2
-  QR code, _NUMBER_ should be between *1* and *40*. For Micro QR code, _NUMBER_
+  version required to store the data will be automatically chosen. For QR code
+  model 2, _NUMBER_ should be between *1* and *40*. For Micro QR code, _NUMBER_
   should be between *1* and *4*. For rMQR code, the first _NUMBER_ should be
   *7*, *9*, *11*, *13*, *15*, or *17*. The second _NUMBER_ should be *27*,
   *43*, *59*, *77*, *99*, or *139*. *27* can only be used with *11*, or *13*.
