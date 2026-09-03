@@ -4,7 +4,7 @@
 
 = qrtool-decode(1)
 // Specify in UTC.
-:docdate: 2026-04-16
+:docdate: 2026-09-03
 :revnumber: 0.13.2
 :doctype: manpage
 :mansource: qrtool {revnumber}
