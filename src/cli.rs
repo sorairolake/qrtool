@@ -91,7 +91,7 @@ pub struct Encode {
     /// The version of the symbol.
     ///
     /// If this option is not specified, the minimum version required to store
-    /// the data will be automatically chosen. For normal QR code, <NUMBER>
+    /// the data will be automatically chosen. For QR code model 2, <NUMBER>
     /// should be between 1 and 40. For Micro QR code, <NUMBER> should be
     /// between 1 and 4. For rMQR code, the first <NUMBER> should be 7, 9, 11,
     /// 13, 15, or 17. The second <NUMBER> should be 27, 43, 59, 77, 99, or 139.
@@ -108,8 +108,8 @@ pub struct Encode {
 
     /// The width of margin.
     ///
-    /// If this option is not specified, the margin will be 4 for normal QR code
-    /// and 2 for others.
+    /// If this option is not specified, the margin will be 4 for QR code model
+    /// 2 and 2 for others.
     #[arg(short, long, value_name("NUMBER"))]
     pub margin: Option<u32>,
 
@@ -503,7 +503,7 @@ pub enum Mode {
 
 #[derive(Clone, Debug, Default, Eq, PartialEq, ValueEnum)]
 pub enum Variant {
-    /// Normal QR code.
+    /// QR code model 2.
     #[default]
     Normal,
 

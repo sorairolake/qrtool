@@ -1588,7 +1588,7 @@ fn encode_with_mode_without_symbol_version() {
 }
 
 #[test]
-fn encode_as_normal_qr_code() {
+fn encode_as_qr_code_model_2() {
     let output = command::command()
         .arg("encode")
         .arg("--variant")
@@ -1607,7 +1607,7 @@ fn encode_as_normal_qr_code() {
 }
 
 #[test]
-fn encode_as_normal_qr_code_with_error_correction_level_and_symbol_version() {
+fn encode_as_qr_code_model_2_with_error_correction_level_and_symbol_version() {
     let output = command::command()
         .arg("encode")
         .arg("-l")
@@ -1630,7 +1630,7 @@ fn encode_as_normal_qr_code_with_error_correction_level_and_symbol_version() {
 }
 
 #[test]
-fn encode_as_normal_qr_code_with_extra_symbol_version() {
+fn encode_as_qr_code_model_2_with_extra_symbol_version() {
     let output = command::command()
         .arg("encode")
         .arg("-l")
