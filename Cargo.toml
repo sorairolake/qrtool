@@ -98,6 +98,9 @@ missing_debug_implementations = "deny"
 rust_2018_idioms = { level = "warn", priority = -1 }
 unsafe_code = "forbid"
 
+[patch.crates-io]
+qrcode2 = { git = "https://github.com/sorairolake/qrcode-rust2.git", branch = "main" }
+
 [profile.release]
 strip = true
 lto = true
