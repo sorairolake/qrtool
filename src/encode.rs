@@ -264,7 +264,7 @@ impl Extractor for QrCode {
             Version::Micro(version) => (u8::from(version).into(), None),
             Version::RectMicro(version) => {
                 let (height, width) = <(u8, u8)>::from(version);
-                (height.into(), width.into())
+                (height.into(), Some(width.into()))
             }
         };
         let symbol_version = metadata::Version::new(symbol_version);
