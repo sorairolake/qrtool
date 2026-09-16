@@ -104,7 +104,7 @@ pub struct Encode {
         num_args(1..=2),
         value_name("NUMBER")
     )]
-    pub symbol_version: Option<Vec<i16>>,
+    pub symbol_version: Option<Vec<u8>>,
 
     /// The width of margin.
     ///
