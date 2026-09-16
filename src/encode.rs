@@ -10,7 +10,7 @@ use anstyle_lossy::palette::Palette;
 use csscolorparser::Color;
 use image::{Rgba, RgbaImage};
 use qrcode2::{
-    QrCode, Version,
+    MicroVersion, NormalVersion, QrCode, RectMicroVersion, Version,
     bits::Bits,
     render::{eps, pic, svg, unicode::Dense1x2},
 };
@@ -23,20 +23,14 @@ use crate::{
 };
 
 /// Sets the version.
-pub fn set_version(version: &[i16], variant: &Variant) -> qrcode2::Result<Version> {
+pub fn set_version(version: &[u8], variant: &Variant) -> qrcode2::Result<Version> {
     match variant {
-        Variant::Normal => Some(Version::Normal(version[0]))
-            .filter(|v| v.is_normal())
-            .ok_or(qrcode2::Error::InvalidVersion),
-        Variant::Micro => Some(Version::Micro(version[0]))
-            .filter(|v| v.is_micro())
-            .ok_or(qrcode2::Error::InvalidVersion),
-        Variant::Rmqr => Some(Version::RectMicro(
-            version[0],
-            version.get(1).copied().unwrap_or_default(),
-        ))
-        .filter(|v| v.is_rect_micro())
-        .ok_or(qrcode2::Error::InvalidVersion),
+        Variant::Normal => NormalVersion::try_from(version[0]).map(Version::Normal),
+        Variant::Micro => MicroVersion::try_from(version[0]).map(Version::Micro),
+        Variant::Rmqr => {
+            RectMicroVersion::try_from((version[0], version.get(1).copied().unwrap_or_default()))
+                .map(Version::RectMicro)
+        }
     }
 }
 
