@@ -359,19 +359,19 @@ mod tests {
         );
 
         assert_eq!(
-            QrCode::with_version(DATA, Version::Micro(MicroVersion::M1), EcLevel::L)
+            QrCode::with_version(DATA, Version::Micro(MicroVersion::M4), EcLevel::L)
                 .unwrap()
                 .metadata(),
             Metadata::new(metadata::Version::new((4, None)), Ecc::L)
         );
         assert_eq!(
-            QrCode::with_version(DATA, Version::Micro(MicroVersion::M1), EcLevel::M)
+            QrCode::with_version(DATA, Version::Micro(MicroVersion::M4), EcLevel::M)
                 .unwrap()
                 .metadata(),
             Metadata::new(metadata::Version::new((4, None)), Ecc::M)
         );
         assert_eq!(
-            QrCode::with_version(DATA, Version::Micro(MicroVersion::M1), EcLevel::Q)
+            QrCode::with_version(DATA, Version::Micro(MicroVersion::M4), EcLevel::Q)
                 .unwrap()
                 .metadata(),
             Metadata::new(metadata::Version::new((4, None)), Ecc::Q)
