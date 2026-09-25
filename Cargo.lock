@@ -323,9 +323,9 @@ dependencies = [
 
 [[package]]
 name = "clap_complete"
-version = "4.6.9"
+version = "4.6.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3be2ad0423bdbbb0e25bc89add796f3559706d4a95e1bc98e4d9662a957b6a19"
+checksum = "037e2a1a92236d0aff7e845093f64661d6df4c02c9fcc61a60e9e1d736fa392f"
 dependencies = [
  "clap",
 ]
@@ -1155,8 +1155,7 @@ dependencies = [
 [[package]]
 name = "qrcode2"
 version = "0.18.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c9b9a9b88fd8c275d65cb2255d8bd152c0a6ab70a48356a378b9977b484511d7"
+source = "git+https://github.com/sorairolake/qrcode-rust2.git?branch=main#a81bec93b53d92d8043185a5c0e0a96bd27b8bb0"
 dependencies = [
  "csscolorparser",
  "image",
