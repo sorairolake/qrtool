@@ -76,7 +76,10 @@ pub fn to_svg(
     module_size: Option<u32>,
 ) -> String {
     let mut renderer = &mut code.render();
-    let colors = [&colors.0, &colors.1].map(Color::to_css_hex);
+    let colors = [&colors.0, &colors.1]
+        .map(Color::to_css_hex)
+        .each_ref()
+        .map(ToString::to_string);
     let [foreground, background] = colors
         .each_ref()
         .map(String::as_str)
