@@ -23,7 +23,7 @@ anyhow = "1.0.102"
 clap = { version = "4.6.1", features = ["derive", "wrap_help"] }
 clap_complete = "4.6.3"
 clap_complete_nushell = "4.6.0"
-csscolorparser = "0.8.3"
+csscolorparser = "0.9.0"
 is-svg = { version = "0.2.2", optional = true }
 qrcode2 = "0.18.0"
 rqrr = "0.11.0"
