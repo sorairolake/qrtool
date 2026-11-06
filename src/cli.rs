@@ -515,7 +515,7 @@ pub enum Variant {
 }
 
 #[derive(Clone, Copy, Debug, ValueEnum)]
-#[expect(clippy::doc_markdown)]
+#[allow(clippy::doc_markdown)]
 #[value(rename_all = "lower")]
 pub enum InputFormat {
     /// Windows Bitmap.
