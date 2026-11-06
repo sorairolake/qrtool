@@ -42,7 +42,7 @@ features = ["parallel", "zopfli"]
 optional = true
 
 [dependencies.resvg]
-version = "0.48.1"
+version = "0.49.0"
 default-features = false
 features = ["svgz"]
 optional = true
