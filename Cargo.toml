@@ -15,42 +15,6 @@ keywords = ["qrcode"]
 categories = ["command-line-utilities"]
 include = ["/LICENSES", "/README.md", "/src"]
 
-[dependencies]
-anstyle = { version = "1.0.14", default-features = false, optional = true }
-anstyle-lossy = { version = "1.1.5", optional = true }
-anstyle-yansi = { version = "2.0.4", optional = true }
-anyhow = "1.0.102"
-clap = { version = "4.6.1", features = ["derive", "wrap_help"] }
-clap_complete = "4.6.3"
-clap_complete_nushell = "4.6.0"
-csscolorparser = "0.9.0"
-is-svg = { version = "0.2.2", optional = true }
-qrcode2 = "0.18.0"
-rqrr = "0.11.0"
-sysexits = "0.13.0"
-yansi = { version = "1.0.1", default-features = false, optional = true }
-
-[dependencies.image]
-version = "0.25.10"
-default-features = false
-features = ["png", "rayon"]
-
-[dependencies.oxipng]
-version = "10.1.1"
-default-features = false
-features = ["parallel", "zopfli"]
-optional = true
-
-[dependencies.resvg]
-version = "0.50.0"
-default-features = false
-features = ["svgz"]
-optional = true
-
-[dev-dependencies]
-assert_cmd = "2.2.1"
-predicates = "3.1.4"
-
 [features]
 default = [
   "decode-from-bmp",
@@ -92,6 +56,42 @@ output-as-ansi = [
   "dep:yansi",
 ]
 
+[dependencies]
+anstyle = { version = "1.0.14", default-features = false, optional = true }
+anstyle-lossy = { version = "1.1.5", optional = true }
+anstyle-yansi = { version = "2.0.4", optional = true }
+anyhow = "1.0.102"
+clap = { version = "4.6.1", features = ["derive", "wrap_help"] }
+clap_complete = "4.6.3"
+clap_complete_nushell = "4.6.0"
+csscolorparser = "0.9.0"
+is-svg = { version = "0.2.2", optional = true }
+qrcode2 = "0.18.0"
+rqrr = "0.11.0"
+sysexits = "0.13.0"
+yansi = { version = "1.0.1", default-features = false, optional = true }
+
+[dependencies.image]
+version = "0.25.10"
+default-features = false
+features = ["png", "rayon"]
+
+[dependencies.oxipng]
+version = "10.1.1"
+default-features = false
+features = ["parallel", "zopfli"]
+optional = true
+
+[dependencies.resvg]
+version = "0.50.0"
+default-features = false
+features = ["svgz"]
+optional = true
+
+[dev-dependencies]
+assert_cmd = "2.2.1"
+predicates = "3.1.4"
+
 [lints.clippy]
 cargo = { level = "warn", priority = -1 }
 multiple_crate_versions = "allow"
@@ -103,12 +103,12 @@ missing_debug_implementations = "deny"
 rust_2018_idioms = { level = "warn", priority = -1 }
 unsafe_code = "forbid"
 
-[patch.crates-io.qrcode2]
-git = "https://github.com/sorairolake/qrcode-rust2.git"
-branch = "main"
-
 [profile.release]
 strip = true
 lto = true
 panic = "abort"
 codegen-units = 1
+
+[patch.crates-io.qrcode2]
+git = "https://github.com/sorairolake/qrcode-rust2.git"
+branch = "main"
