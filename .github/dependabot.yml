@@ -10,6 +10,7 @@ updates:
       interval: "weekly"
     cooldown:
       default-days: 7
+    versioning-strategy: "increase"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -24,3 +25,4 @@ updates:
       interval: "weekly"
     cooldown:
       default-days: 7
+    versioning-strategy: "increase"
