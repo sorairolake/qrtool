@@ -29,4 +29,4 @@ jobs:
       - name: Run linter
         uses: docker://ghcr.io/jdx/jactionlint:latest
         with:
-          args: --format github
+          args: --format github --profile correctness
