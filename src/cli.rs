@@ -360,17 +360,6 @@ pub enum Ecc {
     H,
 }
 
-impl From<Ecc> for EcLevel {
-    fn from(level: Ecc) -> Self {
-        match level {
-            Ecc::L => Self::L,
-            Ecc::M => Self::M,
-            Ecc::Q => Self::Q,
-            Ecc::H => Self::H,
-        }
-    }
-}
-
 impl From<EcLevel> for Ecc {
     fn from(level: EcLevel) -> Self {
         match level {
@@ -390,6 +379,17 @@ impl From<u16> for Ecc {
             2 => Self::H,
             3 => Self::Q,
             _ => unreachable!(),
+        }
+    }
+}
+
+impl From<Ecc> for EcLevel {
+    fn from(level: Ecc) -> Self {
+        match level {
+            Ecc::L => Self::L,
+            Ecc::M => Self::M,
+            Ecc::Q => Self::Q,
+            Ecc::H => Self::H,
         }
     }
 }
@@ -648,14 +648,6 @@ mod tests {
     }
 
     #[test]
-    fn from_ecc_to_ec_level() {
-        assert_eq!(EcLevel::from(Ecc::L), EcLevel::L);
-        assert_eq!(EcLevel::from(Ecc::M), EcLevel::M);
-        assert_eq!(EcLevel::from(Ecc::Q), EcLevel::Q);
-        assert_eq!(EcLevel::from(Ecc::H), EcLevel::H);
-    }
-
-    #[test]
     fn from_ec_level_to_ecc() {
         assert_eq!(Ecc::from(EcLevel::L), Ecc::L);
         assert_eq!(Ecc::from(EcLevel::M), Ecc::M);
@@ -669,6 +661,14 @@ mod tests {
         assert_eq!(Ecc::from(1), Ecc::L);
         assert_eq!(Ecc::from(2), Ecc::H);
         assert_eq!(Ecc::from(3), Ecc::Q);
+    }
+
+    #[test]
+    fn from_ecc_to_ec_level() {
+        assert_eq!(EcLevel::from(Ecc::L), EcLevel::L);
+        assert_eq!(EcLevel::from(Ecc::M), EcLevel::M);
+        assert_eq!(EcLevel::from(Ecc::Q), EcLevel::Q);
+        assert_eq!(EcLevel::from(Ecc::H), EcLevel::H);
     }
 
     #[test]
