@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0 OR MIT
 
-name: actionlint
+name: jactionlint
 
 on:
   pull_request:
@@ -27,6 +27,6 @@ jobs:
         with:
           persist-credentials: false
       - name: Run linter
-        uses: docker://rhysd/actionlint:latest
+        uses: docker://ghcr.io/jdx/jactionlint:latest
         with:
-          args: -color -verbose
+          args: --verbose --format github --profile correctness
